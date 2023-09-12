@@ -9,141 +9,162 @@ osbyte_read_write_escape_break_effect   = 200
 osbyte_tape                             = 140
 
 ; Memory locations
-L0000                           = &0000
-L0001                           = &0001
-L0002                           = &0002
-L0003                           = &0003
-L0004                           = &0004
-L0005                           = &0005
-L0006                           = &0006
-L0007                           = &0007
-L0008                           = &0008
-L0009                           = &0009
-sound_on_off_flag_or_maybe_mask = &000A
-L000B                           = &000B
-L000C                           = &000C
-L000F                           = &000F
-L0010                           = &0010
-L0011                           = &0011
-L0012                           = &0012
-L0013                           = &0013
-L0014                           = &0014
-L0015                           = &0015
-L0016                           = &0016
-L0017                           = &0017
-L0018                           = &0018
-L0019                           = &0019
-L001A                           = &001A
-L001B                           = &001B
-L001C                           = &001C
-L001D                           = &001D
-L001E                           = &001E
-L001F                           = &001F
-L0020                           = &0020
-L0021                           = &0021
-L0022                           = &0022
-L0023                           = &0023
-lives_remaining_0024_possible   = &0024
-L0025                           = &0025
-L0026                           = &0026
-L0027                           = &0027
-L0028                           = &0028
-L0029                           = &0029
-L002A                           = &002A
-L002B                           = &002B
-L002C                           = &002C
-L002D                           = &002D
-L002E                           = &002E
-keyboard_or_joystick_flag       = &002F
-L0030                           = &0030
-L0034                           = &0034
-L0038                           = &0038
-L003C                           = &003C
-L0061                           = &0061
-L0070                           = &0070
-L0072                           = &0072
-L0074                           = &0074
-L0076                           = &0076
-L0078                           = &0078
-L007A                           = &007A
-L007C                           = &007C
-L007E                           = &007E
-zero_page_80                    = &0080
-zero_page_81                    = &0081
-zero_page_82                    = &0082
-zero_page_83                    = &0083
-L0084                           = &0084
-L0085                           = &0085
-L0086                           = &0086
-L0087                           = &0087
-L0088                           = &0088
-L0089                           = &0089
-L008A                           = &008A
-L008B                           = &008B
-L008C                           = &008C
-L008F                           = &008F
-L0090                           = &0090
-L0091                           = &0091
-L0092                           = &0092
-L0093                           = &0093
-L0094                           = &0094
-L0095                           = &0095
-L0096                           = &0096
-L0097                           = &0097
-L0098                           = &0098
-L0099                           = &0099
-L00A0                           = &00A0
-L00A1                           = &00A1
-L00A2                           = &00A2
-L00A3                           = &00A3
-L00A4                           = &00A4
-L00A5                           = &00A5
-L00FF                           = &00FF
-L0100                           = &0100
-L0101                           = &0101
-L03A9                           = &03A9
-L0500                           = &0500
-L0600                           = &0600
-L0720                           = &0720
-L0721                           = &0721
-L0730                           = &0730
-L0731                           = &0731
-L0740                           = &0740
-L087F                           = &087F
-L0880                           = &0880
-L088F                           = &088F
-L0890                           = &0890
-L089F                           = &089F
-L08A0                           = &08A0
-L08A9                           = &08A9
-L08AF                           = &08AF
-L08B0                           = &08B0
-L0A00                           = &0A00
-C0B00                           = &0B00
-L0C00                           = &0C00
-L0CA9                           = &0CA9
-sub_C3000                       = &3000
-L30F1                           = &30F1
-L35F2                           = &35F2
-L35F3                           = &35F3
-L35F4                           = &35F4
-L35F5                           = &35F5
-L35F6                           = &35F6
-L801B                           = &801B
-L90E6                           = &90E6
-LA1E6                           = &A1E6
-LA2E6                           = &A2E6
-video_ula_palette               = &FE21
-user_via_t1c_l                  = &FE64
-user_via_t1c_h                  = &FE65
-user_via_t1l_l                  = &FE66
-user_via_t1l_h                  = &FE67
-user_via_acr                    = &FE6B
-user_via_ifr                    = &FE6D
-osnewl                          = &FFE7
-oswrch                          = &FFEE
-osword                          = &FFF1
-osbyte                          = &FFF4
+L0000                               = &0000
+L0001                               = &0001
+L0002                               = &0002
+L0003                               = &0003
+L0004                               = &0004
+L0005                               = &0005
+L0006                               = &0006
+L0007                               = &0007
+L0008                               = &0008
+L0009                               = &0009
+sound_on_off_flag_or_maybe_mask     = &000A
+L000B                               = &000B
+L000C                               = &000C
+L000F                               = &000F
+L0010                               = &0010
+L0011                               = &0011
+L0012                               = &0012
+L0013                               = &0013
+L0014                               = &0014
+L0015                               = &0015
+L0016                               = &0016
+L0017                               = &0017
+L0018                               = &0018
+L0019                               = &0019
+L001A                               = &001A
+L001B                               = &001B
+L001C                               = &001C
+L001D                               = &001D
+L001E                               = &001E
+L001F                               = &001F
+L0020                               = &0020
+L0021                               = &0021
+L0022                               = &0022
+L0023                               = &0023
+lives_remaining_0024_possible       = &0024
+L0025                               = &0025
+L0026                               = &0026
+L0027                               = &0027
+L0028                               = &0028
+L0029                               = &0029
+L002A                               = &002A
+L002B                               = &002B
+L002C                               = &002C
+L002D                               = &002D
+L002E                               = &002E
+keyboard_or_joystick_flag           = &002F
+L0030                               = &0030
+L0034                               = &0034
+L0038                               = &0038
+L003C                               = &003C
+L0061                               = &0061
+L0070                               = &0070
+L0072                               = &0072
+L0074                               = &0074
+L0076                               = &0076
+L0078                               = &0078
+L007A                               = &007A
+L007C                               = &007C
+L007E                               = &007E
+zero_page_80                        = &0080
+zero_page_81                        = &0081
+zero_page_82                        = &0082
+zero_page_83                        = &0083
+L0084                               = &0084
+L0085                               = &0085
+L0086                               = &0086
+L0087                               = &0087
+L0088                               = &0088
+L0089                               = &0089
+L008A                               = &008A
+L008B                               = &008B
+L008C                               = &008C
+L008F                               = &008F
+L0090                               = &0090
+L0091                               = &0091
+L0092                               = &0092
+L0093                               = &0093
+L0094                               = &0094
+L0095                               = &0095
+L0096                               = &0096
+L0097                               = &0097
+L0098                               = &0098
+L0099                               = &0099
+L00A0                               = &00A0
+L00A1                               = &00A1
+L00A2                               = &00A2
+L00A3                               = &00A3
+L00A4                               = &00A4
+L00A5                               = &00A5
+L00FF                               = &00FF
+L0100                               = &0100
+L0101                               = &0101
+L03A9                               = &03A9
+L0500                               = &0500
+L0600                               = &0600
+L0720                               = &0720
+L0721                               = &0721
+L0730                               = &0730
+L0731                               = &0731
+L0740                               = &0740
+L087F                               = &087F
+L0880                               = &0880
+L088F                               = &088F
+L0890                               = &0890
+L089F                               = &089F
+L08A0                               = &08A0
+L08A9                               = &08A9
+L08AF                               = &08AF
+L08B0                               = &08B0
+L0A00                               = &0A00
+C0B00                               = &0B00
+L0C00                               = &0C00
+L0CA9                               = &0CA9
+sub_C3000                           = &3000
+L30F1                               = &30F1
+L35F2                               = &35F2
+L35F3                               = &35F3
+L35F4                               = &35F4
+L35F5                               = &35F5
+L35F6                               = &35F6
+start_of_game_sprites_area          = &3618
+sprite_01_apple_graphic             = &3640
+sprite_02_bonus_base_graphic        = &3680
+sprite_03_extra_character_graphic   = &36C0
+sprite_04_extra_character_chomp_1   = &3700
+sprite_05_extra_character_chomp_2   = &3740
+sprite_06_cherry_graphic            = &3780
+sprite_07_center_base_graphic       = &37C0
+sprite_08_unknown                   = &3800
+sprite_09_unknown                   = &3840
+sprite_0A_unknown                   = &3880
+sprite_0B_unknown                   = &38C0
+sprite_0C_unknown                   = &3900
+sprite_0D_unknown                   = &3940
+sprite_0E_unknown                   = &3980
+sprite_0F_unknown                   = &39C0
+sprite_10_unknown                   = &3A00
+sprite_11_unknown                   = &3A40
+sprite_12_unknown                   = &3A80
+sprite_13_unknown                   = &3AC0
+sprite_14_unknown                   = &3B00
+L801B                               = &801B
+L90E6                               = &90E6
+LA1E6                               = &A1E6
+LA2E6                               = &A2E6
+video_ula_palette                   = &FE21
+user_via_t1c_l                      = &FE64
+user_via_t1c_h                      = &FE65
+user_via_t1l_l                      = &FE66
+user_via_t1l_h                      = &FE67
+user_via_acr                        = &FE6B
+user_via_ifr                        = &FE6D
+osnewl                              = &FFE7
+oswrch                              = &FFEE
+osword                              = &FFF1
+osbyte                              = &FFF4
 
     ORG &1900
 
@@ -870,13 +891,13 @@ osbyte                          = &FFF4
     TAX                                                               ; 1EB5: AA                                     .            :11B5[8]
     LDY L0021                                                         ; 1EB6: A4 21                                  .!           :11B6[8]
     LDA L0090                                                         ; 1EB8: A5 90                                  ..           :11B8[8]
-    JSR C0A73                                                         ; 1EBA: 20 73 0A                                s.          :11BA[8]
+    JSR write_sprite_to_screen_routine                                ; 1EBA: 20 73 0A                                s.          :11BA[8]
     LDA #&0C                                                          ; 1EBD: A9 0C                                  ..           :11BD[8]
     JSR C0A40                                                         ; 1EBF: 20 40 0A                                @.          :11BF[8]
     LDA L0090                                                         ; 1EC2: A5 90                                  ..           :11C2[8]
     CMP #8                                                            ; 1EC4: C9 08                                  ..           :11C4[8]
     BEQ C11CF                                                         ; 1EC6: F0 07                                  ..           :11C6[8]
-    JSR C0A73                                                         ; 1EC8: 20 73 0A                                s.          :11C8[8]
+    JSR write_sprite_to_screen_routine                                ; 1EC8: 20 73 0A                                s.          :11C8[8]
     DEC L0090                                                         ; 1ECB: C6 90                                  ..           :11CB[8]
     BPL C117B                                                         ; 1ECD: 10 AC                                  ..           :11CD[8]
 ; &1ECF referenced 1 time by &11C6
@@ -1466,7 +1487,7 @@ osbyte                          = &FFF4
     STY L0021                                                         ; 2249: 84 21                                  .!           :1549[8]
     LDX #&28 ; '('                                                    ; 224B: A2 28                                  .(           :154B[8]
     LDA #&19                                                          ; 224D: A9 19                                  ..           :154D[8]
-    JSR C0A73                                                         ; 224F: 20 73 0A                                s.          :154F[8]
+    JSR write_sprite_to_screen_routine                                ; 224F: 20 73 0A                                s.          :154F[8]
     JSR sub_C1A6C                                                     ; 2252: 20 6C 1A                                l.          :1552[8]
     JSR sub_C0A5C                                                     ; 2255: 20 5C 0A                                \.          :1555[8]
 ; &2258 referenced 1 time by &1567
@@ -2267,13 +2288,13 @@ code_to_relocate_1900 = sub_C18FF+1
     LSR A                                                             ; 277A: 4A                                     J            :1A7A[8]
     LSR A                                                             ; 277B: 4A                                     J            :1A7B[8]
     LSR A                                                             ; 277C: 4A                                     J            :1A7C[8]
-    BEQ C1A82                                                         ; 277D: F0 03                                  ..           :1A7D[8]
+    BEQ print_unknown_number_char_on_screen                           ; 277D: F0 03                                  ..           :1A7D[8]
     ORA #&30 ; '0'                                                    ; 277F: 09 30                                  .0           :1A7F[8]
 ; overlapping: BIT L09A9                                              ; 2781: 2C A9 09                               ,..          :1A81[8]
     EQUB &2C                                                          ; 2781: 2C                                     ,            :1A81[8]
 
 ; &2782 referenced 1 time by &1A7D
-.C1A82
+.print_unknown_number_char_on_screen
     LDA #9                                                            ; 2782: A9 09                                  ..           :1A82[8]
     JSR oswrch                                                        ; 2784: 20 EE FF                                ..          :1A84[8]   ; Write character 9
     LDA L0015                                                         ; 2787: A5 15                                  ..           :1A87[8]
@@ -2392,7 +2413,7 @@ code_to_relocate_1900 = sub_C18FF+1
     LSR A                                                             ; 2843: 4A                                     J            :1B43[8]
     TAX                                                               ; 2844: AA                                     .            :1B44[8]
     LDY L0093                                                         ; 2845: A4 93                                  ..           :1B45[8]
-    JSR sub_C0B46                                                     ; 2847: 20 46 0B                                F.          :1B47[8]
+    JSR set_self_modified_code_1_NOP_JSR_0B3F                         ; 2847: 20 46 0B                                F.          :1B47[8]
     DEC L0008                                                         ; 284A: C6 08                                  ..           :1B4A[8]
 ; &284C referenced 3 times by &1B37, &1B6E, &1B72
 .C1B4C
@@ -2479,12 +2500,12 @@ code_to_relocate_1900 = sub_C18FF+1
     LDA L087F,X                                                       ; 28CC: BD 7F 08                               ...          :1BCC[8]
     LSR A                                                             ; 28CF: 4A                                     J            :1BCF[8]
     TAX                                                               ; 28D0: AA                                     .            :1BD0[8]
-    JSR C0A84                                                         ; 28D1: 20 84 0A                                ..          :1BD1[8]
+    JSR possible_calculate_screen_write_address_from_x_y_coords       ; 28D1: 20 84 0A                                ..          :1BD1[8]
     INY                                                               ; 28D4: C8                                     .            :1BD4[8]
     INY                                                               ; 28D5: C8                                     .            :1BD5[8]
     PLA                                                               ; 28D6: 68                                     h            :1BD6[8]
     STA L0084                                                         ; 28D7: 85 84                                  ..           :1BD7[8]
-    JSR C0A84                                                         ; 28D9: 20 84 0A                                ..          :1BD9[8]
+    JSR possible_calculate_screen_write_address_from_x_y_coords       ; 28D9: 20 84 0A                                ..          :1BD9[8]
     PLA                                                               ; 28DC: 68                                     h            :1BDC[8]
     TAX                                                               ; 28DD: AA                                     .            :1BDD[8]
 ; &28DE referenced 1 time by &1BAC
@@ -2697,7 +2718,7 @@ code_to_relocate_1900 = sub_C18FF+1
     LSR A                                                             ; 2A2B: 4A                                     J            :1D2B[8]
     TAX                                                               ; 2A2C: AA                                     .            :1D2C[8]
     LSR L0018                                                         ; 2A2D: 46 18                                  F.           :1D2D[8]
-    JSR C0A84                                                         ; 2A2F: 20 84 0A                                ..          :1D2F[8]
+    JSR possible_calculate_screen_write_address_from_x_y_coords       ; 2A2F: 20 84 0A                                ..          :1D2F[8]
     JSR store_x18_to_0017_and_x10_to_0018                             ; 2A32: 20 50 26                                P&          :1D32[8]
     PLA                                                               ; 2A35: 68                                     h            :1D35[8]
     TAX                                                               ; 2A36: AA                                     .            :1D36[8]
@@ -2851,8 +2872,8 @@ code_to_relocate_1900 = sub_C18FF+1
     TAX                                                               ; 2B0A: AA                                     .            :1E0A[8]
 ; &2B0B referenced 5 times by &1F37, &1F3B, &1FCE, &1FD2, &251A
 .sub_C1E0B
-    LDA #1                                                            ; 2B0B: A9 01                                  ..           :1E0B[8]
-    JMP C0A73                                                         ; 2B0D: 4C 73 0A                               Ls.          :1E0D[8]
+    LDA #1                                                            ; 2B0B: A9 01                                  ..           :1E0B[8]   ; Select sprite 1 to write (apple?)
+    JMP write_sprite_to_screen_routine                                ; 2B0D: 4C 73 0A                               Ls.          :1E0D[8]
 
 ; &2B10 referenced 2 times by &1C31, &1C37
 .sub_C1E10
@@ -2881,7 +2902,7 @@ code_to_relocate_1900 = sub_C18FF+1
     STA L0085                                                         ; 2B2F: 85 85                                  ..           :1E2F[8]
     LDA #&90                                                          ; 2B31: A9 90                                  ..           :1E31[8]
     STA L0084                                                         ; 2B33: 85 84                                  ..           :1E33[8]
-    JMP C0A84                                                         ; 2B35: 4C 84 0A                               L..          :1E35[8]
+    JMP possible_calculate_screen_write_address_from_x_y_coords       ; 2B35: 4C 84 0A                               L..          :1E35[8]
 
 ; &2B38 referenced 2 times by &1C2E, &1D89
 .sub_C1E38
@@ -2899,7 +2920,7 @@ code_to_relocate_1900 = sub_C18FF+1
     STA L0085                                                         ; 2B46: 85 85                                  ..           :1E46[8]
     LDA #&B0                                                          ; 2B48: A9 B0                                  ..           :1E48[8]
     STA L0084                                                         ; 2B4A: 85 84                                  ..           :1E4A[8]
-    JSR C0A84                                                         ; 2B4C: 20 84 0A                                ..          :1E4C[8]
+    JSR possible_calculate_screen_write_address_from_x_y_coords       ; 2B4C: 20 84 0A                                ..          :1E4C[8]
     JMP store_x18_to_0017_and_x10_to_0018                             ; 2B4F: 4C 50 26                               LP&          :1E4F[8]
 
 ; &2B52 referenced 2 times by &1C8D, &1DA3
@@ -3205,16 +3226,16 @@ code_to_relocate_1900 = sub_C18FF+1
     BNE C2020                                                         ; 2CF5: D0 29                                  .)           :1FF5[8]
     LDX #&23 ; '#'                                                    ; 2CF7: A2 23                                  .#           :1FF7[8]
     LDY #&81                                                          ; 2CF9: A0 81                                  ..           :1FF9[8]
-    LDA #7                                                            ; 2CFB: A9 07                                  ..           :1FFB[8]
-    JSR C0A73                                                         ; 2CFD: 20 73 0A                                s.          :1FFD[8]
+    LDA #7                                                            ; 2CFB: A9 07                                  ..           :1FFB[8]   ; Select sprite 7 to write (center_base)
+    JSR write_sprite_to_screen_routine                                ; 2CFD: 20 73 0A                                s.          :1FFD[8]
     LDA L0012                                                         ; 2D00: A5 12                                  ..           :2000[8]
     BNE C201B                                                         ; 2D02: D0 17                                  ..           :2002[8]
     DEC L0014                                                         ; 2D04: C6 14                                  ..           :2004[8]
     BPL C2012                                                         ; 2D06: 10 0A                                  ..           :2006[8]
-    LDA #7                                                            ; 2D08: A9 07                                  ..           :2008[8]
-    JSR C0A73                                                         ; 2D0A: 20 73 0A                                s.          :200A[8]
-    LDA #2                                                            ; 2D0D: A9 02                                  ..           :200D[8]
-    JSR C0A73                                                         ; 2D0F: 20 73 0A                                s.          :200F[8]
+    LDA #7                                                            ; 2D08: A9 07                                  ..           :2008[8]   ; Select sprite 7 to write (center_base)
+    JSR write_sprite_to_screen_routine                                ; 2D0A: 20 73 0A                                s.          :200A[8]
+    LDA #2                                                            ; 2D0D: A9 02                                  ..           :200D[8]   ; Select sprite 2 to write (bonus_base_graphic)
+    JSR write_sprite_to_screen_routine                                ; 2D0F: 20 73 0A                                s.          :200F[8]
 ; &2D12 referenced 1 time by &2006
 .C2012
     LDX #&46 ; 'F'                                                    ; 2D12: A2 46                                  .F           :2012[8]
@@ -3224,7 +3245,7 @@ code_to_relocate_1900 = sub_C18FF+1
 ; &2D1B referenced 1 time by &2002
 .C201B
     LDA #&18                                                          ; 2D1B: A9 18                                  ..           :201B[8]
-    JSR C0A73                                                         ; 2D1D: 20 73 0A                                s.          :201D[8]
+    JSR write_sprite_to_screen_routine                                ; 2D1D: 20 73 0A                                s.          :201D[8]
 ; &2D20 referenced 3 times by &1FDE, &1FE9, &1FF5
 .C2020
     LDA L0029                                                         ; 2D20: A5 29                                  .)           :2020[8]
@@ -3882,7 +3903,7 @@ code_to_relocate_1900 = sub_C18FF+1
     CLC                                                               ; 30D6: 18                                     .            :23D6[8]
     ADC #8                                                            ; 30D7: 69 08                                  i.           :23D7[8]
     TAY                                                               ; 30D9: A8                                     .            :23D9[8]
-    JSR C0A84                                                         ; 30DA: 20 84 0A                                ..          :23DA[8]
+    JSR possible_calculate_screen_write_address_from_x_y_coords       ; 30DA: 20 84 0A                                ..          :23DA[8]
     JSR store_x18_to_0017_and_x10_to_0018                             ; 30DD: 20 50 26                                P&          :23DD[8]
     PLA                                                               ; 30E0: 68                                     h            :23E0[8]
     BNE C23EB                                                         ; 30E1: D0 08                                  ..           :23E1[8]
@@ -3992,7 +4013,7 @@ code_to_relocate_1900 = sub_C18FF+1
 ; &3177 referenced 2 times by &2456, &24AE
 .C2477
     LDY L0093                                                         ; 3177: A4 93                                  ..           :2477[8]
-    JMP C0A73                                                         ; 3179: 4C 73 0A                               Ls.          :2479[8]
+    JMP write_sprite_to_screen_routine                                ; 3179: 4C 73 0A                               Ls.          :2479[8]
 
 ; &317C referenced 2 times by &129D, &202A
 .sub_C247C
@@ -4237,7 +4258,7 @@ code_to_relocate_1900 = sub_C18FF+1
     LDA L0020                                                         ; 32DB: A5 20                                  .            :25DB[8]
     LSR A                                                             ; 32DD: 4A                                     J            :25DD[8]
     TAX                                                               ; 32DE: AA                                     .            :25DE[8]
-    JSR C0A84                                                         ; 32DF: 20 84 0A                                ..          :25DF[8]
+    JSR possible_calculate_screen_write_address_from_x_y_coords       ; 32DF: 20 84 0A                                ..          :25DF[8]
     JMP store_x18_to_0017_and_x10_to_0018                             ; 32E2: 4C 50 26                               LP&          :25E2[8]
 
 ; &32E5 referenced 9 times by &1031, &1050, &1681, &1FE4, &2031, &2202, &2228, &223E, &2330
@@ -4343,7 +4364,7 @@ code_to_relocate_1900 = sub_C18FF+1
     STA L0084                                                         ; 3362: 85 84                                  ..           :2662[8]
     LDA #5                                                            ; 3364: A9 05                                  ..           :2664[8]
     STA L0085                                                         ; 3366: 85 85                                  ..           :2666[8]
-    JSR C0A84                                                         ; 3368: 20 84 0A                                ..          :2668[8]
+    JSR possible_calculate_screen_write_address_from_x_y_coords       ; 3368: 20 84 0A                                ..          :2668[8]
     INX                                                               ; 336B: E8                                     .            :266B[8]
     INX                                                               ; 336C: E8                                     .            :266C[8]
     RTS                                                               ; 336D: 60                                     `            :266D[8]
@@ -4472,8 +4493,8 @@ L26CD = sub_C26CC+1
     ADC #&1E                                                          ; 3405: 69 1E                                  i.           :2705[8]
     TAX                                                               ; 3407: AA                                     .            :2707[8]
     LDY #2                                                            ; 3408: A0 02                                  ..           :2708[8]
-    LDA #3                                                            ; 340A: A9 03                                  ..           :270A[8]
-    JSR C0A73                                                         ; 340C: 20 73 0A                                s.          :270C[8]
+    LDA #3                                                            ; 340A: A9 03                                  ..           :270A[8]   ; Select sprite 3 to write (extra_character_graphic)
+    JSR write_sprite_to_screen_routine                                ; 340C: 20 73 0A                                s.          :270C[8]
     LDY #5                                                            ; 340F: A0 05                                  ..           :270F[8]
     INX                                                               ; 3411: E8                                     .            :2711[8]
     LDA #&30 ; '0'                                                    ; 3412: A9 30                                  .0           :2712[8]
@@ -4488,7 +4509,7 @@ L26CD = sub_C26CC+1
     STA L0088                                                         ; 341F: 85 88                                  ..           :271F[8]
 ; &3421 referenced 1 time by &2750
 .C2721
-    JSR sub_C0B05                                                     ; 3421: 20 05 0B                                ..          :2721[8]
+    JSR set_self_modified_code_1_NOP_JSR_0B31                         ; 3421: 20 05 0B                                ..          :2721[8]
     TXA                                                               ; 3424: 8A                                     .            :2724[8]
     PHA                                                               ; 3425: 48                                     H            :2725[8]
     LDX L0094                                                         ; 3426: A6 94                                  ..           :2726[8]
@@ -4507,7 +4528,7 @@ L26CD = sub_C26CC+1
     CLC                                                               ; 3440: 18                                     .            :2740[8]
     ADC #5                                                            ; 3441: 69 05                                  i.           :2741[8]
     TAX                                                               ; 3443: AA                                     .            :2743[8]
-    JSR sub_C0B05                                                     ; 3444: 20 05 0B                                ..          :2744[8]
+    JSR set_self_modified_code_1_NOP_JSR_0B31                         ; 3444: 20 05 0B                                ..          :2744[8]
     PLA                                                               ; 3447: 68                                     h            :2747[8]
     TAX                                                               ; 3448: AA                                     .            :2748[8]
     TYA                                                               ; 3449: 98                                     .            :2749[8]
@@ -4524,7 +4545,7 @@ L26CD = sub_C26CC+1
     STA L0088                                                         ; 3455: 85 88                                  ..           :2755[8]
 ; &3457 referenced 1 time by &2782
 .C2757
-    JSR sub_C0B05                                                     ; 3457: 20 05 0B                                ..          :2757[8]
+    JSR set_self_modified_code_1_NOP_JSR_0B31                         ; 3457: 20 05 0B                                ..          :2757[8]
     TYA                                                               ; 345A: 98                                     .            :275A[8]
     PHA                                                               ; 345B: 48                                     H            :275B[8]
     LDY L0094                                                         ; 345C: A4 94                                  ..           :275C[8]
@@ -4540,7 +4561,7 @@ L26CD = sub_C26CC+1
     CLC                                                               ; 3472: 18                                     .            :2772[8]
     ADC #&12                                                          ; 3473: 69 12                                  i.           :2773[8]
     TAY                                                               ; 3475: A8                                     .            :2775[8]
-    JSR sub_C0B05                                                     ; 3476: 20 05 0B                                ..          :2776[8]
+    JSR set_self_modified_code_1_NOP_JSR_0B31                         ; 3476: 20 05 0B                                ..          :2776[8]
     PLA                                                               ; 3479: 68                                     h            :2779[8]
     TAY                                                               ; 347A: A8                                     .            :277A[8]
     TXA                                                               ; 347B: 8A                                     .            :277B[8]
@@ -4613,158 +4634,94 @@ L26CD = sub_C26CC+1
     EQUB &83,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0   ; 3618: 83 00 00 00 00 00 00 00 00 00 00 00    ............ :2918[8]
     EQUB   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0   ; 3624: 00 00 00 00 00 00 00 00 00 00 00 00    ............ :2924[8]
     EQUB   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0   ; 3630: 00 00 00 00 00 00 00 00 00 00 00 00    ............ :2930[8]
-    EQUB   0,   0,   0,   0,   0,   0,   1,   1,   3,   3,   3,   3   ; 363C: 00 00 00 00 00 00 01 01 03 03 03 03    ............ :293C[8]
-    EQUB   5,   5,   7, &0D,   6,   3,   3,   3, &0A,   0,   3,   6   ; 3648: 05 05 07 0D 06 03 03 03 0A 00 03 06    ............ :2948[8]
-    EQUB   9,   3,   6,   6,   0,   0,   2,   2,   3,   9,   9,   9   ; 3654: 09 03 06 06 00 00 02 02 03 09 09 09    ............ :2954[8]
-    EQUB   3,   3,   3, &0B, &0B,   5,   5,   0,   3,   3,   3,   3   ; 3660: 03 03 03 0B 0B 05 05 00 03 03 03 03    ............ :2960[8]
-    EQUB &0B, &0B, &0F, &0F,   6,   3,   6,   6,   3, &0B, &0F, &0F   ; 366C: 0B 0B 0F 0F 06 03 06 06 03 0B 0F 0F    ............ :296C[8]
-    EQUB   3,   3,   9,   7,   7, &0A, &0A,   0,   0,   0,   0,   1   ; 3678: 03 03 09 07 07 0A 0A 00 00 00 00 01    ............ :2978[8]
-    EQUB   1,   5,   5,   5,   0,   0,   3,   3,   3,   3, &0F, &0F   ; 3684: 01 05 05 05 00 00 03 03 03 03 0F 0F    ............ :2984[8]
-    EQUB   0,   0,   3,   3,   3,   3, &0F, &0F,   0,   0,   0,   2   ; 3690: 00 00 03 03 03 03 0F 0F 00 00 00 02    ............ :2990[8]
-    EQUB   2, &0A, &0A, &0F, &0F, &0F, &0F, &0F,   5,   0,   0,   0   ; 369C: 02 0A 0A 0F 0F 0F 0F 0F 05 00 00 00    ............ :299C[8]
-    EQUB &0F, &0F, &0F, &0B,   3,   3,   1,   0, &1F, &1F, &2F, &2F   ; 36A8: 0F 0F 0F 0B 03 03 01 00 1F 1F 2F 2F    ..........// :29A8[8]
-    EQUB   7,   3,   1,   0, &0F, &0F, &2F, &2A,   2,   3,   3,   2   ; 36B4: 07 03 01 00 0F 0F 2F 2A 02 03 03 02    ....../*.... :29B4[8]
-    EQUB   0,   5, &0F, &1A, &1A, &1A, &1A, &1A, &0D,   5             ; 36C0: 00 05 0F 1A 1A 1A 1A 1A 0D 05          ..........   :29C0[8]
+    EQUB   0,   0,   0,   0                                           ; 363C: 00 00 00 00                            ....         :293C[8]
 ; &35F2 referenced 1 time by &1AD7
 ; &35F3 referenced 1 time by &1ADC
 ; &35F4 referenced 1 time by &1ADF
 ; &35F5 referenced 1 time by &1AE2
 ; &35F6 referenced 1 time by &1AE5
-    EQUS "000000"                                                     ; 36CA: 30 30 30 30 30 30                      000000       :29CA[8]
-    EQUB &0E, &0A                                                     ; 36D0: 0E 0A                                  ..           :29D0[8]
-    EQUS "000000"                                                     ; 36D2: 30 30 30 30 30 30                      000000       :29D2[8]
-    EQUB   0, &0A, &0F                                                ; 36D8: 00 0A 0F                               ...          :29D8[8]
-    EQUS "%%%%%"                                                      ; 36DB: 25 25 25 25 25                         %%%%%        :29DB[8]
-    EQUB &1A, &1A, &1A, &1A, &0F,   5,   0, &0C                       ; 36E0: 1A 1A 1A 1A 0F 05 00 0C                ........     :29E0[8]
-    EQUS "00000"                                                      ; 36E8: 30 30 30 30 30                         00000        :29E8[8]
-    EQUB &0F, &0F,   8                                                ; 36ED: 0F 0F 08                               ...          :29ED[8]
-    EQUS "00000"                                                      ; 36F0: 30 30 30 30 30                         00000        :29F0[8]
-    EQUB &0F, &0F,   4                                                ; 36F5: 0F 0F 04                               ...          :29F5[8]
-    EQUS "%%%%"                                                       ; 36F8: 25 25 25 25                            %%%%         :29F8[8]
-    EQUB &0F, &0A,   0, &0C,   5,   0,   5, &0C, &0C, &0C, &0C, &0C   ; 36FC: 0F 0A 00 0C 05 00 05 0C 0C 0C 0C 0C    ............ :29FC[8]
-    EQUB &0A, &0A, &0A, &0C, &0C, &18, &20,   0,   5,   0,   5, &0C   ; 3708: 0A 0A 0A 0C 0C 18 20 00 05 00 05 0C    ...... ..... :2A08[8]
-    EQUB &0C, &24, &10, &10, &0A, &0A, &0A, &0C, &0C, &0C, &0C, &0C   ; 3714: 0C 24 10 10 0A 0A 0A 0C 0C 0C 0C 0C    .$.......... :2A14[8]
-    EQUB   4,   4,   4, &0C, &0C, &0C, &0C,   4,   0,   0,   0, &20   ; 3720: 04 04 04 0C 0C 0C 0C 04 00 00 00 20    ...........  :2A20[8]
-    EQUB &18, &0C, &0C,   8, &10, &10, &10, &10, &24, &0C, &0C,   4   ; 372C: 18 0C 0C 08 10 10 10 10 24 0C 0C 04    ........$... :2A2C[8]
-    EQUB   8,   8,   8, &0C, &0C, &0C, &0C,   8,   5,   5,   5, &0C   ; 3738: 08 08 08 0C 0C 0C 0C 08 05 05 05 0C    ............ :2A38[8]
-    EQUB &0C,   4,   4, &0C, &0A,   0, &0A, &0C, &0C, &0C, &0C, &0C   ; 3744: 0C 04 04 0C 0A 00 0A 0C 0C 0C 0C 0C    ............ :2A44[8]
-    EQUB   5,   5,   5, &0C, &0C, &0C, &0C, &0C, &0A,   0, &0A, &0C   ; 3750: 05 05 05 0C 0C 0C 0C 0C 0A 00 0A 0C    ............ :2A50[8]
-    EQUB &0C,   8,   8, &0C, &18, &18, &0C, &0C,   4,   4, &0C, &0C   ; 375C: 0C 08 08 0C 18 18 0C 0C 04 04 0C 0C    ............ :2A5C[8]
-    EQUB &18, &24, &0C, &0C, &0C, &0C, &0C,   4, &24, &18, &0C, &0C   ; 3768: 18 24 0C 0C 0C 0C 0C 04 24 18 0C 0C    .$......$... :2A68[8]
-    EQUB &0C, &0C, &0C,   8, &24, &24, &0C, &0C,   8,   8, &0C, &0C   ; 3774: 0C 0C 0C 08 24 24 0C 0C 08 08 0C 0C    ....$$...... :2A74[8]
-    EQUB &C0, &C0, &C0, &C0, &C0, &C0, &C0, &C0, &C0, &C0, &C0, &C0   ; 3780: C0 C0 C0 C0 C0 C0 C0 C0 C0 C0 C0 C0    ............ :2A80[8]
-    EQUB &80, &80,   0, &15, &C0, &C0,   0, &15, &15, &2A, &2A,   0   ; 378C: 80 80 00 15 C0 C0 00 15 15 2A 2A 00    .........**. :2A8C[8]
-    EQUB &C0, &C0, &40, &40,   0                                      ; 3798: C0 C0 40 40 00                         ..@@.        :2A98[8]
-    EQUS "***"                                                        ; 379D: 2A 2A 2A                               ***          :2A9D[8]
-    EQUB &80, &80, &80,   0,   1,   1,   0, &80, &15, &2A, &2A,   3   ; 37A0: 80 80 80 00 01 01 00 80 15 2A 2A 03    .........**. :2AA0[8]
-    EQUB   2,   2,   3,   0,   0, &15, &15,   1,   3,   3,   1,   0   ; 37AC: 02 02 03 00 00 15 15 01 03 03 01 00    ............ :2AAC[8]
-    EQUB &2A,   0, &40,   0,   2,   2,   0, &40,   1,   3,   2,   2   ; 37B8: 2A 00 40 00 02 02 00 40 01 03 02 02    *.@....@.... :2AB8[8]
-    EQUB   2,   2,   3,   1,   3,   0,   0,   0,   4,   4, &24, &30   ; 37C4: 02 02 03 01 03 00 00 00 04 04 24 30    ..........$0 :2AC4[8]
-    EQUB   3,   1,   0,   8,   4,   4,   4, &18,   0,   2,   2,   3   ; 37D0: 03 01 00 08 04 04 04 18 00 02 02 03    ............ :2AD0[8]
-    EQUB   1,   1,   1,   3,   1,   1,   1,   3,   2,   3,   1,   4   ; 37DC: 01 01 01 03 01 01 01 03 02 03 01 04    ............ :2ADC[8]
-    EQUB &30, &30,   0,   0,   0,   0,   3, &0C, &30, &30,   0,   0   ; 37E8: 30 30 00 00 00 00 03 0C 30 30 00 00    00......00.. :2AE8[8]
-    EQUB   1,   1,   3,   4,   2,   2,   2,   2,   2,   0,   0, &0C   ; 37F4: 01 01 03 04 02 02 02 02 02 00 00 0C    ............ :2AF4[8]
-    EQUB   0,   0,   0,   1,   1, &2A,   0,   9,   1,   3,   9, &17   ; 3800: 00 00 00 01 01 2A 00 09 01 03 09 17    .....*...... :2B00[8]
-    EQUS ".?."                                                        ; 380C: 2E 3F 2E                               .?.          :2B0C[8]
-    EQUB &17,   2,   9,   3, &0C,   8,   8, &0C,   9,   0,   0,   0   ; 380F: 17 02 09 03 0C 08 08 0C 09 00 00 00    ............ :2B0F[8]
-    EQUB   0,   8,   8,   0,   0,   9,   0,   0                       ; 381B: 00 08 08 00 00 09 00 00                ........     :2B1B[8]
-    EQUS "++**"                                                       ; 3823: 2B 2B 2A 2A                            ++**         :2B23[8]
-    EQUB   0,   9,   1,   4,   3,   9,   0,   0,   0,   3,   3,   6   ; 3827: 00 09 01 04 03 09 00 00 00 03 03 06    ............ :2B27[8]
-    EQUB   3,   9,   3,   6, &17,   0,   0,   6,   6,   0,   0,   2   ; 3833: 03 09 03 06 17 00 00 06 06 00 00 02    ............ :2B33[8]
-    EQUB &3F,   0,   0,   0,   0,   4,   4,   0,   0,   1,   6,   3   ; 383F: 3F 00 00 00 00 04 04 00 00 01 06 03    ?........... :2B3F[8]
-    EQUB &0C,   4,   4, &0C,   6,   2,   3,   6, &2B, &1D, &3F, &1D   ; 384B: 0C 04 04 0C 06 02 03 06 2B 1D 3F 1D    ........+.?. :2B4B[8]
-    EQUB &2B,   0,   0,   0,   2,   2, &15,   0,   6,   0,   0,   9   ; 3857: 2B 00 00 00 02 02 15 00 06 00 00 09    +........... :2B57[8]
-    EQUB   9,   0,   0,   1, &3F,   3,   3,   9,   3,   6,   3,   9   ; 3863: 09 00 00 01 3F 03 03 09 03 06 03 09    ....?....... :2B63[8]
-    EQUB &2B,   6,   2,   8,   3,   6,   0,   0,   0,   6,   0,   0   ; 386F: 2B 06 02 08 03 06 00 00 00 06 00 00    +........... :2B6F[8]
-    EQUB &17, &17, &15, &15,   0,   0,   0,   0,   0,   6,   6,   6   ; 387B: 17 17 15 15 00 00 00 00 00 06 06 06    ............ :2B7B[8]
-    EQUB &17,   0,   0,   8,   8,   4,   4, &0C, &1D,   4,   1,   1   ; 3887: 17 00 00 08 08 04 04 0C 1D 04 01 01    ............ :2B87[8]
-    EQUB   1,   1,   6,   3,   3, &15, &15, &15,   1,   6,   3,   3   ; 3893: 01 01 06 03 03 15 15 15 01 06 03 03    ............ :2B93[8]
-    EQUB   8, &1D,   3,   3,   4,   1,   0,   0,   0, &3F, &3F,   0   ; 389F: 08 1D 03 03 04 01 00 00 00 3F 3F 00    .........??. :2B9F[8]
-    EQUB   0,   2, &17, &15,   0,   9,   3,   2,   8,   2,   2,   8   ; 38AB: 00 02 17 15 00 09 03 02 08 02 02 08    ............ :2BAB[8]
-    EQUB   0,   2,   2,   2,   8,   2,   2, &3F,   0,   0,   0,   0   ; 38B7: 00 02 02 02 08 02 02 3F 00 00 00 00    .......?.... :2BB7[8]
-    EQUB   1,   4,   3,   3, &1D,   0, &15, &17,   2,   0,   0, &3F   ; 38C3: 01 04 03 03 1D 00 15 17 02 00 00 3F    ...........? :2BC3[8]
-    EQUB &3F,   0,   8,   2,   2,   8,   2,   3,   9,   0, &3F,   2   ; 38CF: 3F 00 08 02 02 08 02 03 09 00 3F 02    ?.........?. :2BCF[8]
-    EQUB   2,   8,   2,   2,   2, &17,   6,   6,   6,   0,   0,   0   ; 38DB: 02 08 02 02 02 17 06 06 06 00 00 00    ............ :2BDB[8]
-    EQUB   0, &1D, &0C,   4,   4,   8,   8,   0,   0,   3,   3,   6   ; 38E7: 00 1D 0C 04 04 08 08 00 00 03 03 06    ............ :2BE7[8]
-    EQUB   1,   1,   1,   1,   4,   8,   3,   3,   6,   1, &15, &15   ; 38F3: 01 01 01 01 04 08 03 03 06 01 15 15    ............ :2BF3[8]
-    EQUB &15,   0,   0,   0,   1,   1, &2A,   0,   0,   1,   3,   9   ; 38FF: 15 00 00 00 01 01 2A 00 00 01 03 09    ......*..... :2BFF[8]
-    EQUB &17                                                          ; 390B: 17                                     .            :2C0B[8]
-    EQUS ".?."                                                        ; 390C: 2E 3F 2E                               .?.          :2C0C[8]
-    EQUB &15,   2,   9,   3, &0C,   8,   8, &0C,   2,   0,   0,   0   ; 390F: 15 02 09 03 0C 08 08 0C 02 00 00 00    ............ :2C0F[8]
-    EQUB   0,   8,   8,   0,   0,   0,   0,   0,   0,   0,   0,   0   ; 391B: 00 08 08 00 00 00 00 00 00 00 00 00    ............ :2C1B[8]
-    EQUB   0,   3,   3,   9,   3,   6,   1,   1,   1,   3,   3,   9   ; 3927: 00 03 03 09 03 06 01 01 01 03 03 09    ............ :2C27[8]
-    EQUB   3,   3,   3,   9, &3F,   0,   0,   8,   8,   0,   0,   0   ; 3933: 03 03 03 09 3F 00 00 08 08 00 00 00    ....?....... :2C33[8]
-    EQUB &2A,   0,   0,   0,   0,   4,   4,   0,   0,   1,   6,   3   ; 393F: 2A 00 00 00 00 04 04 00 00 01 06 03    *........... :2C3F[8]
-    EQUB &0C,   4,   4, &0C,   1,   2,   3,   6, &2B, &1D, &3F, &1D   ; 394B: 0C 04 04 0C 01 02 03 06 2B 1D 3F 1D    ........+.?. :2C4B[8]
-    EQUB &2A,   0,   0,   0,   2,   2, &15,   0,   0,   0,   0,   4   ; 3957: 2A 00 00 00 02 02 15 00 00 00 00 04    *........... :2C57[8]
-    EQUB   4,   0,   0,   0, &15,   3,   3,   6,   3,   3,   3,   6   ; 3963: 04 00 00 00 15 03 03 06 03 03 03 06    ............ :2C63[8]
-    EQUB &3F,   3,   3,   6,   3,   9,   2,   2,   2,   0,   0,   0   ; 396F: 3F 03 03 06 03 09 02 02 02 00 00 00    ?........... :2C6F[8]
-    EQUB   0,   0,   0,   0,   0,   0,   0,   0,   0,   6,   6,   6   ; 397B: 00 00 00 00 00 00 00 00 00 06 06 06    ............ :2C7B[8]
-    EQUB &17,   0,   0,   8,   8,   4,   4, &0C, &1D,   0,   0,   4   ; 3987: 17 00 00 08 08 04 04 0C 1D 00 00 04    ............ :2C87[8]
-    EQUB   4,   1,   6,   3,   3,   0,   0, &15, &15, &17,   3,   6   ; 3993: 04 01 06 03 03 00 00 15 15 17 03 06    ............ :2C93[8]
-    EQUB   9, &1D,   3,   3,   4,   1,   0,   0,   0, &3F, &3F,   0   ; 399F: 09 1D 03 03 04 01 00 00 00 3F 3F 00    .........??. :2C9F[8]
-    EQUB   0,   2, &17, &15,   0,   9,   3,   0,   0,   0,   0,   0   ; 39AB: 00 02 17 15 00 09 03 00 00 00 00 00    ............ :2CAB[8]
-    EQUB   0,   3,   2,   0,   0,   0,   0,   0,   0,   0,   0,   0   ; 39B7: 00 03 02 00 00 00 00 00 00 00 00 00    ............ :2CB7[8]
-    EQUB   1,   4,   3,   3, &1D,   0, &15, &17,   2,   0,   0, &3F   ; 39C3: 01 04 03 03 1D 00 15 17 02 00 00 3F    ...........? :2CC3[8]
-    EQUB &3F,   0,   0,   0,   0,   0,   0,   3,   9,   0,   0,   0   ; 39CF: 3F 00 00 00 00 00 00 03 09 00 00 00    ?........... :2CCF[8]
-    EQUB   0,   0,   0,   2,   3, &17,   6,   6,   6,   0,   0,   0   ; 39DB: 00 00 00 02 03 17 06 06 06 00 00 00    ............ :2CDB[8]
-    EQUB   0, &1D, &0C,   4,   4,   8,   8,   0,   0,   3,   3,   6   ; 39E7: 00 1D 0C 04 04 08 08 00 00 03 03 06    ............ :2CE7[8]
-    EQUB   1,   4,   4,   0,   0,   9,   6,   3, &17, &15, &15,   0   ; 39F3: 01 04 04 00 00 09 06 03 17 15 15 00    ............ :2CF3[8]
-    EQUB   0,   0,   0,   4                                           ; 39FF: 00 00 00 04                            ....         :2CFF[8]
-    EQUS "$0000"                                                      ; 3A03: 24 30 30 30 30                         $0000        :2D03[8]
-    EQUB   0, &18, &0C,   8, &18                                      ; 3A08: 00 18 0C 08 18                         .....        :2D08[8]
-    EQUS "000"                                                        ; 3A0D: 30 30 30                               000          :2D0D[8]
-    EQUB 0                                                            ; 3A10: 00                                     .            :2D10[8]
-    EQUS "0$$0000"                                                    ; 3A11: 30 24 24 30 30 30 30                   0$$0000      :2D11[8]
-    EQUB   0,   8, &0C,   8, &18                                      ; 3A18: 00 08 0C 08 18                         .....        :2D18[8]
-    EQUS "000000000"                                                  ; 3A1D: 30 30 30 30 30 30 30 30 30             000000000    :2D1D[8]
-    EQUB &10, &10, &21,   2,   2                                      ; 3A26: 10 10 21 02 02                         ..!..        :2D26[8]
-    EQUS "!00"                                                        ; 3A2B: 21 30 30                               !00          :2D2B[8]
-    EQUB &10, &10,   3,   0,   0,   3, &30, &30, &10, &10,   3,   0   ; 3A2E: 10 10 03 00 00 03 30 30 10 10 03 00    ......00.... :2D2E[8]
-    EQUB   0,   3, &30, &30, &10, &10,   0,   4, &0C,   4             ; 3A3A: 00 03 30 30 10 10 00 04 0C 04          ..00......   :2D3A[8]
-    EQUS "$000"                                                       ; 3A44: 24 30 30 30                            $000         :2D44[8]
-    EQUB   0, &30, &18, &18                                           ; 3A48: 00 30 18 18                            .0..         :2D48[8]
-    EQUS "0000"                                                       ; 3A4C: 30 30 30 30                            0000         :2D4C[8]
-    EQUB   0, &24, &0C,   4                                           ; 3A50: 00 24 0C 04                            .$..         :2D50[8]
-    EQUS "$000"                                                       ; 3A54: 24 30 30 30                            $000         :2D54[8]
-    EQUB   0,   0,   8, &18                                           ; 3A58: 00 00 08 18                            ....         :2D58[8]
-    EQUS "0000"                                                       ; 3A5C: 30 30 30 30                            0000         :2D5C[8]
-    EQUB 3, 0, 0, 3                                                   ; 3A60: 03 00 00 03                            ....         :2D60[8]
-    EQUS "00  "                                                       ; 3A64: 30 30 20 20                            00           :2D64[8]
-    EQUB 3, 0, 0, 3                                                   ; 3A68: 03 00 00 03                            ....         :2D68[8]
-    EQUS "00  "                                                       ; 3A6C: 30 30 20 20                            00           :2D6C[8]
-    EQUB &12,   1,   1, &12                                           ; 3A70: 12 01 01 12                            ....         :2D70[8]
-    EQUS "00  000000  "                                               ; 3A74: 30 30 20 20 30 30 30 30 30 30 20 20    00  000000   :2D74[8]
-    EQUB   0,   8,   8, &0C, &0C, &10, &10,   8                       ; 3A80: 00 08 08 0C 0C 10 10 08                ........     :2D80[8]
-    EQUS "!!!!!!!!"                                                   ; 3A88: 21 21 21 21 21 21 21 21                !!!!!!!!     :2D88[8]
-    EQUB 1, 1, 1, 1, 1, 1, 1, 1                                       ; 3A90: 01 01 01 01 01 01 01 01                ........     :2D90[8]
-    EQUS "00  00  "                                                   ; 3A98: 30 30 20 20 30 30 20 20                00  00       :2D98[8]
-    EQUB   8, &0C, &0C, &30, &10, &10,   0,   0                       ; 3AA0: 08 0C 0C 30 10 10 00 00                ...0....     :2DA0[8]
-    EQUS "!!!0000"                                                    ; 3AA8: 21 21 21 30 30 30 30                   !!!0000      :2DA8[8]
-    EQUB   0,   1,   1,   1, &12                                      ; 3AAF: 00 01 01 01 12                         .....        :2DAF[8]
-    EQUS "000"                                                        ; 3AB4: 30 30 30                               000          :2DB4[8]
-    EQUB 0                                                            ; 3AB7: 00                                     .            :2DB7[8]
-    EQUS "00  00 "                                                    ; 3AB8: 30 30 20 20 30 30 20                   00  00       :2DB8[8]
-    EQUB   0,   0,   0, &10, &10, &30, &0C, &0C,   8,   0             ; 3ABF: 00 00 00 10 10 30 0C 0C 08 00          .....0....   :2DBF[8]
-    EQUS "0000!!!"                                                    ; 3AC9: 30 30 30 30 21 21 21                   0000!!!      :2DC9[8]
-    EQUB 0                                                            ; 3AD0: 00                                     .            :2DD0[8]
-    EQUS "000"                                                        ; 3AD1: 30 30 30                               000          :2DD1[8]
-    EQUB &12,   1,   1,   1,   0                                      ; 3AD4: 12 01 01 01 00                         .....        :2DD4[8]
-    EQUS " 00  00"                                                    ; 3AD9: 20 30 30 20 20 30 30                    00  00      :2DD9[8]
-    EQUB   8, &10, &10, &0C, &0C,   8,   8,   0                       ; 3AE0: 08 10 10 0C 0C 08 08 00                ........     :2DE0[8]
-    EQUS "!!!!!!!!"                                                   ; 3AE8: 21 21 21 21 21 21 21 21                !!!!!!!!     :2DE8[8]
-    EQUB 1, 1, 1, 1, 1, 1, 1, 1                                       ; 3AF0: 01 01 01 01 01 01 01 01                ........     :2DF0[8]
-    EQUS "  00  00"                                                   ; 3AF8: 20 20 30 30 20 20 30 30                  00  00     :2DF8[8]
-    EQUB   0,   0,   4,   4,   5,   5,   5, &0F, &0C, &18, &18, &30   ; 3B00: 00 00 04 04 05 05 05 0F 0C 18 18 30    ...........0 :2E00[8]
-    EQUB &24, &0C, &2C, &0E                                           ; 3B0C: 24 0C 2C 0E                            $.,.         :2E0C[8]
-    EQUS " 0$"                                                        ; 3B10: 20 30 24                                0$          :2E10[8]
-    EQUB &1C,   8, &0C, &30, &24,   0,   0,   8, &2C, &2C, &0C, &20   ; 3B13: 1C 08 0C 30 24 00 00 08 2C 2C 0C 20    ...0$...,,.  :2E13[8]
-    EQUB   8,   0,   0,   5, &0F,   0,   5, &0F,   0, &0E, &0E, &2C   ; 3B1F: 08 00 00 05 0F 00 05 0F 00 0E 0E 2C    ..........., :2E1F[8]
-    EQUB &1A, &38, &38, &1E, &0F, &18, &30, &0C                       ; 3B2B: 1A 38 38 1E 0F 18 30 0C                .88...0.     :2E2B[8]
-    EQUS "0( ("                                                       ; 3B33: 30 28 20 28                            0( (         :2E33[8]
-    EQUB &0C, &20, &20,   8, &0C,   4,   4,   0,   8,   0,   0,   4   ; 3B37: 0C 20 20 08 0C 04 04 00 08 00 00 04    .  ......... :2E37[8]
-    EQUB &1C, &1C, &0C, &10,   4, &10, &30, &18, &2C,   4, &0C, &30   ; 3B43: 1C 1C 0C 10 04 10 30 18 2C 04 0C 30    ......0.,..0 :2E43[8]
-    EQUB &18, &0C                                                     ; 3B4F: 18 0C                                  ..           :2E4F[8]
+    EQUW     0, &0101, &0303, &0303, &0505, &0D07, &0306, &0303       ; 3640: 00 00 01 01 03 03 03 03 05 05 07 0D... ............ :2940[8]
+    EQUW &000A, &0603, &0309, &0606,     0, &0202, &0903, &0909       ; 3650: 0A 00 03 06 09 03 06 06 00 00 02 02... ............ :2950[8]
+    EQUW &0303, &0B03, &050B,     5, &0303, &0303, &0B0B, &0F0F       ; 3660: 03 03 03 0B 0B 05 05 00 03 03 03 03... ............ :2960[8]
+    EQUW &0306, &0606, &0B03, &0F0F, &0303, &0709, &0A07, &000A       ; 3670: 06 03 06 06 03 0B 0F 0F 03 03 09 07... ............ :2970[8]
+    EQUW     0, &0100, &0501, &0505,     0, &0303, &0303, &0F0F       ; 3680: 00 00 00 01 01 05 05 05 00 00 03 03... ............ :2980[8]
+    EQUW     0, &0303, &0303, &0F0F,     0, &0200, &0A02, &0F0A       ; 3690: 00 00 03 03 03 03 0F 0F 00 00 00 02... ............ :2990[8]
+    EQUW &0F0F, &0F0F,     5,     0, &0F0F, &0B0F, &0303,     1       ; 36A0: 0F 0F 0F 0F 05 00 00 00 0F 0F 0F 0B... ............ :29A0[8]
+    EQUW &1F1F, &2F2F, &0307,     1, &0F0F, &2A2F, &0302, &0203       ; 36B0: 1F 1F 2F 2F 07 03 01 00 0F 0F 2F 2A... ..//....../* :29B0[8]
+    EQUW &0500, &1A0F, &1A1A, &1A1A, &050D, &3030, &3030, &3030       ; 36C0: 00 05 0F 1A 1A 1A 1A 1A 0D 05 30 30... ..........00 :29C0[8]
+    EQUW &0A0E, &3030, &3030, &3030, &0A00, &250F, &2525, &2525       ; 36D0: 0E 0A 30 30 30 30 30 30 00 0A 0F 25... ..000000...% :29D0[8]
+    EQUW &1A1A, &1A1A, &050F, &0C00, &3030, &3030, &0F30, &080F       ; 36E0: 1A 1A 1A 1A 0F 05 00 0C 30 30 30 30... ........0000 :29E0[8]
+    EQUW &3030, &3030, &0F30, &040F, &2525, &2525, &0A0F, &0C00       ; 36F0: 30 30 30 30 30 0F 0F 04 25 25 25 25... 00000...%%%% :29F0[8]
+    EQUW     5, &0C05, &0C0C, &0C0C, &0A0A, &0C0A, &180C, &0020       ; 3700: 05 00 05 0C 0C 0C 0C 0C 0A 0A 0A 0C... ............ :2A00[8]
+    EQUW     5, &0C05, &240C, &1010, &0A0A, &0C0A, &0C0C, &0C0C       ; 3710: 05 00 05 0C 0C 24 10 10 0A 0A 0A 0C... .....$...... :2A10[8]
+    EQUW &0404, &0C04, &0C0C, &040C,     0, &2000, &0C18, &080C       ; 3720: 04 04 04 0C 0C 0C 0C 04 00 00 00 20... ...........  :2A20[8]
+    EQUW &1010, &1010, &0C24, &040C, &0808, &0C08, &0C0C, &080C       ; 3730: 10 10 10 10 24 0C 0C 04 08 08 08 0C... ....$....... :2A30[8]
+    EQUW &0505, &0C05, &040C, &0C04, &000A, &0C0A, &0C0C, &0C0C       ; 3740: 05 05 05 0C 0C 04 04 0C 0A 00 0A 0C... ............ :2A40[8]
+    EQUW &0505, &0C05, &0C0C, &0C0C, &000A, &0C0A, &080C, &0C08       ; 3750: 05 05 05 0C 0C 0C 0C 0C 0A 00 0A 0C... ............ :2A50[8]
+    EQUW &1818, &0C0C, &0404, &0C0C, &2418, &0C0C, &0C0C, &040C       ; 3760: 18 18 0C 0C 04 04 0C 0C 18 24 0C 0C... .........$.. :2A60[8]
+    EQUW &1824, &0C0C, &0C0C, &080C, &2424, &0C0C, &0808, &0C0C       ; 3770: 24 18 0C 0C 0C 0C 0C 08 24 24 0C 0C... $.......$$.. :2A70[8]
+    EQUW &C0C0, &C0C0, &C0C0, &C0C0, &C0C0, &C0C0, &8080, &1500       ; 3780: C0 C0 C0 C0 C0 C0 C0 C0 C0 C0 C0 C0... ............ :2A80[8]
+    EQUW &C0C0, &1500, &2A15, &002A, &C0C0, &4040, &2A00, &2A2A       ; 3790: C0 C0 00 15 15 2A 2A 00 C0 C0 40 40... .....**...@@ :2A90[8]
+    EQUW &8080, &0080, &0101, &8000, &2A15, &032A, &0202,     3       ; 37A0: 80 80 80 00 01 01 00 80 15 2A 2A 03... .........**. :2AA0[8]
+    EQUW &1500, &0115, &0303,     1, &002A, &0040, &0202, &4000       ; 37B0: 00 15 15 01 03 03 01 00 2A 00 40 00... ........*.@. :2AB0[8]
+    EQUW &0301, &0202, &0202, &0103,     3,     0, &0404, &3024       ; 37C0: 01 03 02 02 02 02 03 01 03 00 00 00... ............ :2AC0[8]
+    EQUW &0103, &0800, &0404, &1804, &0200, &0302, &0101, &0301       ; 37D0: 03 01 00 08 04 04 04 18 00 02 02 03... ............ :2AD0[8]
+    EQUW &0101, &0301, &0302, &0401, &3030,     0,     0, &0C03       ; 37E0: 01 01 01 03 02 03 01 04 30 30 00 00... ........00.. :2AE0[8]
+    EQUW &3030,     0, &0101, &0403, &0202, &0202,     2, &0C00       ; 37F0: 30 30 00 00 01 01 03 04 02 02 02 02... 00.......... :2AF0[8]
+    EQUW     0, &0100, &2A01, &0900, &0301, &1709, &3F2E, &172E       ; 3800: 00 00 00 01 01 2A 00 09 01 03 09 17... .....*...... :2B00[8]
+    EQUW &0902, &0C03, &0808, &090C,     0,     0, &0808,     0       ; 3810: 02 09 03 0C 08 08 0C 09 00 00 00 00... ............ :2B10[8]
+    EQUW     9, &2B00, &2A2B, &002A, &0109, &0304,     9,     0       ; 3820: 09 00 00 2B 2B 2A 2A 00 09 01 04 03... ...++**..... :2B20[8]
+    EQUW &0303, &0306, &0309, &1706,     0, &0606,     0, &3F02       ; 3830: 03 03 06 03 09 03 06 17 00 00 06 06... ............ :2B30[8]
+    EQUW     0,     0, &0404,     0, &0601, &0C03, &0404, &060C       ; 3840: 00 00 00 00 04 04 00 00 01 06 03 0C... ............ :2B40[8]
+    EQUW &0302, &2B06, &3F1D, &2B1D,     0, &0200, &1502, &0600       ; 3850: 02 03 06 2B 1D 3F 1D 2B 00 00 00 02... ...+.?.+.... :2B50[8]
+    EQUW     0, &0909,     0, &3F01, &0303, &0309, &0306, &2B09       ; 3860: 00 00 09 09 00 00 01 3F 03 03 09 03... .......?.... :2B60[8]
+    EQUW &0206, &0308,     6,     0,     6, &1700, &1517, &0015       ; 3870: 06 02 08 03 06 00 00 00 06 00 00 17... ............ :2B70[8]
+    EQUW     0,     0, &0606, &1706,     0, &0808, &0404, &1D0C       ; 3880: 00 00 00 00 06 06 06 17 00 00 08 08... ............ :2B80[8]
+    EQUW &0104, &0101, &0601, &0303, &1515, &0115, &0306, &0803       ; 3890: 04 01 01 01 01 06 03 03 15 15 15 01... ............ :2B90[8]
+    EQUW &031D, &0403,     1,     0, &3F3F,     0, &1702, &0015       ; 38A0: 1D 03 03 04 01 00 00 00 3F 3F 00 00... ........??.. :2BA0[8]
+    EQUW &0309, &0802, &0202,     8, &0202, &0802, &0202, &003F       ; 38B0: 09 03 02 08 02 02 08 00 02 02 02 08... ............ :2BB0[8]
+    EQUW     0, &0100, &0304, &1D03, &1500, &0217,     0, &3F3F       ; 38C0: 00 00 00 01 04 03 03 1D 00 15 17 02... ............ :2BC0[8]
+    EQUW &0800, &0202, &0208, &0903, &3F00, &0202, &0208, &0202       ; 38D0: 00 08 02 02 08 02 03 09 00 3F 02 02... .........?.. :2BD0[8]
+    EQUW &0617, &0606,     0,     0, &0C1D, &0404, &0808,     0       ; 38E0: 17 06 06 06 00 00 00 00 1D 0C 04 04... ............ :2BE0[8]
+    EQUW &0303, &0106, &0101, &0401, &0308, &0603, &1501, &1515       ; 38F0: 03 03 06 01 01 01 01 04 08 03 03 06... ............ :2BF0[8]
+    EQUW     0, &0100, &2A01,     0, &0301, &1709, &3F2E, &152E       ; 3900: 00 00 00 01 01 2A 00 00 01 03 09 17... .....*...... :2C00[8]
+    EQUW &0902, &0C03, &0808, &020C,     0,     0, &0808,     0       ; 3910: 02 09 03 0C 08 08 0C 02 00 00 00 00... ............ :2C10[8]
+    EQUW     0,     0,     0,     0, &0303, &0309, &0106, &0101       ; 3920: 00 00 00 00 00 00 00 00 03 03 09 03... ............ :2C20[8]
+    EQUW &0303, &0309, &0303, &3F09,     0, &0808,     0, &2A00       ; 3930: 03 03 09 03 03 03 09 3F 00 00 08 08... .......?.... :2C30[8]
+    EQUW     0,     0, &0404,     0, &0601, &0C03, &0404, &010C       ; 3940: 00 00 00 00 04 04 00 00 01 06 03 0C... ............ :2C40[8]
+    EQUW &0302, &2B06, &3F1D, &2A1D,     0, &0200, &1502,     0       ; 3950: 02 03 06 2B 1D 3F 1D 2A 00 00 00 02... ...+.?.*.... :2C50[8]
+    EQUW     0, &0404,     0, &1500, &0303, &0306, &0303, &3F06       ; 3960: 00 00 04 04 00 00 00 15 03 03 06 03... ............ :2C60[8]
+    EQUW &0303, &0306, &0209, &0202,     0,     0,     0,     0       ; 3970: 03 03 06 03 09 02 02 02 00 00 00 00... ............ :2C70[8]
+    EQUW     0,     0, &0606, &1706,     0, &0808, &0404, &1D0C       ; 3980: 00 00 00 00 06 06 06 17 00 00 08 08... ............ :2C80[8]
+    EQUW     0, &0404, &0601, &0303,     0, &1515, &0317, &0906       ; 3990: 00 00 04 04 01 06 03 03 00 00 15 15... ............ :2C90[8]
+    EQUW &031D, &0403,     1,     0, &3F3F,     0, &1702, &0015       ; 39A0: 1D 03 03 04 01 00 00 00 3F 3F 00 00... ........??.. :2CA0[8]
+    EQUW &0309,     0,     0,     0, &0203,     0,     0,     0       ; 39B0: 09 03 00 00 00 00 00 00 03 02 00 00... ............ :2CB0[8]
+    EQUW     0, &0100, &0304, &1D03, &1500, &0217,     0, &3F3F       ; 39C0: 00 00 00 01 04 03 03 1D 00 15 17 02... ............ :2CC0[8]
+    EQUW     0,     0,     0, &0903,     0,     0,     0, &0302       ; 39D0: 00 00 00 00 00 00 03 09 00 00 00 00... ............ :2CD0[8]
+    EQUW &0617, &0606,     0,     0, &0C1D, &0404, &0808,     0       ; 39E0: 17 06 06 06 00 00 00 00 1D 0C 04 04... ............ :2CE0[8]
+    EQUW &0303, &0106, &0404,     0, &0609, &1703, &1515,     0       ; 39F0: 03 03 06 01 04 04 00 00 09 06 03 17... ............ :2CF0[8]
+    EQUW     0, &2404, &3030, &3030, &1800, &080C, &3018, &3030       ; 3A00: 00 00 04 24 30 30 30 30 00 18 0C 08... ...$0000.... :2D00[8]
+    EQUW &3000, &2424, &3030, &3030, &0800, &080C, &3018, &3030       ; 3A10: 00 30 24 24 30 30 30 30 00 08 0C 08... .0$$0000.... :2D10[8]
+    EQUW &3030, &3030, &3030, &1010, &0221, &2102, &3030, &1010       ; 3A20: 30 30 30 30 30 30 10 10 21 02 02 21... 000000..!..! :2D20[8]
+    EQUW     3, &0300, &3030, &1010,     3, &0300, &3030, &1010       ; 3A30: 03 00 00 03 30 30 10 10 03 00 00 03... ....00...... :2D30[8]
+    EQUW &0400, &040C, &3024, &3030, &3000, &1818, &3030, &3030       ; 3A40: 00 04 0C 04 24 30 30 30 00 30 18 18... ....$000.0.. :2D40[8]
+    EQUW &2400, &040C, &3024, &3030,     0, &1808, &3030, &3030       ; 3A50: 00 24 0C 04 24 30 30 30 00 00 08 18... .$..$000.... :2D50[8]
+    EQUW     3, &0300, &3030, &2020,     3, &0300, &3030, &2020       ; 3A60: 03 00 00 03 30 30 20 20 03 00 00 03... ....00  .... :2D60[8]
+    EQUW &0112, &1201, &3030, &2020, &3030, &3030, &3030, &2020       ; 3A70: 12 01 01 12 30 30 20 20 30 30 30 30... ....00  0000 :2D70[8]
+    EQUW &0800, &0C08, &100C, &0810, &2121, &2121, &2121, &2121       ; 3A80: 00 08 08 0C 0C 10 10 08 21 21 21 21... ........!!!! :2D80[8]
+    EQUW &0101, &0101, &0101, &0101, &3030, &2020, &3030, &2020       ; 3A90: 01 01 01 01 01 01 01 01 30 30 20 20... ........00   :2D90[8]
+    EQUW &0C08, &300C, &1010,     0, &2121, &3021, &3030, &0030       ; 3AA0: 08 0C 0C 30 10 10 00 00 21 21 21 30... ...0....!!!0 :2DA0[8]
+    EQUW &0101, &1201, &3030, &0030, &3030, &2020, &3030, &0020       ; 3AB0: 01 01 01 12 30 30 30 00 30 30 20 20... ....000.00   :2DB0[8]
+    EQUW     0, &1010, &0C30, &080C, &3000, &3030, &2130, &2121       ; 3AC0: 00 00 10 10 30 0C 0C 08 00 30 30 30... ....0....000 :2DC0[8]
+    EQUW &3000, &3030, &0112, &0101, &2000, &3030, &2020, &3030       ; 3AD0: 00 30 30 30 12 01 01 01 00 20 30 30... .000..... 00 :2DD0[8]
+    EQUW &1008, &0C10, &080C,     8, &2121, &2121, &2121, &2121       ; 3AE0: 08 10 10 0C 0C 08 08 00 21 21 21 21... ........!!!! :2DE0[8]
+    EQUW &0101, &0101, &0101, &0101, &2020, &3030, &2020, &3030       ; 3AF0: 01 01 01 01 01 01 01 01 20 20 30 30... ........  00 :2DF0[8]
+    EQUW     0, &0404, &0505, &0F05, &180C, &3018, &0C24, &0E2C       ; 3B00: 00 00 04 04 05 05 05 0F 0C 18 18 30... ...........0 :2E00[8]
+    EQUW &3020, &1C24, &0C08, &2430,     0, &2C08, &0C2C, &0820       ; 3B10: 20 30 24 1C 08 0C 30 24 00 00 08 2C...  0$...0$..., :2E10[8]
+    EQUW     0, &0F05, &0500, &000F, &0E0E, &1A2C, &3838, &0F1E       ; 3B20: 00 00 05 0F 00 05 0F 00 0E 0E 2C 1A... ..........,. :2E20[8]
+    EQUW &3018, &300C, &2028, &0C28, &2020, &0C08, &0404, &0800       ; 3B30: 18 30 0C 30 28 20 28 0C 20 20 08 0C... .0.0( (.  .. :2E30[8]
+    EQUB   0,   0,   4, &1C, &1C, &0C, &10,   4, &10, &30, &18, &2C   ; 3B40: 00 00 04 1C 1C 0C 10 04 10 30 18 2C    .........0., :2E40[8]
+    EQUB   4, &0C, &30, &18, &0C                                      ; 3B4C: 04 0C 30 18 0C                         ..0..        :2E4C[8]
     EQUS "$$0"                                                        ; 3B51: 24 24 30                               $$0          :2E51[8]
     EQUB &18, &0C, &1C, &0D,   0,   0,   8,   8, &0A, &0A, &0A, &0F   ; 3B54: 18 0C 1C 0D 00 00 08 08 0A 0A 0A 0F    ............ :2E54[8]
     EQUB &10, &10,   4, &0C,   8,   8,   0,   4, &24, &30, &0C, &30   ; 3B60: 10 10 04 0C 08 08 00 04 24 30 0C 30    ........$0.0 :2E60[8]
@@ -5245,11 +5202,11 @@ L09A9 = sub_C09A8+1
 .sub_C0A52
     LDX #&23 ; '#'                                                    ; 4152: A2 23                                  .#           :0A52[2]
     LDY #&81                                                          ; 4154: A0 81                                  ..           :0A54[2]
-    BNE C0A73                                                         ; 4156: D0 1B                                  ..           :0A56[2]
+    BNE write_sprite_to_screen_routine                                ; 4156: D0 1B                                  ..           :0A56[2]
 ; &4158 referenced 4 times by &11DB, &1240, &15D0, &1A9D
 .sub_C0A58
-    LDA #8                                                            ; 4158: A9 08                                  ..           :0A58[2]
-    BNE C0A73                                                         ; 415A: D0 17                                  ..           :0A5A[2]
+    LDA #8                                                            ; 4158: A9 08                                  ..           :0A58[2]   ; Select sprite 8 to write (???)
+    BNE write_sprite_to_screen_routine                                ; 415A: D0 17                                  ..           :0A5A[2]
 ; &415C referenced 11 times by &10D3, &1174, &13F3, &1404, &147E, &14BA, &14DB, &1555, &1558, &155D, &1CB1
 .sub_C0A5C
     LDA L001B                                                         ; 415C: A5 1B                                  ..           :0A5C[2]
@@ -5268,8 +5225,8 @@ L09A9 = sub_C09A8+1
     ORA L0022                                                         ; 416F: 05 22                                  ."           :0A6F[2]
     ORA #8                                                            ; 4171: 09 08                                  ..           :0A71[2]
 ; &4173 referenced 13 times by &0A56, &0A5A, &0B1B, &11BA, &11C8, &154F, &1E0D, &1FFD, &200A, &200F, &201D, &2479, &270C
-.C0A73
-    LSR A                                                             ; 4173: 4A                                     J            :0A73[2]
+.write_sprite_to_screen_routine
+    LSR A                                                             ; 4173: 4A                                     J            :0A73[2]   ; A = sprite number. following code block calculates sprite source address and stores in zp84,85, x and y appear to be screen coordinates, screen memory address stored in zp 80-81
     STA L0085                                                         ; 4174: 85 85                                  ..           :0A74[2]
     LDA #0                                                            ; 4176: A9 00                                  ..           :0A76[2]
     ROR A                                                             ; 4178: 6A                                     j            :0A78[2]
@@ -5280,7 +5237,7 @@ L09A9 = sub_C09A8+1
     ADC #&29 ; ')'                                                    ; 4180: 69 29                                  i)           :0A80[2]
     STA L0085                                                         ; 4182: 85 85                                  ..           :0A82[2]
 ; &4184 referenced 9 times by &0B74, &1BD1, &1BD9, &1D2F, &1E35, &1E4C, &23DA, &25DF, &2668
-.C0A84
+.possible_calculate_screen_write_address_from_x_y_coords
     JSR sub_C0AD3                                                     ; 4184: 20 D3 0A                                ..          :0A84[2]
     STX L0089                                                         ; 4187: 86 89                                  ..           :0A87[2]
     STY L008A                                                         ; 4189: 84 8A                                  ..           :0A89[2]
@@ -5289,23 +5246,23 @@ L09A9 = sub_C09A8+1
 .C0A8D
     LDY L0017                                                         ; 418D: A4 17                                  ..           :0A8D[2]
 ; &418F referenced 1 time by &0A9A
-.loop_C0A8F
+.write_sprite_to_screen_memory
     LDA (L0084),Y                                                     ; 418F: B1 84                                  ..           :0A8F[2]
 ; &4191 referenced 3 times by &0B11, &0B20, &0B62
-.C0A91
-L0A92 = C0A91+1
+.self_modified_code_1_1
+self_modified_code_1_2 = self_modified_code_1_1+1
     EOR (zero_page_80),Y                                              ; 4191: 51 80                                  Q.           :0A91[2]
 ; &4192 referenced 3 times by &0B16, &0B25, &0B67
 ; &4193 referenced 4 times by &0B07, &0B2D, &0B48, &0B6C
-.C0A93
-L0A94 = C0A93+1
-    STA (zero_page_80),Y                                              ; 4193: 91 80                                  ..           :0A93[2]
+.self_modified_code_1_3
+self_modified_code_1_4 = self_modified_code_1_3+1
+    STA (zero_page_80),Y                                              ; 4193: 91 80                                  ..           :0A93[2]   ; zp 80 writes to screen memory (print sprite)
 ; &4194 referenced 3 times by &0B0C, &0B28, &0B71
     TYA                                                               ; 4195: 98                                     .            :0A95[2]
     SEC                                                               ; 4196: 38                                     8            :0A96[2]
     SBC #8                                                            ; 4197: E9 08                                  ..           :0A97[2]
     TAY                                                               ; 4199: A8                                     .            :0A99[2]
-    BPL loop_C0A8F                                                    ; 419A: 10 F3                                  ..           :0A9A[2]
+    BPL write_sprite_to_screen_memory                                 ; 419A: 10 F3                                  ..           :0A9A[2]
     DEX                                                               ; 419C: CA                                     .            :0A9C[2]
     BEQ C0ACE                                                         ; 419D: F0 2F                                  ./           :0A9D[2]
     INC L0084                                                         ; 419F: E6 84                                  ..           :0A9F[2]
@@ -5394,41 +5351,52 @@ L0A94 = C0A93+1
     RTS                                                               ; 4204: 60                                     `            :0B04[3]
 
 ; &4205 referenced 4 times by &2721, &2744, &2757, &2776
-.sub_C0B05
+.set_self_modified_code_1_NOP_JSR_0B31
     LDA #&31 ; '1'                                                    ; 4205: A9 31                                  .1           :0B05[3]
-    STA C0A93                                                         ; 4207: 8D 93 0A                               ...          :0B07[3]
+    STA self_modified_code_1_3                                        ; 4207: 8D 93 0A                               ...          :0B07[3]
     LDA #&0B                                                          ; 420A: A9 0B                                  ..           :0B0A[3]
 ; &420C referenced 1 time by &0B4D
-.C0B0C
-    STA L0A94                                                         ; 420C: 8D 94 0A                               ...          :0B0C[3]
+.set_self_modified_code_1_NOP_JSRabs
+    STA self_modified_code_1_4                                        ; 420C: 8D 94 0A                               ...          :0B0C[3]
     LDA #&EA                                                          ; 420F: A9 EA                                  ..           :0B0F[3]
-    STA C0A91                                                         ; 4211: 8D 91 0A                               ...          :0B11[3]
+    STA self_modified_code_1_1                                        ; 4211: 8D 91 0A                               ...          :0B11[3]
     LDA #&20 ; ' '                                                    ; 4214: A9 20                                  .            :0B14[3]
-    STA L0A92                                                         ; 4216: 8D 92 0A                               ...          :0B16[3]
-    LDA #6                                                            ; 4219: A9 06                                  ..           :0B19[3]
-    JSR C0A73                                                         ; 421B: 20 73 0A                                s.          :0B1B[3]
+    STA self_modified_code_1_2                                        ; 4216: 8D 92 0A                               ...          :0B16[3]
+    LDA #6                                                            ; 4219: A9 06                                  ..           :0B19[3]   ; Select sprite 6 to write (cherry)
+    JSR write_sprite_to_screen_routine                                ; 421B: 20 73 0A                                s.          :0B1B[3]
 ; &421E referenced 1 time by &0B7A
-.C0B1E
+.restore_self_modified_code_eor_zp80
     LDA #&51 ; 'Q'                                                    ; 421E: A9 51                                  .Q           :0B1E[3]
-    STA C0A91                                                         ; 4220: 8D 91 0A                               ...          :0B20[3]
+    STA self_modified_code_1_1                                        ; 4220: 8D 91 0A                               ...          :0B20[3]
     LDA #&80                                                          ; 4223: A9 80                                  ..           :0B23[3]
-    STA L0A92                                                         ; 4225: 8D 92 0A                               ...          :0B25[3]
-    STA L0A94                                                         ; 4228: 8D 94 0A                               ...          :0B28[3]
+    STA self_modified_code_1_2                                        ; 4225: 8D 92 0A                               ...          :0B25[3]
+    STA self_modified_code_1_4                                        ; 4228: 8D 94 0A                               ...          :0B28[3]
     LDA #&91                                                          ; 422B: A9 91                                  ..           :0B2B[3]
-    STA C0A93                                                         ; 422D: 8D 93 0A                               ...          :0B2D[3]
+    STA self_modified_code_1_3                                        ; 422D: 8D 93 0A                               ...          :0B2D[3]
     RTS                                                               ; 4230: 60                                     `            :0B30[3]
 
-    EQUB &48, &29, &C0, &85, &87, &4A, &4A,   5, &87, &31, &80, &91   ; 4231: 48 29 C0 85 87 4A 4A 05 87 31 80 91    H)...JJ..1.. :0B31[3]
-    EQUB &80                                                          ; 423D: 80                                     .            :0B3D[3]
-    EQUS "h)?Q"                                                       ; 423E: 68 29 3F 51                            h)?Q         :0B3E[3]
-    EQUB &80, &91, &80, &60                                           ; 4242: 80 91 80 60                            ...`         :0B42[3]
+.unknown_mod_1
+    PHA                                                               ; 4231: 48                                     H            :0B31[3]
+    AND #&C0                                                          ; 4232: 29 C0                                  ).           :0B32[3]
+    STA L0087                                                         ; 4234: 85 87                                  ..           :0B34[3]
+    LSR A                                                             ; 4236: 4A                                     J            :0B36[3]
+    LSR A                                                             ; 4237: 4A                                     J            :0B37[3]
+    ORA L0087                                                         ; 4238: 05 87                                  ..           :0B38[3]
+    AND (zero_page_80),Y                                              ; 423A: 31 80                                  1.           :0B3A[3]
+    STA (zero_page_80),Y                                              ; 423C: 91 80                                  ..           :0B3C[3]   ; zp 80 writes to screen memory (print sprite)
+    PLA                                                               ; 423E: 68                                     h            :0B3E[3]
+.unknown_mod_2
+    AND #&3F ; '?'                                                    ; 423F: 29 3F                                  )?           :0B3F[3]
+    EOR (zero_page_80),Y                                              ; 4241: 51 80                                  Q.           :0B41[3]
+    STA (zero_page_80),Y                                              ; 4243: 91 80                                  ..           :0B43[3]   ; zp 80 writes to screen memory (print sprite)
+    RTS                                                               ; 4245: 60                                     `            :0B45[3]
 
 ; &4246 referenced 1 time by &1B47
-.sub_C0B46
+.set_self_modified_code_1_NOP_JSR_0B3F
     LDA #&3F ; '?'                                                    ; 4246: A9 3F                                  .?           :0B46[3]
-    STA C0A93                                                         ; 4248: 8D 93 0A                               ...          :0B48[3]
+    STA self_modified_code_1_3                                        ; 4248: 8D 93 0A                               ...          :0B48[3]
     LDA #&0B                                                          ; 424B: A9 0B                                  ..           :0B4B[3]
-    BNE C0B0C                                                         ; 424D: D0 BD                                  ..           :0B4D[3]
+    BNE set_self_modified_code_1_NOP_JSRabs                           ; 424D: D0 BD                                  ..           :0B4D[3]
 ; &424F referenced 5 times by &120B, &1AC2, &24A8, &250D, &2718
 .C0B4F
     AND #7                                                            ; 424F: 29 07                                  ).           :0B4F[3]
@@ -5443,16 +5411,16 @@ L0A94 = C0A93+1
     STA L0017                                                         ; 425C: 85 17                                  ..           :0B5C[3]
     STA L0018                                                         ; 425E: 85 18                                  ..           :0B5E[3]
     LDA #&EA                                                          ; 4260: A9 EA                                  ..           :0B60[3]
-    STA C0A91                                                         ; 4262: 8D 91 0A                               ...          :0B62[3]
+    STA self_modified_code_1_1                                        ; 4262: 8D 91 0A                               ...          :0B62[3]
     LDA #&20 ; ' '                                                    ; 4265: A9 20                                  .            :0B65[3]
-    STA L0A92                                                         ; 4267: 8D 92 0A                               ...          :0B67[3]
+    STA self_modified_code_1_2                                        ; 4267: 8D 92 0A                               ...          :0B67[3]
     LDA #&7D ; '}'                                                    ; 426A: A9 7D                                  .}           :0B6A[3]
-    STA C0A93                                                         ; 426C: 8D 93 0A                               ...          :0B6C[3]
+    STA self_modified_code_1_3                                        ; 426C: 8D 93 0A                               ...          :0B6C[3]
     LDA #&0B                                                          ; 426F: A9 0B                                  ..           :0B6F[3]
-    STA L0A94                                                         ; 4271: 8D 94 0A                               ...          :0B71[3]
-    JSR C0A84                                                         ; 4274: 20 84 0A                                ..          :0B74[3]
+    STA self_modified_code_1_4                                        ; 4271: 8D 94 0A                               ...          :0B71[3]
+    JSR possible_calculate_screen_write_address_from_x_y_coords       ; 4274: 20 84 0A                                ..          :0B74[3]
     JSR store_x18_to_0017_and_x10_to_0018                             ; 4277: 20 50 26                                P&          :0B77[3]
-    JMP C0B1E                                                         ; 427A: 4C 1E 0B                               L..          :0B7A[3]
+    JMP restore_self_modified_code_eor_zp80                           ; 427A: 4C 1E 0B                               L..          :0B7A[3]
 
     EQUB &25, &97, &51, &80, &91, &80, &60                            ; 427D: 25 97 51 80 91 80 60                   %.Q...`      :0B7D[3]
 
@@ -5664,7 +5632,7 @@ L0A94 = C0A93+1
 .pydis_end
 
 ; Label references by decreasing frequency:
-;     zero_page_80:                    102
+;     zero_page_80:                    106
 ;     L0090:                            68
 ;     L0096:                            57
 ;     L0093:                            46
@@ -5684,6 +5652,7 @@ L0A94 = C0A93+1
 ;     zero_page_82:                     16
 ;     zero_page_83:                     16
 ;     L0086:                            16
+;     L0087:                            16
 ;     L0091:                            16
 ;     L0094:                            16
 ;     L2556:                            16
@@ -5695,7 +5664,6 @@ L0A94 = C0A93+1
 ;     sub_C25E5:                        15
 ;     sub_C2766:                        15
 ;     L0009:                            14
-;     L0087:                            14
 ;     L0098:                            14
 ;     L0099:                            14
 ;     L087F:                            13
@@ -6370,18 +6338,12 @@ L0A94 = C0A93+1
 ;     C0A26
 ;     C0A40
 ;     C0A63
-;     C0A73
-;     C0A84
 ;     C0A8D
-;     C0A91
-;     C0A93
 ;     C0AA5
 ;     C0AB6
 ;     C0ACE
 ;     C0B00
 ;     C0B04
-;     C0B0C
-;     C0B1E
 ;     C0B4F
 ;     C0BA4
 ;     C0BF8
@@ -6522,7 +6484,6 @@ L0A94 = C0A93+1
 ;     C1A2B
 ;     C1A4A
 ;     C1A65
-;     C1A82
 ;     C1AAA
 ;     C1ABE
 ;     C1B21
@@ -6941,8 +6902,6 @@ L0A94 = C0A93+1
 ;     L08B0
 ;     L09A9
 ;     L0A00
-;     L0A92
-;     L0A94
 ;     L0C00
 ;     L0CA9
 ;     L0D86
@@ -7278,7 +7237,6 @@ L0A94 = C0A93+1
 ;     loop_C0916
 ;     loop_C0994
 ;     loop_C0A46
-;     loop_C0A8F
 ;     loop_C0B97
 ;     loop_C0DEC
 ;     loop_C0E0E
@@ -7337,8 +7295,6 @@ L0A94 = C0A93+1
 ;     sub_C0A58
 ;     sub_C0A5C
 ;     sub_C0AD3
-;     sub_C0B05
-;     sub_C0B46
 ;     sub_C0B84
 ;     sub_C0B98
 ;     sub_C0B9C
