@@ -17,12 +17,12 @@ def label_equw(addr, length, labelText):
 # multiple versions of the same program.
 load(0x1900, "MREE_1900_4300.bin", "6502")
 
-move(0x900, 0x4000, 0x100)
-move(0xA00, 0x4100, 0x100)
-move(0xB00, 0x4200, 0x100)
-move(0x400, 0x3D00, 0x100)
-move(0x500, 0x3E00, 0x100)
-move(0x600, 0x3F00, 0x100)
+move(0x900, 0x4000, 0x300)
+#move(0xA00, 0x4100, 0x100)
+#move(0xB00, 0x4200, 0x100)
+move(0x400, 0x3D00, 0x300)
+#move(0x500, 0x3E00, 0x100)
+#move(0x600, 0x3F00, 0x100)
 move(0x040, 0x4384, 0x21)
 move(0xC00, 0x1900, 0x2400)
 
@@ -57,22 +57,48 @@ label(0xC00, "relocated_data_C00")
 
 # Address labels
 
-label_and_comment(0x0A73, "write_sprite_to_screen_routine", "A = sprite number. following code block calculates sprite source address and stores in zp84,85, x and y appear to be screen coordinates, screen memory address stored in zp 80-81")
-label(0x0A84, "possible_calculate_screen_write_address_from_x_y_coords")
+subroutine(0x0A73, "write_sprite_to_screen_routine", None, "Writes a sprite to the screen", on_entry={"A": "sprite number", "X" : "X screen coordinate", "Y" : "Y screen coordinate"})
+#label_and_comment(0x0A73, "write_sprite_to_screen_routine", "A = sprite number. following code block calculates sprite source address and stores in zp84,85, x and y appear to be screen coordinates, screen memory address stored in zp 80-81")
+
+label(0x0A8D, "loop_write_next_two_pixels")
 label(0x0A8F, "write_sprite_to_screen_memory")
 label(0x0A91, "self_modified_code_1_1")
 label(0x0A92, "self_modified_code_1_2")
 label(0x0A93, "self_modified_code_1_3")
 label(0x0A94, "self_modified_code_1_4")
+label(0x0AB6, "possible_increment_screen_address")
+label(0x0AD3, "calculate_screen_write_address_from_x_y_coords")
+
+
+label(0x0BA6, "play_sound_if_enabled")
+label(0x0B04, "skip_screenaddr_msb_increment")
 label(0x0B05, "set_self_modified_code_1_NOP_JSR_0B31")
+label(0x0B0C, "set_self_modified_code_1_NOP_JSRabs")
+label(0x0B1E, "set_sprite_code_to_eor_with_background")
 label(0x0B46, "set_self_modified_code_1_NOP_JSR_0B3F")
+
 
 entry(0x0B31, "unknown_mod_1")
 entry(0x0B3F, "unknown_mod_2")
+label(0x0B98, "compile_sound_data_at_zp78")
+label(0x0B9C, "compile_sound_data_at_zp70")
 
-label(0x0B0C, "set_self_modified_code_1_NOP_JSRabs")
-label(0x0B1E, "restore_self_modified_code_eor_zp80")
+
 label(0x0D94, "begin_new_game")
+label(0x0DB3, "begin_next_level")
+
+label(0x0E0E, "loop_set_next_colour_to_possibly_white")
+label(0x0E40, "perform_vdu_19_plot")
+label(0x0E42, "loop_plot")
+
+
+label(0x1162, "extra_completed")
+label(0x1165, "level_completed")
+label(0x1177, "death_routine")
+label(0x117B, "loop_death_routine")
+label(0x11CF, "lose_a_life")
+label(0x11D6, "still_have_lives")
+
 label(0x1320, "check_key_press_S")
 label(0x132B, "check_key_press_Q")
 label(0x1334, "store_sound_mask")
@@ -85,6 +111,7 @@ label(0x137C, "check_key_colon")
 label(0x1386, "check_key_forward_slash")
 label(0x1399, "handle_Z_left_key_press")
 label(0x1421, "handle_X_right_key_press")
+label(0x1532, "extra_player_routine")
 label(0x1610, "game_over_routine")
 label(0x161C, "loop_print_game_over_1")
 label(0X1627, "loop_print_game_over_2")
@@ -99,17 +126,31 @@ label(0x434D, "loop_relocate_more_data")
 label(0x436E, "loop_relocate_zero_page_data")
 label(0x4378, "loop_print_press_space_or_fire")
 
+label(0x0008, "zp_possible_remaining_cherry_count")
+label(0x0015, "zp15_scene_number")
+label(0x0070, "zp70_sound_amplitude")
+label(0x0072, "zp72_sound_amplitude")
+label(0x0074, "zp74_sound_pitch")
+label(0x0076, "zp76_sound_duration")
+
+label(0x0078, "zp78_sound_channel")
+label(0x007A, "zp7A_sound_amplitude")
+label(0x007C, "zp7C_sound_pitch")
+label(0x007E, "zp7E_sound_duration")
 
 label(0x133A, "handle_joystick_input")
 
 # Data labels
 label(0x000A, "sound_on_off_flag_or_maybe_mask")
+label(0x001F, "zp1F_extra_bitmap")
 label(0x002F, "keyboard_or_joystick_flag")
 #comment(0x002F, "Zero value for keyboard, non-zero for joystick", inline=True)
-label(0x0080, "zero_page_80")
-label(0x0081, "zero_page_81")
+label(0x0080, "zero_page_80_dest_screenaddr")
+label(0x0081, "zero_page_81_dest_screenaddr")
 label(0x0082, "zero_page_82")
 label(0x0083, "zero_page_83")
+label(0x0084, "zero_page_84_source_spriteaddr")
+label(0x0085, "zero_page_85_source_spriteaddr")
 label(0x0024, "lives_remaining_0024_possible")
 label(0x05CF, "game_over_string_data")
 label(0x05E3, "more_character_data")
@@ -149,11 +190,20 @@ label(0x2650, "store_x18_to_0017_and_x10_to_0018")
 
 
 
+
 # Commented line.
 
+
+comment(0x0AD3, "X Screen offset calulation begins (Only values 127-0 are used, each value represents two pixels wide)", inline=True)
+comment(0x0AD4, "X coord * 4 (Only values 127-0 are used)", inline=True)
+comment(0x0AE0, "Y Screen offset calulatiom begins Y=lllllnnn, where lllll = line number, nnn = offset within that line (0-7)", inline=True)
+comment(0x0ADA, "Shift overflowed bits into MSB", inline=True)
+comment(0x0AF6, "We have memory offset address for printing spite. Add &3000 (start address of mode 2 to make it point to correct screen memory location", inline=True)
 comment(0x0A58, "Select sprite 8 to write (???)", inline=True)
+comment(0x0A73, "Calculate address for sprite in memory (&3400*(A*&40))", inline=True)
 comment(0x0A93, "zp 80 writes to screen memory (print sprite)", inline=True)
 comment(0x0B19, "Select sprite 6 to write (cherry)", inline=True)
+comment(0x0E16, "VDU 16 (CLG - clear graphics area)", inline=True)
 comment(0x1E0B, "Select sprite 1 to write (apple?)", inline=True)
 comment(0x1FFB, "Select sprite 7 to write (center_base)", inline=True)
 comment(0x2008, "Select sprite 7 to write (center_base)", inline=True)
@@ -164,7 +214,7 @@ comment(0x0B3C, "zp 80 writes to screen memory (print sprite)", inline=True)
 comment(0x0B43, "zp 80 writes to screen memory (print sprite)", inline=True)
 comment(0x431E, "loads address &0C00 into &80-81", inline=True)
 comment(0x4324, "loads address &1900 into &82-83", inline=True)
-
+comment(0x0AC1, "increment screen address by one whole line (finished printing top line, now print bottom", inline=True)
 
 
 
