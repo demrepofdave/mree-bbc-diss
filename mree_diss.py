@@ -63,10 +63,14 @@ label(0x600, "relocated_data_600")
 label_equb(0xC00, 0x20, "user_defined_characters_224_to_255_relocated_data_C00")
 
 # Address labels
-label(0x087F, "possible_monster_stack_x_coord")
-label(0x088F, "possible_monster_stack_y_coord")
-label(0x089F, "possible_unknown_monster_data_1")
-label(0x0100, "possible_unknown_monster_data_2")
+label(0x087F, "monster_stack_x_coord_minus_one")
+label(0x0880, "monster_stack_x_coord")
+label(0x088F, "monster_stack_y_coord_minus_one")
+label(0x0890, "monster_stack_y_coord")
+label(0x089F, "unknown_monster_data_1_minus_one")
+label(0x08A0, "unknown_monster_data_1")
+label(0x0100, "unknown_monster_data_2_minus_one")
+label(0x0101, "unknown_monster_data_2")
 
 label(0x0907,"escape_key_not_pressed")
 label(0x090C,"loop_until_P_key_no_longer_pressed")
@@ -109,7 +113,7 @@ subroutine(0x1402, "set_mr_ee_direction",
                    "Sets Mr Ee new direction and plots mree sprite", 
                    on_entry={'A': "0-Right, 1-Left, 2-Up, 3-Down"})
 
-subroutine(0x2533, "sub_possible_remove_monster_from_stack", 
+subroutine(0x2533, "sub_remove_monster_from_stack", 
                     None, 
                    "Removes monster from stack by copying the last monster on stack over the monster to be removed and decrementing monster count", 
                    on_entry={'X': "Stack index of monster to remove"})
@@ -119,10 +123,15 @@ subroutine(0x2550, "get_monster_data_off_stack",
                    "Reads monster data from the stack and places in registers ready for printing", 
                    on_entry={'X': "Stack index of monster data to copy"})
 
-subroutine(0x2565, "unknown_fetch_and_process_monster_routine", 
+subroutine(0x2565, "fetch_and_process_monster_from_stack", 
                     None, 
                    "Reads monster data from the stack and the does something with it", 
                    on_entry={'X': "Stack index of monster data to copy"})
+
+subroutine(0x2424, "sub_add_new_monster_to_stack", 
+                    None, 
+                   "Adds a new monster to the stack, increments the monster count", 
+                   on_entry={'A': "Monster status?", 'X': "Monster X coord?", 'Y': "Monster Y coord"})
 
 subroutine(0x2568, "unknown_process_monster_routine_without_fetch", 
                     None, 
@@ -245,8 +254,21 @@ subroutine(0x1E0B, "write_apple_to_screen_corrected",
                    "Writes the full apple sprite to the screen at the x,y coordinates specified.  X coordinate has already been shifted correctly", 
                    on_entry={'A': "Unused - Corrupted", 'X': "Apple x position (already corrected)", 'Y': "Apple y position"})
 
+subroutine(0x247C, "introduce_extra_monster_to_playscreen", 
+                    None, 
+                   "Moves one of ther E X T R A monsters into the playscreen.  Not much else known about it yet", 
+                   on_entry={'A': "???", 'X': "???", 'Y': "???"})
+
+
+subroutine(0x1BA1, "sub_update_and_squishing_monsters_on_screen", 
+                    None, 
+                   "For monsters that are currently in 'squishing' state (i.e. apple has squished them and they are currently moving down the screen), they will be moved down the screen (in sync with the apple in another routine",
+                   on_entry={'A': "Unused - Corrupted", 'X': "Unused - Corrupted", 'Y': "Unused - Corrupted?"})
+
 
 # Zero page date labels.
+label(0x0002, "incrementing_counter_during_level_starting_at_scenenumber_plus_2")
+label(0x0003, "scene_number_plus_2")
 label(0x0004, "number_of_continuous_cherries_consumed")
 label(0x0008, "remaining_cherry_count")
 label(0x0005, "score")
@@ -254,6 +276,7 @@ label(0x0006, "score+1")
 label(0x0007, "score+2")
 label(0x0009, "number_of_apples_on_screen")
 label(0x000A, "sound_on_off_flag")
+label(0x000F, "main_game_timer_counter")
 label(0x0012, "next_monster_release_timer")
 label(0x0013, "number_of_all_enemies_on_stack")
 label(0x0014, "remaining_monsters_to_spawn_minus_1") # FF if no more monsters
@@ -262,16 +285,17 @@ label(0x0016, "extra_monster_status") # 0x8x = Active in player area, 0x4x recen
 label(0x001B, "ball_state")  # 0 = with MrEe.  4x ball in motion - Cx ball exploding, Ax ball coming back
 label(0x001D, "number_of_normal_monsters_remaining_minus_1") ## FF if no more monsters on this level
 label(0x001E, "number_of_active_ghosts")
-label(0x0019, "possible_ball_x_coordinate")
-label(0x001A, "possible_ball_y_coordinate")
+label(0x0019, "possible_temp_ball_x_coordinate")
+label(0x001A, "possible_temp_ball_y_coordinate")
 label(0x001F, "extra_bitmap")
 label(0x0020, "mr_ee_x_coord")
 label(0x0021, "mr_ee_y_coord")
 label(0x0022, "possible_mr_ee_direction")
 label(0x0023, "level_number_scene_mod_10")
-
-label(0x0027, "mr_ee_status") # 00 = ok?
 label(0x0024, "zp_24_lives_remaining")
+label(0x0027, "mr_ee_status") # 00 = ok?
+label(0x0028, "strange_unused_score")
+label(0x0029, "strange_unused_score+1")
 label(0x002F, "keyboard_or_joystick_flag")
 label(0x003C, "unknown_counter")
 label(0x003D, "unknown_counter+1")
@@ -293,6 +317,14 @@ label(0x0082, "zp_82")
 label(0x0083, "zp_83")
 label(0x0084, "zp_84_source_spriteaddr")
 label(0x0085, "zp_85_source_spriteaddr")
+label(0x0089, "possible_ball_x_coordinate")
+label(0x008A, "possible_ball_y_coordinate")
+
+label(0x0090, "current_x_coord")
+label(0x0093, "current_y_coord")
+label(0x0096, "current_status_1")
+label(0x0099, "current_status_2")
+
 label(0x00FF, "escape_key_pressed_flag")
 
 
@@ -345,6 +377,7 @@ label(0x1095, "loop_decrement_three_unknown_counters")
 label(0x10A9, "loop_possible_reset_game_pallete")
 label(0x10D6, "main_game_action_loop")
 label(0x10E4, "skip_over_some_sprite_plotting")
+label(0x10FF, "skip_over_all_ghosts_killed_check")
 
 label(0x1121, "mr_ee_is_still_alive")
 label(0x112F, "game_event_detected")
@@ -393,10 +426,12 @@ label(0X1627, "loop_print_game_over_characters_slowly")
 label(0x1635, "wait_for_input_space_or_fire")
 label(0x1637, "loop_no_space_or_fire_pressed")
 label(0x1650, "space_or_fire_press_detected")
+label(0x1655, "loop_unknown_counter_check")
 label(0x16DB, "ball_with_mr_ee")
 
 label(0x1759, "process_all_monsters")
 label(0x175D, "loop_process_next_monster_1")
+label(0x1791, "finished_processing_this_monster_1")
 label(0x1794, "no_more_monsters_to_process_1")
 
 label(0x1862, "skip_mask_result_is_zero")
@@ -413,7 +448,6 @@ label(0x1B21, "skip_move_row_down")
 label(0x1B4C, "possible_skip_no_cherry_eaten")
 label(0x1BDE, "skip_next_item")
 label(0x1BA0, "skip_no_ball_action_required")
-label(0x1BA1, "sub_possible_print_existing_game_sprites")
 label(0x1BA9, "loop_next_item")
 label(0x1BE4, "possible_skip_sprint_print")
 label(0x1BF2, "mr_ee_not_squished_by_apple")
@@ -429,17 +463,22 @@ label(0x1F03, "no_more_monsters_to_process_3")
 label(0x1F7B, "loop_process_next_monster_4")
 label(0x1F9A, "no_more_monsters_to_process_4")
 
-label(0x2056, "loop_possible_process_single_monster")
-label(0x2062, "skip_if_positive")
-label(0x2073, "skip_if_carry_set")
+label(0x2056, "loop_process_next_monster_on_stack")
+label(0x2062, "monster_is_active")
+label(0x2073, "still_monsters_spawning")
 label(0x20B2, "possible_monster_not_hit_by_ball")
+
 
 label(0x2344, "possible_update_a_monster")
 label(0x237B, "ghost_possible_chomping_apples_sprint_print")
 label(0x23B5, "enemy_squished_by_apple_detected_sprite_print")
+label(0x23EB, "check_for_mr_ee_collision_x")
+label(0x23F8, "check_for_mr_ee_collision_y")
 
+label(0x2405, "monster_has_collided_with_mr_ee")
+label(0x2407, "this_monster_processing_complete")
 label(0x2423, "all_monsters_processed")
-label(0x2441, "sub_widely_used_print_some_sprite")
+label(0x2441, "sub_print_or_erase_monster_on_screen")
 label(0x24B0, "sub_monster_hit_by_ball_sprite_print")
 label(0x24CD, "restore_pallet_from_red")
 label(0x24EC, "skip_ghost_and_extra_checks_checks_complete")
@@ -456,6 +495,8 @@ label(0x2693, "skip_end_ball_pos_calculation")
 label(0x26D7, "possible_update_ball_if_exists")
 label(0x26DD, "sub_check_P_key_pressed")
 label(0x26DF, "execute_inkey")
+
+label(0x2793, "base_eaten_ghosts_triggered_music")
 
 label(0x4326, "loop_relocate_data")
 label(0x434D, "loop_relocate_more_data")
@@ -528,8 +569,8 @@ label_equb(0x0608, 0x04, "game_pallet_data_2", cols=1)
 label_equb(0x060C, 0x03, "game_pallet_data_3", cols=1)
 label_equb(0x060F, 0x01, "game_pallet_data_4_or_apple_y_coord_minus_1", cols=1)
 
-label(0x061F, "unknown_apple_status_data") # 0 = Not moving? 0x74 = ?
-
+label(0x061F, "apple_status_data_minus_1") # 0 = Not moving? 0x74 = ?
+label(0x0620, "apple_status_data") # 0 = Not moving? 0x74 = ?
 
 label(0x108C, "initial_write_of_central_base_to_screen")
 label(0x4361,"loop_initialize_70_7F_to_zero")
@@ -634,6 +675,9 @@ comment(0x2654, "Stores &10 (16) to L0018", inline=True)
 comment(0x26D9, "if X=0 then ball does not exist on screen?", inline=True)
 comment(0x270A, "Sprite 3 to write (extra_character_graphic)", inline=True)
 comment(0x2D1B, "Sprite &18 to write (enemy right)", inline=True)
+
+
+comment(0x10E1, "every other main loop tick we perform one extra squishing, which means players/monsters below may not be able to escape being squished", inline=True)
 
 comment(0x4307, "*FX200,2 - disable escape and clear memory on break", inline=True)
 comment(0x431E, "loads address &0C00 into &80-81", inline=True)

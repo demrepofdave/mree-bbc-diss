@@ -9,140 +9,139 @@ osbyte_read_write_escape_break_effect   = 200
 osbyte_tape                             = 140
 
 ; Memory locations
-L0000                                       = &0000
-somthing_used_to_index_address_0720         = &0001
-L0002                                       = &0002
-L0003                                       = &0003
-number_of_continuous_cherries_consumed      = &0004
-score                                       = &0005
-remaining_cherry_count                      = &0008
-number_of_apples_on_screen                  = &0009
-sound_on_off_flag                           = &000A
-L000B                                       = &000B
-L000C                                       = &000C
-L000F                                       = &000F
-L0010                                       = &0010
-L0011                                       = &0011
-next_monster_release_timer                  = &0012
-number_of_all_enemies_on_stack              = &0013
-remaining_monsters_to_spawn_minus_1         = &0014
-scene_number                                = &0015
-extra_monster_status                        = &0016
-L0017                                       = &0017
-L0018                                       = &0018
-possible_ball_x_coordinate                  = &0019
-possible_ball_y_coordinate                  = &001A
-ball_state                                  = &001B
-L001C                                       = &001C
-number_of_normal_monsters_remaining_minus_1 = &001D
-number_of_active_ghosts                     = &001E
-extra_bitmap                                = &001F
-mr_ee_x_coord                               = &0020
-mr_ee_y_coord                               = &0021
-possible_mr_ee_direction                    = &0022
-level_number_scene_mod_10                   = &0023
-zp_24_lives_remaining                       = &0024
-L0025                                       = &0025
-L0026                                       = &0026
-mr_ee_status                                = &0027
-L0028                                       = &0028
-L0029                                       = &0029
-L002A                                       = &002A
-L002B                                       = &002B
-L002C                                       = &002C
-L002D                                       = &002D
-L002E                                       = &002E
-keyboard_or_joystick_flag                   = &002F
-L0030                                       = &0030
-L0034                                       = &0034
-L0038                                       = &0038
-unknown_counter                             = &003C
-L0061                                       = &0061
-zp_70_sound_channel                         = &0070
-zp_72_sound_amplitude                       = &0072
-zp_74_sound_pitch                           = &0074
-zp_76_sound_duration                        = &0076
-zp_78_sound_channel                         = &0078
-zp_7A_sound_amplitude                       = &007A
-zp_7C_sound_pitch                           = &007C
-zp_7E_sound_duration                        = &007E
-zp_80_dest_screenaddr                       = &0080
-zp_81_dest_screenaddr                       = &0081
-zp_82                                       = &0082
-zp_83                                       = &0083
-zp_84_source_spriteaddr                     = &0084
-zp_85_source_spriteaddr                     = &0085
-L0086                                       = &0086
-L0087                                       = &0087
-L0088                                       = &0088
-L0089                                       = &0089
-L008A                                       = &008A
-L008B                                       = &008B
-L008C                                       = &008C
-zp_8f_screencalc_temp_store                 = &008F
-L0090                                       = &0090
-L0091                                       = &0091
-L0092                                       = &0092
-L0093                                       = &0093
-L0094                                       = &0094
-L0095                                       = &0095
-L0096                                       = &0096
-L0097                                       = &0097
-L0098                                       = &0098
-L0099                                       = &0099
-L00A0                                       = &00A0
-L00A1                                       = &00A1
-L00A2                                       = &00A2
-L00A3                                       = &00A3
-L00A4                                       = &00A4
-L00A5                                       = &00A5
-escape_key_pressed_flag                     = &00FF
-possible_unknown_monster_data_2             = &0100
-L0101                                       = &0101
-L03A9                                       = &03A9
-L0720                                       = &0720
-L0721                                       = &0721
-L0730                                       = &0730
-L0731                                       = &0731
-L0740                                       = &0740
-possible_monster_stack_x_coord              = &087F
-L0880                                       = &0880
-possible_monster_stack_y_coord              = &088F
-L0890                                       = &0890
-possible_unknown_monster_data_1             = &089F
-L08A0                                       = &08A0
-L08A9                                       = &08A9
-apple_x_coordinate                          = &08AF
-L08B0                                       = &08B0
-L0C00                                       = &0C00
-L0CA9                                       = &0CA9
-sub_C3000                                   = &3000
-screen_memory_30F1                          = &30F1
-screen_memory_35F2                          = &35F2
-screen_memory_35F3                          = &35F3
-screen_memory_35F4                          = &35F4
-screen_memory_35F5                          = &35F5
-screen_memory_35F6                          = &35F6
-start_of_game_sprites_area                  = &3618
-data_to_relocate_3E00                       = &3E00
-data_to_relocate_3F00                       = &3F00
-data_to_relocate_4100                       = &4100
-data_to_relocate_4200                       = &4200
-L801B                                       = &801B
-L90E6                                       = &90E6
-LA1E6                                       = &A1E6
-LA2E6                                       = &A2E6
-video_ula_palette                           = &FE21
-user_via_t1c_l                              = &FE64
-user_via_t1c_h                              = &FE65
-user_via_t1l_l                              = &FE66
-user_via_t1l_h                              = &FE67
-user_via_acr                                = &FE6B
-user_via_ifr                                = &FE6D
-osnewl                                      = &FFE7
-oswrch                                      = &FFEE
-osword                                      = &FFF1
-osbyte                                      = &FFF4
+L0000                                                           = &0000
+somthing_used_to_index_address_0720                             = &0001
+incrementing_counter_during_level_starting_at_scenenumber_plus_2 = &0002
+scene_number_plus_2                                             = &0003
+number_of_continuous_cherries_consumed                          = &0004
+score                                                           = &0005
+remaining_cherry_count                                          = &0008
+number_of_apples_on_screen                                      = &0009
+sound_on_off_flag                                               = &000A
+L000B                                                           = &000B
+L000C                                                           = &000C
+main_game_timer_counter                                         = &000F
+L0010                                                           = &0010
+L0011                                                           = &0011
+next_monster_release_timer                                      = &0012
+number_of_all_enemies_on_stack                                  = &0013
+remaining_monsters_to_spawn_minus_1                             = &0014
+scene_number                                                    = &0015
+extra_monster_status                                            = &0016
+L0017                                                           = &0017
+L0018                                                           = &0018
+possible_temp_ball_x_coordinate                                 = &0019
+possible_temp_ball_y_coordinate                                 = &001A
+ball_state                                                      = &001B
+L001C                                                           = &001C
+number_of_normal_monsters_remaining_minus_1                     = &001D
+number_of_active_ghosts                                         = &001E
+extra_bitmap                                                    = &001F
+mr_ee_x_coord                                                   = &0020
+mr_ee_y_coord                                                   = &0021
+possible_mr_ee_direction                                        = &0022
+level_number_scene_mod_10                                       = &0023
+zp_24_lives_remaining                                           = &0024
+L0025                                                           = &0025
+L0026                                                           = &0026
+mr_ee_status                                                    = &0027
+strange_unused_score                                            = &0028
+L002A                                                           = &002A
+L002B                                                           = &002B
+L002C                                                           = &002C
+L002D                                                           = &002D
+L002E                                                           = &002E
+keyboard_or_joystick_flag                                       = &002F
+L0030                                                           = &0030
+L0034                                                           = &0034
+L0038                                                           = &0038
+unknown_counter                                                 = &003C
+L0061                                                           = &0061
+zp_70_sound_channel                                             = &0070
+zp_72_sound_amplitude                                           = &0072
+zp_74_sound_pitch                                               = &0074
+zp_76_sound_duration                                            = &0076
+zp_78_sound_channel                                             = &0078
+zp_7A_sound_amplitude                                           = &007A
+zp_7C_sound_pitch                                               = &007C
+zp_7E_sound_duration                                            = &007E
+zp_80_dest_screenaddr                                           = &0080
+zp_81_dest_screenaddr                                           = &0081
+zp_82                                                           = &0082
+zp_83                                                           = &0083
+zp_84_source_spriteaddr                                         = &0084
+zp_85_source_spriteaddr                                         = &0085
+L0086                                                           = &0086
+L0087                                                           = &0087
+L0088                                                           = &0088
+possible_ball_x_coordinate                                      = &0089
+possible_ball_y_coordinate                                      = &008A
+L008B                                                           = &008B
+L008C                                                           = &008C
+zp_8f_screencalc_temp_store                                     = &008F
+current_x_coord                                                 = &0090
+L0091                                                           = &0091
+L0092                                                           = &0092
+current_y_coord                                                 = &0093
+L0094                                                           = &0094
+L0095                                                           = &0095
+current_status_1                                                = &0096
+L0097                                                           = &0097
+L0098                                                           = &0098
+current_status_2                                                = &0099
+L00A0                                                           = &00A0
+L00A1                                                           = &00A1
+L00A2                                                           = &00A2
+L00A3                                                           = &00A3
+L00A4                                                           = &00A4
+L00A5                                                           = &00A5
+escape_key_pressed_flag                                         = &00FF
+unknown_monster_data_2_minus_one                                = &0100
+unknown_monster_data_2                                          = &0101
+L03A9                                                           = &03A9
+L0720                                                           = &0720
+L0721                                                           = &0721
+L0730                                                           = &0730
+L0731                                                           = &0731
+L0740                                                           = &0740
+monster_stack_x_coord_minus_one                                 = &087F
+monster_stack_x_coord                                           = &0880
+monster_stack_y_coord_minus_one                                 = &088F
+monster_stack_y_coord                                           = &0890
+unknown_monster_data_1_minus_one                                = &089F
+unknown_monster_data_1                                          = &08A0
+L08A9                                                           = &08A9
+apple_x_coordinate                                              = &08AF
+L08B0                                                           = &08B0
+L0C00                                                           = &0C00
+L0CA9                                                           = &0CA9
+sub_C3000                                                       = &3000
+screen_memory_30F1                                              = &30F1
+screen_memory_35F2                                              = &35F2
+screen_memory_35F3                                              = &35F3
+screen_memory_35F4                                              = &35F4
+screen_memory_35F5                                              = &35F5
+screen_memory_35F6                                              = &35F6
+start_of_game_sprites_area                                      = &3618
+data_to_relocate_3E00                                           = &3E00
+data_to_relocate_3F00                                           = &3F00
+data_to_relocate_4100                                           = &4100
+data_to_relocate_4200                                           = &4200
+L801B                                                           = &801B
+L90E6                                                           = &90E6
+LA1E6                                                           = &A1E6
+LA2E6                                                           = &A2E6
+video_ula_palette                                               = &FE21
+user_via_t1c_l                                                  = &FE64
+user_via_t1c_h                                                  = &FE65
+user_via_t1l_l                                                  = &FE66
+user_via_t1l_h                                                  = &FE67
+user_via_acr                                                    = &FE6B
+user_via_ifr                                                    = &FE6D
+osnewl                                                          = &FFE7
+oswrch                                                          = &FFEE
+osword                                                          = &FFF1
+osbyte                                                          = &FFF4
 
     ORG &1900
 
@@ -240,15 +239,15 @@ osbyte                                      = &FFF4
     JSR restore_L0017_L0018_to_defaults_x18_and_x10; 1A94: 20 50 26                                P&          :0D94[4]
     LDX #2                                        ; 1A97: A2 02                                  ..           :0D97[4]
     STX zp_24_lives_remaining                     ; 1A99: 86 24                                  .$           :0D99[4]
-    STX L0003                                     ; 1A9B: 86 03                                  ..           :0D9B[4]
+    STX scene_number_plus_2                       ; 1A9B: 86 03                                  ..           :0D9B[4]
     DEX                                           ; 1A9D: CA                                     .            :0D9D[4]
     DEX                                           ; 1A9E: CA                                     .            :0D9E[4]
     STX scene_number                              ; 1A9F: 86 15                                  ..           :0D9F[4]
     STX score                                     ; 1AA1: 86 05                                  ..           :0DA1[4]
     STX score+1                                   ; 1AA3: 86 06                                  ..           :0DA3[4]
     STX score+2                                   ; 1AA5: 86 07                                  ..           :0DA5[4]
-    STX L0028                                     ; 1AA7: 86 28                                  .(           :0DA7[4]
-    STX L0029                                     ; 1AA9: 86 29                                  .)           :0DA9[4]
+    STX strange_unused_score                      ; 1AA7: 86 28                                  .(           :0DA7[4]
+    STX strange_unused_score+1                    ; 1AA9: 86 29                                  .)           :0DA9[4]
     STX extra_monster_status                      ; 1AAB: 86 16                                  ..           :0DAB[4]
     STX extra_bitmap                              ; 1AAD: 86 1F                                  ..           :0DAD[4]
     LDA #5                                        ; 1AAF: A9 05                                  ..           :0DAF[4]
@@ -263,9 +262,9 @@ osbyte                                      = &FFF4
     STA scene_number                              ; 1ABA: 85 15                                  ..           :0DBA[4]
     AND #&0F                                      ; 1ABC: 29 0F                                  ).           :0DBC[4]
     STA level_number_scene_mod_10                 ; 1ABE: 85 23                                  .#           :0DBE[4]
-    INC L0003                                     ; 1AC0: E6 03                                  ..           :0DC0[4]
-    LDA L0003                                     ; 1AC2: A5 03                                  ..           :0DC2[4]
-    STA L0002                                     ; 1AC4: 85 02                                  ..           :0DC4[4]
+    INC scene_number_plus_2                       ; 1AC0: E6 03                                  ..           :0DC0[4]
+    LDA scene_number_plus_2                       ; 1AC2: A5 03                                  ..           :0DC2[4]
+    STA incrementing_counter_during_level_starting_at_scenenumber_plus_2; 1AC4: 85 02                                  ..           :0DC4[4]
     LDA scene_number                              ; 1AC6: A5 15                                  ..           :0DC6[4]
     CMP #5                                        ; 1AC8: C9 05                                  ..           :0DC8[4]
     BCC C0DCF                                     ; 1ACA: 90 03                                  ..           :0DCA[4]
@@ -309,7 +308,7 @@ osbyte                                      = &FFF4
     ASL A                                         ; 1AFF: 0A                                     .            :0DFF[4]
     ROL L0091                                     ; 1B00: 26 91                                  &.           :0E00[4]
     ADC #&32 ; '2'                                ; 1B02: 69 32                                  i2           :0E02[4]
-    STA L0090                                     ; 1B04: 85 90                                  ..           :0E04[4]
+    STA current_x_coord                           ; 1B04: 85 90                                  ..           :0E04[4]
     LDA L0091                                     ; 1B06: A5 91                                  ..           :0E06[4]
     ADC #&0C                                      ; 1B08: 69 0C                                  i.           :0E08[4]
     STA L0091                                     ; 1B0A: 85 91                                  ..           :0E0A[4]
@@ -323,14 +322,14 @@ osbyte                                      = &FFF4
     LDA #&10                                      ; 1B16: A9 10                                  ..           :0E16[4]   ; VDU 16 (CLG - clear graphics area)
     JSR oswrch                                    ; 1B18: 20 EE FF                                ..          :0E18[4]   ; Write character 16
     LDY #&20 ; ' '                                ; 1B1B: A0 20                                  .            :0E1B[4]
-    LDA (L0090),Y                                 ; 1B1D: B1 90                                  ..           :0E1D[4]   ; Get brick pallet for level
+    LDA (current_x_coord),Y                       ; 1B1D: B1 90                                  ..           :0E1D[4]   ; Get brick pallet for level
     LSR A                                         ; 1B1F: 4A                                     J            :0E1F[4]
     LSR A                                         ; 1B20: 4A                                     J            :0E20[4]
     LSR A                                         ; 1B21: 4A                                     J            :0E21[4]
     LSR A                                         ; 1B22: 4A                                     J            :0E22[4]
     ORA #&C0                                      ; 1B23: 09 C0                                  ..           :0E23[4]
     STA game_pallet_data_3                        ; 1B25: 8D 0C 06                               ...          :0E25[4]   ; Set correct foreground brick for level (Logical color 12)
-    LDA (L0090),Y                                 ; 1B28: B1 90                                  ..           :0E28[4]
+    LDA (current_x_coord),Y                       ; 1B28: B1 90                                  ..           :0E28[4]
     AND #&0F                                      ; 1B2A: 29 0F                                  ).           :0E2A[4]
     ORA #&80                                      ; 1B2C: 09 80                                  ..           :0E2C[4]
     STA game_pallet_data_2                        ; 1B2E: 8D 08 06                               ...          :0E2E[4]   ; Set correct backgound brick for level (Logical color 8)
@@ -351,7 +350,7 @@ osbyte                                      = &FFF4
     DEX                                           ; 1B48: CA                                     .            :0E48[4]
     BPL loop_plot                                 ; 1B49: 10 F7                                  ..           :0E49[4]
     LDX #&10                                      ; 1B4B: A2 10                                  ..           :0E4B[4]
-    LDA (L0090),Y                                 ; 1B4D: B1 90                                  ..           :0E4D[4]
+    LDA (current_x_coord),Y                       ; 1B4D: B1 90                                  ..           :0E4D[4]
 ; &1B4F referenced 1 time by &0E53
 .loop_until_brick_line_is_plotted
     JSR oswrch                                    ; 1B4F: 20 EE FF                                ..          :0E4F[4]   ; Write character
@@ -384,7 +383,7 @@ osbyte                                      = &FFF4
     LDA #0                                        ; 1B7F: A9 00                                  ..           :0E7F[4]
     STA L0730,X                                   ; 1B81: 9D 30 07                               .0.          :0E81[4]
     LDY zp_83                                     ; 1B84: A4 83                                  ..           :0E84[4]
-    LDA (L0090),Y                                 ; 1B86: B1 90                                  ..           :0E86[4]
+    LDA (current_x_coord),Y                       ; 1B86: B1 90                                  ..           :0E86[4]
     AND zp_84_source_spriteaddr                   ; 1B88: 25 84                                  %.           :0E88[4]
     BNE C0E8F                                     ; 1B8A: D0 03                                  ..           :0E8A[4]
     JMP C0FA0                                     ; 1B8C: 4C A0 0F                               L..          :0E8C[4]
@@ -429,7 +428,7 @@ osbyte                                      = &FFF4
     DEY                                           ; 1BCC: 88                                     .            :0ECC[4]
     DEY                                           ; 1BCD: 88                                     .            :0ECD[4]
     BMI C0EE3                                     ; 1BCE: 30 13                                  0.           :0ECE[4]
-    LDA (L0090),Y                                 ; 1BD0: B1 90                                  ..           :0ED0[4]
+    LDA (current_x_coord),Y                       ; 1BD0: B1 90                                  ..           :0ED0[4]
     AND zp_84_source_spriteaddr                   ; 1BD2: 25 84                                  %.           :0ED2[4]
     BEQ C0EE3                                     ; 1BD4: F0 0D                                  ..           :0ED4[4]
     INC zp_85_source_spriteaddr                   ; 1BD6: E6 85                                  ..           :0ED6[4]
@@ -447,7 +446,7 @@ osbyte                                      = &FFF4
     INY                                           ; 1BE6: C8                                     .            :0EE6[4]
     CPY #&1A                                      ; 1BE7: C0 1A                                  ..           :0EE7[4]
     BCS C0EFC                                     ; 1BE9: B0 11                                  ..           :0EE9[4]
-    LDA (L0090),Y                                 ; 1BEB: B1 90                                  ..           :0EEB[4]
+    LDA (current_x_coord),Y                       ; 1BEB: B1 90                                  ..           :0EEB[4]
     AND zp_84_source_spriteaddr                   ; 1BED: 25 84                                  %.           :0EED[4]
     BEQ C0EFC                                     ; 1BEF: F0 0B                                  ..           :0EEF[4]
     INC zp_85_source_spriteaddr                   ; 1BF1: E6 85                                  ..           :0EF1[4]
@@ -467,7 +466,7 @@ osbyte                                      = &FFF4
     INY                                           ; 1C04: C8                                     .            :0F04[4]
 ; &1C05 referenced 1 time by &0F01
 .C0F05
-    AND (L0090),Y                                 ; 1C05: 31 90                                  1.           :0F05[4]
+    AND (current_x_coord),Y                       ; 1C05: 31 90                                  1.           :0F05[4]
     BEQ C0F26                                     ; 1C07: F0 1D                                  ..           :0F07[4]
     LDX #&0E                                      ; 1C09: A2 0E                                  ..           :0F09[4]
 ; &1C0B referenced 1 time by &0F10
@@ -498,7 +497,7 @@ osbyte                                      = &FFF4
     BMI C0F52                                     ; 1C2F: 30 21                                  0!           :0F2F[4]
 ; &1C31 referenced 1 time by &0F2B
 .C0F31
-    AND (L0090),Y                                 ; 1C31: 31 90                                  1.           :0F31[4]
+    AND (current_x_coord),Y                       ; 1C31: 31 90                                  1.           :0F31[4]
     BEQ C0F52                                     ; 1C33: F0 1D                                  ..           :0F33[4]
     LDX #&0C                                      ; 1C35: A2 0C                                  ..           :0F35[4]
 ; &1C37 referenced 1 time by &0F3C
@@ -529,7 +528,7 @@ osbyte                                      = &FFF4
     LDA zp_80_dest_screenaddr                     ; 1C5F: A5 80                                  ..           :0F5F[4]
     STA L0088                                     ; 1C61: 85 88                                  ..           :0F61[4]
     LDA zp_81_dest_screenaddr                     ; 1C63: A5 81                                  ..           :0F63[4]
-    STA L0089                                     ; 1C65: 85 89                                  ..           :0F65[4]
+    STA possible_ball_x_coordinate                ; 1C65: 85 89                                  ..           :0F65[4]
     LDX #0                                        ; 1C67: A2 00                                  ..           :0F67[4]
     LDY zp_82                                     ; 1C69: A4 82                                  ..           :0F69[4]
     LDA #&14                                      ; 1C6B: A9 14                                  ..           :0F6B[4]
@@ -561,9 +560,9 @@ osbyte                                      = &FFF4
     CLC                                           ; 1C91: 18                                     .            :0F91[4]
     ADC #&80                                      ; 1C92: 69 80                                  i.           :0F92[4]
     STA L0088                                     ; 1C94: 85 88                                  ..           :0F94[4]
-    LDA L0089                                     ; 1C96: A5 89                                  ..           :0F96[4]
+    LDA possible_ball_x_coordinate                ; 1C96: A5 89                                  ..           :0F96[4]
     ADC #2                                        ; 1C98: 69 02                                  i.           :0F98[4]
-    STA L0089                                     ; 1C9A: 85 89                                  ..           :0F9A[4]
+    STA possible_ball_x_coordinate                ; 1C9A: 85 89                                  ..           :0F9A[4]
 ; &1C9C referenced 1 time by &0F8B
 .C0F9C
     DEC zp_85_source_spriteaddr                   ; 1C9C: C6 85                                  ..           :0F9C[4]
@@ -616,39 +615,39 @@ osbyte                                      = &FFF4
 
 ; &1CEA referenced 1 time by &0FE5
 .C0FEA
-    LDA (L0090),Y                                 ; 1CEA: B1 90                                  ..           :0FEA[4]
+    LDA (current_x_coord),Y                       ; 1CEA: B1 90                                  ..           :0FEA[4]
     STA L0092                                     ; 1CEC: 85 92                                  ..           :0FEC[4]
 ; &1CEE referenced 1 time by &1023
 .C0FEE
     INY                                           ; 1CEE: C8                                     .            :0FEE[4]
     TYA                                           ; 1CEF: 98                                     .            :0FEF[4]
     PHA                                           ; 1CF0: 48                                     H            :0FF0[4]
-    LDA (L0090),Y                                 ; 1CF1: B1 90                                  ..           :0FF1[4]
+    LDA (current_x_coord),Y                       ; 1CF1: B1 90                                  ..           :0FF1[4]
     PHA                                           ; 1CF3: 48                                     H            :0FF3[4]
     AND #&F0                                      ; 1CF4: 29 F0                                  ).           :0FF4[4]
     LSR A                                         ; 1CF6: 4A                                     J            :0FF6[4]
     LSR A                                         ; 1CF7: 4A                                     J            :0FF7[4]
-    STA L0093                                     ; 1CF8: 85 93                                  ..           :0FF8[4]
+    STA current_y_coord                           ; 1CF8: 85 93                                  ..           :0FF8[4]
     LSR A                                         ; 1CFA: 4A                                     J            :0FFA[4]
     LSR A                                         ; 1CFB: 4A                                     J            :0FFB[4]
     STA L0094                                     ; 1CFC: 85 94                                  ..           :0FFC[4]
-    ADC L0093                                     ; 1CFE: 65 93                                  e.           :0FFE[4]
+    ADC current_y_coord                           ; 1CFE: 65 93                                  e.           :0FFE[4]
     ADC #&0A                                      ; 1D00: 69 0A                                  i.           :1000[4]
     TAX                                           ; 1D02: AA                                     .            :1002[4]
     PLA                                           ; 1D03: 68                                     h            :1003[4]
     AND #&0F                                      ; 1D04: 29 0F                                  ).           :1004[4]
     ASL A                                         ; 1D06: 0A                                     .            :1006[4]
-    STA L0093                                     ; 1D07: 85 93                                  ..           :1007[4]
+    STA current_y_coord                           ; 1D07: 85 93                                  ..           :1007[4]
     ASL A                                         ; 1D09: 0A                                     .            :1009[4]
     ASL A                                         ; 1D0A: 0A                                     .            :100A[4]
     ASL A                                         ; 1D0B: 0A                                     .            :100B[4]
     ORA L0094                                     ; 1D0C: 05 94                                  ..           :100C[4]
     STA L0094                                     ; 1D0E: 85 94                                  ..           :100E[4]
-    LDA L0093                                     ; 1D10: A5 93                                  ..           :1010[4]
+    LDA current_y_coord                           ; 1D10: A5 93                                  ..           :1010[4]
     ASL A                                         ; 1D12: 0A                                     .            :1012[4]
     ASL A                                         ; 1D13: 0A                                     .            :1013[4]
     ASL A                                         ; 1D14: 0A                                     .            :1014[4]
-    ADC L0093                                     ; 1D15: 65 93                                  e.           :1015[4]
+    ADC current_y_coord                           ; 1D15: 65 93                                  e.           :1015[4]
     ADC #&15                                      ; 1D17: 69 15                                  i.           :1017[4]
     CPY L0092                                     ; 1D19: C4 92                                  ..           :1019[4]
     TAY                                           ; 1D1B: A8                                     .            :101B[4]
@@ -661,7 +660,7 @@ osbyte                                      = &FFF4
     JSR sub_C26E8                                 ; 1D28: 20 E8 26                                .&          :1028[4]
     LDA #6                                        ; 1D2B: A9 06                                  ..           :102B[4]
     STA number_of_apples_on_screen                ; 1D2D: 85 09                                  ..           :102D[4]
-    STA L0090                                     ; 1D2F: 85 90                                  ..           :102F[4]
+    STA current_x_coord                           ; 1D2F: 85 90                                  ..           :102F[4]
 ; &1D31 referenced 3 times by &106A, &106F, &108A
 .C1031
     JSR sub_C25E5                                 ; 1D31: 20 E5 25                                .%          :1031[4]
@@ -678,11 +677,11 @@ osbyte                                      = &FFF4
     ADC L0091                                     ; 1D40: 65 91                                  e.           :1040[4]
     ADC #&0A                                      ; 1D42: 69 0A                                  i.           :1042[4]
     ASL A                                         ; 1D44: 0A                                     .            :1044[4]
-    LDY L0090                                     ; 1D45: A4 90                                  ..           :1045[4]
+    LDY current_x_coord                           ; 1D45: A4 90                                  ..           :1045[4]
     STA apple_x_coordinate,Y                      ; 1D47: 99 AF 08                               ...          :1047[4]
     TAX                                           ; 1D4A: AA                                     .            :104A[4]
     LDA #0                                        ; 1D4B: A9 00                                  ..           :104B[4]
-    STA unknown_apple_status_data,Y               ; 1D4D: 99 1F 06                               ...          :104D[4]
+    STA apple_status_data_minus_1,Y               ; 1D4D: 99 1F 06                               ...          :104D[4]
     JSR sub_C25E5                                 ; 1D50: 20 E5 25                                .%          :1050[4]
 ; &1D53 referenced 1 time by &1056
 .loop_C1053
@@ -712,11 +711,11 @@ osbyte                                      = &FFF4
     ASL A                                         ; 1D7A: 0A                                     .            :107A[4]
     ADC L0091                                     ; 1D7B: 65 91                                  e.           :107B[4]
     ADC #&15                                      ; 1D7D: 69 15                                  i.           :107D[4]
-    LDY L0090                                     ; 1D7F: A4 90                                  ..           :107F[4]
+    LDY current_x_coord                           ; 1D7F: A4 90                                  ..           :107F[4]
     STA game_pallet_data_4_or_apple_y_coord_minus_1,Y; 1D81: 99 0F 06                               ...          :1081[4]
     TAY                                           ; 1D84: A8                                     .            :1084[4]
     JSR write_apple_to_screen_uncorrected         ; 1D85: 20 08 1E                                ..          :1085[4]
-    DEC L0090                                     ; 1D88: C6 90                                  ..           :1088[4]
+    DEC current_x_coord                           ; 1D88: C6 90                                  ..           :1088[4]
     BNE C1031                                     ; 1D8A: D0 A5                                  ..           :108A[4]
 ; &1D8C referenced 1 time by &1248
 .initial_write_of_central_base_to_screen
@@ -763,30 +762,30 @@ osbyte                                      = &FFF4
 ; &1DD6 referenced 1 time by &112D
 .main_game_action_loop
     JSR sub_called_by_main_game_loop_1            ; 1DD6: 20 4B 12                                K.          :10D6[4]
-    JSR sub_possible_print_existing_game_sprites  ; 1DD9: 20 A1 1B                                ..          :10D9[4]
-    LDA L000F                                     ; 1DDC: A5 0F                                  ..           :10DC[4]
+    JSR sub_update_and_squishing_monsters_on_screen; 1DD9: 20 A1 1B                                ..          :10D9[4]
+    LDA main_game_timer_counter                   ; 1DDC: A5 0F                                  ..           :10DC[4]
     LSR A                                         ; 1DDE: 4A                                     J            :10DE[4]
     BCC skip_over_some_sprite_plotting            ; 1DDF: 90 03                                  ..           :10DF[4]
-    JSR sub_possible_print_existing_game_sprites  ; 1DE1: 20 A1 1B                                ..          :10E1[4]
+    JSR sub_update_and_squishing_monsters_on_screen; 1DE1: 20 A1 1B                                ..          :10E1[4]   ; every other main loop tick we perform one extra squishing, which means players/monsters below may not be able to escape being squished
 ; &1DE4 referenced 1 time by &10DF
 .skip_over_some_sprite_plotting
     JSR run_music_and_pause_waiting_for_timer_interrupt_900; 1DE4: 20 00 09                                ..          :10E4[4]
     LDA remaining_monsters_to_spawn_minus_1       ; 1DE7: A5 14                                  ..           :10E7[4]
     CMP #&FD                                      ; 1DE9: C9 FD                                  ..           :10E9[4]
     BNE possible_all_ghosts_killed                ; 1DEB: D0 06                                  ..           :10EB[4]
-    LDA L000F                                     ; 1DED: A5 0F                                  ..           :10ED[4]
+    LDA main_game_timer_counter                   ; 1DED: A5 0F                                  ..           :10ED[4]
     AND #3                                        ; 1DEF: 29 03                                  ).           :10EF[4]
-    BEQ C10FF                                     ; 1DF1: F0 0C                                  ..           :10F1[4]
+    BEQ skip_over_all_ghosts_killed_check         ; 1DF1: F0 0C                                  ..           :10F1[4]
 ; &1DF3 referenced 1 time by &10EB
 .possible_all_ghosts_killed
     LDA scene_number                              ; 1DF3: A5 15                                  ..           :10F3[4]
     CMP #8                                        ; 1DF5: C9 08                                  ..           :10F5[4]
     BCC C1102                                     ; 1DF7: 90 09                                  ..           :10F7[4]
-    LDA L000F                                     ; 1DF9: A5 0F                                  ..           :10F9[4]
+    LDA main_game_timer_counter                   ; 1DF9: A5 0F                                  ..           :10F9[4]
     AND #7                                        ; 1DFB: 29 07                                  ).           :10FB[4]
     BNE C1102                                     ; 1DFD: D0 03                                  ..           :10FD[4]
 ; &1DFF referenced 1 time by &10F1
-.C10FF
+.skip_over_all_ghosts_killed_check
     JSR sub_C1FDC                                 ; 1DFF: 20 DC 1F                                ..          :10FF[4]
 ; &1E02 referenced 2 times by &10F7, &10FD
 .C1102
@@ -794,7 +793,7 @@ osbyte                                      = &FFF4
     LDA L0720,Y                                   ; 1E04: B9 20 07                               . .          :1104[4]
     LSR A                                         ; 1E07: 4A                                     J            :1107[4]
     BCS C1115                                     ; 1E08: B0 0B                                  ..           :1108[4]
-    LDA L000F                                     ; 1E0A: A5 0F                                  ..           :110A[4]
+    LDA main_game_timer_counter                   ; 1E0A: A5 0F                                  ..           :110A[4]
     AND #7                                        ; 1E0C: 29 07                                  ).           :110C[4]
     CMP #4                                        ; 1E0E: C9 04                                  ..           :110E[4]
     BNE C1115                                     ; 1E10: D0 03                                  ..           :1110[4]
@@ -824,7 +823,7 @@ osbyte                                      = &FFF4
 .loop_keep_plotting_animations_post_event
     LDA #0                                        ; 1E34: A9 00                                  ..           :1134[4]
     STA L0026                                     ; 1E36: 85 26                                  .&           :1136[4]
-    JSR sub_possible_print_existing_game_sprites  ; 1E38: 20 A1 1B                                ..          :1138[4]
+    JSR sub_update_and_squishing_monsters_on_screen; 1E38: 20 A1 1B                                ..          :1138[4]
     JSR sub_C1653                                 ; 1E3B: 20 53 16                                S.          :113B[4]
     JSR run_music_and_pause_waiting_for_timer_interrupt_900; 1E3E: 20 00 09                                ..          :113E[4]
     LDX ball_state                                ; 1E41: A6 1B                                  ..           :1141[4]
@@ -866,7 +865,7 @@ osbyte                                      = &FFF4
 ; &1E77 referenced 1 time by &1171
 .death_ditty
     LDA #&0B                                      ; 1E77: A9 0B                                  ..           :1177[4]
-    STA L0090                                     ; 1E79: 85 90                                  ..           :1179[4]
+    STA current_x_coord                           ; 1E79: 85 90                                  ..           :1179[4]
 ; &1E7B referenced 1 time by &11CD
 .loop_death_ditty
     LDA #2                                        ; 1E7B: A9 02                                  ..           :117B[4]
@@ -874,7 +873,7 @@ osbyte                                      = &FFF4
     STA zp_7E_sound_duration                      ; 1E7F: 85 7E                                  .~           :117F[4]
     ASL A                                         ; 1E81: 0A                                     .            :1181[4]
     STA zp_7A_sound_amplitude                     ; 1E82: 85 7A                                  .z           :1182[4]
-    LDX L0090                                     ; 1E84: A6 90                                  ..           :1184[4]
+    LDX current_x_coord                           ; 1E84: A6 90                                  ..           :1184[4]
     LDA L0052,X                                   ; 1E86: B5 52                                  .R           :1186[4]
     PHA                                           ; 1E88: 48                                     H            :1188[4]
     LDA L0056,X                                   ; 1E89: B5 56                                  .V           :1189[4]
@@ -903,15 +902,15 @@ osbyte                                      = &FFF4
     LSR A                                         ; 1EB4: 4A                                     J            :11B4[4]
     TAX                                           ; 1EB5: AA                                     .            :11B5[4]   ; X=X screen coordinate
     LDY mr_ee_y_coord                             ; 1EB6: A4 21                                  .!           :11B6[4]   ; Y=Y screen coordinate
-    LDA L0090                                     ; 1EB8: A5 90                                  ..           :11B8[4]   ; A=sprite number
+    LDA current_x_coord                           ; 1EB8: A5 90                                  ..           :11B8[4]   ; A=sprite number
     JSR write_sprite_to_screen_routine            ; 1EBA: 20 73 0A                                s.          :11BA[4]
     LDA #&0C                                      ; 1EBD: A9 0C                                  ..           :11BD[4]
     JSR delay_routine                             ; 1EBF: 20 40 0A                                @.          :11BF[4]
-    LDA L0090                                     ; 1EC2: A5 90                                  ..           :11C2[4]
+    LDA current_x_coord                           ; 1EC2: A5 90                                  ..           :11C2[4]
     CMP #8                                        ; 1EC4: C9 08                                  ..           :11C4[4]
     BEQ lose_a_life                               ; 1EC6: F0 07                                  ..           :11C6[4]
     JSR write_sprite_to_screen_routine            ; 1EC8: 20 73 0A                                s.          :11C8[4]
-    DEC L0090                                     ; 1ECB: C6 90                                  ..           :11CB[4]
+    DEC current_x_coord                           ; 1ECB: C6 90                                  ..           :11CB[4]
     BPL loop_death_ditty                          ; 1ECD: 10 AC                                  ..           :11CD[4]
 ; &1ECF referenced 1 time by &11C6
 .lose_a_life
@@ -936,8 +935,8 @@ osbyte                                      = &FFF4
 .loop_C11EB
     TXA                                           ; 1EEB: 8A                                     .            :11EB[4]
     PHA                                           ; 1EEC: 48                                     H            :11EC[4]
-    JSR unknown_fetch_and_process_monster_routine ; 1EED: 20 65 25                                e%          :11ED[4]
-    JSR sub_widely_used_print_some_sprite         ; 1EF0: 20 41 24                                A$          :11F0[4]
+    JSR fetch_and_process_monster_from_stack      ; 1EED: 20 65 25                                e%          :11ED[4]
+    JSR sub_print_or_erase_monster_on_screen      ; 1EF0: 20 41 24                                A$          :11F0[4]
     PLA                                           ; 1EF3: 68                                     h            :11F3[4]
     TAX                                           ; 1EF4: AA                                     .            :11F4[4]
     DEX                                           ; 1EF5: CA                                     .            :11F5[4]
@@ -999,21 +998,21 @@ osbyte                                      = &FFF4
 
 ; &1F4B referenced 1 time by &10D6
 .sub_called_by_main_game_loop_1
-    INC L000F                                     ; 1F4B: E6 0F                                  ..           :124B[4]
+    INC main_game_timer_counter                   ; 1F4B: E6 0F                                  ..           :124B[4]
     JSR sub_C1FDC                                 ; 1F4D: 20 DC 1F                                ..          :124D[4]
     JSR sub_C1653                                 ; 1F50: 20 53 16                                S.          :1250[4]
-    LDA L000F                                     ; 1F53: A5 0F                                  ..           :1253[4]
+    LDA main_game_timer_counter                   ; 1F53: A5 0F                                  ..           :1253[4]
     AND #2                                        ; 1F55: 29 02                                  ).           :1255[4]
     BEQ C126C                                     ; 1F57: F0 13                                  ..           :1257[4]
     LDX number_of_apples_on_screen                ; 1F59: A6 09                                  ..           :1259[4]
     BEQ C126C                                     ; 1F5B: F0 0F                                  ..           :125B[4]
 ; &1F5D referenced 1 time by &126A
 .loop_C125D
-    LDA unknown_apple_status_data,X               ; 1F5D: BD 1F 06                               ...          :125D[4]
+    LDA apple_status_data_minus_1,X               ; 1F5D: BD 1F 06                               ...          :125D[4]
     CMP #&40 ; '@'                                ; 1F60: C9 40                                  .@           :1260[4]
     BCS C1269                                     ; 1F62: B0 05                                  ..           :1262[4]
     AND #&FE                                      ; 1F64: 29 FE                                  ).           :1264[4]
-    STA unknown_apple_status_data,X               ; 1F66: 9D 1F 06                               ...          :1266[4]
+    STA apple_status_data_minus_1,X               ; 1F66: 9D 1F 06                               ...          :1266[4]
 ; &1F69 referenced 1 time by &1262
 .C1269
     DEX                                           ; 1F69: CA                                     .            :1269[4]
@@ -1043,7 +1042,7 @@ osbyte                                      = &FFF4
     STA video_ula_palette                         ; 1F95: 8D 21 FE                               .!.          :1295[4]
     LDA #&C6                                      ; 1F98: A9 C6                                  ..           :1298[4]   ; logical color 12 (flash blue/yellow) -> 6 EOR 7 = Actual color 1 (Red)
     STA video_ula_palette                         ; 1F9A: 8D 21 FE                               .!.          :129A[4]
-    JSR sub_C247C                                 ; 1F9D: 20 7C 24                                |$          :129D[4]
+    JSR introduce_extra_monster_to_playscreen     ; 1F9D: 20 7C 24                                |$          :129D[4]
     LDA #&55 ; 'U'                                ; 1FA0: A9 55                                  .U           :12A0[4]
     JSR flush_all_sound_channels                  ; 1FA2: 20 B2 25                                .%          :12A2[4]
     LDA #&F1                                      ; 1FA5: A9 F1                                  ..           :12A5[4]
@@ -1054,7 +1053,7 @@ osbyte                                      = &FFF4
     LDA #2                                        ; 1FAB: A9 02                                  ..           :12AB[4]
     STA zp_78_sound_channel                       ; 1FAD: 85 78                                  .x           :12AD[4]
     STA zp_7E_sound_duration                      ; 1FAF: 85 7E                                  .~           :12AF[4]
-    LDA L2793,X                                   ; 1FB1: BD 93 27                               ..'          :12B1[4]
+    LDA base_eaten_ghosts_triggered_music,X       ; 1FB1: BD 93 27                               ..'          :12B1[4]
     STA zp_7C_sound_pitch                         ; 1FB4: 85 7C                                  .|           :12B4[4]
     TXA                                           ; 1FB6: 8A                                     .            :12B6[4]
     PHA                                           ; 1FB7: 48                                     H            :12B7[4]
@@ -1070,9 +1069,9 @@ osbyte                                      = &FFF4
 ; &1FC9 referenced 3 times by &126F, &1277, &127B
 .mr_ee_has_not_triggered_ghosts
     LDA mr_ee_x_coord                             ; 1FC9: A5 20                                  .            :12C9[4]
-    STA L0090                                     ; 1FCB: 85 90                                  ..           :12CB[4]
+    STA current_x_coord                           ; 1FCB: 85 90                                  ..           :12CB[4]
     LDA mr_ee_y_coord                             ; 1FCD: A5 21                                  .!           :12CD[4]
-    STA L0093                                     ; 1FCF: 85 93                                  ..           :12CF[4]
+    STA current_y_coord                           ; 1FCF: 85 93                                  ..           :12CF[4]
     JSR unknown_process_monster_routine_without_fetch; 1FD1: 20 68 25                                h%          :12D1[4]
     STY somthing_used_to_index_address_0720       ; 1FD4: 84 01                                  ..           :12D4[4]
     JSR sub_check_for_eaten_cherries              ; 1FD6: 20 25 1B                                %.          :12D6[4]
@@ -1210,7 +1209,7 @@ osbyte                                      = &FFF4
     BEQ C13F3                                     ; 20A9: F0 48                                  .H           :13A9[4]
     CMP #&0C                                      ; 20AB: C9 0C                                  ..           :13AB[4]
     BCS reset_cherries_consumed_counter           ; 20AD: B0 E1                                  ..           :13AD[4]
-    LDA L000F                                     ; 20AF: A5 0F                                  ..           :13AF[4]
+    LDA main_game_timer_counter                   ; 20AF: A5 0F                                  ..           :13AF[4]
     LSR A                                         ; 20B1: 4A                                     J            :13B1[4]
     LSR A                                         ; 20B2: 4A                                     J            :13B2[4]
     BCC C1407                                     ; 20B3: 90 52                                  .R           :13B3[4]
@@ -1219,18 +1218,18 @@ osbyte                                      = &FFF4
 ; &20B9 referenced 1 time by &13EE
 .loop_another_unknown_stuff
     LDA L0087                                     ; 20B9: A5 87                                  ..           :13B9[4]
-    CMP possible_monster_stack_y_coord,X          ; 20BB: DD 8F 08                               ...          :13BB[4]
+    CMP monster_stack_y_coord_minus_one,X         ; 20BB: DD 8F 08                               ...          :13BB[4]
     BNE C13ED                                     ; 20BE: D0 2D                                  .-           :13BE[4]
-    LDA possible_unknown_monster_data_1,X         ; 20C0: BD 9F 08                               ...          :13C0[4]
+    LDA unknown_monster_data_1_minus_one,X        ; 20C0: BD 9F 08                               ...          :13C0[4]
     AND #&0A                                      ; 20C3: 29 0A                                  ).           :13C3[4]
     BNE C13ED                                     ; 20C5: D0 26                                  .&           :13C5[4]
-    LDA possible_monster_stack_x_coord,X          ; 20C7: BD 7F 08                               ...          :13C7[4]
+    LDA monster_stack_x_coord_minus_one,X         ; 20C7: BD 7F 08                               ...          :13C7[4]
     SBC L0086                                     ; 20CA: E5 86                                  ..           :13CA[4]
     CMP #&F0                                      ; 20CC: C9 F0                                  ..           :13CC[4]
     BCC C13ED                                     ; 20CE: 90 1D                                  ..           :13CE[4]
     TXA                                           ; 20D0: 8A                                     .            :13D0[4]
     PHA                                           ; 20D1: 48                                     H            :13D1[4]
-    JSR unknown_fetch_and_process_monster_routine ; 20D2: 20 65 25                                e%          :13D2[4]
+    JSR fetch_and_process_monster_from_stack      ; 20D2: 20 65 25                                e%          :13D2[4]
     LDA L0092                                     ; 20D5: A5 92                                  ..           :13D5[4]
     BNE C13E0                                     ; 20D7: D0 07                                  ..           :13D7[4]
     LDA L0720,Y                                   ; 20D9: B9 20 07                               . .          :13D9[4]
@@ -1238,10 +1237,10 @@ osbyte                                      = &FFF4
     BEQ C13EB                                     ; 20DE: F0 0B                                  ..           :13DE[4]
 ; &20E0 referenced 1 time by &13D7
 .C13E0
-    DEC possible_monster_stack_x_coord,X          ; 20E0: DE 7F 08                               ...          :13E0[4]
-    JSR sub_widely_used_print_some_sprite         ; 20E3: 20 41 24                                A$          :13E3[4]
-    DEC L0090                                     ; 20E6: C6 90                                  ..           :13E6[4]
-    JSR sub_widely_used_print_some_sprite         ; 20E8: 20 41 24                                A$          :13E8[4]
+    DEC monster_stack_x_coord_minus_one,X         ; 20E0: DE 7F 08                               ...          :13E0[4]
+    JSR sub_print_or_erase_monster_on_screen      ; 20E3: 20 41 24                                A$          :13E3[4]
+    DEC current_x_coord                           ; 20E6: C6 90                                  ..           :13E6[4]
+    JSR sub_print_or_erase_monster_on_screen      ; 20E8: 20 41 24                                A$          :13E8[4]
 ; &20EB referenced 1 time by &13DE
 .C13EB
     PLA                                           ; 20EB: 68                                     h            :13EB[4]
@@ -1317,7 +1316,7 @@ osbyte                                      = &FFF4
     BEQ C147E                                     ; 2134: F0 48                                  .H           :1434[4]
     CMP #&0C                                      ; 2136: C9 0C                                  ..           :1436[4]
     BCS loop_C142F                                ; 2138: B0 F5                                  ..           :1438[4]
-    LDA L000F                                     ; 213A: A5 0F                                  ..           :143A[4]
+    LDA main_game_timer_counter                   ; 213A: A5 0F                                  ..           :143A[4]
     LSR A                                         ; 213C: 4A                                     J            :143C[4]
     LSR A                                         ; 213D: 4A                                     J            :143D[4]
     BCC C1407                                     ; 213E: 90 C7                                  ..           :143E[4]
@@ -1326,18 +1325,18 @@ osbyte                                      = &FFF4
 ; &2144 referenced 1 time by &1479
 .C1444
     LDA L0087                                     ; 2144: A5 87                                  ..           :1444[4]
-    CMP possible_monster_stack_y_coord,X          ; 2146: DD 8F 08                               ...          :1446[4]
+    CMP monster_stack_y_coord_minus_one,X         ; 2146: DD 8F 08                               ...          :1446[4]
     BNE C1478                                     ; 2149: D0 2D                                  .-           :1449[4]
-    LDA possible_unknown_monster_data_1,X         ; 214B: BD 9F 08                               ...          :144B[4]
+    LDA unknown_monster_data_1_minus_one,X        ; 214B: BD 9F 08                               ...          :144B[4]
     AND #&0A                                      ; 214E: 29 0A                                  ).           :144E[4]
     BNE C1478                                     ; 2150: D0 26                                  .&           :1450[4]
-    LDA possible_monster_stack_x_coord,X          ; 2152: BD 7F 08                               ...          :1452[4]
+    LDA monster_stack_x_coord_minus_one,X         ; 2152: BD 7F 08                               ...          :1452[4]
     SBC L0086                                     ; 2155: E5 86                                  ..           :1455[4]
     CMP #9                                        ; 2157: C9 09                                  ..           :1457[4]
     BCS C1478                                     ; 2159: B0 1D                                  ..           :1459[4]
     TXA                                           ; 215B: 8A                                     .            :145B[4]
     PHA                                           ; 215C: 48                                     H            :145C[4]
-    JSR unknown_fetch_and_process_monster_routine ; 215D: 20 65 25                                e%          :145D[4]
+    JSR fetch_and_process_monster_from_stack      ; 215D: 20 65 25                                e%          :145D[4]
     LDA L0092                                     ; 2160: A5 92                                  ..           :1460[4]
     BNE C146B                                     ; 2162: D0 07                                  ..           :1462[4]
     LDA L0720,Y                                   ; 2164: B9 20 07                               . .          :1464[4]
@@ -1345,10 +1344,10 @@ osbyte                                      = &FFF4
     BEQ C1476                                     ; 2169: F0 0B                                  ..           :1469[4]
 ; &216B referenced 1 time by &1462
 .C146B
-    INC possible_monster_stack_x_coord,X          ; 216B: FE 7F 08                               ...          :146B[4]
-    JSR sub_widely_used_print_some_sprite         ; 216E: 20 41 24                                A$          :146E[4]
-    INC L0090                                     ; 2171: E6 90                                  ..           :1471[4]
-    JSR sub_widely_used_print_some_sprite         ; 2173: 20 41 24                                A$          :1473[4]
+    INC monster_stack_x_coord_minus_one,X         ; 216B: FE 7F 08                               ...          :146B[4]
+    JSR sub_print_or_erase_monster_on_screen      ; 216E: 20 41 24                                A$          :146E[4]
+    INC current_x_coord                           ; 2171: E6 90                                  ..           :1471[4]
+    JSR sub_print_or_erase_monster_on_screen      ; 2173: 20 41 24                                A$          :1473[4]
 ; &2176 referenced 1 time by &1469
 .C1476
     PLA                                           ; 2176: 68                                     h            :1476[4]
@@ -1433,22 +1432,22 @@ osbyte                                      = &FFF4
     BNE C14C6                                     ; 21E7: D0 DD                                  ..           :14E7[4]
 ; &21E9 referenced 8 times by &1692, &1697, &169E, &16A3, &16AF, &16B4, &16C6, &16CB
 .sub_C14E9
-    LDA L0090                                     ; 21E9: A5 90                                  ..           :14E9[4]
+    LDA current_x_coord                           ; 21E9: A5 90                                  ..           :14E9[4]
     ASL A                                         ; 21EB: 0A                                     .            :14EB[4]
     BCS C1531                                     ; 21EC: B0 43                                  .C           :14EC[4]
     ASL A                                         ; 21EE: 0A                                     .            :14EE[4]
     BCS C1531                                     ; 21EF: B0 40                                  .@           :14EF[4]
     STA L0091                                     ; 21F1: 85 91                                  ..           :14F1[4]
-    LDA possible_ball_y_coordinate                ; 21F3: A5 1A                                  ..           :14F3[4]
+    LDA possible_temp_ball_y_coordinate           ; 21F3: A5 1A                                  ..           :14F3[4]
     SEC                                           ; 21F5: 38                                     8            :14F5[4]
     SBC L0091                                     ; 21F6: E5 91                                  ..           :14F6[4]
     BCC C14FD                                     ; 21F8: 90 03                                  ..           :14F8[4]
     JSR sub_C1509                                 ; 21FA: 20 09 15                                ..          :14FA[4]
 ; &21FD referenced 1 time by &14F8
 .C14FD
-    LDA possible_ball_y_coordinate                ; 21FD: A5 1A                                  ..           :14FD[4]
+    LDA possible_temp_ball_y_coordinate           ; 21FD: A5 1A                                  ..           :14FD[4]
     JSR sub_C1509                                 ; 21FF: 20 09 15                                ..          :14FF[4]
-    LDA possible_ball_y_coordinate                ; 2202: A5 1A                                  ..           :1502[4]
+    LDA possible_temp_ball_y_coordinate           ; 2202: A5 1A                                  ..           :1502[4]
     CLC                                           ; 2204: 18                                     .            :1504[4]
     ADC L0091                                     ; 2205: 65 91                                  e.           :1505[4]
     BCS C1531                                     ; 2207: B0 28                                  .(           :1507[4]
@@ -1456,9 +1455,9 @@ osbyte                                      = &FFF4
 .sub_C1509
     PHA                                           ; 2209: 48                                     H            :1509[4]
     TAY                                           ; 220A: A8                                     .            :150A[4]
-    LDA possible_ball_x_coordinate                ; 220B: A5 19                                  ..           :150B[4]
+    LDA possible_temp_ball_x_coordinate           ; 220B: A5 19                                  ..           :150B[4]
     SEC                                           ; 220D: 38                                     8            :150D[4]
-    SBC L0090                                     ; 220E: E5 90                                  ..           :150E[4]
+    SBC current_x_coord                           ; 220E: E5 90                                  ..           :150E[4]
     TAX                                           ; 2210: AA                                     .            :1510[4]
     BCC C1516                                     ; 2211: 90 03                                  ..           :1511[4]
     JSR sub_possible_ball_printing_or_in_motion_routine; 2213: 20 98 26                                .&          :1513[4]
@@ -1467,17 +1466,17 @@ osbyte                                      = &FFF4
     PLA                                           ; 2216: 68                                     h            :1516[4]
     PHA                                           ; 2217: 48                                     H            :1517[4]
     TAY                                           ; 2218: A8                                     .            :1518[4]
-    LDX possible_ball_x_coordinate                ; 2219: A6 19                                  ..           :1519[4]
-    CPY possible_ball_y_coordinate                ; 221B: C4 1A                                  ..           :151B[4]
+    LDX possible_temp_ball_x_coordinate           ; 2219: A6 19                                  ..           :1519[4]
+    CPY possible_temp_ball_y_coordinate           ; 221B: C4 1A                                  ..           :151B[4]
     BEQ C1522                                     ; 221D: F0 03                                  ..           :151D[4]
     JSR sub_possible_ball_printing_or_in_motion_routine; 221F: 20 98 26                                .&          :151F[4]
 ; &2222 referenced 1 time by &151D
 .C1522
     PLA                                           ; 2222: 68                                     h            :1522[4]
     TAY                                           ; 2223: A8                                     .            :1523[4]
-    LDA possible_ball_x_coordinate                ; 2224: A5 19                                  ..           :1524[4]
+    LDA possible_temp_ball_x_coordinate           ; 2224: A5 19                                  ..           :1524[4]
     CLC                                           ; 2226: 18                                     .            :1526[4]
-    ADC L0090                                     ; 2227: 65 90                                  e.           :1527[4]
+    ADC current_x_coord                           ; 2227: 65 90                                  e.           :1527[4]
     TAX                                           ; 2229: AA                                     .            :1529[4]
     CPX #&4F ; 'O'                                ; 222A: E0 4F                                  .O           :152A[4]
     BCS C1531                                     ; 222C: B0 03                                  ..           :152C[4]
@@ -1518,27 +1517,27 @@ osbyte                                      = &FFF4
     CMP #&3C ; '<'                                ; 2265: C9 3C                                  .<           :1565[4]
     BNE move_mr_ee_towards_enemy                  ; 2267: D0 EF                                  ..           :1567[4]
     JSR calculate_ball_x_y_position_relative_to_mr_ee; 2269: 20 6E 26                                n&          :1569[4]
-    STX possible_ball_x_coordinate                ; 226C: 86 19                                  ..           :156C[4]
-    STY possible_ball_y_coordinate                ; 226E: 84 1A                                  ..           :156E[4]
+    STX possible_temp_ball_x_coordinate           ; 226C: 86 19                                  ..           :156C[4]
+    STY possible_temp_ball_y_coordinate           ; 226E: 84 1A                                  ..           :156E[4]
 ; &2270 referenced 1 time by &1590
 .loop_fired_ball_in_transit
     JSR possible_update_ball_if_exists            ; 2270: 20 D7 26                                .&          :1570[4]
-    INC possible_ball_x_coordinate                ; 2273: E6 19                                  ..           :1573[4]
-    LDY possible_ball_y_coordinate                ; 2275: A4 1A                                  ..           :1575[4]
+    INC possible_temp_ball_x_coordinate           ; 2273: E6 19                                  ..           :1573[4]
+    LDY possible_temp_ball_y_coordinate           ; 2275: A4 1A                                  ..           :1575[4]
     INY                                           ; 2277: C8                                     .            :1577[4]
     INY                                           ; 2278: C8                                     .            :1578[4]
     INY                                           ; 2279: C8                                     .            :1579[4]
     INY                                           ; 227A: C8                                     .            :157A[4]
-    LDA possible_ball_x_coordinate                ; 227B: A5 19                                  ..           :157B[4]
+    LDA possible_temp_ball_x_coordinate           ; 227B: A5 19                                  ..           :157B[4]
     CMP #&26 ; '&'                                ; 227D: C9 26                                  .&           :157D[4]
     BCC C1584                                     ; 227F: 90 03                                  ..           :157F[4]
     JSR sub_C1A66                                 ; 2281: 20 66 1A                                f.          :1581[4]
 ; &2284 referenced 1 time by &157F
 .C1584
-    STY possible_ball_y_coordinate                ; 2284: 84 1A                                  ..           :1584[4]
+    STY possible_temp_ball_y_coordinate           ; 2284: 84 1A                                  ..           :1584[4]
     JSR possible_update_ball_if_exists            ; 2286: 20 D7 26                                .&          :1586[4]
     JSR run_music_and_pause_waiting_for_timer_interrupt_900; 2289: 20 00 09                                ..          :1589[4]
-    LDA possible_ball_x_coordinate                ; 228C: A5 19                                  ..           :158C[4]
+    LDA possible_temp_ball_x_coordinate           ; 228C: A5 19                                  ..           :158C[4]
     CMP #&27 ; '''                                ; 228E: C9 27                                  .'           :158E[4]
     BNE loop_fired_ball_in_transit                ; 2290: D0 DE                                  ..           :1590[4]
     JSR possible_update_ball_if_exists            ; 2292: 20 D7 26                                .&          :1592[4]
@@ -1640,7 +1639,7 @@ extra_player_string_data = sub_C15DA+2
 .sub_C1653
     LDX #3                                        ; 2353: A2 03                                  ..           :1653[4]
 ; &2355 referenced 1 time by &1671
-.loop_C1655
+.loop_unknown_counter_check
     LDA unknown_counter,X                         ; 2355: B5 3C                                  .<           :1655[4]
     BEQ C1670                                     ; 2357: F0 17                                  ..           :1657[4]
     INC L0026                                     ; 2359: E6 26                                  .&           :1659[4]
@@ -1661,7 +1660,7 @@ extra_player_string_data = sub_C15DA+2
 ; &2370 referenced 2 times by &1657, &165D
 .C1670
     DEX                                           ; 2370: CA                                     .            :1670[4]
-    BPL loop_C1655                                ; 2371: 10 E2                                  ..           :1671[4]
+    BPL loop_unknown_counter_check                ; 2371: 10 E2                                  ..           :1671[4]
 ; ***************************************************************************************
 ; Possibly Examines ball state and updates the ball position accordingly (any screen
 ; printing?)
@@ -1691,14 +1690,14 @@ extra_player_string_data = sub_C15DA+2
 .C168E
     ASL A                                         ; 238E: 0A                                     .            :168E[4]
     ASL A                                         ; 238F: 0A                                     .            :168F[4]
-    STA L0090                                     ; 2390: 85 90                                  ..           :1690[4]
+    STA current_x_coord                           ; 2390: 85 90                                  ..           :1690[4]
     JSR sub_C14E9                                 ; 2392: 20 E9 14                                ..          :1692[4]
-    LSR L0090                                     ; 2395: 46 90                                  F.           :1695[4]
+    LSR current_x_coord                           ; 2395: 46 90                                  F.           :1695[4]
     JSR sub_C14E9                                 ; 2397: 20 E9 14                                ..          :1697[4]
-    INC L0090                                     ; 239A: E6 90                                  ..           :169A[4]
-    INC L0090                                     ; 239C: E6 90                                  ..           :169C[4]
+    INC current_x_coord                           ; 239A: E6 90                                  ..           :169A[4]
+    INC current_x_coord                           ; 239C: E6 90                                  ..           :169C[4]
     JSR sub_C14E9                                 ; 239E: 20 E9 14                                ..          :169E[4]
-    ASL L0090                                     ; 23A1: 06 90                                  ..           :16A1[4]
+    ASL current_x_coord                           ; 23A1: 06 90                                  ..           :16A1[4]
     JSR sub_C14E9                                 ; 23A3: 20 E9 14                                ..          :16A3[4]
     INC ball_state                                ; 23A6: E6 1B                                  ..           :16A6[4]
 ; &23A8 referenced 3 times by &1686, &16D0, &16E0
@@ -1710,20 +1709,20 @@ extra_player_string_data = sub_C15DA+2
     LDA ball_state                                ; 23A9: A5 1B                                  ..           :16A9[4]
     ASL A                                         ; 23AB: 0A                                     .            :16AB[4]
     ASL A                                         ; 23AC: 0A                                     .            :16AC[4]
-    STA L0090                                     ; 23AD: 85 90                                  ..           :16AD[4]
+    STA current_x_coord                           ; 23AD: 85 90                                  ..           :16AD[4]
     JSR sub_C14E9                                 ; 23AF: 20 E9 14                                ..          :16AF[4]
-    LSR L0090                                     ; 23B2: 46 90                                  F.           :16B2[4]
+    LSR current_x_coord                           ; 23B2: 46 90                                  F.           :16B2[4]
     JSR sub_C14E9                                 ; 23B4: 20 E9 14                                ..          :16B4[4]
     LDA mr_ee_x_coord                             ; 23B7: A5 20                                  .            :16B7[4]
     LSR A                                         ; 23B9: 4A                                     J            :16B9[4]
-    STA possible_ball_x_coordinate                ; 23BA: 85 19                                  ..           :16BA[4]
+    STA possible_temp_ball_x_coordinate           ; 23BA: 85 19                                  ..           :16BA[4]
     LDA mr_ee_y_coord                             ; 23BC: A5 21                                  .!           :16BC[4]
-    STA possible_ball_y_coordinate                ; 23BE: 85 1A                                  ..           :16BE[4]
-    DEC L0090                                     ; 23C0: C6 90                                  ..           :16C0[4]
-    DEC L0090                                     ; 23C2: C6 90                                  ..           :16C2[4]
+    STA possible_temp_ball_y_coordinate           ; 23BE: 85 1A                                  ..           :16BE[4]
+    DEC current_x_coord                           ; 23C0: C6 90                                  ..           :16C0[4]
+    DEC current_x_coord                           ; 23C2: C6 90                                  ..           :16C2[4]
     BEQ C16D2                                     ; 23C4: F0 0C                                  ..           :16C4[4]
     JSR sub_C14E9                                 ; 23C6: 20 E9 14                                ..          :16C6[4]
-    ASL L0090                                     ; 23C9: 06 90                                  ..           :16C9[4]
+    ASL current_x_coord                           ; 23C9: 06 90                                  ..           :16C9[4]
     JSR sub_C14E9                                 ; 23CB: 20 E9 14                                ..          :16CB[4]
     DEC ball_state                                ; 23CE: C6 1B                                  ..           :16CE[4]
     BNE C16A8                                     ; 23D0: D0 D6                                  ..           :16D0[4]
@@ -1750,8 +1749,8 @@ extra_player_string_data = sub_C15DA+2
     LDA L008B                                     ; 23E9: A5 8B                                  ..           :16E9[4]
     EOR ball_state                                ; 23EB: 45 1B                                  E.           :16EB[4]
     STA L0088                                     ; 23ED: 85 88                                  ..           :16ED[4]
-    LDX possible_ball_x_coordinate                ; 23EF: A6 19                                  ..           :16EF[4]
-    LDY possible_ball_y_coordinate                ; 23F1: A4 1A                                  ..           :16F1[4]
+    LDX possible_temp_ball_x_coordinate           ; 23EF: A6 19                                  ..           :16EF[4]
+    LDY possible_temp_ball_y_coordinate           ; 23F1: A4 1A                                  ..           :16F1[4]
     INX                                           ; 23F3: E8                                     .            :16F3[4]
     LSR A                                         ; 23F4: 4A                                     J            :16F4[4]
     BCC C16F9                                     ; 23F5: 90 02                                  ..           :16F5[4]
@@ -1769,8 +1768,8 @@ extra_player_string_data = sub_C15DA+2
     JSR sub_add_8_to_y_register                   ; 2402: 20 60 1A                                `.          :1702[4]
 ; &2405 referenced 1 time by &1700
 .C1705
-    STX L0089                                     ; 2405: 86 89                                  ..           :1705[4]
-    STY L008A                                     ; 2407: 84 8A                                  ..           :1707[4]
+    STX possible_ball_x_coordinate                ; 2405: 86 89                                  ..           :1705[4]
+    STY possible_ball_y_coordinate                ; 2407: 84 8A                                  ..           :1707[4]
     CPY #&15                                      ; 2409: C0 15                                  ..           :1709[4]
     BCC C172B                                     ; 240B: 90 1E                                  ..           :170B[4]
     JSR calculate_screen_write_address_from_x_y_coords; 240D: 20 D3 0A                                ..          :170D[4]
@@ -1807,10 +1806,10 @@ extra_player_string_data = sub_C15DA+2
     JSR play_sound_if_enabled                     ; 2443: 20 A6 0B                                ..          :1743[4]
 ; &2446 referenced 2 times by &173D, &17CF
 .C1746
-    LDX L0089                                     ; 2446: A6 89                                  ..           :1746[4]
-    STX possible_ball_x_coordinate                ; 2448: 86 19                                  ..           :1748[4]
-    LDY L008A                                     ; 244A: A4 8A                                  ..           :174A[4]
-    STY possible_ball_y_coordinate                ; 244C: 84 1A                                  ..           :174C[4]
+    LDX possible_ball_x_coordinate                ; 2446: A6 89                                  ..           :1746[4]
+    STX possible_temp_ball_x_coordinate           ; 2448: 86 19                                  ..           :1748[4]
+    LDY possible_ball_y_coordinate                ; 244A: A4 8A                                  ..           :174A[4]
+    STY possible_temp_ball_y_coordinate           ; 244C: 84 1A                                  ..           :174C[4]
     LDA L0088                                     ; 244E: A5 88                                  ..           :174E[4]
     AND #3                                        ; 2450: 29 03                                  ).           :1750[4]
     ORA #&40 ; '@'                                ; 2452: 09 40                                  .@           :1752[4]
@@ -1824,39 +1823,39 @@ extra_player_string_data = sub_C15DA+2
 ; &245D referenced 1 time by &1792
 .loop_process_next_monster_1
     JSR get_monster_data_off_stack                ; 245D: 20 50 25                                P%          :175D[4]
-    LDA L0096                                     ; 2460: A5 96                                  ..           :1760[4]
-    BMI C1791                                     ; 2462: 30 2D                                  0-           :1762[4]
-    LDA L0090                                     ; 2464: A5 90                                  ..           :1764[4]
+    LDA current_status_1                          ; 2460: A5 96                                  ..           :1760[4]
+    BMI finished_processing_this_monster_1        ; 2462: 30 2D                                  0-           :1762[4]
+    LDA current_x_coord                           ; 2464: A5 90                                  ..           :1764[4]
     LSR A                                         ; 2466: 4A                                     J            :1766[4]
     SEC                                           ; 2467: 38                                     8            :1767[4]
-    SBC L0089                                     ; 2468: E5 89                                  ..           :1768[4]
+    SBC possible_ball_x_coordinate                ; 2468: E5 89                                  ..           :1768[4]
     CMP #2                                        ; 246A: C9 02                                  ..           :176A[4]
     BCC C1772                                     ; 246C: 90 04                                  ..           :176C[4]
     CMP #&FC                                      ; 246E: C9 FC                                  ..           :176E[4]
-    BCC C1791                                     ; 2470: 90 1F                                  ..           :1770[4]
+    BCC finished_processing_this_monster_1        ; 2470: 90 1F                                  ..           :1770[4]
 ; &2472 referenced 1 time by &176C
 .C1772
-    LDA L0093                                     ; 2472: A5 93                                  ..           :1772[4]
+    LDA current_y_coord                           ; 2472: A5 93                                  ..           :1772[4]
     SEC                                           ; 2474: 38                                     8            :1774[4]
-    SBC L008A                                     ; 2475: E5 8A                                  ..           :1775[4]
+    SBC possible_ball_y_coordinate                ; 2475: E5 8A                                  ..           :1775[4]
     CMP #4                                        ; 2477: C9 04                                  ..           :1777[4]
     BCC C177F                                     ; 2479: 90 04                                  ..           :1779[4]
     CMP #&F0                                      ; 247B: C9 F0                                  ..           :177B[4]
-    BCC C1791                                     ; 247D: 90 12                                  ..           :177D[4]
+    BCC finished_processing_this_monster_1        ; 247D: 90 12                                  ..           :177D[4]
 ; &247F referenced 1 time by &1779
 .C177F
     LDA #&C0                                      ; 247F: A9 C0                                  ..           :177F[4]
     STA ball_state                                ; 2481: 85 1B                                  ..           :1781[4]
     JSR sub_monster_hit_by_ball_sprite_print      ; 2483: 20 B0 24                                .$          :1783[4]
-    LDA L0090                                     ; 2486: A5 90                                  ..           :1786[4]
+    LDA current_x_coord                           ; 2486: A5 90                                  ..           :1786[4]
     LSR A                                         ; 2488: 4A                                     J            :1788[4]
     TAX                                           ; 2489: AA                                     .            :1789[4]
-    LDY L0093                                     ; 248A: A4 93                                  ..           :178A[4]
+    LDY current_y_coord                           ; 248A: A4 93                                  ..           :178A[4]
     LDA #5                                        ; 248C: A9 05                                  ..           :178C[4]
     JMP C2603                                     ; 248E: 4C 03 26                               L.&          :178E[4]
 
 ; &2491 referenced 3 times by &1762, &1770, &177D
-.C1791
+.finished_processing_this_monster_1
     DEX                                           ; 2491: CA                                     .            :1791[4]
     BNE loop_process_next_monster_1               ; 2492: D0 C9                                  ..           :1792[4]
 ; &2494 referenced 1 time by &175B
@@ -1866,7 +1865,7 @@ extra_player_string_data = sub_C15DA+2
     LDA mr_ee_x_coord                             ; 2498: A5 20                                  .            :1798[4]
     LSR A                                         ; 249A: 4A                                     J            :179A[4]
     SEC                                           ; 249B: 38                                     8            :179B[4]
-    SBC L0089                                     ; 249C: E5 89                                  ..           :179C[4]
+    SBC possible_ball_x_coordinate                ; 249C: E5 89                                  ..           :179C[4]
     CMP #2                                        ; 249E: C9 02                                  ..           :179E[4]
     BCC C17A6                                     ; 24A0: 90 04                                  ..           :17A0[4]
     CMP #&FC                                      ; 24A2: C9 FC                                  ..           :17A2[4]
@@ -1875,7 +1874,7 @@ extra_player_string_data = sub_C15DA+2
 .C17A6
     LDA mr_ee_y_coord                             ; 24A6: A5 21                                  .!           :17A6[4]
     SEC                                           ; 24A8: 38                                     8            :17A8[4]
-    SBC L008A                                     ; 24A9: E5 8A                                  ..           :17A9[4]
+    SBC possible_ball_y_coordinate                ; 24A9: E5 8A                                  ..           :17A9[4]
     CMP #4                                        ; 24AB: C9 04                                  ..           :17AB[4]
     BCC C17B3                                     ; 24AD: 90 04                                  ..           :17AD[4]
     CMP #&F0                                      ; 24AF: C9 F0                                  ..           :17AF[4]
@@ -1889,12 +1888,12 @@ extra_player_string_data = sub_C15DA+2
 
 ; &24BB referenced 3 times by &1796, &17A4, &17B1
 .C17BB
-    LDA L0089                                     ; 24BB: A5 89                                  ..           :17BB[4]
+    LDA possible_ball_x_coordinate                ; 24BB: A5 89                                  ..           :17BB[4]
     CMP #&22 ; '"'                                ; 24BD: C9 22                                  ."           :17BD[4]
     BCC C17D2                                     ; 24BF: 90 11                                  ..           :17BF[4]
     CMP #&28 ; '('                                ; 24C1: C9 28                                  .(           :17C1[4]
     BCS C17D2                                     ; 24C3: B0 0D                                  ..           :17C3[4]
-    LDA L008A                                     ; 24C5: A5 8A                                  ..           :17C5[4]
+    LDA possible_ball_y_coordinate                ; 24C5: A5 8A                                  ..           :17C5[4]
     CMP #&7E ; '~'                                ; 24C7: C9 7E                                  .~           :17C7[4]
     BCC C17D2                                     ; 24C9: 90 07                                  ..           :17C9[4]
     CMP #&91                                      ; 24CB: C9 91                                  ..           :17CB[4]
@@ -2375,7 +2374,7 @@ code_to_relocate_1900 = sub_C18FF+1
     LDY #5                                        ; 27AE: A0 05                                  ..           :1AAE[4]
     LDX #&2F ; '/'                                ; 27B0: A2 2F                                  ./           :1AB0[4]
     LDA #4                                        ; 27B2: A9 04                                  ..           :1AB2[4]
-    STA L0093                                     ; 27B4: 85 93                                  ..           :1AB4[4]
+    STA current_y_coord                           ; 27B4: 85 93                                  ..           :1AB4[4]
 ; &27B6 referenced 1 time by &1ACC
 .loop_C1AB6
     LDA #&0F                                      ; 27B6: A9 0F                                  ..           :1AB6[4]
@@ -2385,13 +2384,13 @@ code_to_relocate_1900 = sub_C18FF+1
 ; &27BE referenced 1 time by &1ABA
 .C1ABE
     STA L0097                                     ; 27BE: 85 97                                  ..           :1ABE[4]
-    LDA L0093                                     ; 27C0: A5 93                                  ..           :1AC0[4]
+    LDA current_y_coord                           ; 27C0: A5 93                                  ..           :1AC0[4]
     JSR update_extra_letters_at_top_of_screen     ; 27C2: 20 4F 0B                                O.          :1AC2[4]
     TXA                                           ; 27C5: 8A                                     .            :1AC5[4]
     SEC                                           ; 27C6: 38                                     8            :1AC6[4]
     SBC #4                                        ; 27C7: E9 04                                  ..           :1AC7[4]
     TAX                                           ; 27C9: AA                                     .            :1AC9[4]
-    DEC L0093                                     ; 27CA: C6 93                                  ..           :1ACA[4]
+    DEC current_y_coord                           ; 27CA: C6 93                                  ..           :1ACA[4]
     BPL loop_C1AB6                                ; 27CC: 10 E8                                  ..           :1ACC[4]
     LDX #&14                                      ; 27CE: A2 14                                  ..           :1ACE[4]
     LDY #0                                        ; 27D0: A0 00                                  ..           :1AD0[4]
@@ -2465,10 +2464,10 @@ code_to_relocate_1900 = sub_C18FF+1
     LDA L0720,Y                                   ; 2839: B9 20 07                               . .          :1B39[4]
     AND #&FD                                      ; 283C: 29 FD                                  ).           :1B3C[4]
     STA L0720,Y                                   ; 283E: 99 20 07                               . .          :1B3E[4]
-    LDA L0090                                     ; 2841: A5 90                                  ..           :1B41[4]
+    LDA current_x_coord                           ; 2841: A5 90                                  ..           :1B41[4]
     LSR A                                         ; 2843: 4A                                     J            :1B43[4]
     TAX                                           ; 2844: AA                                     .            :1B44[4]
-    LDY L0093                                     ; 2845: A4 93                                  ..           :1B45[4]
+    LDY current_y_coord                           ; 2845: A4 93                                  ..           :1B45[4]
     JSR set_self_modified_code_1_NOP_JSR_0B3F_unknown_mod_2; 2847: 20 46 0B                                F.          :1B47[4]
     DEC remaining_cherry_count                    ; 284A: C6 08                                  ..           :1B4A[4]
 ; &284C referenced 3 times by &1B37, &1B6E, &1B72
@@ -2525,8 +2524,8 @@ code_to_relocate_1900 = sub_C18FF+1
     ORA #&40 ; '@'                                ; 2893: 09 40                                  .@           :1B93[4]
     STA ball_state                                ; 2895: 85 1B                                  ..           :1B95[4]
     JSR calculate_ball_x_y_position_relative_to_mr_ee; 2897: 20 6E 26                                n&          :1B97[4]
-    STX possible_ball_x_coordinate                ; 289A: 86 19                                  ..           :1B9A[4]
-    STY possible_ball_y_coordinate                ; 289C: 84 1A                                  ..           :1B9C[4]
+    STX possible_temp_ball_x_coordinate           ; 289A: 86 19                                  ..           :1B9A[4]
+    STY possible_temp_ball_y_coordinate           ; 289C: 84 1A                                  ..           :1B9C[4]
 ; &289E referenced 1 time by &1B85
 .C1B9E
     STA L001C                                     ; 289E: 85 1C                                  ..           :1B9E[4]
@@ -2534,25 +2533,34 @@ code_to_relocate_1900 = sub_C18FF+1
 .skip_no_ball_action_required
     RTS                                           ; 28A0: 60                                     `            :1BA0[4]
 
+; ***************************************************************************************
+; For monsters that are currently in 'squishing' state (i.e. apple has squished them
+; and they are currently moving down the screen), they will be moved down the screen
+; (in sync with the apple in another routine
+; 
+; On Entry:
+;     A: Unused - Corrupted
+;     X: Unused - Corrupted
+;     Y: Unused - Corrupted?
 ; &28A1 referenced 3 times by &10D9, &10E1, &1138
-.sub_possible_print_existing_game_sprites
+.sub_update_and_squishing_monsters_on_screen
     LDX number_of_all_enemies_on_stack            ; 28A1: A6 13                                  ..           :1BA1[4]
     BEQ possible_skip_sprint_print                ; 28A3: F0 3F                                  .?           :1BA3[4]
     LDA #8                                        ; 28A5: A9 08                                  ..           :1BA5[4]
     STA L0018                                     ; 28A7: 85 18                                  ..           :1BA7[4]   ; Stores 8 to L0018
 ; &28A9 referenced 1 time by &1BDF
 .loop_next_item
-    LDA possible_unknown_monster_data_1,X         ; 28A9: BD 9F 08                               ...          :1BA9[4]
+    LDA unknown_monster_data_1_minus_one,X        ; 28A9: BD 9F 08                               ...          :1BA9[4]
     BPL skip_next_item                            ; 28AC: 10 30                                  .0           :1BAC[4]
     TXA                                           ; 28AE: 8A                                     .            :1BAE[4]
     PHA                                           ; 28AF: 48                                     H            :1BAF[4]
-    LDA possible_monster_stack_y_coord,X          ; 28B0: BD 8F 08                               ...          :1BB0[4]
+    LDA monster_stack_y_coord_minus_one,X         ; 28B0: BD 8F 08                               ...          :1BB0[4]
     CLC                                           ; 28B3: 18                                     .            :1BB3[4]
     ADC #2                                        ; 28B4: 69 02                                  i.           :1BB4[4]
-    STA possible_monster_stack_y_coord,X          ; 28B6: 9D 8F 08                               ...          :1BB6[4]
+    STA monster_stack_y_coord_minus_one,X         ; 28B6: 9D 8F 08                               ...          :1BB6[4]
     ADC #6                                        ; 28B9: 69 06                                  i.           :1BB9[4]
     TAY                                           ; 28BB: A8                                     .            :1BBB[4]   ; Y=Y screen coordinate
-    LDA possible_unknown_monster_data_1,X         ; 28BC: BD 9F 08                               ...          :1BBC[4]
+    LDA unknown_monster_data_1_minus_one,X        ; 28BC: BD 9F 08                               ...          :1BBC[4]
     AND #8                                        ; 28BF: 29 08                                  ).           :1BBF[4]
     ASL A                                         ; 28C1: 0A                                     .            :1BC1[4]
     ASL A                                         ; 28C2: 0A                                     .            :1BC2[4]
@@ -2561,7 +2569,7 @@ code_to_relocate_1900 = sub_C18FF+1
     STA zp_84_source_spriteaddr                   ; 28C6: 85 84                                  ..           :1BC6[4]
     LDA #4                                        ; 28C8: A9 04                                  ..           :1BC8[4]
     STA zp_85_source_spriteaddr                   ; 28CA: 85 85                                  ..           :1BCA[4]
-    LDA possible_monster_stack_x_coord,X          ; 28CC: BD 7F 08                               ...          :1BCC[4]
+    LDA monster_stack_x_coord_minus_one,X         ; 28CC: BD 7F 08                               ...          :1BCC[4]
     LSR A                                         ; 28CF: 4A                                     J            :1BCF[4]   ; A=(unused)
     TAX                                           ; 28D0: AA                                     .            :1BD0[4]   ; X=X screen coordinate
     JSR write_pre_selected_sprite_to_screen_routine; 28D1: 20 84 0A                                ..          :1BD1[4]
@@ -2596,12 +2604,12 @@ code_to_relocate_1900 = sub_C18FF+1
     TXA                                           ; 28F7: 8A                                     .            :1BF7[4]
     PHA                                           ; 28F8: 48                                     H            :1BF8[4]
     LDA apple_x_coordinate,X                      ; 28F9: BD AF 08                               ...          :1BF9[4]
-    STA L0090                                     ; 28FC: 85 90                                  ..           :1BFC[4]
+    STA current_x_coord                           ; 28FC: 85 90                                  ..           :1BFC[4]
     LDA game_pallet_data_4_or_apple_y_coord_minus_1,X; 28FE: BD 0F 06                               ...          :1BFE[4]
-    STA L0093                                     ; 2901: 85 93                                  ..           :1C01[4]
+    STA current_y_coord                           ; 2901: 85 93                                  ..           :1C01[4]
     JSR unknown_process_monster_routine_without_fetch; 2903: 20 68 25                                h%          :1C03[4]
-    LDA unknown_apple_status_data,X               ; 2906: BD 1F 06                               ...          :1C06[4]
-    STA L0096                                     ; 2909: 85 96                                  ..           :1C09[4]
+    LDA apple_status_data_minus_1,X               ; 2906: BD 1F 06                               ...          :1C06[4]
+    STA current_status_1                          ; 2909: 85 96                                  ..           :1C09[4]
     CMP #&20 ; ' '                                ; 290B: C9 20                                  .            :1C0B[4]
     BNE C1C15                                     ; 290D: D0 06                                  ..           :1C0D[4]
     JSR write_apple_to_screen_using_90x_93y       ; 290F: 20 04 1E                                ..          :1C0F[4]
@@ -2609,17 +2617,17 @@ code_to_relocate_1900 = sub_C18FF+1
 
 ; &2915 referenced 1 time by &1C0D
 .C1C15
-    BIT L0096                                     ; 2915: 24 96                                  $.           :1C15[4]
+    BIT current_status_1                          ; 2915: 24 96                                  $.           :1C15[4]
     BMI C1C1C                                     ; 2917: 30 03                                  0.           :1C17[4]
     JMP C1D93                                     ; 2919: 4C 93 1D                               L..          :1C19[4]
 
 ; &291C referenced 1 time by &1C17
 .C1C1C
     INC L0026                                     ; 291C: E6 26                                  .&           :1C1C[4]
-    BIT L0096                                     ; 291E: 24 96                                  $.           :1C1E[4]
+    BIT current_status_1                          ; 291E: 24 96                                  $.           :1C1E[4]
     BVC C1C50                                     ; 2920: 50 2E                                  P.           :1C20[4]
-    DEC L0096                                     ; 2922: C6 96                                  ..           :1C22[4]
-    LDA L0096                                     ; 2924: A5 96                                  ..           :1C24[4]
+    DEC current_status_1                          ; 2922: C6 96                                  ..           :1C22[4]
+    LDA current_status_1                          ; 2924: A5 96                                  ..           :1C24[4]
     AND #&1F                                      ; 2926: 29 1F                                  ).           :1C26[4]
     BEQ C1C37                                     ; 2928: F0 0D                                  ..           :1C28[4]
     CMP #&10                                      ; 292A: C9 10                                  ..           :1C2A[4]
@@ -2637,11 +2645,11 @@ code_to_relocate_1900 = sub_C18FF+1
 .C1C3A
     LDY number_of_apples_on_screen                ; 293A: A4 09                                  ..           :1C3A[4]
     LDA apple_x_coordinate,Y                      ; 293C: B9 AF 08                               ...          :1C3C[4]
-    STA L0090                                     ; 293F: 85 90                                  ..           :1C3F[4]
+    STA current_x_coord                           ; 293F: 85 90                                  ..           :1C3F[4]
     LDA game_pallet_data_4_or_apple_y_coord_minus_1,Y; 2941: B9 0F 06                               ...          :1C41[4]
-    STA L0093                                     ; 2944: 85 93                                  ..           :1C44[4]
-    LDA unknown_apple_status_data,Y               ; 2946: B9 1F 06                               ...          :1C46[4]
-    STA L0096                                     ; 2949: 85 96                                  ..           :1C49[4]
+    STA current_y_coord                           ; 2944: 85 93                                  ..           :1C44[4]
+    LDA apple_status_data_minus_1,Y               ; 2946: B9 1F 06                               ...          :1C46[4]
+    STA current_status_1                          ; 2949: 85 96                                  ..           :1C49[4]
     DEC number_of_apples_on_screen                ; 294B: C6 09                                  ..           :1C4B[4]
     JMP update_apple_data_in_memory               ; 294D: 4C EC 1D                               L..          :1C4D[4]
 
@@ -2653,13 +2661,13 @@ code_to_relocate_1900 = sub_C18FF+1
     LDA L0092                                     ; 2957: A5 92                                  ..           :1C57[4]
     CMP #5                                        ; 2959: C9 05                                  ..           :1C59[4]
     BCS C1C60                                     ; 295B: B0 03                                  ..           :1C5B[4]
-    DEC L0090                                     ; 295D: C6 90                                  ..           :1C5D[4]
+    DEC current_x_coord                           ; 295D: C6 90                                  ..           :1C5D[4]
 ; overlapping: BIT L90E6                          ; 295F: 2C E6 90                               ,..          :1C5F[4]
     EQUB &2C                                      ; 295F: 2C                                     ,            :1C5F[4]
 
 ; &2960 referenced 1 time by &1C5B
 .C1C60
-    INC L0090                                     ; 2960: E6 90                                  ..           :1C60[4]
+    INC current_x_coord                           ; 2960: E6 90                                  ..           :1C60[4]
     JSR write_apple_to_screen_using_90x_93y       ; 2962: 20 04 1E                                ..          :1C62[4]
 ; &2965 referenced 1 time by &1CC2
 .C1C65
@@ -2669,7 +2677,7 @@ code_to_relocate_1900 = sub_C18FF+1
 .C1C68
     LDA L0095                                     ; 2968: A5 95                                  ..           :1C68[4]
     BNE C1C8D                                     ; 296A: D0 21                                  .!           :1C6A[4]
-    LDA L0096                                     ; 296C: A5 96                                  ..           :1C6C[4]
+    LDA current_status_1                          ; 296C: A5 96                                  ..           :1C6C[4]
     CMP #&81                                      ; 296E: C9 81                                  ..           :1C6E[4]
     BNE C1C7F                                     ; 2970: D0 0D                                  ..           :1C70[4]
     TYA                                           ; 2972: 98                                     .            :1C72[4]
@@ -2688,23 +2696,23 @@ code_to_relocate_1900 = sub_C18FF+1
     LDA L0730,Y                                   ; 2985: B9 30 07                               .0.          :1C85[4]
     LSR A                                         ; 2988: 4A                                     J            :1C88[4]
     BCC C1CE0                                     ; 2989: 90 55                                  .U           :1C89[4]
-    INC L0096                                     ; 298B: E6 96                                  ..           :1C8B[4]
+    INC current_status_1                          ; 298B: E6 96                                  ..           :1C8B[4]
 ; &298D referenced 1 time by &1C6A
 .C1C8D
     JSR sub_C1E52                                 ; 298D: 20 52 1E                                R.          :1C8D[4]
-    INC L0093                                     ; 2990: E6 93                                  ..           :1C90[4]
-    INC L0093                                     ; 2992: E6 93                                  ..           :1C92[4]
+    INC current_y_coord                           ; 2990: E6 93                                  ..           :1C90[4]
+    INC current_y_coord                           ; 2992: E6 93                                  ..           :1C92[4]
     JSR write_apple_to_screen_using_90x_93y       ; 2994: 20 04 1E                                ..          :1C94[4]
     LDA mr_ee_status                              ; 2997: A5 27                                  .'           :1C97[4]
     BNE C1CBB                                     ; 2999: D0 20                                  .            :1C99[4]
     LDA mr_ee_y_coord                             ; 299B: A5 21                                  .!           :1C9B[4]
     SEC                                           ; 299D: 38                                     8            :1C9D[4]
-    SBC L0093                                     ; 299E: E5 93                                  ..           :1C9E[4]
+    SBC current_y_coord                           ; 299E: E5 93                                  ..           :1C9E[4]
     CMP #9                                        ; 29A0: C9 09                                  ..           :1CA0[4]
     BCS C1CBB                                     ; 29A2: B0 17                                  ..           :1CA2[4]
     LDA mr_ee_x_coord                             ; 29A4: A5 20                                  .            :1CA4[4]
     SEC                                           ; 29A6: 38                                     8            :1CA6[4]
-    SBC L0090                                     ; 29A7: E5 90                                  ..           :1CA7[4]
+    SBC current_x_coord                           ; 29A7: E5 90                                  ..           :1CA7[4]
     CMP #&FC                                      ; 29A9: C9 FC                                  ..           :1CA9[4]
     BCS C1CB1                                     ; 29AB: B0 04                                  ..           :1CAB[4]
     CMP #6                                        ; 29AD: C9 06                                  ..           :1CAD[4]
@@ -2717,14 +2725,14 @@ code_to_relocate_1900 = sub_C18FF+1
     STA mr_ee_status                              ; 29B9: 85 27                                  .'           :1CB9[4]
 ; &29BB referenced 3 times by &1C99, &1CA2, &1CAF
 .C1CBB
-    LDX L0090                                     ; 29BB: A6 90                                  ..           :1CBB[4]
-    LDY L0093                                     ; 29BD: A4 93                                  ..           :1CBD[4]
+    LDX current_x_coord                           ; 29BB: A6 90                                  ..           :1CBB[4]
+    LDY current_y_coord                           ; 29BD: A4 93                                  ..           :1CBD[4]
     JSR sub_C1E66                                 ; 29BF: 20 66 1E                                f.          :1CBF[4]
     BCC C1C65                                     ; 29C2: 90 A1                                  ..           :1CC2[4]
-    LDA unknown_apple_status_data,X               ; 29C4: BD 1F 06                               ...          :1CC4[4]
+    LDA apple_status_data_minus_1,X               ; 29C4: BD 1F 06                               ...          :1CC4[4]
     BMI C1CDC                                     ; 29C7: 30 13                                  0.           :1CC7[4]
     LDA #&DF                                      ; 29C9: A9 DF                                  ..           :1CC9[4]
-    STA unknown_apple_status_data,X               ; 29CB: 9D 1F 06                               ...          :1CCB[4]
+    STA apple_status_data_minus_1,X               ; 29CB: 9D 1F 06                               ...          :1CCB[4]
     LDA game_pallet_data_4_or_apple_y_coord_minus_1,X; 29CE: BD 0F 06                               ...          :1CCE[4]
     TAY                                           ; 29D1: A8                                     .            :1CD1[4]
     LDA apple_x_coordinate,X                      ; 29D2: BD AF 08                               ...          :1CD2[4]
@@ -2734,7 +2742,7 @@ code_to_relocate_1900 = sub_C18FF+1
 ; &29DC referenced 1 time by &1CC7
 .C1CDC
     LDA #&82                                      ; 29DC: A9 82                                  ..           :1CDC[4]
-    STA L0096                                     ; 29DE: 85 96                                  ..           :1CDE[4]
+    STA current_status_1                          ; 29DE: 85 96                                  ..           :1CDE[4]
 ; &29E0 referenced 3 times by &1C12, &1C83, &1C89
 .C1CE0
     LDA #3                                        ; 29E0: A9 03                                  ..           :1CE0[4]
@@ -2747,16 +2755,16 @@ code_to_relocate_1900 = sub_C18FF+1
     BEQ no_more_monsters_to_process_2             ; 29EF: F0 4C                                  .L           :1CEF[4]
 ; &29F1 referenced 1 time by &1D3B
 .loop_process_next_monster_2
-    LDA possible_unknown_monster_data_1,X         ; 29F1: BD 9F 08                               ...          :1CF1[4]
+    LDA unknown_monster_data_1_minus_one,X        ; 29F1: BD 9F 08                               ...          :1CF1[4]
     BPL C1D3A                                     ; 29F4: 10 44                                  .D           :1CF4[4]
-    STA L0099                                     ; 29F6: 85 99                                  ..           :1CF6[4]
-    LDA possible_monster_stack_y_coord,X          ; 29F8: BD 8F 08                               ...          :1CF8[4]
+    STA current_status_2                          ; 29F6: 85 99                                  ..           :1CF6[4]
+    LDA monster_stack_y_coord_minus_one,X         ; 29F8: BD 8F 08                               ...          :1CF8[4]
     SEC                                           ; 29FB: 38                                     8            :1CFB[4]
-    SBC L0093                                     ; 29FC: E5 93                                  ..           :1CFC[4]
+    SBC current_y_coord                           ; 29FC: E5 93                                  ..           :1CFC[4]
     CMP #&17                                      ; 29FE: C9 17                                  ..           :1CFE[4]
     BCS C1D3A                                     ; 2A00: B0 38                                  .8           :1D00[4]
-    LDA possible_monster_stack_x_coord,X          ; 2A02: BD 7F 08                               ...          :1D02[4]
-    SBC L0090                                     ; 2A05: E5 90                                  ..           :1D05[4]
+    LDA monster_stack_x_coord_minus_one,X         ; 2A02: BD 7F 08                               ...          :1D02[4]
+    SBC current_x_coord                           ; 2A05: E5 90                                  ..           :1D05[4]
     CMP #&FA                                      ; 2A07: C9 FA                                  ..           :1D07[4]
     BCS C1D0F                                     ; 2A09: B0 04                                  ..           :1D09[4]
     CMP #8                                        ; 2A0B: C9 08                                  ..           :1D0B[4]
@@ -2766,11 +2774,11 @@ code_to_relocate_1900 = sub_C18FF+1
     INC L0098                                     ; 2A0F: E6 98                                  ..           :1D0F[4]
     TXA                                           ; 2A11: 8A                                     .            :1D11[4]
     PHA                                           ; 2A12: 48                                     H            :1D12[4]
-    LDA possible_monster_stack_y_coord,X          ; 2A13: BD 8F 08                               ...          :1D13[4]
+    LDA monster_stack_y_coord_minus_one,X         ; 2A13: BD 8F 08                               ...          :1D13[4]
     CLC                                           ; 2A16: 18                                     .            :1D16[4]
     ADC #8                                        ; 2A17: 69 08                                  i.           :1D17[4]
     TAY                                           ; 2A19: A8                                     .            :1D19[4]   ; Y=Y screen coordinate
-    LDA L0099                                     ; 2A1A: A5 99                                  ..           :1D1A[4]
+    LDA current_status_2                          ; 2A1A: A5 99                                  ..           :1D1A[4]
     AND #8                                        ; 2A1C: 29 08                                  ).           :1D1C[4]
     ASL A                                         ; 2A1E: 0A                                     .            :1D1E[4]
     ASL A                                         ; 2A1F: 0A                                     .            :1D1F[4]
@@ -2778,7 +2786,7 @@ code_to_relocate_1900 = sub_C18FF+1
     STA zp_84_source_spriteaddr                   ; 2A22: 85 84                                  ..           :1D22[4]
     LDA #4                                        ; 2A24: A9 04                                  ..           :1D24[4]
     STA zp_85_source_spriteaddr                   ; 2A26: 85 85                                  ..           :1D26[4]
-    LDA possible_monster_stack_x_coord,X          ; 2A28: BD 7F 08                               ...          :1D28[4]
+    LDA monster_stack_x_coord_minus_one,X         ; 2A28: BD 7F 08                               ...          :1D28[4]
     LSR A                                         ; 2A2B: 4A                                     J            :1D2B[4]   ; A=(unused)
     TAX                                           ; 2A2C: AA                                     .            :1D2C[4]   ; X=X screen coordinate
     LSR L0018                                     ; 2A2D: 46 18                                  F.           :1D2D[4]
@@ -2786,7 +2794,7 @@ code_to_relocate_1900 = sub_C18FF+1
     JSR restore_L0017_L0018_to_defaults_x18_and_x10; 2A32: 20 50 26                                P&          :1D32[4]
     PLA                                           ; 2A35: 68                                     h            :1D35[4]
     TAX                                           ; 2A36: AA                                     .            :1D36[4]
-    JSR sub_possible_remove_monster_from_stack    ; 2A37: 20 33 25                                3%          :1D37[4]
+    JSR sub_remove_monster_from_stack             ; 2A37: 20 33 25                                3%          :1D37[4]
 ; &2A3A referenced 3 times by &1CF4, &1D00, &1D0D
 .C1D3A
     DEX                                           ; 2A3A: CA                                     .            :1D3A[4]
@@ -2797,12 +2805,12 @@ code_to_relocate_1900 = sub_C18FF+1
     BPL C1D59                                     ; 2A3F: 10 18                                  ..           :1D3F[4]
     LDA mr_ee_y_coord                             ; 2A41: A5 21                                  .!           :1D41[4]
     SEC                                           ; 2A43: 38                                     8            :1D43[4]
-    SBC L0093                                     ; 2A44: E5 93                                  ..           :1D44[4]
+    SBC current_y_coord                           ; 2A44: E5 93                                  ..           :1D44[4]
     CMP #&0D                                      ; 2A46: C9 0D                                  ..           :1D46[4]
     BCS C1D59                                     ; 2A48: B0 0F                                  ..           :1D48[4]
     LDA mr_ee_x_coord                             ; 2A4A: A5 20                                  .            :1D4A[4]
     SEC                                           ; 2A4C: 38                                     8            :1D4C[4]
-    SBC L0090                                     ; 2A4D: E5 90                                  ..           :1D4D[4]
+    SBC current_x_coord                           ; 2A4D: E5 90                                  ..           :1D4D[4]
     CMP #&FA                                      ; 2A4F: C9 FA                                  ..           :1D4F[4]
     BCS C1D57                                     ; 2A51: B0 04                                  ..           :1D51[4]
     CMP #8                                        ; 2A53: C9 08                                  ..           :1D53[4]
@@ -2812,7 +2820,7 @@ code_to_relocate_1900 = sub_C18FF+1
     DEC mr_ee_status                              ; 2A57: C6 27                                  .'           :1D57[4]
 ; &2A59 referenced 3 times by &1D3F, &1D48, &1D55
 .C1D59
-    LDA L0096                                     ; 2A59: A5 96                                  ..           :1D59[4]
+    LDA current_status_1                          ; 2A59: A5 96                                  ..           :1D59[4]
     CMP #&20 ; ' '                                ; 2A5B: C9 20                                  .            :1D5B[4]
     BEQ C1D79                                     ; 2A5D: F0 1A                                  ..           :1D5D[4]
     LDA L0098                                     ; 2A5F: A5 98                                  ..           :1D5F[4]
@@ -2825,7 +2833,7 @@ code_to_relocate_1900 = sub_C18FF+1
 ; &2A6E referenced 1 time by &1D6A
 .C1D6E
     LDA L0047,Y                                   ; 2A6E: B9 47 00                               .G.          :1D6E[4]
-    LDY L0093                                     ; 2A71: A4 93                                  ..           :1D71[4]
+    LDY current_y_coord                           ; 2A71: A4 93                                  ..           :1D71[4]
     JSR C2603                                     ; 2A73: 20 03 26                                .&          :1D73[4]
     JSR sub_C2596                                 ; 2A76: 20 96 25                                .%          :1D76[4]
 ; &2A79 referenced 1 time by &1D5D
@@ -2835,7 +2843,7 @@ code_to_relocate_1900 = sub_C18FF+1
 ; &2A7C referenced 1 time by &1D61
 .C1D7C
     LDX #0                                        ; 2A7C: A2 00                                  ..           :1D7C[4]
-    LDA L0096                                     ; 2A7E: A5 96                                  ..           :1D7E[4]
+    LDA current_status_1                          ; 2A7E: A5 96                                  ..           :1D7E[4]
     AND #&0F                                      ; 2A80: 29 0F                                  ).           :1D80[4]
     CMP #1                                        ; 2A82: C9 01                                  ..           :1D82[4]
     BEQ C1D8E                                     ; 2A84: F0 08                                  ..           :1D84[4]
@@ -2846,30 +2854,30 @@ code_to_relocate_1900 = sub_C18FF+1
     LDX #&DF                                      ; 2A8C: A2 DF                                  ..           :1D8C[4]
 ; &2A8E referenced 1 time by &1D84
 .C1D8E
-    STX L0096                                     ; 2A8E: 86 96                                  ..           :1D8E[4]
+    STX current_status_1                          ; 2A8E: 86 96                                  ..           :1D8E[4]
     JMP update_apple_data_in_memory               ; 2A90: 4C EC 1D                               L..          :1D90[4]
 
 ; &2A93 referenced 1 time by &1C19
 .C1D93
     AND #&40 ; '@'                                ; 2A93: 29 40                                  )@           :1D93[4]
     BEQ C1DB9                                     ; 2A95: F0 22                                  ."           :1D95[4]
-    INC L0096                                     ; 2A97: E6 96                                  ..           :1D97[4]
+    INC current_status_1                          ; 2A97: E6 96                                  ..           :1D97[4]
     INC L0026                                     ; 2A99: E6 26                                  .&           :1D99[4]
-    LDA L0096                                     ; 2A9B: A5 96                                  ..           :1D9B[4]
+    LDA current_status_1                          ; 2A9B: A5 96                                  ..           :1D9B[4]
     AND #7                                        ; 2A9D: 29 07                                  ).           :1D9D[4]
     CMP #4                                        ; 2A9F: C9 04                                  ..           :1D9F[4]
     BNE C1DAB                                     ; 2AA1: D0 08                                  ..           :1DA1[4]
     JSR sub_C1E52                                 ; 2AA3: 20 52 1E                                R.          :1DA3[4]
-    INC L0093                                     ; 2AA6: E6 93                                  ..           :1DA6[4]
+    INC current_y_coord                           ; 2AA6: E6 93                                  ..           :1DA6[4]
     JSR write_apple_to_screen_using_90x_93y       ; 2AA8: 20 04 1E                                ..          :1DA8[4]
 ; &2AAB referenced 1 time by &1DA1
 .C1DAB
-    LDA L0096                                     ; 2AAB: A5 96                                  ..           :1DAB[4]
+    LDA current_status_1                          ; 2AAB: A5 96                                  ..           :1DAB[4]
     AND #&0F                                      ; 2AAD: 29 0F                                  ).           :1DAD[4]
     CMP #&0F                                      ; 2AAF: C9 0F                                  ..           :1DAF[4]
     BNE update_apple_data_in_memory               ; 2AB1: D0 39                                  .9           :1DB1[4]
     LDA #&81                                      ; 2AB3: A9 81                                  ..           :1DB3[4]
-    STA L0096                                     ; 2AB5: 85 96                                  ..           :1DB5[4]
+    STA current_status_1                          ; 2AB5: 85 96                                  ..           :1DB5[4]
     BNE update_apple_data_in_memory               ; 2AB7: D0 33                                  .3           :1DB7[4]
 ; &2AB9 referenced 1 time by &1D95
 .C1DB9
@@ -2887,36 +2895,36 @@ code_to_relocate_1900 = sub_C18FF+1
     BCC update_apple_data_in_memory               ; 2ACA: 90 20                                  .            :1DCA[4]
     LDA mr_ee_y_coord                             ; 2ACC: A5 21                                  .!           :1DCC[4]
     SEC                                           ; 2ACE: 38                                     8            :1DCE[4]
-    SBC L0093                                     ; 2ACF: E5 93                                  ..           :1DCF[4]
+    SBC current_y_coord                           ; 2ACF: E5 93                                  ..           :1DCF[4]
     CMP #&13                                      ; 2AD1: C9 13                                  ..           :1DD1[4]
     BCS C1DE2                                     ; 2AD3: B0 0D                                  ..           :1DD3[4]
     LDA mr_ee_x_coord                             ; 2AD5: A5 20                                  .            :1DD5[4]
     SEC                                           ; 2AD7: 38                                     8            :1DD7[4]
-    SBC L0090                                     ; 2AD8: E5 90                                  ..           :1DD8[4]
+    SBC current_x_coord                           ; 2AD8: E5 90                                  ..           :1DD8[4]
     CMP #8                                        ; 2ADA: C9 08                                  ..           :1DDA[4]
     BCC update_apple_data_in_memory               ; 2ADC: 90 0E                                  ..           :1DDC[4]
     CMP #&FE                                      ; 2ADE: C9 FE                                  ..           :1DDE[4]
     BCS update_apple_data_in_memory               ; 2AE0: B0 0A                                  ..           :1DE0[4]
 ; &2AE2 referenced 1 time by &1DD3
 .C1DE2
-    LDA L0096                                     ; 2AE2: A5 96                                  ..           :1DE2[4]
+    LDA current_status_1                          ; 2AE2: A5 96                                  ..           :1DE2[4]
     LSR A                                         ; 2AE4: 4A                                     J            :1DE4[4]
     LDA #&40 ; '@'                                ; 2AE5: A9 40                                  .@           :1DE5[4]
     BCC C1DEA                                     ; 2AE7: 90 01                                  ..           :1DE7[4]
     ASL A                                         ; 2AE9: 0A                                     .            :1DE9[4]
 ; &2AEA referenced 1 time by &1DE7
 .C1DEA
-    STA L0096                                     ; 2AEA: 85 96                                  ..           :1DEA[4]
+    STA current_status_1                          ; 2AEA: 85 96                                  ..           :1DEA[4]
 ; &2AEC referenced 9 times by &1C34, &1C4D, &1C65, &1D90, &1DB1, &1DB7, &1DCA, &1DDC, &1DE0
 .update_apple_data_in_memory
     PLA                                           ; 2AEC: 68                                     h            :1DEC[4]
     TAX                                           ; 2AED: AA                                     .            :1DED[4]
-    LDA L0090                                     ; 2AEE: A5 90                                  ..           :1DEE[4]
+    LDA current_x_coord                           ; 2AEE: A5 90                                  ..           :1DEE[4]
     STA apple_x_coordinate,X                      ; 2AF0: 9D AF 08                               ...          :1DF0[4]
-    LDA L0093                                     ; 2AF3: A5 93                                  ..           :1DF3[4]
+    LDA current_y_coord                           ; 2AF3: A5 93                                  ..           :1DF3[4]
     STA game_pallet_data_4_or_apple_y_coord_minus_1,X; 2AF5: 9D 0F 06                               ...          :1DF5[4]
-    LDA L0096                                     ; 2AF8: A5 96                                  ..           :1DF8[4]
-    STA unknown_apple_status_data,X               ; 2AFA: 9D 1F 06                               ...          :1DFA[4]
+    LDA current_status_1                          ; 2AF8: A5 96                                  ..           :1DF8[4]
+    STA apple_status_data_minus_1,X               ; 2AFA: 9D 1F 06                               ...          :1DFA[4]
     DEX                                           ; 2AFD: CA                                     .            :1DFD[4]
     BEQ C1E03                                     ; 2AFE: F0 03                                  ..           :1DFE[4]
     JMP C1BF7                                     ; 2B00: 4C F7 1B                               L..          :1E00[4]
@@ -2935,8 +2943,8 @@ code_to_relocate_1900 = sub_C18FF+1
 ;     Y: Unused - Corrupted?
 ; &2B04 referenced 8 times by &1C0F, &1C54, &1C62, &1C94, &1D63, &1D86, &1DA8, &1E5C
 .write_apple_to_screen_using_90x_93y
-    LDX L0090                                     ; 2B04: A6 90                                  ..           :1E04[4]
-    LDY L0093                                     ; 2B06: A4 93                                  ..           :1E06[4]   ; Y=Y screen coordinate
+    LDX current_x_coord                           ; 2B04: A6 90                                  ..           :1E04[4]
+    LDY current_y_coord                           ; 2B06: A4 93                                  ..           :1E06[4]   ; Y=Y screen coordinate
 ; ***************************************************************************************
 ; Writes the full apple sprite to the screen at the x,y coordinates specified.  X
 ; coordinate has not been corrected and will be shifted correctly
@@ -2965,12 +2973,12 @@ code_to_relocate_1900 = sub_C18FF+1
 
 ; &2B10 referenced 2 times by &1C31, &1C37
 .sub_C1E10
-    LDA L0090                                     ; 2B10: A5 90                                  ..           :1E10[4]
+    LDA current_x_coord                           ; 2B10: A5 90                                  ..           :1E10[4]
     LSR A                                         ; 2B12: 4A                                     J            :1E12[4]
     TAX                                           ; 2B13: AA                                     .            :1E13[4]
     DEX                                           ; 2B14: CA                                     .            :1E14[4]
     DEX                                           ; 2B15: CA                                     .            :1E15[4]
-    LDA L0093                                     ; 2B16: A5 93                                  ..           :1E16[4]
+    LDA current_y_coord                           ; 2B16: A5 93                                  ..           :1E16[4]
     CLC                                           ; 2B18: 18                                     .            :1E18[4]
     ADC #8                                        ; 2B19: 69 08                                  i.           :1E19[4]
     TAY                                           ; 2B1B: A8                                     .            :1E1B[4]
@@ -2994,8 +3002,8 @@ code_to_relocate_1900 = sub_C18FF+1
 
 ; &2B38 referenced 2 times by &1C2E, &1D89
 .sub_C1E38
-    LDX L0090                                     ; 2B38: A6 90                                  ..           :1E38[4]
-    LDY L0093                                     ; 2B3A: A4 93                                  ..           :1E3A[4]   ; Y=Y screen coordinate
+    LDX current_x_coord                           ; 2B38: A6 90                                  ..           :1E38[4]
+    LDY current_y_coord                           ; 2B3A: A4 93                                  ..           :1E3A[4]   ; Y=Y screen coordinate
     TXA                                           ; 2B3C: 8A                                     .            :1E3C[4]
     LSR A                                         ; 2B3D: 4A                                     J            :1E3D[4]
     TAX                                           ; 2B3E: AA                                     .            :1E3E[4]
@@ -3106,7 +3114,7 @@ code_to_relocate_1900 = sub_C18FF+1
     BEQ C1EDC                                     ; 2BB6: F0 24                                  .$           :1EB6[4]
 ; &2BB8 referenced 1 time by &1EDA
 .C1EB8
-    LDA unknown_apple_status_data,X               ; 2BB8: BD 1F 06                               ...          :1EB8[4]
+    LDA apple_status_data_minus_1,X               ; 2BB8: BD 1F 06                               ...          :1EB8[4]
     AND #&C0                                      ; 2BBB: 29 C0                                  ).           :1EBB[4]
     BNE C1ED9                                     ; 2BBD: D0 1A                                  ..           :1EBD[4]
     LDA L0087                                     ; 2BBF: A5 87                                  ..           :1EBF[4]
@@ -3134,14 +3142,14 @@ code_to_relocate_1900 = sub_C18FF+1
 ; &2BE4 referenced 1 time by &1F01
 .loop_process_next_monster_3
     LDA L0087                                     ; 2BE4: A5 87                                  ..           :1EE4[4]
-    CMP possible_monster_stack_y_coord,X          ; 2BE6: DD 8F 08                               ...          :1EE6[4]
+    CMP monster_stack_y_coord_minus_one,X         ; 2BE6: DD 8F 08                               ...          :1EE6[4]
     BNE C1F00                                     ; 2BE9: D0 15                                  ..           :1EE9[4]
-    LDA possible_monster_stack_x_coord,X          ; 2BEB: BD 7F 08                               ...          :1EEB[4]
+    LDA monster_stack_x_coord_minus_one,X         ; 2BEB: BD 7F 08                               ...          :1EEB[4]
     SEC                                           ; 2BEE: 38                                     8            :1EEE[4]
     SBC L0086                                     ; 2BEF: E5 86                                  ..           :1EEF[4]
     CMP #&F0                                      ; 2BF1: C9 F0                                  ..           :1EF1[4]
     BCC C1F00                                     ; 2BF3: 90 0B                                  ..           :1EF3[4]
-    LDA possible_unknown_monster_data_1,X         ; 2BF5: BD 9F 08                               ...          :1EF5[4]
+    LDA unknown_monster_data_1_minus_one,X        ; 2BF5: BD 9F 08                               ...          :1EF5[4]
     AND #&0C                                      ; 2BF8: 29 0C                                  ).           :1EF8[4]
     EOR #8                                        ; 2BFA: 49 08                                  I.           :1EFA[4]
     ORA L008C                                     ; 2BFC: 05 8C                                  ..           :1EFC[4]
@@ -3162,7 +3170,7 @@ code_to_relocate_1900 = sub_C18FF+1
     BEQ C1F44                                     ; 2C0A: F0 38                                  .8           :1F0A[4]
 ; &2C0C referenced 1 time by &1F42
 .C1F0C
-    LDA unknown_apple_status_data,X               ; 2C0C: BD 1F 06                               ...          :1F0C[4]
+    LDA apple_status_data_minus_1,X               ; 2C0C: BD 1F 06                               ...          :1F0C[4]
     BNE C1F41                                     ; 2C0F: D0 30                                  .0           :1F0F[4]
     LDA L0087                                     ; 2C11: A5 87                                  ..           :1F11[4]
     CMP game_pallet_data_4_or_apple_y_coord_minus_1,X; 2C13: DD 0F 06                               ...          :1F13[4]
@@ -3174,7 +3182,7 @@ code_to_relocate_1900 = sub_C18FF+1
     BEQ C1F41                                     ; 2C20: F0 1F                                  ..           :1F20[4]
     CMP #9                                        ; 2C22: C9 09                                  ..           :1F22[4]
     BCS C1F41                                     ; 2C24: B0 1B                                  ..           :1F24[4]
-    INC unknown_apple_status_data,X               ; 2C26: FE 1F 06                               ...          :1F26[4]
+    INC apple_status_data_minus_1,X               ; 2C26: FE 1F 06                               ...          :1F26[4]
     LDA apple_x_coordinate,X                      ; 2C29: BD AF 08                               ...          :1F29[4]
     STA L0088                                     ; 2C2C: 85 88                                  ..           :1F2C[4]
     DEC apple_x_coordinate,X                      ; 2C2E: DE AF 08                               ...          :1F2E[4]
@@ -3206,7 +3214,7 @@ code_to_relocate_1900 = sub_C18FF+1
     BEQ C1F73                                     ; 2C4D: F0 24                                  .$           :1F4D[4]
 ; &2C4F referenced 1 time by &1F71
 .C1F4F
-    LDA unknown_apple_status_data,X               ; 2C4F: BD 1F 06                               ...          :1F4F[4]
+    LDA apple_status_data_minus_1,X               ; 2C4F: BD 1F 06                               ...          :1F4F[4]
     AND #&C0                                      ; 2C52: 29 C0                                  ).           :1F52[4]
     BNE C1F70                                     ; 2C54: D0 1A                                  ..           :1F54[4]
     LDA L0087                                     ; 2C56: A5 87                                  ..           :1F56[4]
@@ -3234,14 +3242,14 @@ code_to_relocate_1900 = sub_C18FF+1
 ; &2C7B referenced 1 time by &1F98
 .loop_process_next_monster_4
     LDA L0087                                     ; 2C7B: A5 87                                  ..           :1F7B[4]
-    CMP possible_monster_stack_y_coord,X          ; 2C7D: DD 8F 08                               ...          :1F7D[4]
+    CMP monster_stack_y_coord_minus_one,X         ; 2C7D: DD 8F 08                               ...          :1F7D[4]
     BNE C1F97                                     ; 2C80: D0 15                                  ..           :1F80[4]
-    LDA possible_monster_stack_x_coord,X          ; 2C82: BD 7F 08                               ...          :1F82[4]
+    LDA monster_stack_x_coord_minus_one,X         ; 2C82: BD 7F 08                               ...          :1F82[4]
     SEC                                           ; 2C85: 38                                     8            :1F85[4]
     SBC L0086                                     ; 2C86: E5 86                                  ..           :1F86[4]
     CMP #9                                        ; 2C88: C9 09                                  ..           :1F88[4]
     BCS C1F97                                     ; 2C8A: B0 0B                                  ..           :1F8A[4]
-    LDA possible_unknown_monster_data_1,X         ; 2C8C: BD 9F 08                               ...          :1F8C[4]
+    LDA unknown_monster_data_1_minus_one,X        ; 2C8C: BD 9F 08                               ...          :1F8C[4]
     AND #&0C                                      ; 2C8F: 29 0C                                  ).           :1F8F[4]
     EOR #8                                        ; 2C91: 49 08                                  I.           :1F91[4]
     ORA L008C                                     ; 2C93: 05 8C                                  ..           :1F93[4]
@@ -3262,7 +3270,7 @@ code_to_relocate_1900 = sub_C18FF+1
     BEQ C1FDB                                     ; 2CA1: F0 38                                  .8           :1FA1[4]
 ; &2CA3 referenced 1 time by &1FD9
 .C1FA3
-    LDA unknown_apple_status_data,X               ; 2CA3: BD 1F 06                               ...          :1FA3[4]
+    LDA apple_status_data_minus_1,X               ; 2CA3: BD 1F 06                               ...          :1FA3[4]
     BNE C1FD8                                     ; 2CA6: D0 30                                  .0           :1FA6[4]
     LDA L0087                                     ; 2CA8: A5 87                                  ..           :1FA8[4]
     CMP game_pallet_data_4_or_apple_y_coord_minus_1,X; 2CAA: DD 0F 06                               ...          :1FAA[4]
@@ -3274,7 +3282,7 @@ code_to_relocate_1900 = sub_C18FF+1
     BEQ C1FD8                                     ; 2CB7: F0 1F                                  ..           :1FB7[4]
     CMP #&F8                                      ; 2CB9: C9 F8                                  ..           :1FB9[4]
     BCC C1FD8                                     ; 2CBB: 90 1B                                  ..           :1FBB[4]
-    INC unknown_apple_status_data,X               ; 2CBD: FE 1F 06                               ...          :1FBD[4]
+    INC apple_status_data_minus_1,X               ; 2CBD: FE 1F 06                               ...          :1FBD[4]
     LDA apple_x_coordinate,X                      ; 2CC0: BD AF 08                               ...          :1FC0[4]
     STA L0088                                     ; 2CC3: 85 88                                  ..           :1FC3[4]
     INC apple_x_coordinate,X                      ; 2CC5: FE AF 08                               ...          :1FC5[4]
@@ -3329,19 +3337,19 @@ code_to_relocate_1900 = sub_C18FF+1
     LDX #&46 ; 'F'                                ; 2D12: A2 46                                  .F           :2012[4]
     LDY #&81                                      ; 2D14: A0 81                                  ..           :2014[4]
     LDA #3                                        ; 2D16: A9 03                                  ..           :2016[4]
-    JSR sub_C2424                                 ; 2D18: 20 24 24                                $$          :2018[4]
+    JSR sub_add_new_monster_to_stack              ; 2D18: 20 24 24                                $$          :2018[4]
 ; &2D1B referenced 1 time by &2002
 .C201B
     LDA #&18                                      ; 2D1B: A9 18                                  ..           :201B[4]   ; A=sprite number
     JSR write_sprite_to_screen_routine            ; 2D1D: 20 73 0A                                s.          :201D[4]
 ; &2D20 referenced 3 times by &1FDE, &1FE9, &1FF5
 .C2020
-    LDA L0029                                     ; 2D20: A5 29                                  .)           :2020[4]
+    LDA strange_unused_score+1                    ; 2D20: A5 29                                  .)           :2020[4]
     CMP #&50 ; 'P'                                ; 2D22: C9 50                                  .P           :2022[4]
     BCC C202D                                     ; 2D24: 90 07                                  ..           :2024[4]
     SBC #&50 ; 'P'                                ; 2D26: E9 50                                  .P           :2026[4]
-    STA L0029                                     ; 2D28: 85 29                                  .)           :2028[4]
-    JSR sub_C247C                                 ; 2D2A: 20 7C 24                                |$          :202A[4]
+    STA strange_unused_score+1                    ; 2D28: 85 29                                  .)           :2028[4]
+    JSR introduce_extra_monster_to_playscreen     ; 2D2A: 20 7C 24                                |$          :202A[4]
 ; &2D2D referenced 1 time by &2024
 .C202D
     LDA extra_monster_status                      ; 2D2D: A5 16                                  ..           :202D[4]
@@ -3367,33 +3375,33 @@ code_to_relocate_1900 = sub_C18FF+1
     LDA #&FF                                      ; 2D4D: A9 FF                                  ..           :204D[4]
     STA L0010                                     ; 2D4F: 85 10                                  ..           :204F[4]
     LDX number_of_all_enemies_on_stack            ; 2D51: A6 13                                  ..           :2051[4]
-    BNE loop_possible_process_single_monster      ; 2D53: D0 01                                  ..           :2053[4]
+    BNE loop_process_next_monster_on_stack        ; 2D53: D0 01                                  ..           :2053[4]
     RTS                                           ; 2D55: 60                                     `            :2055[4]
 
 ; &2D56 referenced 3 times by &2053, &209B, &2420
-.loop_possible_process_single_monster
+.loop_process_next_monster_on_stack
     TXA                                           ; 2D56: 8A                                     .            :2056[4]
     PHA                                           ; 2D57: 48                                     H            :2057[4]
-    JSR unknown_fetch_and_process_monster_routine ; 2D58: 20 65 25                                e%          :2058[4]
-    LDA L0096                                     ; 2D5B: A5 96                                  ..           :205B[4]
-    BPL skip_if_positive                          ; 2D5D: 10 03                                  ..           :205D[4]
-    JMP C2407                                     ; 2D5F: 4C 07 24                               L.$          :205F[4]
+    JSR fetch_and_process_monster_from_stack      ; 2D58: 20 65 25                                e%          :2058[4]
+    LDA current_status_1                          ; 2D5B: A5 96                                  ..           :205B[4]
+    BPL monster_is_active                         ; 2D5D: 10 03                                  ..           :205D[4]
+    JMP this_monster_processing_complete          ; 2D5F: 4C 07 24                               L.$          :205F[4]
 
 ; &2D62 referenced 1 time by &205D
-.skip_if_positive
+.monster_is_active
     AND #&0C                                      ; 2D62: 29 0C                                  ).           :2062[4]
     STA L0098                                     ; 2D64: 85 98                                  ..           :2064[4]
     BIT remaining_monsters_to_spawn_minus_1       ; 2D66: 24 14                                  $.           :2066[4]
     BVS C209E                                     ; 2D68: 70 34                                  p4           :2068[4]
     BPL C209E                                     ; 2D6A: 10 32                                  .2           :206A[4]
     CMP #8                                        ; 2D6C: C9 08                                  ..           :206C[4]
-    BCS skip_if_carry_set                         ; 2D6E: B0 03                                  ..           :206E[4]
+    BCS still_monsters_spawning                   ; 2D6E: B0 03                                  ..           :206E[4]
 ; &2D70 referenced 2 times by &207D, &20D7
 .C2070
     JMP C2347                                     ; 2D70: 4C 47 23                               LG#          :2070[4]
 
 ; &2D73 referenced 1 time by &206E
-.skip_if_carry_set
+.still_monsters_spawning
     BNE C209E                                     ; 2D73: D0 29                                  .)           :2073[4]
     LDA remaining_monsters_to_spawn_minus_1       ; 2D75: A5 14                                  ..           :2075[4]
     AND #&3F ; '?'                                ; 2D77: 29 3F                                  )?           :2077[4]
@@ -3406,16 +3414,16 @@ code_to_relocate_1900 = sub_C18FF+1
     BEQ C209E                                     ; 2D85: F0 17                                  ..           :2085[4]
     LDA #&10                                      ; 2D87: A9 10                                  ..           :2087[4]
     STA next_monster_release_timer                ; 2D89: 85 12                                  ..           :2089[4]
-    LDX L0090                                     ; 2D8B: A6 90                                  ..           :208B[4]
-    LDY L0093                                     ; 2D8D: A4 93                                  ..           :208D[4]
-    LDA L0096                                     ; 2D8F: A5 96                                  ..           :208F[4]
+    LDX current_x_coord                           ; 2D8B: A6 90                                  ..           :208B[4]
+    LDY current_y_coord                           ; 2D8D: A4 93                                  ..           :208D[4]
+    LDA current_status_1                          ; 2D8F: A5 96                                  ..           :208F[4]
     AND #3                                        ; 2D91: 29 03                                  ).           :2091[4]
     ORA #&0C                                      ; 2D93: 09 0C                                  ..           :2093[4]
-    JSR sub_C2424                                 ; 2D95: 20 24 24                                $$          :2095[4]
+    JSR sub_add_new_monster_to_stack              ; 2D95: 20 24 24                                $$          :2095[4]
     PLA                                           ; 2D98: 68                                     h            :2098[4]
     TAX                                           ; 2D99: AA                                     .            :2099[4]
     DEX                                           ; 2D9A: CA                                     .            :209A[4]
-    BNE loop_possible_process_single_monster      ; 2D9B: D0 B9                                  ..           :209B[4]
+    BNE loop_process_next_monster_on_stack        ; 2D9B: D0 B9                                  ..           :209B[4]
     RTS                                           ; 2D9D: 60                                     `            :209D[4]
 
 ; &2D9E referenced 5 times by &2068, &206A, &2073, &2079, &2085
@@ -3433,36 +3441,36 @@ code_to_relocate_1900 = sub_C18FF+1
 
 ; &2DB2 referenced 2 times by &20A2, &20A8
 .possible_monster_not_hit_by_ball
-    LDA L0099                                     ; 2DB2: A5 99                                  ..           :20B2[4]
+    LDA current_status_2                          ; 2DB2: A5 99                                  ..           :20B2[4]
     BEQ C20D9                                     ; 2DB4: F0 23                                  .#           :20B4[4]
-    LDA L0096                                     ; 2DB6: A5 96                                  ..           :20B6[4]
+    LDA current_status_1                          ; 2DB6: A5 96                                  ..           :20B6[4]
     AND #8                                        ; 2DB8: 29 08                                  ).           :20B8[4]
     BEQ C20D5                                     ; 2DBA: F0 19                                  ..           :20BA[4]
-    LDA L0099                                     ; 2DBC: A5 99                                  ..           :20BC[4]
+    LDA current_status_2                          ; 2DBC: A5 99                                  ..           :20BC[4]
     CMP #1                                        ; 2DBE: C9 01                                  ..           :20BE[4]
     BEQ C20C6                                     ; 2DC0: F0 04                                  ..           :20C0[4]
     AND #7                                        ; 2DC2: 29 07                                  ).           :20C2[4]
     BNE C20D1                                     ; 2DC4: D0 0B                                  ..           :20C4[4]
 ; &2DC6 referenced 1 time by &20C0
 .C20C6
-    JSR sub_widely_used_print_some_sprite         ; 2DC6: 20 41 24                                A$          :20C6[4]
-    DEC L0099                                     ; 2DC9: C6 99                                  ..           :20C9[4]
-    JSR sub_widely_used_print_some_sprite         ; 2DCB: 20 41 24                                A$          :20CB[4]
+    JSR sub_print_or_erase_monster_on_screen      ; 2DC6: 20 41 24                                A$          :20C6[4]
+    DEC current_status_2                          ; 2DC9: C6 99                                  ..           :20C9[4]
+    JSR sub_print_or_erase_monster_on_screen      ; 2DCB: 20 41 24                                A$          :20CB[4]
 ; &2DCE referenced 1 time by &20D3
 .loop_C20CE
-    JMP C23EB                                     ; 2DCE: 4C EB 23                               L.#          :20CE[4]
+    JMP check_for_mr_ee_collision_x               ; 2DCE: 4C EB 23                               L.#          :20CE[4]
 
 ; &2DD1 referenced 1 time by &20C4
 .C20D1
-    DEC L0099                                     ; 2DD1: C6 99                                  ..           :20D1[4]
+    DEC current_status_2                          ; 2DD1: C6 99                                  ..           :20D1[4]
     BPL loop_C20CE                                ; 2DD3: 10 F9                                  ..           :20D3[4]
 ; &2DD5 referenced 1 time by &20BA
 .C20D5
-    DEC L0099                                     ; 2DD5: C6 99                                  ..           :20D5[4]
+    DEC current_status_2                          ; 2DD5: C6 99                                  ..           :20D5[4]
     BPL C2070                                     ; 2DD7: 10 97                                  ..           :20D7[4]
 ; &2DD9 referenced 1 time by &20B4
 .C20D9
-    LDA L0620,Y                                   ; 2DD9: B9 20 06                               . .          :20D9[4]
+    LDA apple_status_data,Y                       ; 2DD9: B9 20 06                               . .          :20D9[4]
     CMP L0010                                     ; 2DDC: C5 10                                  ..           :20DC[4]
     BCS C20E2                                     ; 2DDE: B0 02                                  ..           :20DE[4]
     STA L0010                                     ; 2DE0: 85 10                                  ..           :20E0[4]
@@ -3503,7 +3511,7 @@ code_to_relocate_1900 = sub_C18FF+1
     BPL loop_C2105                                ; 2E0E: 10 F5                                  ..           :210E[4]
 ; &2E10 referenced 1 time by &20FA
 .C2110
-    LDA L0620,Y                                   ; 2E10: B9 20 06                               . .          :2110[4]
+    LDA apple_status_data,Y                       ; 2E10: B9 20 06                               . .          :2110[4]
     LDX L0092                                     ; 2E13: A6 92                                  ..           :2113[4]
     BEQ C2124                                     ; 2E15: F0 0D                                  ..           :2115[4]
     CMP L0621,Y                                   ; 2E17: D9 21 06                               .!.          :2117[4]
@@ -3539,7 +3547,7 @@ code_to_relocate_1900 = sub_C18FF+1
     INC L00A0                                     ; 2E3A: E6 A0                                  ..           :213A[4]
 ; &2E3C referenced 1 time by &2138
 .local_skip_1
-    CMP unknown_apple_status_data,Y               ; 2E3C: D9 1F 06                               ...          :213C[4]
+    CMP apple_status_data_minus_1,Y               ; 2E3C: D9 1F 06                               ...          :213C[4]
     BCC local_skip_2                              ; 2E3F: 90 02                                  ..           :213F[4]
     INC L00A1                                     ; 2E41: E6 A1                                  ..           :2141[4]
 ; &2E43 referenced 1 time by &213F
@@ -3556,14 +3564,14 @@ code_to_relocate_1900 = sub_C18FF+1
 .C2151
     TYA                                           ; 2E51: 98                                     .            :2151[4]
     PHA                                           ; 2E52: 48                                     H            :2152[4]
-    JSR sub_widely_used_print_some_sprite         ; 2E53: 20 41 24                                A$          :2153[4]
+    JSR sub_print_or_erase_monster_on_screen      ; 2E53: 20 41 24                                A$          :2153[4]
     STY L00A5                                     ; 2E56: 84 A5                                  ..           :2156[4]
     PLA                                           ; 2E58: 68                                     h            :2158[4]
     TAY                                           ; 2E59: A8                                     .            :2159[4]
     LDA L0092                                     ; 2E5A: A5 92                                  ..           :215A[4]
     ORA L0095                                     ; 2E5C: 05 95                                  ..           :215C[4]
     BEQ C2169                                     ; 2E5E: F0 09                                  ..           :215E[4]
-    LDA L0096                                     ; 2E60: A5 96                                  ..           :2160[4]
+    LDA current_status_1                          ; 2E60: A5 96                                  ..           :2160[4]
     AND #&10                                      ; 2E62: 29 10                                  ).           :2162[4]
     BNE C21D6                                     ; 2E64: D0 70                                  .p           :2164[4]
 ; &2E66 referenced 1 time by &21D8
@@ -3572,28 +3580,28 @@ code_to_relocate_1900 = sub_C18FF+1
 
 ; &2E69 referenced 1 time by &215E
 .C2169
-    LDA L0096                                     ; 2E69: A5 96                                  ..           :2169[4]
+    LDA current_status_1                          ; 2E69: A5 96                                  ..           :2169[4]
     AND #&2C ; ','                                ; 2E6B: 29 2C                                  ),           :216B[4]
     CMP #&20 ; ' '                                ; 2E6D: C9 20                                  .            :216D[4]
     BNE C217F                                     ; 2E6F: D0 0E                                  ..           :216F[4]
-    LDA L0096                                     ; 2E71: A5 96                                  ..           :2171[4]
+    LDA current_status_1                          ; 2E71: A5 96                                  ..           :2171[4]
     EOR #&24 ; '$'                                ; 2E73: 49 24                                  I$           :2173[4]
-    STA L0096                                     ; 2E75: 85 96                                  ..           :2175[4]
+    STA current_status_1                          ; 2E75: 85 96                                  ..           :2175[4]
     AND #&0C                                      ; 2E77: 29 0C                                  ).           :2177[4]
     STA L0098                                     ; 2E79: 85 98                                  ..           :2179[4]
     LDA #&0A                                      ; 2E7B: A9 0A                                  ..           :217B[4]
-    STA L0099                                     ; 2E7D: 85 99                                  ..           :217D[4]
+    STA current_status_2                          ; 2E7D: 85 99                                  ..           :217D[4]
 ; &2E7F referenced 1 time by &216F
 .C217F
     LDA L0098                                     ; 2E7F: A5 98                                  ..           :217F[4]
     CMP #4                                        ; 2E81: C9 04                                  ..           :2181[4]
     BNE C21D6                                     ; 2E83: D0 51                                  .Q           :2183[4]
-    LDA L0096                                     ; 2E85: A5 96                                  ..           :2185[4]
+    LDA current_status_1                          ; 2E85: A5 96                                  ..           :2185[4]
     AND #3                                        ; 2E87: 29 03                                  ).           :2187[4]
 ; &2E89 referenced 2 times by &21AE, &21B6
 .C2189
     LDX mr_ee_x_coord                             ; 2E89: A6 20                                  .            :2189[4]
-    CPX L0090                                     ; 2E8B: E4 90                                  ..           :218B[4]
+    CPX current_x_coord                           ; 2E8B: E4 90                                  ..           :218B[4]
     BCS C2197                                     ; 2E8D: B0 08                                  ..           :218D[4]
     CMP #0                                        ; 2E8F: C9 00                                  ..           :218F[4]
     BEQ C21A6                                     ; 2E91: F0 13                                  ..           :2191[4]
@@ -3613,7 +3621,7 @@ code_to_relocate_1900 = sub_C18FF+1
     TXA                                           ; 2EA5: 8A                                     .            :21A5[4]
 ; &2EA6 referenced 2 times by &2191, &219F
 .C21A6
-    LDX L0093                                     ; 2EA6: A6 93                                  ..           :21A6[4]
+    LDX current_y_coord                           ; 2EA6: A6 93                                  ..           :21A6[4]
     CPX mr_ee_y_coord                             ; 2EA8: E4 21                                  .!           :21A8[4]
     BCS C21B4                                     ; 2EAA: B0 08                                  ..           :21AA[4]
 ; &2EAC referenced 1 time by &21BB
@@ -3639,20 +3647,20 @@ code_to_relocate_1900 = sub_C18FF+1
 
 ; &2EC8 referenced 1 time by &21C3
 .C21C8
-    LDA L0096                                     ; 2EC8: A5 96                                  ..           :21C8[4]
+    LDA current_status_1                          ; 2EC8: A5 96                                  ..           :21C8[4]
     EOR #4                                        ; 2ECA: 49 04                                  I.           :21CA[4]
-    STA L0096                                     ; 2ECC: 85 96                                  ..           :21CC[4]
+    STA current_status_1                          ; 2ECC: 85 96                                  ..           :21CC[4]
     LDA #0                                        ; 2ECE: A9 00                                  ..           :21CE[4]
     STA L0098                                     ; 2ED0: 85 98                                  ..           :21D0[4]
     LDA #&0A                                      ; 2ED2: A9 0A                                  ..           :21D2[4]
-    STA L0099                                     ; 2ED4: 85 99                                  ..           :21D4[4]
+    STA current_status_2                          ; 2ED4: 85 99                                  ..           :21D4[4]
 ; &2ED6 referenced 2 times by &2164, &2183
 .C21D6
     LDA L0094                                     ; 2ED6: A5 94                                  ..           :21D6[4]
     BEQ C2166                                     ; 2ED8: F0 8C                                  ..           :21D8[4]
     LDA L0098                                     ; 2EDA: A5 98                                  ..           :21DA[4]
     BNE C21E2                                     ; 2EDC: D0 04                                  ..           :21DC[4]
-    BIT L0096                                     ; 2EDE: 24 96                                  $.           :21DE[4]
+    BIT current_status_1                          ; 2EDE: 24 96                                  $.           :21DE[4]
     BVS C220F                                     ; 2EE0: 70 2D                                  p-           :21E0[4]
 ; &2EE2 referenced 1 time by &21DC
 .C21E2
@@ -3660,7 +3668,7 @@ code_to_relocate_1900 = sub_C18FF+1
     BNE C21F4                                     ; 2EE4: D0 0E                                  ..           :21E4[4]
     LDA ball_state                                ; 2EE6: A5 1B                                  ..           :21E6[4]
     BNE C21F4                                     ; 2EE8: D0 0A                                  ..           :21E8[4]
-    LDA L0620,Y                                   ; 2EEA: B9 20 06                               . .          :21EA[4]
+    LDA apple_status_data,Y                       ; 2EEA: B9 20 06                               . .          :21EA[4]
     CMP L0010                                     ; 2EED: C5 10                                  ..           :21ED[4]
     BNE C21F4                                     ; 2EEF: D0 03                                  ..           :21EF[4]
     LDA #2                                        ; 2EF1: A9 02                                  ..           :21F1[4]
@@ -3690,7 +3698,7 @@ code_to_relocate_1900 = sub_C18FF+1
     BEQ C2238                                     ; 2F0D: F0 29                                  .)           :220D[4]
 ; &2F0F referenced 1 time by &21E0
 .C220F
-    LDA L0096                                     ; 2F0F: A5 96                                  ..           :220F[4]
+    LDA current_status_1                          ; 2F0F: A5 96                                  ..           :220F[4]
     AND #3                                        ; 2F11: 29 03                                  ).           :2211[4]
     EOR #1                                        ; 2F13: 49 01                                  I.           :2213[4]
     STA L00A4                                     ; 2F15: 85 A4                                  ..           :2215[4]
@@ -3725,23 +3733,23 @@ code_to_relocate_1900 = sub_C18FF+1
     LDA L0098                                     ; 2F3A: A5 98                                  ..           :223A[4]
     BNE C2253                                     ; 2F3C: D0 15                                  ..           :223C[4]
     JSR sub_C25E5                                 ; 2F3E: 20 E5 25                                .%          :223E[4]
-    CMP L0002                                     ; 2F41: C5 02                                  ..           :2241[4]
+    CMP incrementing_counter_during_level_starting_at_scenenumber_plus_2; 2F41: C5 02                                  ..           :2241[4]
     BCS C2253                                     ; 2F43: B0 0E                                  ..           :2243[4]
-    LDA L0096                                     ; 2F45: A5 96                                  ..           :2245[4]
+    LDA current_status_1                          ; 2F45: A5 96                                  ..           :2245[4]
     AND #&10                                      ; 2F47: 29 10                                  ).           :2247[4]
     LSR A                                         ; 2F49: 4A                                     J            :2249[4]
     LSR A                                         ; 2F4A: 4A                                     J            :224A[4]
     LSR A                                         ; 2F4B: 4A                                     J            :224B[4]
     LSR A                                         ; 2F4C: 4A                                     J            :224C[4]
-    EOR L0096                                     ; 2F4D: 45 96                                  E.           :224D[4]   ; Sprite &19 to write (enemy left)
+    EOR current_status_1                          ; 2F4D: 45 96                                  E.           :224D[4]   ; Sprite &19 to write (enemy left)
     ORA #&20 ; ' '                                ; 2F4F: 09 20                                  .            :224F[4]
-    STA L0096                                     ; 2F51: 85 96                                  ..           :2251[4]
+    STA current_status_1                          ; 2F51: 85 96                                  ..           :2251[4]
 ; &2F53 referenced 2 times by &223C, &2243
 .C2253
-    LDA L0096                                     ; 2F53: A5 96                                  ..           :2253[4]
+    LDA current_status_1                          ; 2F53: A5 96                                  ..           :2253[4]
     AND #&FC                                      ; 2F55: 29 FC                                  ).           :2255[4]
     ORA L00A4                                     ; 2F57: 05 A4                                  ..           :2257[4]
-    STA L0096                                     ; 2F59: 85 96                                  ..           :2259[4]
+    STA current_status_1                          ; 2F59: 85 96                                  ..           :2259[4]
 ; &2F5B referenced 1 time by &2166
 .C225B
     LDA L0098                                     ; 2F5B: A5 98                                  ..           :225B[4]
@@ -3749,9 +3757,9 @@ code_to_relocate_1900 = sub_C18FF+1
     BNE C228F                                     ; 2F5F: D0 2E                                  ..           :225F[4]
     JSR sub_check_for_eaten_cherries              ; 2F61: 20 25 1B                                %.          :2261[4]
     LDY L00A5                                     ; 2F64: A4 A5                                  ..           :2264[4]
-    LDA L0090                                     ; 2F66: A5 90                                  ..           :2266[4]
+    LDA current_x_coord                           ; 2F66: A5 90                                  ..           :2266[4]
     LSR A                                         ; 2F68: 4A                                     J            :2268[4]
-    LDA L0096                                     ; 2F69: A5 96                                  ..           :2269[4]
+    LDA current_status_1                          ; 2F69: A5 96                                  ..           :2269[4]
     AND #3                                        ; 2F6B: 29 03                                  ).           :226B[4]
     BNE C2277                                     ; 2F6D: D0 08                                  ..           :226D[4]
     BCC C2274                                     ; 2F6F: 90 03                                  ..           :226F[4]
@@ -3783,14 +3791,14 @@ code_to_relocate_1900 = sub_C18FF+1
     JSR C1999                                     ; 2F8C: 20 99 19                                ..          :228C[4]
 ; &2F8F referenced 4 times by &225F, &2274, &2280, &2289
 .C228F
-    LDX L0090                                     ; 2F8F: A6 90                                  ..           :228F[4]
-    LDY L0093                                     ; 2F91: A4 93                                  ..           :2291[4]
+    LDX current_x_coord                           ; 2F8F: A6 90                                  ..           :228F[4]
+    LDY current_y_coord                           ; 2F91: A4 93                                  ..           :2291[4]
     LDA L0098                                     ; 2F93: A5 98                                  ..           :2293[4]
     AND #8                                        ; 2F95: 29 08                                  ).           :2295[4]
     PHA                                           ; 2F97: 48                                     H            :2297[4]
-    LDA L0096                                     ; 2F98: A5 96                                  ..           :2298[4]
+    LDA current_status_1                          ; 2F98: A5 96                                  ..           :2298[4]
     AND #&EF                                      ; 2F9A: 29 EF                                  ).           :229A[4]
-    STA L0096                                     ; 2F9C: 85 96                                  ..           :229C[4]
+    STA current_status_1                          ; 2F9C: 85 96                                  ..           :229C[4]
     AND #3                                        ; 2F9E: 29 03                                  ).           :229E[4]
     BNE C22D0                                     ; 2FA0: D0 2E                                  ..           :22A0[4]
     PLA                                           ; 2FA2: 68                                     h            :22A2[4]
@@ -3812,14 +3820,14 @@ code_to_relocate_1900 = sub_C18FF+1
     BCC C2326                                     ; 2FC1: 90 63                                  .c           :22C1[4]
 ; &2FC3 referenced 1 time by &22B8
 .C22C3
-    LDA L000F                                     ; 2FC3: A5 0F                                  ..           :22C3[4]
+    LDA main_game_timer_counter                   ; 2FC3: A5 0F                                  ..           :22C3[4]
     LSR A                                         ; 2FC5: 4A                                     J            :22C5[4]
     LSR A                                         ; 2FC6: 4A                                     J            :22C6[4]
     BCC C2326                                     ; 2FC7: 90 5D                                  .]           :22C7[4]
     JSR C1F9F                                     ; 2FC9: 20 9F 1F                                ..          :22C9[4]
 ; &2FCC referenced 2 times by &22A3, &22AE
 .C22CC
-    INC L0090                                     ; 2FCC: E6 90                                  ..           :22CC[4]
+    INC current_x_coord                           ; 2FCC: E6 90                                  ..           :22CC[4]
     BNE C232C                                     ; 2FCE: D0 5C                                  .\           :22CE[4]
 ; &2FD0 referenced 1 time by &22A0
 .C22D0
@@ -3844,14 +3852,14 @@ code_to_relocate_1900 = sub_C18FF+1
     BCS C2326                                     ; 2FF3: B0 31                                  .1           :22F3[4]
 ; &2FF5 referenced 1 time by &22EA
 .C22F5
-    LDA L000F                                     ; 2FF5: A5 0F                                  ..           :22F5[4]
+    LDA main_game_timer_counter                   ; 2FF5: A5 0F                                  ..           :22F5[4]
     LSR A                                         ; 2FF7: 4A                                     J            :22F7[4]
     LSR A                                         ; 2FF8: 4A                                     J            :22F8[4]
     BCC C2326                                     ; 2FF9: 90 2B                                  .+           :22F9[4]
     JSR C1F08                                     ; 2FFB: 20 08 1F                                ..          :22FB[4]
 ; &2FFE referenced 2 times by &22D5, &22E0
 .C22FE
-    DEC L0090                                     ; 2FFE: C6 90                                  ..           :22FE[4]
+    DEC current_x_coord                           ; 2FFE: C6 90                                  ..           :22FE[4]
     BNE C232C                                     ; 3000: D0 2A                                  .*           :2300[4]
 ; &3002 referenced 1 time by &22D2
 .C2302
@@ -3863,8 +3871,8 @@ code_to_relocate_1900 = sub_C18FF+1
     BCS C2326                                     ; 300C: B0 18                                  ..           :230C[4]
 ; &300E referenced 1 time by &2307
 .C230E
-    DEC L0093                                     ; 300E: C6 93                                  ..           :230E[4]
-    DEC L0093                                     ; 3010: C6 93                                  ..           :2310[4]
+    DEC current_y_coord                           ; 300E: C6 93                                  ..           :230E[4]
+    DEC current_y_coord                           ; 3010: C6 93                                  ..           :2310[4]
     BNE C232C                                     ; 3012: D0 18                                  ..           :2312[4]
 ; &3014 referenced 1 time by &2304
 .C2314
@@ -3874,16 +3882,16 @@ code_to_relocate_1900 = sub_C18FF+1
     BCS C2326                                     ; 301A: B0 0A                                  ..           :231A[4]
 ; &301C referenced 1 time by &2315
 .C231C
-    INC L0093                                     ; 301C: E6 93                                  ..           :231C[4]
-    INC L0093                                     ; 301E: E6 93                                  ..           :231E[4]
-    LDA L0093                                     ; 3020: A5 93                                  ..           :2320[4]
+    INC current_y_coord                           ; 301C: E6 93                                  ..           :231C[4]
+    INC current_y_coord                           ; 301E: E6 93                                  ..           :231E[4]
+    LDA current_y_coord                           ; 3020: A5 93                                  ..           :2320[4]
     CMP #&15                                      ; 3022: C9 15                                  ..           :2322[4]
     BNE C232C                                     ; 3024: D0 06                                  ..           :2324[4]
 ; &3026 referenced 10 times by &22AA, &22B2, &22C1, &22C7, &22DC, &22E4, &22F3, &22F9, &230C, &231A
 .C2326
-    LDA L0096                                     ; 3026: A5 96                                  ..           :2326[4]
+    LDA current_status_1                          ; 3026: A5 96                                  ..           :2326[4]
     ORA #&10                                      ; 3028: 09 10                                  ..           :2328[4]
-    STA L0096                                     ; 302A: 85 96                                  ..           :232A[4]
+    STA current_status_1                          ; 302A: 85 96                                  ..           :232A[4]
 ; &302C referenced 4 times by &22CE, &2300, &2312, &2324
 .C232C
     LDA L0098                                     ; 302C: A5 98                                  ..           :232C[4]
@@ -3892,38 +3900,38 @@ code_to_relocate_1900 = sub_C18FF+1
     LSR A                                         ; 3033: 4A                                     J            :2333[4]
     BNE possible_update_a_monster                 ; 3034: D0 0E                                  ..           :2334[4]
     LDX #&40 ; '@'                                ; 3036: A2 40                                  .@           :2336[4]
-    LDA L0096                                     ; 3038: A5 96                                  ..           :2338[4]
+    LDA current_status_1                          ; 3038: A5 96                                  ..           :2338[4]
     AND #&10                                      ; 303A: 29 10                                  ).           :233A[4]
     BEQ C233F                                     ; 303C: F0 01                                  ..           :233C[4]
     INX                                           ; 303E: E8                                     .            :233E[4]
 ; &303F referenced 1 time by &233C
 .C233F
     TXA                                           ; 303F: 8A                                     .            :233F[4]
-    EOR L0096                                     ; 3040: 45 96                                  E.           :2340[4]
-    STA L0096                                     ; 3042: 85 96                                  ..           :2342[4]
+    EOR current_status_1                          ; 3040: 45 96                                  E.           :2340[4]
+    STA current_status_1                          ; 3042: 85 96                                  ..           :2342[4]
 ; &3044 referenced 2 times by &232E, &2334
 .possible_update_a_monster
-    JSR sub_widely_used_print_some_sprite         ; 3044: 20 41 24                                A$          :2344[4]
+    JSR sub_print_or_erase_monster_on_screen      ; 3044: 20 41 24                                A$          :2344[4]
 ; &3047 referenced 1 time by &2070
 .C2347
     LDX number_of_apples_on_screen                ; 3047: A6 09                                  ..           :2347[4]
     BNE C234E                                     ; 3049: D0 03                                  ..           :2349[4]
-    JMP C23EB                                     ; 304B: 4C EB 23                               L.#          :234B[4]
+    JMP check_for_mr_ee_collision_x               ; 304B: 4C EB 23                               L.#          :234B[4]
 
 ; &304E referenced 2 times by &2349, &23E8
 .C234E
     TXA                                           ; 304E: 8A                                     .            :234E[4]
     PHA                                           ; 304F: 48                                     H            :234F[4]
-    LDA L0096                                     ; 3050: A5 96                                  ..           :2350[4]
+    LDA current_status_1                          ; 3050: A5 96                                  ..           :2350[4]
     AND #8                                        ; 3052: 29 08                                  ).           :2352[4]
     BEQ C238D                                     ; 3054: F0 37                                  .7           :2354[4]
-    LDA unknown_apple_status_data,X               ; 3056: BD 1F 06                               ...          :2356[4]
+    LDA apple_status_data_minus_1,X               ; 3056: BD 1F 06                               ...          :2356[4]
     AND #&C0                                      ; 3059: 29 C0                                  ).           :2359[4]
     CMP #&C0                                      ; 305B: C9 C0                                  ..           :235B[4]
     BEQ C238D                                     ; 305D: F0 2E                                  ..           :235D[4]
     LDA apple_x_coordinate,X                      ; 305F: BD AF 08                               ...          :235F[4]
     SEC                                           ; 3062: 38                                     8            :2362[4]
-    SBC L0090                                     ; 3063: E5 90                                  ..           :2363[4]
+    SBC current_x_coord                           ; 3063: E5 90                                  ..           :2363[4]
     CMP #4                                        ; 3065: C9 04                                  ..           :2365[4]
     BCC C236D                                     ; 3067: 90 04                                  ..           :2367[4]
     CMP #&FD                                      ; 3069: C9 FD                                  ..           :2369[4]
@@ -3932,7 +3940,7 @@ code_to_relocate_1900 = sub_C18FF+1
 .C236D
     LDA game_pallet_data_4_or_apple_y_coord_minus_1,X; 306D: BD 0F 06                               ...          :236D[4]
     SEC                                           ; 3070: 38                                     8            :2370[4]
-    SBC L0093                                     ; 3071: E5 93                                  ..           :2371[4]
+    SBC current_y_coord                           ; 3071: E5 93                                  ..           :2371[4]
     CMP #4                                        ; 3073: C9 04                                  ..           :2373[4]
     BCC ghost_possible_chomping_apples_sprint_print; 3075: 90 04                                  ..           :2375[4]
     CMP #&FD                                      ; 3077: C9 FD                                  ..           :2377[4]
@@ -3940,29 +3948,29 @@ code_to_relocate_1900 = sub_C18FF+1
 ; &307B referenced 1 time by &2375
 .ghost_possible_chomping_apples_sprint_print
     LDA #&20 ; ' '                                ; 307B: A9 20                                  .            :237B[4]
-    STA unknown_apple_status_data,X               ; 307D: 9D 1F 06                               ...          :237D[4]
-    JSR sub_widely_used_print_some_sprite         ; 3080: 20 41 24                                A$          :2380[4]
+    STA apple_status_data_minus_1,X               ; 307D: 9D 1F 06                               ...          :237D[4]
+    JSR sub_print_or_erase_monster_on_screen      ; 3080: 20 41 24                                A$          :2380[4]
     LDA #&2F ; '/'                                ; 3083: A9 2F                                  ./           :2383[4]
-    STA L0099                                     ; 3085: 85 99                                  ..           :2385[4]
-    JSR sub_widely_used_print_some_sprite         ; 3087: 20 41 24                                A$          :2387[4]
+    STA current_status_2                          ; 3085: 85 99                                  ..           :2385[4]
+    JSR sub_print_or_erase_monster_on_screen      ; 3087: 20 41 24                                A$          :2387[4]
     JMP C23E3                                     ; 308A: 4C E3 23                               L.#          :238A[4]
 
 ; &308D referenced 4 times by &2354, &235D, &236B, &2379
 .C238D
-    LDA L0096                                     ; 308D: A5 96                                  ..           :238D[4]
+    LDA current_status_1                          ; 308D: A5 96                                  ..           :238D[4]
     AND #&0B                                      ; 308F: 29 0B                                  ).           :238F[4]
     CMP #&0A                                      ; 3091: C9 0A                                  ..           :2391[4]
     BEQ C23E3                                     ; 3093: F0 4E                                  .N           :2393[4]
-    LDA unknown_apple_status_data,X               ; 3095: BD 1F 06                               ...          :2395[4]
+    LDA apple_status_data_minus_1,X               ; 3095: BD 1F 06                               ...          :2395[4]
     AND #&C0                                      ; 3098: 29 C0                                  ).           :2398[4]
     CMP #&80                                      ; 309A: C9 80                                  ..           :239A[4]
     BNE C23E3                                     ; 309C: D0 45                                  .E           :239C[4]
-    LDA L0093                                     ; 309E: A5 93                                  ..           :239E[4]
+    LDA current_y_coord                           ; 309E: A5 93                                  ..           :239E[4]
     SEC                                           ; 30A0: 38                                     8            :23A0[4]
     SBC game_pallet_data_4_or_apple_y_coord_minus_1,X; 30A1: FD 0F 06                               ...          :23A1[4]
     CMP #7                                        ; 30A4: C9 07                                  ..           :23A4[4]
     BCS C23E3                                     ; 30A6: B0 3B                                  .;           :23A6[4]
-    LDA L0090                                     ; 30A8: A5 90                                  ..           :23A8[4]
+    LDA current_x_coord                           ; 30A8: A5 90                                  ..           :23A8[4]
     SBC apple_x_coordinate,X                      ; 30AA: FD AF 08                               ...          :23AA[4]
     CMP #&FA                                      ; 30AD: C9 FA                                  ..           :23AD[4]
     BCS enemy_squished_by_apple_detected_sprite_print; 30AF: B0 04                                  ..           :23AF[4]
@@ -3970,11 +3978,11 @@ code_to_relocate_1900 = sub_C18FF+1
     BCS C23E3                                     ; 30B3: B0 2E                                  ..           :23B3[4]
 ; &30B5 referenced 1 time by &23AF
 .enemy_squished_by_apple_detected_sprite_print
-    JSR sub_widely_used_print_some_sprite         ; 30B5: 20 41 24                                A$          :23B5[4]
+    JSR sub_print_or_erase_monster_on_screen      ; 30B5: 20 41 24                                A$          :23B5[4]
     JSR C24BF                                     ; 30B8: 20 BF 24                                .$          :23B8[4]
-    LDA L0096                                     ; 30BB: A5 96                                  ..           :23BB[4]
+    LDA current_status_1                          ; 30BB: A5 96                                  ..           :23BB[4]
     ORA #&80                                      ; 30BD: 09 80                                  ..           :23BD[4]
-    STA L0096                                     ; 30BF: 85 96                                  ..           :23BF[4]
+    STA current_status_1                          ; 30BF: 85 96                                  ..           :23BF[4]
     AND #8                                        ; 30C1: 29 08                                  ).           :23C1[4]
     ASL A                                         ; 30C3: 0A                                     .            :23C3[4]
     ASL A                                         ; 30C4: 0A                                     .            :23C4[4]
@@ -3984,93 +3992,100 @@ code_to_relocate_1900 = sub_C18FF+1
     STA zp_85_source_spriteaddr                   ; 30CB: 85 85                                  ..           :23CB[4]
     ASL A                                         ; 30CD: 0A                                     .            :23CD[4]
     STA L0018                                     ; 30CE: 85 18                                  ..           :23CE[4]
-    LDA L0090                                     ; 30D0: A5 90                                  ..           :23D0[4]
+    LDA current_x_coord                           ; 30D0: A5 90                                  ..           :23D0[4]
     LSR A                                         ; 30D2: 4A                                     J            :23D2[4]
     TAX                                           ; 30D3: AA                                     .            :23D3[4]   ; X=X screen coordinate
-    LDA L0093                                     ; 30D4: A5 93                                  ..           :23D4[4]
+    LDA current_y_coord                           ; 30D4: A5 93                                  ..           :23D4[4]
     CLC                                           ; 30D6: 18                                     .            :23D6[4]
     ADC #8                                        ; 30D7: 69 08                                  i.           :23D7[4]   ; A=(unused)
     TAY                                           ; 30D9: A8                                     .            :23D9[4]   ; Y=Y screen coordinate
     JSR write_pre_selected_sprite_to_screen_routine; 30DA: 20 84 0A                                ..          :23DA[4]
     JSR restore_L0017_L0018_to_defaults_x18_and_x10; 30DD: 20 50 26                                P&          :23DD[4]
     PLA                                           ; 30E0: 68                                     h            :23E0[4]
-    BNE C23EB                                     ; 30E1: D0 08                                  ..           :23E1[4]
+    BNE check_for_mr_ee_collision_x               ; 30E1: D0 08                                  ..           :23E1[4]
 ; &30E3 referenced 5 times by &238A, &2393, &239C, &23A6, &23B3
 .C23E3
     PLA                                           ; 30E3: 68                                     h            :23E3[4]
     TAX                                           ; 30E4: AA                                     .            :23E4[4]
     DEX                                           ; 30E5: CA                                     .            :23E5[4]
-    BEQ C23EB                                     ; 30E6: F0 03                                  ..           :23E6[4]
+    BEQ check_for_mr_ee_collision_x               ; 30E6: F0 03                                  ..           :23E6[4]
     JMP C234E                                     ; 30E8: 4C 4E 23                               LN#          :23E8[4]
 
 ; &30EB referenced 4 times by &20CE, &234B, &23E1, &23E6
-.C23EB
+.check_for_mr_ee_collision_x
     LDA mr_ee_x_coord                             ; 30EB: A5 20                                  .            :23EB[4]
     SEC                                           ; 30ED: 38                                     8            :23ED[4]
-    SBC L0090                                     ; 30EE: E5 90                                  ..           :23EE[4]
+    SBC current_x_coord                           ; 30EE: E5 90                                  ..           :23EE[4]
     CMP #4                                        ; 30F0: C9 04                                  ..           :23F0[4]
 ; &30F1 referenced 1 time by &1AD4
-    BCC C23F8                                     ; 30F2: 90 04                                  ..           :23F2[4]
+    BCC check_for_mr_ee_collision_y               ; 30F2: 90 04                                  ..           :23F2[4]
     CMP #&FD                                      ; 30F4: C9 FD                                  ..           :23F4[4]
-    BCC C2407                                     ; 30F6: 90 0F                                  ..           :23F6[4]
+    BCC this_monster_processing_complete          ; 30F6: 90 0F                                  ..           :23F6[4]
 ; &30F8 referenced 1 time by &23F2
-.C23F8
+.check_for_mr_ee_collision_y
     LDA mr_ee_y_coord                             ; 30F8: A5 21                                  .!           :23F8[4]
     SEC                                           ; 30FA: 38                                     8            :23FA[4]
-    SBC L0093                                     ; 30FB: E5 93                                  ..           :23FB[4]
+    SBC current_y_coord                           ; 30FB: E5 93                                  ..           :23FB[4]
     CMP #&0C                                      ; 30FD: C9 0C                                  ..           :23FD[4]
-    BCC C2405                                     ; 30FF: 90 04                                  ..           :23FF[4]
+    BCC monster_has_collided_with_mr_ee           ; 30FF: 90 04                                  ..           :23FF[4]
     CMP #&F5                                      ; 3101: C9 F5                                  ..           :2401[4]
-    BCC C2407                                     ; 3103: 90 02                                  ..           :2403[4]
+    BCC this_monster_processing_complete          ; 3103: 90 02                                  ..           :2403[4]
 ; &3105 referenced 1 time by &23FF
-.C2405
+.monster_has_collided_with_mr_ee
     INC mr_ee_status                              ; 3105: E6 27                                  .'           :2405[4]
 ; &3107 referenced 3 times by &205F, &23F6, &2403
-.C2407
+.this_monster_processing_complete
     PLA                                           ; 3107: 68                                     h            :2407[4]
     TAX                                           ; 3108: AA                                     .            :2408[4]
-    LDA L0090                                     ; 3109: A5 90                                  ..           :2409[4]
-    STA possible_monster_stack_x_coord,X          ; 310B: 9D 7F 08                               ...          :240B[4]
-    LDA L0093                                     ; 310E: A5 93                                  ..           :240E[4]
-    STA possible_monster_stack_y_coord,X          ; 3110: 9D 8F 08                               ...          :2410[4]
-    LDA L0096                                     ; 3113: A5 96                                  ..           :2413[4]
-    STA possible_unknown_monster_data_1,X         ; 3115: 9D 9F 08                               ...          :2415[4]
-    LDA L0099                                     ; 3118: A5 99                                  ..           :2418[4]
-    STA possible_unknown_monster_data_2,X         ; 311A: 9D 00 01                               ...          :241A[4]
+    LDA current_x_coord                           ; 3109: A5 90                                  ..           :2409[4]
+    STA monster_stack_x_coord_minus_one,X         ; 310B: 9D 7F 08                               ...          :240B[4]
+    LDA current_y_coord                           ; 310E: A5 93                                  ..           :240E[4]
+    STA monster_stack_y_coord_minus_one,X         ; 3110: 9D 8F 08                               ...          :2410[4]
+    LDA current_status_1                          ; 3113: A5 96                                  ..           :2413[4]
+    STA unknown_monster_data_1_minus_one,X        ; 3115: 9D 9F 08                               ...          :2415[4]
+    LDA current_status_2                          ; 3118: A5 99                                  ..           :2418[4]
+    STA unknown_monster_data_2_minus_one,X        ; 311A: 9D 00 01                               ...          :241A[4]
 ; &311D referenced 1 time by &20AF
 .C241D
     DEX                                           ; 311D: CA                                     .            :241D[4]
     BEQ all_monsters_processed                    ; 311E: F0 03                                  ..           :241E[4]
-    JMP loop_possible_process_single_monster      ; 3120: 4C 56 20                               LV           :2420[4]
+    JMP loop_process_next_monster_on_stack        ; 3120: 4C 56 20                               LV           :2420[4]
 
 ; &3123 referenced 1 time by &241E
 .all_monsters_processed
     RTS                                           ; 3123: 60                                     `            :2423[4]
 
+; ***************************************************************************************
+; Adds a new monster to the stack, increments the monster count
+; 
+; On Entry:
+;     A: Monster status?
+;     X: Monster X coord?
+;     Y: Monster Y coord
 ; &3124 referenced 3 times by &2018, &2095, &2490
-.sub_C2424
-    STX L0090                                     ; 3124: 86 90                                  ..           :2424[4]
-    STY L0093                                     ; 3126: 84 93                                  ..           :2426[4]
-    STA L0096                                     ; 3128: 85 96                                  ..           :2428[4]
+.sub_add_new_monster_to_stack
+    STX current_x_coord                           ; 3124: 86 90                                  ..           :2424[4]
+    STY current_y_coord                           ; 3126: 84 93                                  ..           :2426[4]
+    STA current_status_1                          ; 3128: 85 96                                  ..           :2428[4]
     LDX number_of_all_enemies_on_stack            ; 312A: A6 13                                  ..           :242A[4]
     INC number_of_all_enemies_on_stack            ; 312C: E6 13                                  ..           :242C[4]
-    STA L08A0,X                                   ; 312E: 9D A0 08                               ...          :242E[4]
+    STA unknown_monster_data_1,X                  ; 312E: 9D A0 08                               ...          :242E[4]
     TYA                                           ; 3131: 98                                     .            :2431[4]
-    STA L0890,X                                   ; 3132: 9D 90 08                               ...          :2432[4]
-    LDA L0090                                     ; 3135: A5 90                                  ..           :2435[4]
-    STA L0880,X                                   ; 3137: 9D 80 08                               ...          :2437[4]
+    STA monster_stack_y_coord,X                   ; 3132: 9D 90 08                               ...          :2432[4]
+    LDA current_x_coord                           ; 3135: A5 90                                  ..           :2435[4]
+    STA monster_stack_x_coord,X                   ; 3137: 9D 80 08                               ...          :2437[4]
     LDA #0                                        ; 313A: A9 00                                  ..           :243A[4]
-    STA L0101,X                                   ; 313C: 9D 01 01                               ...          :243C[4]
-    STA L0099                                     ; 313F: 85 99                                  ..           :243F[4]
+    STA unknown_monster_data_2,X                  ; 313C: 9D 01 01                               ...          :243C[4]
+    STA current_status_2                          ; 313F: 85 99                                  ..           :243F[4]
 ; &3141 referenced 13 times by &11F0, &13E3, &13E8, &146E, &1473, &20C6, &20CB, &2153, &2344, &2380, &2387, &23B5, &24B3
-.sub_widely_used_print_some_sprite
-    LDA L0090                                     ; 3141: A5 90                                  ..           :2441[4]
+.sub_print_or_erase_monster_on_screen
+    LDA current_x_coord                           ; 3141: A5 90                                  ..           :2441[4]
     LSR A                                         ; 3143: 4A                                     J            :2443[4]
     TAX                                           ; 3144: AA                                     .            :2444[4]
-    LDA L0096                                     ; 3145: A5 96                                  ..           :2445[4]
+    LDA current_status_1                          ; 3145: A5 96                                  ..           :2445[4]
     AND #8                                        ; 3147: 29 08                                  ).           :2447[4]
     BEQ C2458                                     ; 3149: F0 0D                                  ..           :2449[4]
-    LDA L0099                                     ; 314B: A5 99                                  ..           :244B[4]
+    LDA current_status_2                          ; 314B: A5 99                                  ..           :244B[4]
     BEQ C2458                                     ; 314D: F0 09                                  ..           :244D[4]
     AND #8                                        ; 314F: 29 08                                  ).           :244F[4]
     LSR A                                         ; 3151: 4A                                     J            :2451[4]
@@ -4080,10 +4095,10 @@ code_to_relocate_1900 = sub_C18FF+1
     BNE C2477                                     ; 3156: D0 1F                                  ..           :2456[4]
 ; &3158 referenced 2 times by &2449, &244D
 .C2458
-    LDA L0096                                     ; 3158: A5 96                                  ..           :2458[4]
+    LDA current_status_1                          ; 3158: A5 96                                  ..           :2458[4]
     AND #3                                        ; 315A: 29 03                                  ).           :245A[4]
     STA zp_80_dest_screenaddr                     ; 315C: 85 80                                  ..           :245C[4]
-    LDA L0096                                     ; 315E: A5 96                                  ..           :245E[4]
+    LDA current_status_1                          ; 315E: A5 96                                  ..           :245E[4]
     AND #&0C                                      ; 3160: 29 0C                                  ).           :2460[4]
     CMP #8                                        ; 3162: C9 08                                  ..           :2462[4]
     BEQ C2496                                     ; 3164: F0 30                                  .0           :2464[4]
@@ -4100,11 +4115,19 @@ code_to_relocate_1900 = sub_C18FF+1
     ORA zp_80_dest_screenaddr                     ; 3175: 05 80                                  ..           :2475[4]   ; A=sprite number
 ; &3177 referenced 2 times by &2456, &24AE
 .C2477
-    LDY L0093                                     ; 3177: A4 93                                  ..           :2477[4]   ; Y=Y screen coordinate
+    LDY current_y_coord                           ; 3177: A4 93                                  ..           :2477[4]   ; Y=Y screen coordinate
     JMP write_sprite_to_screen_routine            ; 3179: 4C 73 0A                               Ls.          :2479[4]
 
+; ***************************************************************************************
+; Moves one of ther E X T R A monsters into the playscreen.  Not much else known about
+; it yet
+; 
+; On Entry:
+;     A: ???
+;     X: ???
+;     Y: ???
 ; &317C referenced 2 times by &129D, &202A
-.sub_C247C
+.introduce_extra_monster_to_playscreen
     LDA extra_monster_status                      ; 317C: A5 16                                  ..           :247C[4]
     BMI skip_ghost_and_extra_checks_checks_complete; 317E: 30 6C                                  0l           :247E[4]
     ORA #&80                                      ; 3180: 09 80                                  ..           :2480[4]
@@ -4117,9 +4140,9 @@ code_to_relocate_1900 = sub_C18FF+1
     TAX                                           ; 318B: AA                                     .            :248B[4]
     LDY #3                                        ; 318C: A0 03                                  ..           :248C[4]
     LDA #&0B                                      ; 318E: A9 0B                                  ..           :248E[4]
-    JSR sub_C2424                                 ; 3190: 20 24 24                                $$          :2490[4]
+    JSR sub_add_new_monster_to_stack              ; 3190: 20 24 24                                $$          :2490[4]
     DEY                                           ; 3193: 88                                     .            :2493[4]
-    STY L0093                                     ; 3194: 84 93                                  ..           :2494[4]
+    STY current_y_coord                           ; 3194: 84 93                                  ..           :2494[4]
 ; &3196 referenced 1 time by &2464
 .C2496
     LDA #&3C ; '<'                                ; 3196: A9 3C                                  .<           :2496[4]
@@ -4130,7 +4153,7 @@ code_to_relocate_1900 = sub_C18FF+1
 .C249E
     STA L0097                                     ; 319E: 85 97                                  ..           :249E[4]
     INX                                           ; 31A0: E8                                     .            :24A0[4]
-    LDY L0093                                     ; 31A1: A4 93                                  ..           :24A1[4]
+    LDY current_y_coord                           ; 31A1: A4 93                                  ..           :24A1[4]
     INY                                           ; 31A3: C8                                     .            :24A3[4]
     INY                                           ; 31A4: C8                                     .            :24A4[4]
     INY                                           ; 31A5: C8                                     .            :24A5[4]
@@ -4141,15 +4164,15 @@ code_to_relocate_1900 = sub_C18FF+1
     BNE C2477                                     ; 31AE: D0 C7                                  ..           :24AE[4]
 ; &31B0 referenced 2 times by &1783, &20AA
 .sub_monster_hit_by_ball_sprite_print
-    JSR sub_possible_remove_monster_from_stack    ; 31B0: 20 33 25                                3%          :24B0[4]
-    JSR sub_widely_used_print_some_sprite         ; 31B3: 20 41 24                                A$          :24B3[4]
-    LDA L0096                                     ; 31B6: A5 96                                  ..           :24B6[4]
+    JSR sub_remove_monster_from_stack             ; 31B0: 20 33 25                                3%          :24B0[4]
+    JSR sub_print_or_erase_monster_on_screen      ; 31B3: 20 41 24                                A$          :24B3[4]
+    LDA current_status_1                          ; 31B6: A5 96                                  ..           :24B6[4]
     AND #8                                        ; 31B8: 29 08                                  ).           :24B8[4]
     BEQ C24BF                                     ; 31BA: F0 03                                  ..           :24BA[4]
     JSR sub_C251A                                 ; 31BC: 20 1A 25                                .%          :24BC[4]
 ; &31BF referenced 2 times by &23B8, &24BA
 .C24BF
-    LDA L0096                                     ; 31BF: A5 96                                  ..           :24BF[4]
+    LDA current_status_1                          ; 31BF: A5 96                                  ..           :24BF[4]
     AND #&0C                                      ; 31C1: 29 0C                                  ).           :24C1[4]
     CMP #8                                        ; 31C3: C9 08                                  ..           :24C3[4]
     BEQ C24ED                                     ; 31C5: F0 26                                  .&           :24C5[4]
@@ -4164,7 +4187,7 @@ code_to_relocate_1900 = sub_C18FF+1
     STA video_ula_palette                         ; 31D6: 8D 21 FE                               .!.          :24D6[4]
     LDA #&FD                                      ; 31D9: A9 FD                                  ..           :24D9[4]
     STA remaining_monsters_to_spawn_minus_1       ; 31DB: 85 14                                  ..           :24DB[4]
-    INC L0002                                     ; 31DD: E6 02                                  ..           :24DD[4]
+    INC incrementing_counter_during_level_starting_at_scenenumber_plus_2; 31DD: E6 02                                  ..           :24DD[4]
     JMP C259E                                     ; 31DF: 4C 9E 25                               L.%          :24DF[4]
 
 ; &31E2 referenced 1 time by &24C7
@@ -4173,7 +4196,7 @@ code_to_relocate_1900 = sub_C18FF+1
     LDA number_of_normal_monsters_remaining_minus_1; 31E4: A5 1D                                  ..           :24E4[4]
     CMP #2                                        ; 31E6: C9 02                                  ..           :24E6[4]
     BCS skip_ghost_and_extra_checks_checks_complete; 31E8: B0 02                                  ..           :24E8[4]
-    INC L0002                                     ; 31EA: E6 02                                  ..           :24EA[4]
+    INC incrementing_counter_during_level_starting_at_scenenumber_plus_2; 31EA: E6 02                                  ..           :24EA[4]
 ; &31EC referenced 3 times by &247E, &24CB, &24E8
 .skip_ghost_and_extra_checks_checks_complete
     RTS                                           ; 31EC: 60                                     `            :24EC[4]
@@ -4221,7 +4244,7 @@ code_to_relocate_1900 = sub_C18FF+1
     TYA                                           ; 3227: 98                                     .            :2527[4]
     STA L0610,X                                   ; 3228: 9D 10 06                               ...          :2528[4]
     LDA #0                                        ; 322B: A9 00                                  ..           :252B[4]
-    STA L0620,X                                   ; 322D: 9D 20 06                               . .          :252D[4]
+    STA apple_status_data,X                       ; 322D: 9D 20 06                               . .          :252D[4]
     INC number_of_apples_on_screen                ; 3230: E6 09                                  ..           :2530[4]
     RTS                                           ; 3232: 60                                     `            :2532[4]
 
@@ -4232,16 +4255,16 @@ code_to_relocate_1900 = sub_C18FF+1
 ; On Entry:
 ;     X: Stack index of monster to remove
 ; &3233 referenced 2 times by &1D37, &24B0
-.sub_possible_remove_monster_from_stack
+.sub_remove_monster_from_stack
     LDY number_of_all_enemies_on_stack            ; 3233: A4 13                                  ..           :2533[4]
-    LDA possible_monster_stack_x_coord,Y          ; 3235: B9 7F 08                               ...          :2535[4]
-    STA possible_monster_stack_x_coord,X          ; 3238: 9D 7F 08                               ...          :2538[4]
-    LDA possible_monster_stack_y_coord,Y          ; 323B: B9 8F 08                               ...          :253B[4]
-    STA possible_monster_stack_y_coord,X          ; 323E: 9D 8F 08                               ...          :253E[4]
-    LDA possible_unknown_monster_data_1,Y         ; 3241: B9 9F 08                               ...          :2541[4]
-    STA possible_unknown_monster_data_1,X         ; 3244: 9D 9F 08                               ...          :2544[4]
-    LDA possible_unknown_monster_data_2,Y         ; 3247: B9 00 01                               ...          :2547[4]
-    STA possible_unknown_monster_data_2,X         ; 324A: 9D 00 01                               ...          :254A[4]
+    LDA monster_stack_x_coord_minus_one,Y         ; 3235: B9 7F 08                               ...          :2535[4]
+    STA monster_stack_x_coord_minus_one,X         ; 3238: 9D 7F 08                               ...          :2538[4]
+    LDA monster_stack_y_coord_minus_one,Y         ; 323B: B9 8F 08                               ...          :253B[4]
+    STA monster_stack_y_coord_minus_one,X         ; 323E: 9D 8F 08                               ...          :253E[4]
+    LDA unknown_monster_data_1_minus_one,Y        ; 3241: B9 9F 08                               ...          :2541[4]
+    STA unknown_monster_data_1_minus_one,X        ; 3244: 9D 9F 08                               ...          :2544[4]
+    LDA unknown_monster_data_2_minus_one,Y        ; 3247: B9 00 01                               ...          :2547[4]
+    STA unknown_monster_data_2_minus_one,X        ; 324A: 9D 00 01                               ...          :254A[4]
     DEC number_of_all_enemies_on_stack            ; 324D: C6 13                                  ..           :254D[4]
     RTS                                           ; 324F: 60                                     `            :254F[4]
 
@@ -4252,14 +4275,14 @@ code_to_relocate_1900 = sub_C18FF+1
 ;     X: Stack index of monster data to copy
 ; &3250 referenced 2 times by &175D, &2565
 .get_monster_data_off_stack
-    LDA possible_monster_stack_x_coord,X          ; 3250: BD 7F 08                               ...          :2550[4]
-    STA L0090                                     ; 3253: 85 90                                  ..           :2553[4]
-    LDA possible_monster_stack_y_coord,X          ; 3255: BD 8F 08                               ...          :2555[4]
-    STA L0093                                     ; 3258: 85 93                                  ..           :2558[4]
-    LDA possible_unknown_monster_data_1,X         ; 325A: BD 9F 08                               ...          :255A[4]
-    STA L0096                                     ; 325D: 85 96                                  ..           :255D[4]
-    LDA possible_unknown_monster_data_2,X         ; 325F: BD 00 01                               ...          :255F[4]
-    STA L0099                                     ; 3262: 85 99                                  ..           :2562[4]
+    LDA monster_stack_x_coord_minus_one,X         ; 3250: BD 7F 08                               ...          :2550[4]
+    STA current_x_coord                           ; 3253: 85 90                                  ..           :2553[4]
+    LDA monster_stack_y_coord_minus_one,X         ; 3255: BD 8F 08                               ...          :2555[4]
+    STA current_y_coord                           ; 3258: 85 93                                  ..           :2558[4]
+    LDA unknown_monster_data_1_minus_one,X        ; 325A: BD 9F 08                               ...          :255A[4]
+    STA current_status_1                          ; 325D: 85 96                                  ..           :255D[4]
+    LDA unknown_monster_data_2_minus_one,X        ; 325F: BD 00 01                               ...          :255F[4]
+    STA current_status_2                          ; 3262: 85 99                                  ..           :2562[4]
     RTS                                           ; 3264: 60                                     `            :2564[4]
 
 ; ***************************************************************************************
@@ -4268,7 +4291,7 @@ code_to_relocate_1900 = sub_C18FF+1
 ; On Entry:
 ;     X: Stack index of monster data to copy
 ; &3265 referenced 4 times by &11ED, &13D2, &145D, &2058
-.unknown_fetch_and_process_monster_routine
+.fetch_and_process_monster_from_stack
     JSR get_monster_data_off_stack                ; 3265: 20 50 25                                P%          :2565[4]
 ; ***************************************************************************************
 ; On entry monster is already fetched, then does something with it
@@ -4280,7 +4303,7 @@ code_to_relocate_1900 = sub_C18FF+1
     LDA #&FF                                      ; 3268: A9 FF                                  ..           :2568[4]
     STA L0091                                     ; 326A: 85 91                                  ..           :256A[4]
     STA L0094                                     ; 326C: 85 94                                  ..           :256C[4]
-    LDA L0090                                     ; 326E: A5 90                                  ..           :256E[4]
+    LDA current_x_coord                           ; 326E: A5 90                                  ..           :256E[4]
     SEC                                           ; 3270: 38                                     8            :2570[4]
     SBC #&14                                      ; 3271: E9 14                                  ..           :2571[4]
 ; &3273 referenced 1 time by &2577
@@ -4290,7 +4313,7 @@ code_to_relocate_1900 = sub_C18FF+1
     BCS loop_local_monster_maths_1                ; 3277: B0 FA                                  ..           :2577[4]
     ADC #&0A                                      ; 3279: 69 0A                                  i.           :2579[4]
     STA L0092                                     ; 327B: 85 92                                  ..           :257B[4]
-    LDA L0093                                     ; 327D: A5 93                                  ..           :257D[4]
+    LDA current_y_coord                           ; 327D: A5 93                                  ..           :257D[4]
     SEC                                           ; 327F: 38                                     8            :257F[4]
     SBC #3                                        ; 3280: E9 03                                  ..           :2580[4]
 ; &3282 referenced 1 time by &2586
@@ -4593,8 +4616,8 @@ L26CD = sub_C26CC+1
 
 ; &33D7 referenced 6 times by &11E4, &1570, &1586, &1592, &16E2, &17D9
 .possible_update_ball_if_exists
-    LDY possible_ball_y_coordinate                ; 33D7: A4 1A                                  ..           :26D7[4]
-    LDX possible_ball_x_coordinate                ; 33D9: A6 19                                  ..           :26D9[4]   ; if X=0 then ball does not exist on screen?
+    LDY possible_temp_ball_y_coordinate           ; 33D7: A4 1A                                  ..           :26D7[4]
+    LDX possible_temp_ball_x_coordinate           ; 33D9: A6 19                                  ..           :26D9[4]   ; if X=0 then ball does not exist on screen?
     BNE sub_possible_ball_printing_or_in_motion_routine; 33DB: D0 BB                                  ..           :26DB[4]
 ; &33DD referenced 4 times by &0907, &090C, &0911, &0916
 .sub_check_P_key_pressed
@@ -4733,7 +4756,7 @@ L26CD = sub_C26CC+1
     RTS                                           ; 3492: 60                                     `            :2792[4]
 
 ; &3493 referenced 1 time by &12B1
-.L2793
+.base_eaten_ghosts_triggered_music
     EQUB &A8, &94, &C4, &A8                       ; 3493: A8 94 C4 A8                            ....         :2793[4]
 ; &3497 referenced 1 time by &0929
 .sound_pitch_data
@@ -5108,10 +5131,10 @@ relocated_data_600 = game_pallet_data+1
 .L0610
     EQUS "jsrDCH:pla:tay:"                        ; 3F10: 6A 73 72 44 43 48 3A 70 6C 61 3A 74... jsrDCH:pla:t :0610[2]
 ; &3F1F referenced 20 times by &0A01, &0A08, &104D, &125D, &1266, &1C06, &1C46, &1CC4, &1CCB, &1DFA, &1EB8, &1F0C, &1F26, &1F4F, &1FA3, &1FBD, &213C, &2356, &237D, &2395
-.unknown_apple_status_data
+.apple_status_data_minus_1
     EQUB &74                                      ; 3F1F: 74                                     t            :061F[2]
 ; &3F20 referenced 5 times by &09BA, &20D9, &2110, &21EA, &252D
-.L0620
+.apple_status_data
     EQUB &78                                      ; 3F20: 78                                     x            :0620[2]
 ; &3F21 referenced 4 times by &0A16, &0A1D, &2117, &2135
 .L0621
@@ -5311,7 +5334,7 @@ L09A9 = sub_C09A8+1
 ; &40B8 referenced 2 times by &09A8, &09B1
 .C09B8
     LDA #1                                        ; 40B8: A9 01                                  ..           :09B8[1]
-    STA L0620,Y                                   ; 40BA: 99 20 06                               . .          :09BA[1]
+    STA apple_status_data,Y                       ; 40BA: 99 20 06                               . .          :09BA[1]
     ASL A                                         ; 40BD: 0A                                     .            :09BD[1]
     STA L00A3                                     ; 40BE: 85 A3                                  ..           :09BE[1]
     LDX #&0F                                      ; 40C0: A2 0F                                  ..           :09C0[1]
@@ -5359,10 +5382,10 @@ L09A9 = sub_C09A8+1
 relocated_data_A00 = sub_C09FF+1
     BCC C0A12                                     ; 40FF: 90 11                                  ..           :09FF[1]
 ; &4100 referenced 2 times by &432C, &432F
-    LDA unknown_apple_status_data,Y               ; 4101: B9 1F 06                               ...          :0A01[1]
+    LDA apple_status_data_minus_1,Y               ; 4101: B9 1F 06                               ...          :0A01[1]
     BNE C0A12                                     ; 4104: D0 0C                                  ..           :0A04[1]
     LDA L00A3                                     ; 4106: A5 A3                                  ..           :0A06[1]
-    STA unknown_apple_status_data,Y               ; 4108: 99 1F 06                               ...          :0A08[1]
+    STA apple_status_data_minus_1,Y               ; 4108: 99 1F 06                               ...          :0A08[1]
     INX                                           ; 410B: E8                                     .            :0A0B[1]
     DEY                                           ; 410C: 88                                     .            :0A0C[1]
     TYA                                           ; 410D: 98                                     .            :0A0D[1]
@@ -5491,8 +5514,8 @@ relocated_data_A00 = sub_C09FF+1
 ; &4184 referenced 9 times by &0B74, &1BD1, &1BD9, &1D2F, &1E35, &1E4C, &23DA, &25DF, &2668
 .write_pre_selected_sprite_to_screen_routine
     JSR calculate_screen_write_address_from_x_y_coords; 4184: 20 D3 0A                                ..          :0A84[1]
-    STX L0089                                     ; 4187: 86 89                                  ..           :0A87[1]
-    STY L008A                                     ; 4189: 84 8A                                  ..           :0A89[1]
+    STX possible_ball_x_coordinate                ; 4187: 86 89                                  ..           :0A87[1]
+    STY possible_ball_y_coordinate                ; 4189: 84 8A                                  ..           :0A89[1]
     LDX L0018                                     ; 418B: A6 18                                  ..           :0A8B[1]
 ; &418D referenced 2 times by &0ABD, &0ACC
 .loop_write_next_two_pixels
@@ -5549,8 +5572,8 @@ self_modified_code_1_4 = self_modified_code_1_3+1
     BCC loop_write_next_two_pixels                ; 41CC: 90 BF                                  ..           :0ACC[1]
 ; &41CE referenced 1 time by &0A9D
 .C0ACE
-    LDX L0089                                     ; 41CE: A6 89                                  ..           :0ACE[1]
-    LDY L008A                                     ; 41D0: A4 8A                                  ..           :0AD0[1]
+    LDX possible_ball_x_coordinate                ; 41CE: A6 89                                  ..           :0ACE[1]
+    LDY possible_ball_y_coordinate                ; 41D0: A4 8A                                  ..           :0AD0[1]
     RTS                                           ; 41D2: 60                                     `            :0AD2[1]
 
 ; ***************************************************************************************
@@ -5751,11 +5774,11 @@ self_modified_code_1_4 = self_modified_code_1_3+1
     STA score+2                                   ; 42BD: 85 07                                  ..           :0BBD[1]
     PLA                                           ; 42BF: 68                                     h            :0BBF[1]
     CLC                                           ; 42C0: 18                                     .            :0BC0[1]
-    ADC L0028                                     ; 42C1: 65 28                                  e(           :0BC1[1]
-    STA L0028                                     ; 42C3: 85 28                                  .(           :0BC3[1]
+    ADC strange_unused_score                      ; 42C1: 65 28                                  e(           :0BC1[1]
+    STA strange_unused_score                      ; 42C3: 85 28                                  .(           :0BC3[1]
     TXA                                           ; 42C5: 8A                                     .            :0BC5[1]
-    ADC L0029                                     ; 42C6: 65 29                                  e)           :0BC6[1]
-    STA L0029                                     ; 42C8: 85 29                                  .)           :0BC8[1]
+    ADC strange_unused_score+1                    ; 42C6: 65 29                                  e)           :0BC6[1]
+    STA strange_unused_score+1                    ; 42C8: 85 29                                  .)           :0BC8[1]
     CLD                                           ; 42CA: D8                                     .            :0BCA[1]
 ; ***************************************************************************************
 ; TBD
@@ -5918,693 +5941,693 @@ self_modified_code_1_4 = self_modified_code_1_3+1
 .pydis_end
 
 ; Label references by decreasing frequency:
-;     zp_80_dest_screenaddr:                       106
-;     L0090:                                        68
-;     L0096:                                        57
-;     L0093:                                        46
-;     mr_ee_y_coord:                                32
-;     mr_ee_x_coord:                                30
-;     sub_C273C:                                    30
-;     zp_85_source_spriteaddr:                      28
-;     zp_81_dest_screenaddr:                        26
-;     zp_84_source_spriteaddr:                      24
-;     L0092:                                        23
-;     ball_state:                                   22
-;     L0088:                                        22
-;     extra_monster_status:                         21
-;     L2760:                                        20
-;     L3F1F:                                        20
-;     apple_x_coordinate:                           19
-;     zp_82:                                        16
-;     zp_83:                                        16
-;     L0086:                                        16
-;     L0087:                                        16
-;     L0091:                                        16
-;     L0094:                                        16
-;     L2556:                                        16
-;     L25E8:                                        16
-;     number_of_all_enemies_on_stack:               15
-;     remaining_monsters_to_spawn_minus_1:          15
-;     L00A0:                                        15
-;     L0720:                                        15
-;     sub_C25E5:                                    15
-;     sub_C2766:                                    15
-;     number_of_apples_on_screen:                   14
-;     L0098:                                        14
-;     L0099:                                        14
-;     possible_monster_stack_x_coord:               13
-;     sub_C3141:                                    13
-;     L3F0F:                                        13
-;     C4173:                                        13
-;     oswrch:                                       13
-;     possible_ball_x_coordinate:                   12
-;     possible_ball_y_coordinate:                   12
-;     L0730:                                        12
-;     possible_monster_stack_y_coord:               12
-;     next_monster_release_timer:                   11
-;     mr_ee_status:                                 11
-;     possible_unknown_monster_data_1:              11
-;     sub_C415C:                                    11
-;     osbyte:                                       11
-;     L000F:                                        10
-;     L0089:                                        10
-;     sub_C274B:                                    10
-;     C3026:                                        10
-;     L0018:                                         9
-;     zp_7C_sound_pitch:                             9
-;     L00A3:                                         9
-;     L2AEC:                                         9
-;     sub_C32E5:                                     9
-;     data_to_relocate_4000:                         9
-;     C4184:                                         9
-;     scene_number:                                  8
-;     extra_bitmap:                                  8
-;     possible_mr_ee_direction:                      8
-;     zp_7E_sound_duration:                          8
-;     L008C:                                         8
-;     L0095:                                         8
-;     L00A2:                                         8
-;     L21E9:                                         8
-;     L2B04:                                         8
-;     C3350:                                         8
-;     sub_C33DF:                                     8
-;     sub_C4298:                                     8
-;     L000C:                                         7
-;     number_of_normal_monsters_remaining_minus_1:   7
-;     zp_70_sound_channel:                           7
-;     L008A:                                         7
-;     L3F30:                                         7
-;     C4140:                                         7
-;     number_of_continuous_cherries_consumed:        6
-;     L0017:                                         6
-;     zp_24_lives_remaining:                         6
-;     zp_78_sound_channel:                           6
-;     L2090:                                         6
-;     C33D7:                                         6
-;     video_ula_palette:                             6
-;     L0026:                                         5
-;     L0029:                                         5
-;     unknown_counter:                               5
-;     zp_7A_sound_amplitude:                         5
-;     L0097:                                         5
-;     L00A4:                                         5
-;     L24D2:                                         5
-;     L2B0B:                                         5
-;     L2D9E:                                         5
-;     C30E3:                                         5
-;     C3398:                                         5
-;     L3F20:                                         5
-;     C424F:                                         5
-;     sub_C4284:                                     5
-;     L0002:                                         4
-;     score:                                         4
-;     score+1:                                       4
-;     score+2:                                       4
-;     remaining_cherry_count:                        4
-;     sound_on_off_flag:                             4
-;     L000B:                                         4
-;     L0010:                                         4
-;     L0011:                                         4
-;     L0025:                                         4
-;     L008B:                                         4
-;     L00A1:                                         4
-;     possible_unknown_monster_data_2:               4
-;     L0700:                                         4
-;     sub_C2231:                                     4
-;     L2BD9:                                         4
-;     L2C08:                                         4
-;     L2C41:                                         4
-;     L2C70:                                         4
-;     L2C9F:                                         4
-;     L2CD8:                                         4
-;     L2F8F:                                         4
-;     C302C:                                         4
-;     C308D:                                         4
-;     C30EB:                                         4
-;     sub_C3265:                                     4
-;     sub_C32B2:                                     4
-;     sub_C32CB:                                     4
-;     C3303:                                         4
-;     sub_C3395:                                     4
-;     sub_C33DD:                                     4
-;     sub_C33E8:                                     4
-;     L3F10:                                         4
-;     L3F21:                                         4
-;     C4065:                                         4
-;     C4087:                                         4
-;     sub_C4158:                                     4
-;     C4193:                                         4
-;     sub_C4205:                                     4
-;     sub_C429C:                                     4
-;     L0000:                                         3
-;     somthing_used_to_index_address_0720:           3
-;     L0003:                                         3
-;     L001C:                                         3
-;     level_number_scene_mod_10:                     3
-;     L0028:                                         3
-;     keyboard_or_joystick_flag:                     3
-;     L0740:                                         3
-;     L1A86:                                         3
-;     sub_C1A87:                                     3
-;     sub_C1C52:                                     3
-;     L1D31:                                         3
-;     L1E34:                                         3
-;     sub_C1FC9:                                     3
-;     sub_C2099:                                     3
-;     L20ED:                                         3
-;     L2178:                                         3
-;     L21B7:                                         3
-;     L21C9:                                         3
-;     sub_C23A8:                                     3
-;     L2491:                                         3
-;     L24BB:                                         3
-;     L2699:                                         3
-;     L2825:                                         3
-;     L284C:                                         3
-;     L28A1:                                         3
-;     L29BB:                                         3
-;     L29E0:                                         3
-;     L2A3A:                                         3
-;     L2A59:                                         3
-;     L2B66:                                         3
-;     L2CDC:                                         3
-;     L2D20:                                         3
-;     L2D56:                                         3
-;     L2E51:                                         3
-;     L2EBF:                                         3
-;     L2EF4:                                         3
-;     L2F28:                                         3
-;     C3107:                                         3
-;     sub_C3124:                                     3
-;     C31EC:                                         3
-;     sub_C336E:                                     3
-;     C3393:                                         3
-;     C401B:                                         3
-;     C4126:                                         3
-;     sub_C4152:                                     3
-;     C4191:                                         3
-;     L4192:                                         3
-;     L4194:                                         3
-;     sub_C41D3:                                     3
-;     data_to_relocate_4384:                         3
-;     number_of_active_ghosts:                       2
-;     L002A:                                         2
-;     L002C:                                         2
-;     L002E:                                         2
-;     L0030:                                         2
-;     L0034:                                         2
-;     L0038:                                         2
-;     zp_8f_screencalc_temp_store:                   2
-;     L00A5:                                         2
-;     L0721:                                         2
-;     L0731:                                         2
-;     L1BE3:                                         2
-;     sub_C1BFC:                                     2
-;     sub_C1C26:                                     2
-;     L1E02:                                         2
-;     sub_C1E15:                                     2
-;     sub_C1E2F:                                     2
-;     L1E65:                                         2
-;     L1EE7:                                         2
-;     L1F25:                                         2
-;     sub_C1F6C:                                     2
-;     C2020:                                         2
-;     sub_C2102:                                     2
-;     sub_C2107:                                     2
-;     L210C:                                         2
-;     L210F:                                         2
-;     sub_C2121:                                     2
-;     L2190:                                         2
-;     C21A5:                                         2
-;     sub_C2209:                                     2
-;     sub_C2310:                                     2
-;     L2353:                                         2
-;     sub_C2370:                                     2
-;     sub_C2373:                                     2
-;     L23A9:                                         2
-;     L2446:                                         2
-;     L2459:                                         2
-;     L24DC:                                         2
-;     sub_C2562:                                     2
-;     L2563:                                         2
-;     L25F4:                                         2
-;     sub_C25F5:                                     2
-;     L276C:                                         2
-;     L286A:                                         2
-;     L2885:                                         2
-;     L28A0:                                         2
-;     L28F7:                                         2
-;     L2B08:                                         2
-;     L2B10:                                         2
-;     L2B2D:                                         2
-;     L2B38:                                         2
-;     L2B52:                                         2
-;     L2B85:                                         2
-;     L2B8A:                                         2
-;     L2BA9:                                         2
-;     L2BAE:                                         2
-;     sprite_0C_mr_ee_right_2:                       2
-;     L2C45:                                         2
-;     L2C97:                                         2
-;     L2D4D:                                         2
-;     L2D70:                                         2
-;     L2DB2:                                         2
-;     L2E89:                                         2
-;     L2EA6:                                         2
-;     L2ED6:                                         2
-;     L2F01:                                         2
-;     L2F38:                                         2
-;     L2F53:                                         2
-;     L2FCC:                                         2
-;     L2FFE:                                         2
-;     C3044:                                         2
-;     C304E:                                         2
-;     C3158:                                         2
-;     C3175:                                         2
-;     C3177:                                         2
-;     sub_C317C:                                     2
-;     sub_C31B0:                                     2
-;     C31BF:                                         2
-;     sub_C3233:                                     2
-;     sub_C3250:                                     2
-;     sub_C3268:                                     2
-;     C32CA:                                         2
-;     sub_C3359:                                     2
-;     sub_C335B:                                     2
-;     L33CD:                                         2
-;     sub_C33D0:                                     2
-;     C3400:                                         2
-;     sub_C3485:                                     2
-;     data_to_relocate_3D00:                         2
-;     data_to_relocate_3E00:                         2
-;     L3ECF:                                         2
-;     data_to_relocate_3F00:                         2
-;     L3F08:                                         2
-;     L3F0C:                                         2
-;     C40B8:                                         2
-;     C40C4:                                         2
-;     C40E7:                                         2
-;     C40FD:                                         2
-;     data_to_relocate_4100:                         2
-;     C4112:                                         2
-;     C418D:                                         2
-;     C41B6:                                         2
-;     data_to_relocate_4200:                         2
-;     sub_C42AD:                                     2
-;     sub_C42E3:                                     2
-;     C42F8:                                         2
-;     loop_relocate_more_data:                       2
-;     L002B:                                         1
-;     L002D:                                         1
-;     zp_72_sound_amplitude:                         1
-;     zp_74_sound_pitch:                             1
-;     zp_76_sound_duration:                          1
-;     escape_key_pressed_flag:                       1
-;     L0101:                                         1
-;     L0880:                                         1
-;     L0890:                                         1
-;     L08A0:                                         1
-;     L08A9:                                         1
-;     L08B0:                                         1
-;     L1920:                                         1
-;     L1A94:                                         1
-;     L1AB3:                                         1
-;     L1ACF:                                         1
-;     L1AD8:                                         1
-;     sub_C1AE2:                                     1
-;     sub_C1AEC:                                     1
-;     L1B0E:                                         1
-;     L1B40:                                         1
-;     L1B42:                                         1
-;     L1B4F:                                         1
-;     L1B63:                                         1
-;     L1B7D:                                         1
-;     sub_C1B8F:                                     1
-;     sub_C1B97:                                     1
-;     L1B99:                                         1
-;     L1BA4:                                         1
-;     sub_C1BC6:                                     1
-;     sub_C1BDC:                                     1
-;     L1BF5:                                         1
-;     L1C05:                                         1
-;     sub_C1C0B:                                     1
-;     sub_C1C20:                                     1
-;     sub_C1C31:                                     1
-;     C1C37:                                         1
-;     L1C4C:                                         1
-;     L1C6F:                                         1
-;     sub_C1C73:                                     1
-;     L1C9C:                                         1
-;     sub_C1CA0:                                     1
-;     sub_C1CAD:                                     1
-;     L1CB5:                                         1
-;     L1CE7:                                         1
-;     L1CEA:                                         1
-;     L1CEE:                                         1
-;     L1D34:                                         1
-;     sub_C1D53:                                     1
-;     sub_C1D8C:                                     1
-;     sub_C1D95:                                     1
-;     L1DA9:                                         1
-;     L1DD6:                                         1
-;     sub_C1DE4:                                     1
-;     sub_C1DF3:                                     1
-;     L1DFF:                                         1
-;     L1E21:                                         1
-;     L1E49:                                         1
-;     sub_C1E62:                                     1
-;     sub_C1E68:                                     1
-;     L1E74:                                         1
-;     sub_C1E77:                                     1
-;     sub_C1E7B:                                     1
-;     L1ECF:                                         1
-;     L1ED6:                                         1
-;     sub_C1EEB:                                     1
-;     sub_C1EF8:                                     1
-;     sub_C1F07:                                     1
-;     L1F0E:                                         1
-;     sub_C1F20:                                     1
-;     sub_C1F29:                                     1
-;     C1F4B:                                         1
-;     sub_C1F5D:                                     1
-;     sub_C1F69:                                     1
-;     L1FAB:                                         1
-;     L1FE6:                                         1
-;     L1FEA:                                         1
-;     L2019:                                         1
-;     L202B:                                         1
-;     sub_C2034:                                     1
-;     L2036:                                         1
-;     L2063:                                         1
-;     sub_C2079:                                     1
-;     L207C:                                         1
-;     sub_C2083:                                     1
-;     L2086:                                         1
-;     sub_C208D:                                     1
-;     L20B9:                                         1
-;     sub_C20E0:                                     1
-;     L20EB:                                         1
-;     sub_C20F0:                                     1
-;     L20F3:                                         1
-;     sub_C20FE:                                     1
-;     L2114:                                         1
-;     L212F:                                         1
-;     sub_C2132:                                     1
-;     L2144:                                         1
-;     sub_C216B:                                     1
-;     L2176:                                         1
-;     sub_C217B:                                     1
-;     L217E:                                         1
-;     C2189:                                         1
-;     sub_C2195:                                     1
-;     sub_C21BA:                                     1
-;     L21C6:                                         1
-;     sub_C21FD:                                     1
-;     L2216:                                         1
-;     L2222:                                         1
-;     sub_C2232:                                     1
-;     C2238:                                         1
-;     L2258:                                         1
-;     L2270:                                         1
-;     sub_C2284:                                     1
-;     L22AF:                                         1
-;     L22BE:                                         1
-;     sub_C22DC:                                     1
-;     C231C:                                         1
-;     L2327:                                         1
-;     L2335:                                         1
-;     L2337:                                         1
-;     sub_C2350:                                     1
-;     L2355:                                         1
-;     L2388:                                         1
-;     L238E:                                         1
-;     sub_C23D2:                                     1
-;     L23DB:                                         1
-;     sub_C23E0:                                     1
-;     L23E9:                                         1
-;     L23F9:                                         1
-;     C2405:                                         1
-;     L242B:                                         1
-;     sub_C242E:                                     1
-;     L245D:                                         1
-;     L2472:                                         1
-;     L247F:                                         1
-;     sub_C2494:                                     1
-;     sub_C24A6:                                     1
-;     sub_C24B3:                                     1
-;     sub_C24D9:                                     1
-;     sub_C24FE:                                     1
-;     sub_C250D:                                     1
-;     sub_C2521:                                     1
-;     sub_C254D:                                     1
-;     sub_C2586:                                     1
-;     sub_C2595:                                     1
-;     L25AB:                                         1
-;     L25D9:                                         1
-;     sub_C2611:                                     1
-;     sub_C2631:                                     1
-;     sub_C2639:                                     1
-;     sub_C2659:                                     1
-;     sub_C2671:                                     1
-;     sub_C2685:                                     1
-;     L26AE:                                         1
-;     sub_C26D4:                                     1
-;     L26DC:                                         1
-;     sub_C26FC:                                     1
-;     L270B:                                         1
-;     sub_C272B:                                     1
-;     sub_C274A:                                     1
-;     L2765:                                         1
-;     sub_C276E:                                     1
-;     sub_C2782:                                     1
-;     L2799:                                         1
-;     L27AA:                                         1
-;     L27B6:                                         1
-;     L27BE:                                         1
-;     L27D2:                                         1
-;     L2804:                                         1
-;     L2821:                                         1
-;     L284D:                                         1
-;     L289E:                                         1
-;     L28A9:                                         1
-;     L28DE:                                         1
-;     L28E4:                                         1
-;     L28F2:                                         1
-;     L2915:                                         1
-;     L291C:                                         1
-;     L2934:                                         1
-;     L2937:                                         1
-;     L293A:                                         1
-;     L2950:                                         1
-;     L2960:                                         1
-;     L2965:                                         1
-;     L2968:                                         1
-;     L297F:                                         1
-;     L298D:                                         1
-;     L29B1:                                         1
-;     L29DC:                                         1
-;     L29F1:                                         1
-;     L2A0F:                                         1
-;     L2A3D:                                         1
-;     L2A57:                                         1
-;     L2A6E:                                         1
-;     L2A79:                                         1
-;     L2A7C:                                         1
-;     L2A86:                                         1
-;     L2A8E:                                         1
-;     L2A93:                                         1
-;     L2AAB:                                         1
-;     L2AB9:                                         1
-;     L2AC6:                                         1
-;     L2AE2:                                         1
-;     L2AEA:                                         1
-;     L2B03:                                         1
-;     L2B3F:                                         1
-;     L2B5C:                                         1
-;     L2B63:                                         1
-;     L2B6C:                                         1
-;     L2B83:                                         1
-;     L2B88:                                         1
-;     L2B90:                                         1
-;     L2BA7:                                         1
-;     L2BAC:                                         1
-;     L2BB4:                                         1
-;     L2BB8:                                         1
-;     L2BDC:                                         1
-;     L2BE4:                                         1
-;     L2C03:                                         1
-;     L2C0C:                                         1
-;     L2C44:                                         1
-;     L2C4B:                                         1
-;     L2C4F:                                         1
-;     L2C73:                                         1
-;     L2C7B:                                         1
-;     L2C9A:                                         1
-;     L2CA3:                                         1
-;     L2CDB:                                         1
-;     L2CEF:                                         1
-;     L2D12:                                         1
-;     L2D1B:                                         1
-;     L2D2D:                                         1
-;     L2D48:                                         1
-;     L2D62:                                         1
-;     L2D73:                                         1
-;     L2DC6:                                         1
-;     L2DCE:                                         1
-;     L2DD1:                                         1
-;     L2DD5:                                         1
-;     L2DD9:                                         1
-;     L2DE2:                                         1
-;     L2DEC:                                         1
-;     L2DF2:                                         1
-;     L2DFC:                                         1
-;     L2E05:                                         1
-;     L2E10:                                         1
-;     L2E1F:                                         1
-;     L2E24:                                         1
-;     L2E30:                                         1
-;     L2E35:                                         1
-;     L2E3C:                                         1
-;     L2E43:                                         1
-;     L2E4A:                                         1
-;     L2E66:                                         1
-;     L2E69:                                         1
-;     L2E7F:                                         1
-;     L2E97:                                         1
-;     L2EA5:                                         1
-;     L2EAC:                                         1
-;     L2EB4:                                         1
-;     L2EC8:                                         1
-;     L2EE2:                                         1
-;     L2EF8:                                         1
-;     L2F0F:                                         1
-;     L2F19:                                         1
-;     L2F23:                                         1
-;     L2F3A:                                         1
-;     L2F5B:                                         1
-;     L2F74:                                         1
-;     L2F77:                                         1
-;     sprite_1A_enemy_up:                            1
-;     L2F83:                                         1
-;     L2F8C:                                         1
-;     L2FC3:                                         1
-;     L2FD0:                                         1
-;     L2FF5:                                         1
-;     C3002:                                         1
-;     C300E:                                         1
-;     C3014:                                         1
-;     C301C:                                         1
-;     C303F:                                         1
-;     C3047:                                         1
-;     C306D:                                         1
-;     C307B:                                         1
-;     C30B5:                                         1
-;     screen_memory_30F1:                            1
-;     C30F8:                                         1
-;     C3105:                                         1
-;     C311D:                                         1
-;     C3123:                                         1
-;     C3196:                                         1
-;     C319E:                                         1
-;     C31CD:                                         1
-;     C31E2:                                         1
-;     C31ED:                                         1
-;     C31F6:                                         1
-;     C3219:                                         1
-;     sub_C321A:                                     1
-;     C3273:                                         1
-;     C3282:                                         1
-;     sub_C3296:                                     1
-;     C329E:                                         1
-;     C32AE:                                         1
-;     C32B0:                                         1
-;     C32B6:                                         1
-;     C32E9:                                         1
-;     C330F:                                         1
-;     C3317:                                         1
-;     sub_C332A:                                     1
-;     C3342:                                         1
-;     C3380:                                         1
-;     C3388:                                         1
-;     C3390:                                         1
-;     sub_C33CA:                                     1
-;     C33F4:                                         1
-;     sub_C341B:                                     1
-;     C3421:                                         1
-;     C3453:                                         1
-;     C3457:                                         1
-;     L3493:                                         1
-;     L3497:                                         1
-;     L3558:                                         1
-;     screen_memory_35F2:                            1
-;     screen_memory_35F3:                            1
-;     screen_memory_35F4:                            1
-;     screen_memory_35F5:                            1
-;     screen_memory_35F6:                            1
-;     L3EE3:                                         1
-;     L3EFF:                                         1
-;     L3F2F:                                         1
-;     L3F31:                                         1
-;     L3F32:                                         1
-;     L3F33:                                         1
-;     L3F36:                                         1
-;     L3F3B:                                         1
-;     L3F3D:                                         1
-;     L3F40:                                         1
-;     L3F43:                                         1
-;     L3F46:                                         1
-;     L3F91:                                         1
-;     L3F94:                                         1
-;     L3F97:                                         1
-;     L3F9A:                                         1
-;     L3F9C:                                         1
-;     L3FA1:                                         1
-;     C4007:                                         1
-;     C400C:                                         1
-;     C4011:                                         1
-;     C4016:                                         1
-;     C403A:                                         1
-;     C4041:                                         1
-;     C406C:                                         1
-;     sub_C4090:                                     1
-;     C4094:                                         1
-;     C40B3:                                         1
-;     C40C9:                                         1
-;     C4146:                                         1
-;     C4163:                                         1
-;     C418F:                                         1
-;     C41A5:                                         1
-;     C41CE:                                         1
-;     C4204:                                         1
-;     C420C:                                         1
-;     C421E:                                         1
-;     sub_C4246:                                     1
-;     C4297:                                         1
-;     C42A4:                                         1
-;     sub_C42A6:                                     1
-;     sub_C42CB:                                     1
-;     sub_C42EE:                                     1
-;     C42FC:                                         1
-;     loop_relocate_data:                            1
-;     loop_initialize_70_7F_to_zero:                 1
-;     loop_relocate_zp_data:                         1
-;     loop_print_press_space_or_fire:                1
-;     L438A:                                         1
-;     L438B:                                         1
-;     L438E:                                         1
-;     L4392:                                         1
-;     L4396:                                         1
-;     L439A:                                         1
-;     press_space_or_fire_string_data:               1
-;     L801B:                                         1
-;     user_via_t1c_l:                                1
-;     user_via_t1c_h:                                1
-;     user_via_t1l_l:                                1
-;     user_via_t1l_h:                                1
-;     user_via_acr:                                  1
-;     user_via_ifr:                                  1
-;     osnewl:                                        1
-;     osword:                                        1
+;     zp_80_dest_screenaddr:                                            106
+;     current_x_coord:                                                   68
+;     current_status_1:                                                  57
+;     current_y_coord:                                                   46
+;     mr_ee_y_coord:                                                     32
+;     mr_ee_x_coord:                                                     30
+;     sub_C273C:                                                         30
+;     zp_85_source_spriteaddr:                                           28
+;     zp_81_dest_screenaddr:                                             26
+;     zp_84_source_spriteaddr:                                           24
+;     L0092:                                                             23
+;     ball_state:                                                        22
+;     L0088:                                                             22
+;     extra_monster_status:                                              21
+;     L2760:                                                             20
+;     L3F1F:                                                             20
+;     apple_x_coordinate:                                                19
+;     zp_82:                                                             16
+;     zp_83:                                                             16
+;     L0086:                                                             16
+;     L0087:                                                             16
+;     L0091:                                                             16
+;     L0094:                                                             16
+;     L2556:                                                             16
+;     L25E8:                                                             16
+;     number_of_all_enemies_on_stack:                                    15
+;     remaining_monsters_to_spawn_minus_1:                               15
+;     L00A0:                                                             15
+;     L0720:                                                             15
+;     sub_C25E5:                                                         15
+;     sub_C2766:                                                         15
+;     number_of_apples_on_screen:                                        14
+;     L0098:                                                             14
+;     current_status_2:                                                  14
+;     monster_stack_x_coord_minus_one:                                   13
+;     sub_C3141:                                                         13
+;     L3F0F:                                                             13
+;     C4173:                                                             13
+;     oswrch:                                                            13
+;     possible_temp_ball_x_coordinate:                                   12
+;     possible_temp_ball_y_coordinate:                                   12
+;     L0730:                                                             12
+;     monster_stack_y_coord_minus_one:                                   12
+;     next_monster_release_timer:                                        11
+;     mr_ee_status:                                                      11
+;     unknown_monster_data_1_minus_one:                                  11
+;     sub_C415C:                                                         11
+;     osbyte:                                                            11
+;     main_game_timer_counter:                                           10
+;     possible_ball_x_coordinate:                                        10
+;     sub_C274B:                                                         10
+;     C3026:                                                             10
+;     L0018:                                                              9
+;     zp_7C_sound_pitch:                                                  9
+;     L00A3:                                                              9
+;     L2AEC:                                                              9
+;     sub_C32E5:                                                          9
+;     data_to_relocate_4000:                                              9
+;     C4184:                                                              9
+;     scene_number:                                                       8
+;     extra_bitmap:                                                       8
+;     possible_mr_ee_direction:                                           8
+;     zp_7E_sound_duration:                                               8
+;     L008C:                                                              8
+;     L0095:                                                              8
+;     L00A2:                                                              8
+;     L21E9:                                                              8
+;     L2B04:                                                              8
+;     C3350:                                                              8
+;     sub_C33DF:                                                          8
+;     sub_C4298:                                                          8
+;     L000C:                                                              7
+;     number_of_normal_monsters_remaining_minus_1:                        7
+;     zp_70_sound_channel:                                                7
+;     possible_ball_y_coordinate:                                         7
+;     L3F30:                                                              7
+;     C4140:                                                              7
+;     number_of_continuous_cherries_consumed:                             6
+;     L0017:                                                              6
+;     zp_24_lives_remaining:                                              6
+;     zp_78_sound_channel:                                                6
+;     L2090:                                                              6
+;     C33D7:                                                              6
+;     video_ula_palette:                                                  6
+;     L0026:                                                              5
+;     strange_unused_score+1:                                             5
+;     unknown_counter:                                                    5
+;     zp_7A_sound_amplitude:                                              5
+;     L0097:                                                              5
+;     L00A4:                                                              5
+;     L24D2:                                                              5
+;     L2B0B:                                                              5
+;     L2D9E:                                                              5
+;     C30E3:                                                              5
+;     C3398:                                                              5
+;     L3F20:                                                              5
+;     C424F:                                                              5
+;     sub_C4284:                                                          5
+;     incrementing_counter_during_level_starting_at_scenenumber_plus_2:   4
+;     score:                                                              4
+;     score+1:                                                            4
+;     score+2:                                                            4
+;     remaining_cherry_count:                                             4
+;     sound_on_off_flag:                                                  4
+;     L000B:                                                              4
+;     L0010:                                                              4
+;     L0011:                                                              4
+;     L0025:                                                              4
+;     L008B:                                                              4
+;     L00A1:                                                              4
+;     unknown_monster_data_2_minus_one:                                   4
+;     L0700:                                                              4
+;     sub_C2231:                                                          4
+;     L2BD9:                                                              4
+;     L2C08:                                                              4
+;     L2C41:                                                              4
+;     L2C70:                                                              4
+;     L2C9F:                                                              4
+;     L2CD8:                                                              4
+;     L2F8F:                                                              4
+;     C302C:                                                              4
+;     C308D:                                                              4
+;     C30EB:                                                              4
+;     sub_C3265:                                                          4
+;     sub_C32B2:                                                          4
+;     sub_C32CB:                                                          4
+;     C3303:                                                              4
+;     sub_C3395:                                                          4
+;     sub_C33DD:                                                          4
+;     sub_C33E8:                                                          4
+;     L3F10:                                                              4
+;     L3F21:                                                              4
+;     C4065:                                                              4
+;     C4087:                                                              4
+;     sub_C4158:                                                          4
+;     C4193:                                                              4
+;     sub_C4205:                                                          4
+;     sub_C429C:                                                          4
+;     L0000:                                                              3
+;     somthing_used_to_index_address_0720:                                3
+;     scene_number_plus_2:                                                3
+;     L001C:                                                              3
+;     level_number_scene_mod_10:                                          3
+;     strange_unused_score:                                               3
+;     keyboard_or_joystick_flag:                                          3
+;     L0740:                                                              3
+;     L1A86:                                                              3
+;     sub_C1A87:                                                          3
+;     sub_C1C52:                                                          3
+;     L1D31:                                                              3
+;     L1E34:                                                              3
+;     sub_C1FC9:                                                          3
+;     sub_C2099:                                                          3
+;     L20ED:                                                              3
+;     L2178:                                                              3
+;     L21B7:                                                              3
+;     L21C9:                                                              3
+;     sub_C23A8:                                                          3
+;     L2491:                                                              3
+;     L24BB:                                                              3
+;     L2699:                                                              3
+;     L2825:                                                              3
+;     L284C:                                                              3
+;     L28A1:                                                              3
+;     L29BB:                                                              3
+;     L29E0:                                                              3
+;     L2A3A:                                                              3
+;     L2A59:                                                              3
+;     L2B66:                                                              3
+;     L2CDC:                                                              3
+;     L2D20:                                                              3
+;     L2D56:                                                              3
+;     L2E51:                                                              3
+;     L2EBF:                                                              3
+;     L2EF4:                                                              3
+;     L2F28:                                                              3
+;     C3107:                                                              3
+;     sub_C3124:                                                          3
+;     C31EC:                                                              3
+;     sub_C336E:                                                          3
+;     C3393:                                                              3
+;     C401B:                                                              3
+;     C4126:                                                              3
+;     sub_C4152:                                                          3
+;     C4191:                                                              3
+;     L4192:                                                              3
+;     L4194:                                                              3
+;     sub_C41D3:                                                          3
+;     data_to_relocate_4384:                                              3
+;     number_of_active_ghosts:                                            2
+;     L002A:                                                              2
+;     L002C:                                                              2
+;     L002E:                                                              2
+;     L0030:                                                              2
+;     L0034:                                                              2
+;     L0038:                                                              2
+;     zp_8f_screencalc_temp_store:                                        2
+;     L00A5:                                                              2
+;     L0721:                                                              2
+;     L0731:                                                              2
+;     L1BE3:                                                              2
+;     sub_C1BFC:                                                          2
+;     sub_C1C26:                                                          2
+;     L1E02:                                                              2
+;     sub_C1E15:                                                          2
+;     sub_C1E2F:                                                          2
+;     L1E65:                                                              2
+;     L1EE7:                                                              2
+;     L1F25:                                                              2
+;     sub_C1F6C:                                                          2
+;     C2020:                                                              2
+;     sub_C2102:                                                          2
+;     sub_C2107:                                                          2
+;     L210C:                                                              2
+;     L210F:                                                              2
+;     sub_C2121:                                                          2
+;     L2190:                                                              2
+;     C21A5:                                                              2
+;     sub_C2209:                                                          2
+;     sub_C2310:                                                          2
+;     L2353:                                                              2
+;     sub_C2370:                                                          2
+;     sub_C2373:                                                          2
+;     L23A9:                                                              2
+;     L2446:                                                              2
+;     L2459:                                                              2
+;     L24DC:                                                              2
+;     sub_C2562:                                                          2
+;     L2563:                                                              2
+;     L25F4:                                                              2
+;     sub_C25F5:                                                          2
+;     L276C:                                                              2
+;     L286A:                                                              2
+;     L2885:                                                              2
+;     L28A0:                                                              2
+;     L28F7:                                                              2
+;     L2B08:                                                              2
+;     L2B10:                                                              2
+;     L2B2D:                                                              2
+;     L2B38:                                                              2
+;     L2B52:                                                              2
+;     L2B85:                                                              2
+;     L2B8A:                                                              2
+;     L2BA9:                                                              2
+;     L2BAE:                                                              2
+;     sprite_0C_mr_ee_right_2:                                            2
+;     L2C45:                                                              2
+;     L2C97:                                                              2
+;     L2D4D:                                                              2
+;     L2D70:                                                              2
+;     L2DB2:                                                              2
+;     L2E89:                                                              2
+;     L2EA6:                                                              2
+;     L2ED6:                                                              2
+;     L2F01:                                                              2
+;     L2F38:                                                              2
+;     L2F53:                                                              2
+;     L2FCC:                                                              2
+;     L2FFE:                                                              2
+;     C3044:                                                              2
+;     C304E:                                                              2
+;     C3158:                                                              2
+;     C3175:                                                              2
+;     C3177:                                                              2
+;     sub_C317C:                                                          2
+;     sub_C31B0:                                                          2
+;     C31BF:                                                              2
+;     sub_C3233:                                                          2
+;     sub_C3250:                                                          2
+;     sub_C3268:                                                          2
+;     C32CA:                                                              2
+;     sub_C3359:                                                          2
+;     sub_C335B:                                                          2
+;     L33CD:                                                              2
+;     sub_C33D0:                                                          2
+;     C3400:                                                              2
+;     sub_C3485:                                                          2
+;     data_to_relocate_3D00:                                              2
+;     data_to_relocate_3E00:                                              2
+;     L3ECF:                                                              2
+;     data_to_relocate_3F00:                                              2
+;     L3F08:                                                              2
+;     L3F0C:                                                              2
+;     C40B8:                                                              2
+;     C40C4:                                                              2
+;     C40E7:                                                              2
+;     C40FD:                                                              2
+;     data_to_relocate_4100:                                              2
+;     C4112:                                                              2
+;     C418D:                                                              2
+;     C41B6:                                                              2
+;     data_to_relocate_4200:                                              2
+;     sub_C42AD:                                                          2
+;     sub_C42E3:                                                          2
+;     C42F8:                                                              2
+;     loop_relocate_more_data:                                            2
+;     L002B:                                                              1
+;     L002D:                                                              1
+;     zp_72_sound_amplitude:                                              1
+;     zp_74_sound_pitch:                                                  1
+;     zp_76_sound_duration:                                               1
+;     escape_key_pressed_flag:                                            1
+;     unknown_monster_data_2:                                             1
+;     monster_stack_x_coord:                                              1
+;     monster_stack_y_coord:                                              1
+;     unknown_monster_data_1:                                             1
+;     L08A9:                                                              1
+;     L08B0:                                                              1
+;     L1920:                                                              1
+;     L1A94:                                                              1
+;     L1AB3:                                                              1
+;     L1ACF:                                                              1
+;     L1AD8:                                                              1
+;     sub_C1AE2:                                                          1
+;     sub_C1AEC:                                                          1
+;     L1B0E:                                                              1
+;     L1B40:                                                              1
+;     L1B42:                                                              1
+;     L1B4F:                                                              1
+;     L1B63:                                                              1
+;     L1B7D:                                                              1
+;     sub_C1B8F:                                                          1
+;     sub_C1B97:                                                          1
+;     L1B99:                                                              1
+;     L1BA4:                                                              1
+;     sub_C1BC6:                                                          1
+;     sub_C1BDC:                                                          1
+;     L1BF5:                                                              1
+;     L1C05:                                                              1
+;     sub_C1C0B:                                                          1
+;     sub_C1C20:                                                          1
+;     sub_C1C31:                                                          1
+;     C1C37:                                                              1
+;     L1C4C:                                                              1
+;     L1C6F:                                                              1
+;     sub_C1C73:                                                          1
+;     L1C9C:                                                              1
+;     sub_C1CA0:                                                          1
+;     sub_C1CAD:                                                          1
+;     L1CB5:                                                              1
+;     L1CE7:                                                              1
+;     L1CEA:                                                              1
+;     L1CEE:                                                              1
+;     L1D34:                                                              1
+;     sub_C1D53:                                                          1
+;     sub_C1D8C:                                                          1
+;     sub_C1D95:                                                          1
+;     L1DA9:                                                              1
+;     L1DD6:                                                              1
+;     sub_C1DE4:                                                          1
+;     sub_C1DF3:                                                          1
+;     L1DFF:                                                              1
+;     L1E21:                                                              1
+;     L1E49:                                                              1
+;     sub_C1E62:                                                          1
+;     sub_C1E68:                                                          1
+;     L1E74:                                                              1
+;     sub_C1E77:                                                          1
+;     sub_C1E7B:                                                          1
+;     L1ECF:                                                              1
+;     L1ED6:                                                              1
+;     sub_C1EEB:                                                          1
+;     sub_C1EF8:                                                          1
+;     sub_C1F07:                                                          1
+;     L1F0E:                                                              1
+;     sub_C1F20:                                                          1
+;     sub_C1F29:                                                          1
+;     C1F4B:                                                              1
+;     sub_C1F5D:                                                          1
+;     sub_C1F69:                                                          1
+;     L1FAB:                                                              1
+;     L1FE6:                                                              1
+;     L1FEA:                                                              1
+;     L2019:                                                              1
+;     L202B:                                                              1
+;     sub_C2034:                                                          1
+;     L2036:                                                              1
+;     L2063:                                                              1
+;     sub_C2079:                                                          1
+;     L207C:                                                              1
+;     sub_C2083:                                                          1
+;     L2086:                                                              1
+;     sub_C208D:                                                          1
+;     L20B9:                                                              1
+;     sub_C20E0:                                                          1
+;     L20EB:                                                              1
+;     sub_C20F0:                                                          1
+;     L20F3:                                                              1
+;     sub_C20FE:                                                          1
+;     L2114:                                                              1
+;     L212F:                                                              1
+;     sub_C2132:                                                          1
+;     L2144:                                                              1
+;     sub_C216B:                                                          1
+;     L2176:                                                              1
+;     sub_C217B:                                                          1
+;     L217E:                                                              1
+;     C2189:                                                              1
+;     sub_C2195:                                                          1
+;     sub_C21BA:                                                          1
+;     L21C6:                                                              1
+;     sub_C21FD:                                                          1
+;     L2216:                                                              1
+;     L2222:                                                              1
+;     sub_C2232:                                                          1
+;     C2238:                                                              1
+;     L2258:                                                              1
+;     L2270:                                                              1
+;     sub_C2284:                                                          1
+;     L22AF:                                                              1
+;     L22BE:                                                              1
+;     sub_C22DC:                                                          1
+;     C231C:                                                              1
+;     L2327:                                                              1
+;     L2335:                                                              1
+;     L2337:                                                              1
+;     sub_C2350:                                                          1
+;     L2355:                                                              1
+;     L2388:                                                              1
+;     L238E:                                                              1
+;     sub_C23D2:                                                          1
+;     L23DB:                                                              1
+;     sub_C23E0:                                                          1
+;     L23E9:                                                              1
+;     L23F9:                                                              1
+;     monster_has_collided_with_mr_ee:                                    1
+;     L242B:                                                              1
+;     sub_C242E:                                                          1
+;     L245D:                                                              1
+;     L2472:                                                              1
+;     L247F:                                                              1
+;     sub_C2494:                                                          1
+;     sub_C24A6:                                                          1
+;     sub_C24B3:                                                          1
+;     sub_C24D9:                                                          1
+;     sub_C24FE:                                                          1
+;     sub_C250D:                                                          1
+;     sub_C2521:                                                          1
+;     sub_C254D:                                                          1
+;     sub_C2586:                                                          1
+;     sub_C2595:                                                          1
+;     L25AB:                                                              1
+;     L25D9:                                                              1
+;     sub_C2611:                                                          1
+;     sub_C2631:                                                          1
+;     sub_C2639:                                                          1
+;     sub_C2659:                                                          1
+;     sub_C2671:                                                          1
+;     sub_C2685:                                                          1
+;     L26AE:                                                              1
+;     sub_C26D4:                                                          1
+;     L26DC:                                                              1
+;     sub_C26FC:                                                          1
+;     L270B:                                                              1
+;     sub_C272B:                                                          1
+;     sub_C274A:                                                          1
+;     L2765:                                                              1
+;     sub_C276E:                                                          1
+;     sub_C2782:                                                          1
+;     L2799:                                                              1
+;     L27AA:                                                              1
+;     L27B6:                                                              1
+;     L27BE:                                                              1
+;     L27D2:                                                              1
+;     L2804:                                                              1
+;     L2821:                                                              1
+;     L284D:                                                              1
+;     L289E:                                                              1
+;     L28A9:                                                              1
+;     L28DE:                                                              1
+;     L28E4:                                                              1
+;     L28F2:                                                              1
+;     L2915:                                                              1
+;     L291C:                                                              1
+;     L2934:                                                              1
+;     L2937:                                                              1
+;     L293A:                                                              1
+;     L2950:                                                              1
+;     L2960:                                                              1
+;     L2965:                                                              1
+;     L2968:                                                              1
+;     L297F:                                                              1
+;     L298D:                                                              1
+;     L29B1:                                                              1
+;     L29DC:                                                              1
+;     L29F1:                                                              1
+;     L2A0F:                                                              1
+;     L2A3D:                                                              1
+;     L2A57:                                                              1
+;     L2A6E:                                                              1
+;     L2A79:                                                              1
+;     L2A7C:                                                              1
+;     L2A86:                                                              1
+;     L2A8E:                                                              1
+;     L2A93:                                                              1
+;     L2AAB:                                                              1
+;     L2AB9:                                                              1
+;     L2AC6:                                                              1
+;     L2AE2:                                                              1
+;     L2AEA:                                                              1
+;     L2B03:                                                              1
+;     L2B3F:                                                              1
+;     L2B5C:                                                              1
+;     L2B63:                                                              1
+;     L2B6C:                                                              1
+;     L2B83:                                                              1
+;     L2B88:                                                              1
+;     L2B90:                                                              1
+;     L2BA7:                                                              1
+;     L2BAC:                                                              1
+;     L2BB4:                                                              1
+;     L2BB8:                                                              1
+;     L2BDC:                                                              1
+;     L2BE4:                                                              1
+;     L2C03:                                                              1
+;     L2C0C:                                                              1
+;     L2C44:                                                              1
+;     L2C4B:                                                              1
+;     L2C4F:                                                              1
+;     L2C73:                                                              1
+;     L2C7B:                                                              1
+;     L2C9A:                                                              1
+;     L2CA3:                                                              1
+;     L2CDB:                                                              1
+;     L2CEF:                                                              1
+;     L2D12:                                                              1
+;     L2D1B:                                                              1
+;     L2D2D:                                                              1
+;     L2D48:                                                              1
+;     L2D62:                                                              1
+;     L2D73:                                                              1
+;     L2DC6:                                                              1
+;     L2DCE:                                                              1
+;     L2DD1:                                                              1
+;     L2DD5:                                                              1
+;     L2DD9:                                                              1
+;     L2DE2:                                                              1
+;     L2DEC:                                                              1
+;     L2DF2:                                                              1
+;     L2DFC:                                                              1
+;     L2E05:                                                              1
+;     L2E10:                                                              1
+;     L2E1F:                                                              1
+;     L2E24:                                                              1
+;     L2E30:                                                              1
+;     L2E35:                                                              1
+;     L2E3C:                                                              1
+;     L2E43:                                                              1
+;     L2E4A:                                                              1
+;     L2E66:                                                              1
+;     L2E69:                                                              1
+;     L2E7F:                                                              1
+;     L2E97:                                                              1
+;     L2EA5:                                                              1
+;     L2EAC:                                                              1
+;     L2EB4:                                                              1
+;     L2EC8:                                                              1
+;     L2EE2:                                                              1
+;     L2EF8:                                                              1
+;     L2F0F:                                                              1
+;     L2F19:                                                              1
+;     L2F23:                                                              1
+;     L2F3A:                                                              1
+;     L2F5B:                                                              1
+;     L2F74:                                                              1
+;     L2F77:                                                              1
+;     sprite_1A_enemy_up:                                                 1
+;     L2F83:                                                              1
+;     L2F8C:                                                              1
+;     L2FC3:                                                              1
+;     L2FD0:                                                              1
+;     L2FF5:                                                              1
+;     C3002:                                                              1
+;     C300E:                                                              1
+;     C3014:                                                              1
+;     C301C:                                                              1
+;     C303F:                                                              1
+;     C3047:                                                              1
+;     C306D:                                                              1
+;     C307B:                                                              1
+;     C30B5:                                                              1
+;     screen_memory_30F1:                                                 1
+;     C30F8:                                                              1
+;     C3105:                                                              1
+;     C311D:                                                              1
+;     C3123:                                                              1
+;     C3196:                                                              1
+;     C319E:                                                              1
+;     C31CD:                                                              1
+;     C31E2:                                                              1
+;     C31ED:                                                              1
+;     C31F6:                                                              1
+;     C3219:                                                              1
+;     sub_C321A:                                                          1
+;     C3273:                                                              1
+;     C3282:                                                              1
+;     sub_C3296:                                                          1
+;     C329E:                                                              1
+;     C32AE:                                                              1
+;     C32B0:                                                              1
+;     C32B6:                                                              1
+;     C32E9:                                                              1
+;     C330F:                                                              1
+;     C3317:                                                              1
+;     sub_C332A:                                                          1
+;     C3342:                                                              1
+;     C3380:                                                              1
+;     C3388:                                                              1
+;     C3390:                                                              1
+;     sub_C33CA:                                                          1
+;     C33F4:                                                              1
+;     sub_C341B:                                                          1
+;     C3421:                                                              1
+;     C3453:                                                              1
+;     C3457:                                                              1
+;     L3493:                                                              1
+;     L3497:                                                              1
+;     L3558:                                                              1
+;     screen_memory_35F2:                                                 1
+;     screen_memory_35F3:                                                 1
+;     screen_memory_35F4:                                                 1
+;     screen_memory_35F5:                                                 1
+;     screen_memory_35F6:                                                 1
+;     L3EE3:                                                              1
+;     L3EFF:                                                              1
+;     L3F2F:                                                              1
+;     L3F31:                                                              1
+;     L3F32:                                                              1
+;     L3F33:                                                              1
+;     L3F36:                                                              1
+;     L3F3B:                                                              1
+;     L3F3D:                                                              1
+;     L3F40:                                                              1
+;     L3F43:                                                              1
+;     L3F46:                                                              1
+;     L3F91:                                                              1
+;     L3F94:                                                              1
+;     L3F97:                                                              1
+;     L3F9A:                                                              1
+;     L3F9C:                                                              1
+;     L3FA1:                                                              1
+;     C4007:                                                              1
+;     C400C:                                                              1
+;     C4011:                                                              1
+;     C4016:                                                              1
+;     C403A:                                                              1
+;     C4041:                                                              1
+;     C406C:                                                              1
+;     sub_C4090:                                                          1
+;     C4094:                                                              1
+;     C40B3:                                                              1
+;     C40C9:                                                              1
+;     C4146:                                                              1
+;     C4163:                                                              1
+;     C418F:                                                              1
+;     C41A5:                                                              1
+;     C41CE:                                                              1
+;     C4204:                                                              1
+;     C420C:                                                              1
+;     C421E:                                                              1
+;     sub_C4246:                                                          1
+;     C4297:                                                              1
+;     C42A4:                                                              1
+;     sub_C42A6:                                                          1
+;     sub_C42CB:                                                          1
+;     sub_C42EE:                                                          1
+;     C42FC:                                                              1
+;     loop_relocate_data:                                                 1
+;     loop_initialize_70_7F_to_zero:                                      1
+;     loop_relocate_zp_data:                                              1
+;     loop_print_press_space_or_fire:                                     1
+;     L438A:                                                              1
+;     L438B:                                                              1
+;     L438E:                                                              1
+;     L4392:                                                              1
+;     L4396:                                                              1
+;     L439A:                                                              1
+;     press_space_or_fire_string_data:                                    1
+;     L801B:                                                              1
+;     user_via_t1c_l:                                                     1
+;     user_via_t1c_h:                                                     1
+;     user_via_t1l_l:                                                     1
+;     user_via_t1l_h:                                                     1
+;     user_via_acr:                                                       1
+;     user_via_ifr:                                                       1
+;     osnewl:                                                             1
+;     osword:                                                             1
 
 ; Automatically generated labels:
 ;     C093A
@@ -6644,7 +6667,6 @@ self_modified_code_1_4 = self_modified_code_1_3+1
 ;     C0FEA
 ;     C0FEE
 ;     C1031
-;     C10FF
 ;     C1102
 ;     C1115
 ;     C11F8
@@ -6695,7 +6717,6 @@ self_modified_code_1_4 = self_modified_code_1_3+1
 ;     C1746
 ;     C1772
 ;     C177F
-;     C1791
 ;     C17A6
 ;     C17B3
 ;     C17BB
@@ -6849,10 +6870,6 @@ self_modified_code_1_4 = self_modified_code_1_3+1
 ;     C236D
 ;     C238D
 ;     C23E3
-;     C23EB
-;     C23F8
-;     C2405
-;     C2407
 ;     C241D
 ;     C2458
 ;     C2475
@@ -6970,11 +6987,8 @@ self_modified_code_1_4 = self_modified_code_1_3+1
 ;     C42F8
 ;     C42FC
 ;     L0000
-;     L0002
-;     L0003
 ;     L000B
 ;     L000C
-;     L000F
 ;     L0010
 ;     L0011
 ;     L0017
@@ -6982,8 +6996,6 @@ self_modified_code_1_4 = self_modified_code_1_3+1
 ;     L001C
 ;     L0025
 ;     L0026
-;     L0028
-;     L0029
 ;     L002A
 ;     L002B
 ;     L002C
@@ -7002,30 +7014,22 @@ self_modified_code_1_4 = self_modified_code_1_3+1
 ;     L0086
 ;     L0087
 ;     L0088
-;     L0089
-;     L008A
 ;     L008B
 ;     L008C
-;     L0090
 ;     L0091
 ;     L0092
-;     L0093
 ;     L0094
 ;     L0095
-;     L0096
 ;     L0097
 ;     L0098
-;     L0099
 ;     L00A0
 ;     L00A1
 ;     L00A2
 ;     L00A3
 ;     L00A4
 ;     L00A5
-;     L0101
 ;     L03A9
 ;     L0610
-;     L0620
 ;     L0621
 ;     L062F
 ;     L0630
@@ -7050,9 +7054,6 @@ self_modified_code_1_4 = self_modified_code_1_3+1
 ;     L0730
 ;     L0731
 ;     L0740
-;     L0880
-;     L0890
-;     L08A0
 ;     L08A9
 ;     L08B0
 ;     L09A9
@@ -7168,7 +7169,6 @@ self_modified_code_1_4 = self_modified_code_1_3+1
 ;     L2760
 ;     L2765
 ;     L276C
-;     L2793
 ;     L2799
 ;     L27AA
 ;     L27B6
@@ -7393,7 +7393,6 @@ self_modified_code_1_4 = self_modified_code_1_3+1
 ;     loop_C12AB
 ;     loop_C142F
 ;     loop_C15BE
-;     loop_C1655
 ;     loop_C1821
 ;     loop_C18AB
 ;     loop_C1911
@@ -7506,9 +7505,7 @@ self_modified_code_1_4 = self_modified_code_1_3+1
 ;     sub_C23A8
 ;     sub_C23D2
 ;     sub_C23E0
-;     sub_C2424
 ;     sub_C242E
-;     sub_C247C
 ;     sub_C2494
 ;     sub_C24A6
 ;     sub_C24B3
