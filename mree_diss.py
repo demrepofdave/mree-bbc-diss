@@ -266,6 +266,12 @@ subroutine(0x1BA1, "sub_update_and_squishing_monsters_on_screen",
                    on_entry={'A': "Unused - Corrupted", 'X': "Unused - Corrupted", 'Y': "Unused - Corrupted?"})
 
 
+subroutine(0x271B, "print_cherry_group", 
+                    None, 
+                   "Part of building the maze, prints a group of 8 cherries.  Possibly whether Carry flag is set or not chooses the code path. 2 paths, print group horizontally, print vertically", 
+                   on_entry={'A': "???", 'X': "???", 'Y': "???"})
+
+
 # Zero page date labels.
 label(0x0002, "incrementing_counter_during_level_starting_at_scenenumber_plus_2")
 label(0x0003, "scene_number_plus_2")
@@ -317,16 +323,32 @@ label(0x0082, "zp_82")
 label(0x0083, "zp_83")
 label(0x0084, "zp_84_source_spriteaddr")
 label(0x0085, "zp_85_source_spriteaddr")
-label(0x0089, "possible_ball_x_coordinate")
-label(0x008A, "possible_ball_y_coordinate")
+label(0x0089, "zp_89_possible_ball_x_coordinate")
+label(0x008A, "zp_8A_possible_ball_y_coordinate")
 
-label(0x0090, "current_x_coord")
-label(0x0093, "current_y_coord")
-label(0x0096, "current_status_1")
-label(0x0099, "current_status_2")
+label(0x0090, "zp_90_current_x_coord")
+label(0x0093, "zp_93_current_y_coord")
+label(0x0096, "zp_96_current_status_1")
+label(0x0099, "zp_99_current_status_2")
 
 label(0x00FF, "escape_key_pressed_flag")
 
+# Game play workspace - Map of what is tunnel and what is brick?
+label(0x0630, "possible_current_tunnel_brick_map")
+
+# Maze is 12x13, although the representation in memory is 16x13 (the last 4 bytes of each line are not used)
+# Values may be bitmapped....
+# 00000000 (0x00) = Just brick.
+# xxxxxx1x (0x02) = cherry (bit 2)
+# xxxx11x1 (0x0D) = blank connected top and bottom
+# xxxxx1x1 (0x35) = blank connected at least bottom
+# xxxx1xx1 (0x39) = blank connected at least top
+# xx1xxxx1 (0x21) = blank connected at least right
+# xxx1xxx1 (0x31) = blank connected at least left
+# 1xxxxxxx (0x80) = apple  (bit 8)
+# 
+label(0x0730, "realtime_maze_grid")
+label(0x0731, "realtime_maze_grid+1")
 
 # Game play workspace
 label(0x08AF, "apple_x_coordinate")
@@ -350,7 +372,7 @@ label(0x1558, "move_mr_ee_towards_enemy")
 
 label(0x0BA6, "play_sound_if_enabled")
 label(0x0B04, "skip_screenaddr_msb_increment")
-label(0x0B05, "set_self_modified_code_1_NOP_JSR_0B31_unknown_mod_1")
+label(0x0B05, "print_cherry")
 label(0x0B0C, "set_self_modified_code_1_NOP_JSRabs")
 label(0x0B1E, "set_sprite_code_to_eor_with_background")
 label(0x0B46, "set_self_modified_code_1_NOP_JSR_0B3F_unknown_mod_2")
@@ -364,6 +386,7 @@ label(0x0BEE, "print_digit_or_move_cursor")
 label(0x0BF8, "print_digit")
 label(0x0BFC, "move_cursor_right")
 
+label(0x0DEC, "loop_initial_screen_setup_mode2_gcol")
 label(0x0D94, "begin_new_game")
 label(0x0DB3, "begin_next_level")
 
@@ -371,6 +394,11 @@ label(0x0E0E, "loop_until_all_pallet_colours_are_set_to_black")
 label(0x0E40, "perform_vdu_25_plot_a_x_y")
 label(0x0E42, "loop_plot")
 label(0x0E4F, "loop_until_brick_line_is_plotted")
+label(0x0E7D, "loop_possible_build_maze")
+
+label(0x0F73, "loop_until_empty_space_is_plotted")
+label(0x0FE7, "skip_end_of_maze_line")
+label(0x0FEA, "position_fruit_in_maze")
 
 label(0x10F3, "possible_all_ghosts_killed")
 label(0x1095, "loop_decrement_three_unknown_counters")
@@ -496,6 +524,9 @@ label(0x26D7, "possible_update_ball_if_exists")
 label(0x26DD, "sub_check_P_key_pressed")
 label(0x26DF, "execute_inkey")
 
+label(0x2721, "loop_plot_cherry_group_vertically")
+label(0x2753, "plot_cherry_group_horizontally")
+label(0x2757, "loop_plot_cherry_group_horizontally")
 label(0x2793, "base_eaten_ghosts_triggered_music")
 
 label(0x4326, "loop_relocate_data")
@@ -523,8 +554,20 @@ label_equb(0x05CF, 0x14, "game_over_string_data")
 label_equb(0x05E3, 28, "initial_screen_setup_vdus")
 label_equb(0x0C20, 0x11, "scene_and_score_zero_string_data")
 
+# Level data
+label_equb(0x0C32, 0x22, "scene_10_level_data")
+label_equb(0x0C54, 0x22, "scene_1_level_data")
+label_equb(0x0C76, 0x22, "scene_2_level_data")
+label_equb(0x0C98, 0x22, "scene_3_level_data")
+label_equb(0x0CBA, 0x22, "scene_4_level_data")
+label_equb(0x0CDC, 0x22, "scene_5_level_data")
+label_equb(0x0CFE, 0x22, "scene_6_level_data")
+label_equb(0x0D20, 0x22, "scene_7_level_data")
+label_equb(0x0D42, 0x22, "scene_8_level_data")
+label_equb(0x0D64, 0x22, "scene_9_level_data")
+
 label(0x15DC, "extra_player_string_data")
-label_equb(0x15DD, 0x32, "scene_and_score_zero_string_data+1")
+label_equb(0x15DD, 0x32, "extra_player_string_data+1")
 
 label(0x3618, "start_of_game_sprites_area")
 label_equw(0x2940, 0x20, "sprite_01_apple_graphic")
@@ -580,7 +623,6 @@ label(0x2650, "restore_L0017_L0018_to_defaults_x18_and_x10")
 
 label(0x0AA5, "skip_inc_1")
 
-label(0x0E7D, "loop_possible_build_maze")
 
 # Commented line.
 
@@ -590,35 +632,35 @@ comment(0x0C10, "VDU 226 - Level block 3 - Brick", inline=True)
 comment(0x0C18, "VDU 227 - Level block 4 - Wavey", inline=True)
 
 comment(0x0C32, "Level 0 (e.g. scene 10) data begins", inline=True)
-comment_equb(0x0C52, 0x01, "Level 0 foreground/background brick color (0x22 = 34 bytes in total per level)", cols=1)
-comment_equb(0x0C53, 0x01, "Level 0 Brick character", cols=1)
+comment(0x0C52, "Level 0 foreground/background brick color (0x22 = 34 bytes in total per level)", inline=True)
+comment(0x0C53, "Level 0 Brick character", inline=True)
 comment(0x0C54, "Level 1 (e.g. scene 1) data begins", inline=True)
-comment_equb(0x0C74, 0x01, "Level 1 foreground/background brick color", cols=1)
-comment_equb(0x0C75, 0x01, "Level 1 Brick character", cols=1)
+comment(0x0C74, "Level 1 foreground/background brick color", inline=True)
+comment(0x0C75, "Level 1 Brick character", inline=True)
 comment(0x0C76, "Level 2 data begins", inline=True)
-comment_equb(0x0C96, 0x01, "Level 2 foreground/background brick color", cols=1)
-comment_equb(0x0C97, 0x01, "Level 2 Brick character", cols=1)
+comment(0x0C96, "Level 2 foreground/background brick color", inline=True)
+comment(0x0C97, "Level 2 Brick character", inline=True)
 comment(0x0C98, "Level 3 data begins", inline=True)
-comment_equb(0x0CB8, 0x01, "Level 3 foreground/background brick color", cols=1)
-comment_equb(0x0CB9, 0x01, "Level 3 Brick character", cols=1)
+comment(0x0CB8, "Level 3 foreground/background brick color", inline=True)
+comment(0x0CB9, "Level 3 Brick character", inline=True)
 comment(0x0CBA, "Level 4 data begins", inline=True)
-comment_equb(0x0CDA, 0x01, "Level 4 foreground/background brick color", cols=1)
-comment_equb(0x0CDB, 0x01, "Level 4 Brick character", cols=1)
+comment(0x0CDA, "Level 4 foreground/background brick color", inline=True)
+comment(0x0CDB, "Level 4 Brick character", inline=True)
 comment(0x0CDC, "Level 5 data begins", inline=True)
-comment_equb(0x0CFC, 0x01, "Level 5 foreground/background brick color", cols=1)
-comment_equb(0x0CFD, 0x01, "Level 5 Brick character", cols=1)
+comment(0x0CFC, "Level 5 foreground/background brick color", inline=True)
+comment(0x0CFD, "Level 5 Brick character", inline=True)
 comment(0x0CFE, "Level 6 data begins", inline=True)
-comment_equb(0x0D1E, 0x01, "Level 6 foreground/background brick color", cols=1)
-comment_equb(0x0D1F, 0x01, "Level 6 Brick character", cols=1)
+comment(0x0D1E, "Level 6 foreground/background brick color", inline=True)
+comment(0x0D1F, "Level 6 Brick character", inline=True)
 comment(0x0D20, "Level 7 data begins", inline=True)
-comment_equb(0x0D40, 0x01, "Level 7 foreground/background brick color", cols=1)
-comment_equb(0x0D41, 0x01, "Level 7 Brick character", cols=1)
+comment(0x0D40, "Level 7 foreground/background brick color", inline=True)
+comment(0x0D41, "Level 7 Brick character", inline=True)
 comment(0x0D42, "Level 8 data begins", inline=True)
-comment_equb(0x0D62, 0x01, "Level 8 foreground/background brick color", cols=1)
-comment_equb(0x0D63, 0x01, "Level 8 Brick character", cols=1)
+comment(0x0D62, "Level 8 foreground/background brick color", inline=True)
+comment(0x0D63, "Level 8 Brick character", inline=True)
 comment(0x0D64, "Level 9 data begins", inline=True)
-comment_equb(0x0D84, 0x01, "Level 9 foreground/background brick color", cols=1)
-comment_equb(0x0D85, 0x01, "Level 9 Brick character", cols=1)
+comment(0x0D84, "Level 9 foreground/background brick color", inline=True)
+comment(0x0D85, "Level 9 Brick character", inline=True)
 
 label(0x2797, "sound_pitch_data")
 
@@ -647,6 +689,7 @@ comment(0x0E12, "subtract 1 from logical color, set this to actual color 0 (Blac
 comment(0x0E16, "VDU 16 (CLG - clear graphics area)", inline=True)
 comment(0x0E1D, "Get brick pallet for level", inline=True)
 
+comment(0x0E7D, "The following is called to build out the empty blocks on the brick map, performing the calculations for smoothing between the adjacent blocks.  This is called for each block left to right and top down.  At entry 0x92 contains the YX coordinates (Y top nibble from 1-x dec. X bottom nibble 0-11) This is the next block to work on.")
 comment(0x108C, "Sprite 7 to write (center_base)", inline=True)
 comment(0x10B6, "set ACR register to 01000000 = 01 Continuous Interupts, PB7 disabled + 0 = Timed Interrupt + 000 Shift Control Register Disabled + 00 (PA/PB Latch Disabled)")
 
