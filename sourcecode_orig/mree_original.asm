@@ -5,6 +5,13 @@ RELOAD_ADDR		= &1100		; address at which code will load
 
 OFFSET			= RELOAD_ADDR - NATIVE_ADDR
 
+; Define code altering constants
+; If 0, generate original code (blank whilst generating new level screen),
+; If 1 remove blanking code ans show level screen as it's being built.
+demrepofdavenoscreenblank = FALSE
+; NOTE - above switch does not work correctly yet.
+                                
+
 ; Constants
 event_start_of_vertical_sync            = 4
 inkey_key_p                             = 200
@@ -298,56 +305,60 @@ osbyte                                                          = &FFF4
     LDX #&1C                                      ; 1AEA: A2 1C                                  ..           :0DEA[4]
 ; &1AEC referenced 1 time by &0DF3
 .loop_initial_screen_setup_mode2_gcol
-    LDA initial_screen_setup_vdus,X               ; 1AEC: BD E3 05                               ...          :0DEC[4]
-    JSR oswrch                                    ; 1AEF: 20 EE FF                                ..          :0DEF[4]   ; Write character
-    DEX                                           ; 1AF2: CA                                     .            :0DF2[4]
-    BNE loop_initial_screen_setup_mode2_gcol      ; 1AF3: D0 F7                                  ..           :0DF3[4]
-    STX L0091                                     ; 1AF5: 86 91                                  ..           :0DF5[4]
-    LDA level_number_scene_mod_10                 ; 1AF7: A5 23                                  .#           :0DF7[4]
-    ASL A                                         ; 1AF9: 0A                                     .            :0DF9[4]
-    ASL A                                         ; 1AFA: 0A                                     .            :0DFA[4]
-    ASL A                                         ; 1AFB: 0A                                     .            :0DFB[4]
-    ASL A                                         ; 1AFC: 0A                                     .            :0DFC[4]
-    ADC level_number_scene_mod_10                 ; 1AFD: 65 23                                  e#           :0DFD[4]
-    ASL A                                         ; 1AFF: 0A                                     .            :0DFF[4]
-    ROL L0091                                     ; 1B00: 26 91                                  &.           :0E00[4]
-    ADC #&32 ; '2'                                ; 1B02: 69 32                                  i2           :0E02[4]
-    STA zp_90_current_x_coord                     ; 1B04: 85 90                                  ..           :0E04[4]
-    LDA L0091                                     ; 1B06: A5 91                                  ..           :0E06[4]
-    ADC #&0C                                      ; 1B08: 69 0C                                  i.           :0E08[4]
-    STA L0091                                     ; 1B0A: 85 91                                  ..           :0E0A[4]
-    LDA #&F7                                      ; 1B0C: A9 F7                                  ..           :0E0C[4]   ; logical color 15 (flash white/black) -> 7 EOR 7 = Actual color 0 (Black)
+    LDA initial_screen_setup_vdus,X               ; 0DEC: BD E3 05  ...
+    JSR oswrch                                    ; 0DEF: 20 EE FF  ..    ; Write character
+    DEX                                           ; 0DF2: CA        .  
+    BNE loop_initial_screen_setup_mode2_gcol      ; 0DF3: D0 F7     .. 
+    STX L0091                                     ; 0DF5: 86 91     .. 
+    LDA level_number_scene_mod_10                 ; 0DF7: A5 23     .# 
+    ASL A                                         ; 0DF9: 0A        .  
+    ASL A                                         ; 0DFA: 0A        .  
+    ASL A                                         ; 0DFB: 0A        .  
+    ASL A                                         ; 0DFC: 0A        .  
+    ADC level_number_scene_mod_10                 ; 0DFD: 65 23     e# 
+    ASL A                                         ; 0DFF: 0A        . 
+    ROL L0091                                     ; 0E00: 26 91     &.
+    ADC #&32 ; '2'                                ; 0E02: 69 32     i2
+    STA zp_90_current_x_coord                     ; 0E04: 85 90     ..
+    LDA L0091                                     ; 0E06: A5 91     ..
+    ADC #&0C                                      ; 0E08: 69 0C     i.
+    STA L0091                                     ; 0E0A: 85 91     ..
+    LDA #&F7                                      ; 0E0C: A9 F7     ..    ; logical color 15 (flash white/black) -> 7 EOR 7 = Actual color 0 (Black)
 ; &1B0E referenced 1 time by &0E14
 .loop_until_all_pallet_colours_are_set_to_black
-;    STA video_ula_palette                         ; 1B0E: 8D 21 FE                               .!.          :0E0E[4]
-; DM - Alternate build - Don't blank during screen update
+IF demrepofdavenoscreenblank
    NOP
    NOP
    NOP
-    SEC                                           ; 1B11: 38                                     8            :0E11[4]
-    SBC #&10                                      ; 1B12: E9 10                                  ..           :0E12[4]   ; subtract 1 from logical color, set this to actual color 0 (Black)
-    BCS loop_until_all_pallet_colours_are_set_to_black; 1B14: B0 F8                                  ..           :0E14[4]
-    LDA #&10                                      ; 1B16: A9 10                                  ..           :0E16[4]   ; VDU 16 (CLG - clear graphics area)
-    JSR oswrch                                    ; 1B18: 20 EE FF                                ..          :0E18[4]   ; Write character 16
-    LDY #&20 ; ' '                                ; 1B1B: A0 20                                  .            :0E1B[4]
-    LDA (zp_90_current_x_coord),Y                 ; 1B1D: B1 90                                  ..           :0E1D[4]   ; Get brick pallet for level
-    LSR A                                         ; 1B1F: 4A                                     J            :0E1F[4]
-    LSR A                                         ; 1B20: 4A                                     J            :0E20[4]
-    LSR A                                         ; 1B21: 4A                                     J            :0E21[4]
-    LSR A                                         ; 1B22: 4A                                     J            :0E22[4]
-    ORA #&C0                                      ; 1B23: 09 C0                                  ..           :0E23[4]
-    STA game_pallet_data_3                        ; 1B25: 8D 0C 06                               ...          :0E25[4]   ; Set correct foreground brick for level (Logical color 12)
-    LDA (zp_90_current_x_coord),Y                 ; 1B28: B1 90                                  ..           :0E28[4]
-    AND #&0F                                      ; 1B2A: 29 0F                                  ).           :0E2A[4]
-    ORA #&80                                      ; 1B2C: 09 80                                  ..           :0E2C[4]
-    STA game_pallet_data_2                        ; 1B2E: 8D 08 06                               ...          :0E2E[4]   ; Set correct backgound brick for level (Logical color 8)
-    INY                                           ; 1B31: C8                                     .            :0E31[4]
-    LDA #&1E                                      ; 1B32: A9 1E                                  ..           :0E32[4]
-    STA zp_80_dest_screenaddr                     ; 1B34: 85 80                                  ..           :0E34[4]
-    LDA #3                                        ; 1B36: A9 03                                  ..           :0E36[4]
-    STA L0D86                                     ; 1B38: 8D 86 0D                               ...          :0E38[4]
-    LDA #&B0                                      ; 1B3B: A9 B0                                  ..           :0E3B[4]
-    STA L0D87                                     ; 1B3D: 8D 87 0D                               ...          :0E3D[4]
+ELSE
+   ; Original game code
+   STA video_ula_palette                       ; 0E0E: 8D 21 FE   .!.
+ENDIF
+; DemRepOfDave - Alternate build - Don't blank during screen update (to see how it is built and what code builds it).
+    SEC                                           ; 0E11: 38         8  
+    SBC #&10                                      ; 0E12: E9 10      ..  ; subtract 1 from logical color, set this to actual color 0 (Black)
+    BCS loop_until_all_pallet_colours_are_set_to_black; 0E14: B0 F8  .. 
+    LDA #&10                                      ; 0E16: A9 10      ..  ; VDU 16 (CLG - clear graphics area)
+    JSR oswrch                                    ; 0E18: 20 EE FF   ..  ; Write character 16
+    LDY #&20 ; ' '                                ; 0E1B: A0 20      .  
+    LDA (zp_90_current_x_coord),Y                 ; 0E1D: B1 90      ..  ; Get brick pallet for level
+    LSR A                                         ; 0E1F: 4A         J  
+    LSR A                                         ; 0E20: 4A         J  
+    LSR A                                         ; 0E21: 4A         J  
+    LSR A                                         ; 0E22: 4A         J  
+    ORA #&C0                                      ; 0E23: 09 C0      .. 
+    STA game_pallet_data_3                        ; 0E25: 8D 0C 06   ... ; Set correct foreground brick for level (Logical color 12)
+    LDA (zp_90_current_x_coord),Y                 ; 0E28: B1 90      .. 
+    AND #&0F                                      ; 0E2A: 29 0F      ). 
+    ORA #&80                                      ; 0E2C: 09 80      .. 
+    STA game_pallet_data_2                        ; 0E2E: 8D 08 06   ... ; Set correct backgound brick for level (Logical color 8)
+    INY                                           ; 0E31: C8         .  
+    LDA #&1E                                      ; 0E32: A9 1E      .. 
+    STA zp_80_dest_screenaddr                     ; 0E34: 85 80      .. 
+    LDA #3                                        ; 0E36: A9 03      .. 
+    STA L0D86                                     ; 0E38: 8D 86 0D   ...
+    LDA #&B0                                      ; 0E3B: A9 B0      .. 
+    STA L0D87                                     ; 0E3D: 8D 87 0D   ...
 ; &1B40 referenced 1 time by &0E65
 .perform_vdu_25_plot_a_x_y
     LDX #5                                        ; 1B40: A2 05                                  ..           :0E40[4]
