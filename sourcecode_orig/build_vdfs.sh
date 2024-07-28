@@ -15,5 +15,8 @@ beebasm -i mree_original.asm -v
 
 cat R-1-0C00 R-2-0400 R-3-0900 R-4-4300 > build_vdfs/MREE
 
+# DROD - Work in progress below.
+#cat R-1-0C00 R-2-0400 build_vdfs/R-4-4000 > build_vdfs/MREE
+
 # Done.
 echo "VDFS Built"

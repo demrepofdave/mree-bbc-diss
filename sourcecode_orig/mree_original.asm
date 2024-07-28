@@ -6702,9 +6702,28 @@ ORG &4300
 ;     osnewl:                                                             1
 ;     osword:                                                             1
 
+main_code_length = main_code_end - main_code_begin
+reloc_400_length = reloc_0400_end - reloc_0400_begin
+reloc_900_length = reloc_0900_end - reloc_0900_begin
+relocation_code_length = relocation_code_end - relocation_code_begin
 
+PRINT "MR.EE code sections have been assembled!"
+PRINT "========================================"
+PRINT ""
+PRINT "Main Code : ( ", ~main_code_begin, " -", ~main_code_end, "), length ", ~main_code_length 
+PRINT "reloc 400: ( ", ~reloc_0400_begin, " -", ~reloc_0400_end, "), length ", ~reloc_400_length 
+PRINT "reloc 900: ( ", ~reloc_0900_begin, " -", ~reloc_0900_end, "), length ", ~reloc_900_length 
+PRINT "reloc 900: ( ", ~relocation_code_begin, " -", ~relocation_code_end, "), length ", ~relocation_code_length 
 
+; Current save routine (build_vdfs.sh will assemble this into main MREE binary)
 SAVE "R-1-0C00", main_code_begin, main_code_end
 SAVE "R-2-0400", reloc_0400_begin, reloc_0400_end
 SAVE "R-3-0900", reloc_0900_begin, reloc_0900_end
 SAVE "R-4-4300", relocation_code_begin, relocation_code_end
+
+; Better code, save in one block, but at the moment this doesn't work and is WIP.
+
+;COPYBLOCK main_code_begin, main_code_end, &1900
+;COPYBLOCK reloc_0400_begin, reloc_0400_end-1, &3D00
+;COPYBLOCK reloc_0900_begin, reloc_0900_begin-1, &4000
+;SAVE "build_vdfs/R-4-4000", &3D00, relocation_code_end
