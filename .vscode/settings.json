@@ -1,0 +1,9 @@
+{
+    "beebvsc": {
+        "sourceFile": [
+            "sourcecode/mree_diss.asm"
+        ],
+        "targetName": "sourcecode/mree_diss.ssd"
+    },
+    "beebvsc.assembler": "beebasm"
+}

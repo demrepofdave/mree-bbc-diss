@@ -1,0 +1,11 @@
+; Mr.EE memory map.
+
+; Actual code address  (relocated from)
+
+; &400-&6FF (&3D00)
+; &900-&BFF (&4000-42FF) ??
+; &C00-&2FFF (&1900-42FF) Main relocated block.
+; &4300 (&4300) Entry point, relocates, and performs some initialisation. above code.
+
+; Memory map of main game code....
+

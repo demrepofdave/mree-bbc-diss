@@ -1,0 +1,49 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "BeebVSC Build Target 'sourcecode/mree_diss.ssd'",
+            "type": "shell",
+            "problemMatcher": {
+                "owner": "6502",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceRoot}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "severity": 3,
+                    "message": 4
+                }
+            },
+            "command": "beebasm",
+            "args": [
+                "-v",
+                "-i",
+                "sourcecode/mree_diss.asm",
+                "-do",
+                "sourcecode/mree_diss.ssd",
+                "-boot",
+                "sourcecode/mree_diss"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "BeebVSC Test Target",
+            "type": "shell",
+            "command": "BeebEm.exe",
+            "args": [
+                "sourcecode/mree_diss.ssd"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        }
+    ]
+}
