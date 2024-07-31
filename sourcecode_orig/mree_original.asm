@@ -117,7 +117,7 @@ escape_key_pressed_flag                                         = &00FF
 unknown_monster_data_2_minus_one                                = &0100
 unknown_monster_data_2                                          = &0101
 L03A9                                                           = &03A9
-realtime_maze_grid_offset_minus_16                                                           = &0720
+realtime_maze_grid_offset_minus_16                              = &0720
 L0721                                                           = &0721
 realtime_maze_grid                                              = &0730
 L0740                                                           = &0740
@@ -347,11 +347,11 @@ ENDIF
     LSR A                                         ; 0E21: 4A         J  
     LSR A                                         ; 0E22: 4A         J  
     ORA #&C0                                      ; 0E23: 09 C0      .. 
-    STA game_pallet_data_3                        ; 0E25: 8D 0C 06   ... ; Set correct foreground brick for level (Logical color 12)
+    STA game_pallet_brick_color_foreground        ; 0E25: 8D 0C 06   ... ; Set correct foreground brick for level (Logical color 12)
     LDA (zp_90_current_x_coord),Y                 ; 0E28: B1 90      .. 
     AND #&0F                                      ; 0E2A: 29 0F      ). 
     ORA #&80                                      ; 0E2C: 09 80      .. 
-    STA game_pallet_data_2                        ; 0E2E: 8D 08 06   ... ; Set correct backgound brick for level (Logical color 8)
+    STA game_pallet_brick_color_background        ; 0E2E: 8D 08 06   ... ; Set correct backgound brick for level (Logical color 8)
     INY                                           ; 0E31: C8         .  
     LDA #&1E                                      ; 0E32: A9 1E      .. 
     STA zp_80_dest_screenaddr                     ; 0E34: 85 80      .. 
@@ -761,7 +761,7 @@ ENDIF
     LDX #&10                                      ; 1DA7: A2 10                                  ..           :10A7[4]
 ; &1DA9 referenced 1 time by &10B4
 .loop_possible_reset_game_pallete
-    LDA game_pallet_data,X                        ; 1DA9: BD FF 05                               ...          :10A9[4]
+    LDA game_pallet_data-1,X                      ; 1DA9: BD FF 05                               ...          :10A9[4]
     STA video_ula_palette                         ; 1DAC: 8D 21 FE                               .!.          :10AC[4]
     STX L000C                                     ; 1DAF: 86 0C                                  ..           :10AF[4]
     STX L000B                                     ; 1DB1: 86 0B                                  ..           :10B1[4]
@@ -1043,35 +1043,35 @@ ENDIF
     BNE loop_C125D                                ; 1F6A: D0 F1                                  ..           :126A[4]
 ; &1F6C referenced 2 times by &1257, &125B
 .C126C
-    LDX remaining_monsters_to_spawn_minus_1       ; 1F6C: A6 14                                  ..           :126C[4]
-    INX                                           ; 1F6E: E8                                     .            :126E[4]
-    BNE mr_ee_has_not_triggered_ghosts            ; 1F6F: D0 58                                  .X           :126F[4]
-    LDX mr_ee_x_coord                             ; 1F71: A6 20                                  .            :1271[4]
-    LDY mr_ee_y_coord                             ; 1F73: A4 21                                  .!           :1273[4]
-    CPX #&46 ; 'F'                                ; 1F75: E0 46                                  .F           :1275[4]
-    BNE mr_ee_has_not_triggered_ghosts            ; 1F77: D0 50                                  .P           :1277[4]
-    CPY #&81                                      ; 1F79: C0 81                                  ..           :1279[4]
-    BNE mr_ee_has_not_triggered_ghosts            ; 1F7B: D0 4C                                  .L           :127B[4]
-    LDA #3                                        ; 1F7D: A9 03                                  ..           :127D[4]
-    STA number_of_active_ghosts                   ; 1F7F: 85 1E                                  ..           :127F[4]
-    LDA #&84                                      ; 1F81: A9 84                                  ..           :1281[4]
-    STA remaining_monsters_to_spawn_minus_1       ; 1F83: 85 14                                  ..           :1283[4]
-    LDA #1                                        ; 1F85: A9 01                                  ..           :1285[4]
-    STA next_monster_release_timer                ; 1F87: 85 12                                  ..           :1287[4]
-    LDA #2                                        ; 1F89: A9 02                                  ..           :1289[4]   ; Sprite 2 to write (bonus base graphic)
-    JSR write_sprite_at_central_base              ; 1F8B: 20 52 0A                                R.          :128B[4]
-    LDA L0011                                     ; 1F8E: A5 11                                  ..           :128E[4]
-    JSR C2603                                     ; 1F90: 20 03 26                                .&          :1290[4]
-    LDA #&86                                      ; 1F93: A9 86                                  ..           :1293[4]   ; logical color 8 (flash black/white) -> 6 EOR 7 = Actual color 1 (Red)
-    STA video_ula_palette                         ; 1F95: 8D 21 FE                               .!.          :1295[4]
-    LDA #&C6                                      ; 1F98: A9 C6                                  ..           :1298[4]   ; logical color 12 (flash blue/yellow) -> 6 EOR 7 = Actual color 1 (Red)
-    STA video_ula_palette                         ; 1F9A: 8D 21 FE                               .!.          :129A[4]
-    JSR introduce_extra_monster_to_playscreen     ; 1F9D: 20 7C 24                                |$          :129D[4]
-    LDA #&55 ; 'U'                                ; 1FA0: A9 55                                  .U           :12A0[4]
-    JSR flush_all_sound_channels                  ; 1FA2: 20 B2 25                                .%          :12A2[4]
-    LDA #&F1                                      ; 1FA5: A9 F1                                  ..           :12A5[4]
-    STA zp_7A_sound_amplitude                     ; 1FA7: 85 7A                                  .z           :12A7[4]
-    LDX #4                                        ; 1FA9: A2 04                                  ..           :12A9[4]
+    LDX remaining_monsters_to_spawn_minus_1       ; 126C: A6 14     ..
+    INX                                           ; 126E: E8        . 
+    BNE mr_ee_has_not_triggered_ghosts            ; 126F: D0 58     .X
+    LDX mr_ee_x_coord                             ; 1271: A6 20     . 
+    LDY mr_ee_y_coord                             ; 1273: A4 21     .!
+    CPX #&46 ; 'F'                                ; 1275: E0 46     .F
+    BNE mr_ee_has_not_triggered_ghosts            ; 1277: D0 50     .P
+    CPY #&81                                      ; 1279: C0 81     ..
+    BNE mr_ee_has_not_triggered_ghosts            ; 127B: D0 4C     .L
+    LDA #3                                        ; 127D: A9 03     ..
+    STA number_of_active_ghosts                   ; 127F: 85 1E     ..
+    LDA #&84                                      ; 1281: A9 84     ..
+    STA remaining_monsters_to_spawn_minus_1       ; 1283: 85 14     ..
+    LDA #1                                        ; 1285: A9 01     ..
+    STA next_monster_release_timer                ; 1287: 85 12     ..
+    LDA #2                                        ; 1289: A9 02     ..   ; Sprite 2 to write (bonus base graphic)
+    JSR write_sprite_at_central_base              ; 128B: 20 52 0A  R.
+    LDA L0011                                     ; 128E: A5 11     ..
+    JSR C2603                                     ; 1290: 20 03 26  .&
+    LDA #&86                                      ; 1293: A9 86     ..   ; logical color 8 (flash black/white) -> 6 EOR 7 = Actual color 1 (Red)
+    STA video_ula_palette                         ; 1295: 8D 21 FE  .!.
+    LDA #&C6                                      ; 1298: A9 C6     ..   ; logical color 12 (flash blue/yellow) -> 6 EOR 7 = Actual color 1 (Red)
+    STA video_ula_palette                         ; 129A: 8D 21 FE  .!.
+    JSR introduce_extra_monster_to_playscreen     ; 129D: 20 7C 24   |$
+    LDA #&55 ; 'U'                                ; 12A0: A9 55     .U
+    JSR flush_all_sound_channels                  ; 12A2: 20 B2 25   .%
+    LDA #&F1                                      ; 12A5: A9 F1     ..
+    STA zp_7A_sound_amplitude                     ; 12A7: 85 7A     .z
+    LDX #4                                        ; 12A9: A2 04     ..
 ; &1FAB referenced 1 time by &12C7
 .loop_C12AB
     LDA #2                                        ; 1FAB: A9 02                                  ..           :12AB[4]
@@ -1101,61 +1101,63 @@ ENDIF
     JSR sub_check_for_eaten_cherries              ; 1FD6: 20 25 1B                                %.          :12D6[4]
     JSR sub_C0990                                 ; 1FD9: 20 90 09                                ..          :12D9[4]
     LDA L0000                                     ; 1FDC: A5 00                                  ..           :12DC[4]
-    BMI start_keyboard_checks_key_S               ; 1FDE: 30 40                                  0@           :12DE[4]
+    BMI begin_keyboard_checks               ; 1FDE: 30 40                                  0@           :12DE[4]
     BNE C12E6                                     ; 1FE0: D0 04                                  ..           :12E0[4]
     STA number_of_continuous_cherries_consumed    ; 1FE2: 85 04                                  ..           :12E2[4]
-    BEQ start_keyboard_checks_key_S               ; 1FE4: F0 3A                                  .:           :12E4[4]
+    BEQ begin_keyboard_checks               ; 1FE4: F0 3A                                  .:           :12E4[4]
 ; &1FE6 referenced 1 time by &12E0
 .C12E6
     LDA #3                                        ; 1FE6: A9 03                                  ..           :12E6[4]
     STA zp_80_dest_screenaddr                     ; 1FE8: 85 80                                  ..           :12E8[4]
 ; &1FEA referenced 1 time by &12FC
 .loop_unknown_sound_loop
-    LDX number_of_continuous_cherries_consumed    ; 1FEA: A6 04                                  ..           :12EA[4]
-    LDA &40,X                     ; 1FEC: B5 40                                  .@           :12EC[4]
-    TAX                                           ; 1FEE: AA                                     .            :12EE[4]
-    LDA #1                                        ; 1FEF: A9 01                                  ..           :12EF[4]
-    LDY #2                                        ; 1FF1: A0 02                                  ..           :12F1[4]
-    JSR compile_sound_from_AXY_data               ; 1FF3: 20 9C 0B                                ..          :12F3[4]   ; SOUND ?,1,<data>,2
-    LDA #1                                        ; 1FF6: A9 01                                  ..           :12F6[4]
-    STA zp_70_sound_channel                       ; 1FF8: 85 70                                  .p           :12F8[4]
-    DEC zp_80_dest_screenaddr                     ; 1FFA: C6 80                                  ..           :12FA[4]
-    BNE loop_unknown_sound_loop                   ; 1FFC: D0 EC                                  ..           :12FC[4]
-    LDA #&11                                      ; 1FFE: A9 11                                  ..           :12FE[4]
-    STA zp_70_sound_channel                       ; 2000: 85 70                                  .p           :1300[4]
-    INC number_of_continuous_cherries_consumed    ; 2002: E6 04                                  ..           :1302[4]
-    LDY number_of_continuous_cherries_consumed    ; 2004: A4 04                                  ..           :1304[4]
-    CPY #8                                        ; 2006: C0 08                                  ..           :1306[4]
-    BNE skip_more_somethings                      ; 2008: D0 0F                                  ..           :1308[4]
-    LDA #0                                        ; 200A: A9 00                                  ..           :130A[4]
-    STA number_of_continuous_cherries_consumed    ; 200C: 85 04                                  ..           :130C[4]
-    LDA mr_ee_x_coord                             ; 200E: A5 20                                  .            :130E[4]
-    LSR A                                         ; 2010: 4A                                     J            :1310[4]
-    TAX                                           ; 2011: AA                                     .            :1311[4]
-    LDY mr_ee_y_coord                             ; 2012: A4 21                                  .!           :1312[4]
-    LDA #5                                        ; 2014: A9 05                                  ..           :1314[4]
-    JSR C2603                                     ; 2016: 20 03 26                                .&          :1316[4]
+    LDX number_of_continuous_cherries_consumed    ; 12EA: A6 04     ..
+    LDA &40,X                     ; 12EC: B5 40                     .@
+    TAX                                           ; 12EE: AA        . 
+    LDA #1                                        ; 12EF: A9 01     ..   ; Prepare sound call equivalent to
+    LDY #2                                        ; 12F1: A0 02     ..   ; SOUND ? <A>, <X>, <Y>
+    JSR compile_sound_from_AXY_data               ; 12F3: 20 9C 0B  ..   ; SOUND ?,1, <cherry number pitch>,2
+    LDA #1                                        ; 12F6: A9 01     ..
+    STA zp_70_sound_channel                       ; 12F8: 85 70     .p
+    DEC zp_80_dest_screenaddr                     ; 12FA: C6 80     ..
+    BNE loop_unknown_sound_loop                   ; 12FC: D0 EC     ..
+    LDA #&11                                      ; 12FE: A9 11     ..
+    STA zp_70_sound_channel                       ; 1300: 85 70     .p
+    INC number_of_continuous_cherries_consumed    ; 1302: E6 04     ..   ; Another cherry consumed, increment count
+    LDY number_of_continuous_cherries_consumed    ; 1304: A4 04     ..   
+    CPY #8                                        ; 1306: C0 08     ..   
+    BNE skip_zero_cherry_count                    ; 1308: D0 0F     ..
+    LDA #0                                        ; 130A: A9 00     ..  ; If cherry count has reached 8 then we have consumed the group
+    STA number_of_continuous_cherries_consumed    ; 130C: 85 04     ..  ; and reset cherry count to 0.
+    LDA mr_ee_x_coord                             ; 130E: A5 20     . 
+    LSR A                                         ; 1310: 4A        J 
+    TAX                                           ; 1311: AA        . 
+    LDY mr_ee_y_coord                             ; 1312: A4 21     .!
+    LDA #5                                        ; 1314: A9 05     ..
+    JSR C2603                                     ; 1316: 20 03 26  .&
 ; &2019 referenced 1 time by &1308
-.skip_more_somethings
-    LDX #0                                        ; 2019: A2 00                                  ..           :1319[4]
-    LDA #&50 ; 'P'                                ; 201B: A9 50                                  .P           :131B[4]
-    JSR increment_score                           ; 201D: 20 AD 0B                                ..          :131D[4]
+.skip_zero_cherry_count
+    LDX #0                                        ; 1319: A2 00     ..     Add 50 point to player score and 
+    LDA #&50 ; 'P'                                ; 131B: A9 50     .P     update printed score
+    JSR increment_score                           ; 131D: 20 AD 0B  ..     
 ; &2020 referenced 2 times by &12DE, &12E4
-.start_keyboard_checks_key_S
-    LDX #&AE                                      ; 2020: A2 AE                                  ..           :1320[4]
-    JSR execute_inkey                             ; 2022: 20 DF 26                                .&          :1322[4]
-    BEQ check_key_press_Q                         ; 2025: F0 04                                  ..           :1325[4]
-    LDA #7                                        ; 2027: A9 07                                  ..           :1327[4]
-    BNE store_sound_mask                          ; 2029: D0 09                                  ..           :1329[4]
+.begin_keyboard_checks
+    ; Check if key S is being pressed.
+    LDX #&AE                                      ; 1320: A2 AE     ..  
+    JSR execute_inkey                             ; 1322: 20 DF 26   .& 
+    BEQ check_key_press_Q                         ; 1325: F0 04     ..  
+    LDA #7                                        ; 1327: A9 07     ..   ; Key S was pressed, store 7 (0x0000111) in
+    BNE store_sound_mask                          ; 1329: D0 09     ..   ; sound flag.
 ; &202B referenced 1 time by &1325
 .check_key_press_Q
-    LDX #&EF                                      ; 202B: A2 EF                                  ..           :132B[4]
-    JSR execute_inkey                             ; 202D: 20 DF 26                                .&          :132D[4]
-    BEQ possibly_check_game_keyboard_and_joystick ; 2030: F0 04                                  ..           :1330[4]
-    LDA #0                                        ; 2032: A9 00                                  ..           :1332[4]
+    ; Check if key S is being pressed.
+    LDX #&EF                                      ; 132B: A2 EF     .. 
+    JSR execute_inkey                             ; 132D: 20 DF 26  .& 
+    BEQ possibly_check_game_keyboard_and_joystick ; 1330: F0 04     .. 
+    LDA #0                                        ; 1332: A9 00     ..   ; Key Q was pressed store 0 in sound flag.
 ; &2034 referenced 1 time by &1329
 .store_sound_mask
-    STA sound_on_off_flag                         ; 2034: 85 0A                                  ..           :1334[4]
+    STA sound_on_off_flag                         ; 2034: 85 0A     ..   ; Either 7 (sound on) or 0 (sound off) is stored here.
 ; &2036 referenced 1 time by &1330
 .possibly_check_game_keyboard_and_joystick
     LDA keyboard_or_joystick_flag                 ; 2036: A5 2F                                  ./           :1336[4]
@@ -1165,7 +1167,7 @@ ENDIF
     JSR osbyte                                    ; 203C: 20 F4 FF                                ..          :133C[4]
     TXA                                           ; 203F: 8A                                     .            :133F[4]
     AND #1                                        ; 2040: 29 01                                  ).           :1340[4]
-    JSR handle_firing_of_the_the_ball_routine_possible; 2042: 20 85 1B                                ..          :1342[4]
+    JSR handle_firing_the_the_ball_if_mree_has_it ; 2042: 20 85 1B                                ..          :1342[4]
     LDA #osbyte_read_adc_or_get_buffer_status     ; 2045: A9 80                                  ..           :1345[4]
     LDX #1                                        ; 2047: A2 01                                  ..           :1347[4]
     JSR osbyte                                    ; 2049: 20 F4 FF                                ..          :1349[4]   ; Read the ADC conversion value for channel X=1
@@ -1184,7 +1186,7 @@ ENDIF
 .check_keys_return_Z_X
     LDX #&B6                                      ; 2063: A2 B6                                  ..           :1363[4]
     JSR execute_inkey                             ; 2065: 20 DF 26                                .&          :1365[4]
-    JSR handle_firing_of_the_the_ball_routine_possible; 2068: 20 85 1B                                ..          :1368[4]
+    JSR handle_firing_the_the_ball_if_mree_has_it ; 2068: 20 85 1B                                ..          :1368[4]
     LDX #&9E                                      ; 206B: A2 9E                                  ..           :136B[4]
     JSR execute_inkey                             ; 206D: 20 DF 26                                .&          :136D[4]
     BNE handle_left_input                         ; 2070: D0 27                                  .'           :1370[4]
@@ -1625,14 +1627,14 @@ extra_player_string_data = sub_C15DA+2
     LDX #&14                                      ; 231A: A2 14                                  ..           :161A[4]
 ; &231C referenced 1 time by &1625
 .loop_print_game_black_box
-    LDA game_over_string_data,X                   ; 231C: BD CF 05                               ...          :161C[4]
+    LDA game_over_string_data-1,X                   ; 231C: BD CF 05                               ...          :161C[4]
     JSR oswrch                                    ; 231F: 20 EE FF                                ..          :161F[4]   ; Write character
     DEX                                           ; 2322: CA                                     .            :1622[4]
     CPX #&0E                                      ; 2323: E0 0E                                  ..           :1623[4]
     BNE loop_print_game_black_box                 ; 2325: D0 F5                                  ..           :1625[4]
 ; &2327 referenced 1 time by &1633
 .loop_print_game_over_characters_slowly
-    LDA game_over_string_data,X                   ; 2327: BD CF 05                               ...          :1627[4]
+    LDA game_over_string_data-1,X                   ; 2327: BD CF 05                               ...          :1627[4]
     JSR oswrch                                    ; 232A: 20 EE FF                                ..          :162A[4]   ; Write character
     LDA #5                                        ; 232D: A9 05                                  ..           :162D[4]
     JSR delay_routine                             ; 232F: 20 40 0A                                @.          :162F[4]
@@ -2533,11 +2535,11 @@ code_to_relocate_1900 = sub_C18FF+1
 ; available no action will happen
 ; 
 ; On Entry:
-;     A: If non-zero user is pressin the first key
+;     A: If non-zero user is pressing the first key
 ;     X: unused?
 ;     Y: unused?
 ; &2885 referenced 2 times by &1342, &1368
-.handle_firing_of_the_the_ball_routine_possible
+.handle_firing_the_the_ball_if_mree_has_it
     BEQ C1B9E                                     ; 2885: F0 17                                  ..           :1B85[4]
     LDA L001C                                     ; 2887: A5 1C                                  ..           :1B87[4]
     BNE skip_no_ball_action_required              ; 2889: D0 15                                  ..           :1B89[4]
@@ -4205,9 +4207,9 @@ code_to_relocate_1900 = sub_C18FF+1
     BNE skip_ghost_and_extra_checks_checks_complete; 31CB: D0 1F                                  ..           :24CB[4]
 ; &31CD referenced 1 time by &2517
 .restore_pallet_from_red
-    LDA game_pallet_data_2                        ; 31CD: AD 08 06                               ...          :24CD[4]
+    LDA game_pallet_brick_color_background        ; 31CD: AD 08 06                               ...          :24CD[4]
     STA video_ula_palette                         ; 31D0: 8D 21 FE                               .!.          :24D0[4]
-    LDA game_pallet_data_3                        ; 31D3: AD 0C 06                               ...          :24D3[4]
+    LDA game_pallet_brick_color_foreground        ; 31D3: AD 0C 06                               ...          :24D3[4]
     STA video_ula_palette                         ; 31D6: 8D 21 FE                               .!.          :24D6[4]
     LDA #&FD                                      ; 31D9: A9 FD                                  ..           :24D9[4]
     STA remaining_monsters_to_spawn_minus_1       ; 31DB: 85 14                                  ..           :24DB[4]
@@ -5090,70 +5092,72 @@ L26CD = sub_C26CC+1
     EQUB   3,   3,   3,   3,   7,   7,   7, &0F   ; 3DF8: 03 03 03 03 07 07 07 0F                ........     :04F8[2]
 ; &3E00 referenced 2 times by &433E, &4341
 .relocated_data_500
-    EQUB   3,   3,   3,   7,   7, &0A, &0A,   0   ; 3E00: 03 03 03 07 07 0A 0A 00                ........     :0500[2]
-    EQUB   0,   0,   0,   0,   0,   0,   0,   0   ; 3E08: 00 00 00 00 00 00 00 00                ........     :0508[2]
-    EQUB   4,   8,   8,   8,   8,   8,   4,   0   ; 3E10: 04 08 08 08 08 08 04 00                ........     :0510[2]
-    EQUB   0,   8,   8,   8,   8,   8,   0,   0   ; 3E18: 00 08 08 08 08 08 00 00                ........     :0518[2]
-    EQUB   4, &0C,   4,   4,   4,   4, &0C,   0   ; 3E20: 04 0C 04 04 04 04 0C 00                ........     :0520[2]
-    EQUB   0,   0,   0,   0,   0,   0,   8,   0   ; 3E28: 00 00 00 00 00 00 08 00                ........     :0528[2]
-    EQUB   4,   8,   0,   0,   4,   8, &0C,   0   ; 3E30: 04 08 00 00 04 08 0C 00                ........     :0530[2]
-    EQUB   0,   8,   8,   8,   0,   0,   8,   0   ; 3E38: 00 08 08 08 00 00 08 00                ........     :0538[2]
-    EQUB   4,   8,   0,   4,   0,   8,   4,   0   ; 3E40: 04 08 00 04 00 08 04 00                ........     :0540[2]
-    EQUB   0,   8,   8,   0,   8,   8,   0,   0   ; 3E48: 00 08 08 00 08 08 00 00                ........     :0548[2]
-    EQUB   8,   8,   8,   8, &0C,   0,   0,   0   ; 3E50: 08 08 08 08 0C 00 00 00                ........     :0550[2]
-    EQUB   0,   0,   8,   8,   8,   8,   8,   0   ; 3E58: 00 00 08 08 08 08 08 00                ........     :0558[2]
-    EQUB &0C,   8, &0C,   0,   0,   8,   4,   0   ; 3E60: 0C 08 0C 00 00 08 04 00                ........     :0560[2]
-    EQUB   8,   0,   0,   8,   8,   8,   0,   0   ; 3E68: 08 00 00 08 08 08 00 00                ........     :0568[2]
-    EQUB   4,   8,   8, &0C,   8,   8,   4,   0   ; 3E70: 04 08 08 0C 08 08 04 00                ........     :0570[2]
-    EQUB   0,   8,   0,   0,   8,   8,   0,   0   ; 3E78: 00 08 00 00 08 08 00 00                ........     :0578[2]
-    EQUB &0C,   0,   0,   4,   4,   4,   4,   0   ; 3E80: 0C 00 00 04 04 04 04 00                ........     :0580[2]
-    EQUB   8,   8,   8,   0,   0,   0,   0,   0   ; 3E88: 08 08 08 00 00 00 00 00                ........     :0588[2]
-    EQUB   4,   8,   8,   4,   8,   8,   4,   0   ; 3E90: 04 08 08 04 08 08 04 00                ........     :0590[2]
-    EQUB   0,   8,   8,   0,   8,   8,   0,   0   ; 3E98: 00 08 08 00 08 08 00 00                ........     :0598[2]
-    EQUB   4,   8,   8,   4,   0,   8,   4,   0   ; 3EA0: 04 08 08 04 00 08 04 00                ........     :05A0[2]
-    EQUB   0,   8,   8,   8,   8,   8,   0,   0   ; 3EA8: 00 08 08 08 08 08 00 00                ........     :05A8[2]
-    EQUB   0,   0, &2B,   0,   9,   0, &2B, &2A   ; 3EB0: 00 00 2B 00 09 00 2B 2A                ..+...+*     :05B0[2]
-    EQUB   0,   3, &17, &15,   3,   1,   9,   1   ; 3EB8: 00 03 17 15 03 01 09 01                ........     :05B8[2]
-    EQUB   0,   3,   4, &2E,   3,   9, &17, &17   ; 3EC0: 00 03 04 2E 03 09 17 17                ........     :05C0[2]
-    EQUB   0,   0,   8,   0,   0,   6,   0        ; 3EC8: 00 00 08 00 00 06 00                   .......      :05C8[2]
+    EQUB   3,   3,   3,   7,   7, &0A, &0A,   0   ; 0500: 03 03 03 07 07 0A 0A 00   ........ 
+    EQUB   0,   0,   0,   0,   0,   0,   0,   0   ; 0508: 00 00 00 00 00 00 00 00   ........ 
+    EQUB   4,   8,   8,   8,   8,   8,   4,   0   ; 0510: 04 08 08 08 08 08 04 00   ........ 
+    EQUB   0,   8,   8,   8,   8,   8,   0,   0   ; 0518: 00 08 08 08 08 08 00 00   ........ 
+    EQUB   4, &0C,   4,   4,   4,   4, &0C,   0   ; 0520: 04 0C 04 04 04 04 0C 00   ........ 
+    EQUB   0,   0,   0,   0,   0,   0,   8,   0   ; 0528: 00 00 00 00 00 00 08 00   ........ 
+    EQUB   4,   8,   0,   0,   4,   8, &0C,   0   ; 0530: 04 08 00 00 04 08 0C 00   ........ 
+    EQUB   0,   8,   8,   8,   0,   0,   8,   0   ; 0538: 00 08 08 08 00 00 08 00   ........
+    EQUB   4,   8,   0,   4,   0,   8,   4,   0   ; 0540: 04 08 00 04 00 08 04 00   ........
+    EQUB   0,   8,   8,   0,   8,   8,   0,   0   ; 0548: 00 08 08 00 08 08 00 00   ........
+    EQUB   8,   8,   8,   8, &0C,   0,   0,   0   ; 0550: 08 08 08 08 0C 00 00 00   ........
+    EQUB   0,   0,   8,   8,   8,   8,   8,   0   ; 0558: 00 00 08 08 08 08 08 00   ........
+    EQUB &0C,   8, &0C,   0,   0,   8,   4,   0   ; 0560: 0C 08 0C 00 00 08 04 00   ........
+    EQUB   8,   0,   0,   8,   8,   8,   0,   0   ; 0568: 08 00 00 08 08 08 00 00   ........
+    EQUB   4,   8,   8, &0C,   8,   8,   4,   0   ; 0570: 04 08 08 0C 08 08 04 00   ........
+    EQUB   0,   8,   0,   0,   8,   8,   0,   0   ; 0578: 00 08 00 00 08 08 00 00   ........
+    EQUB &0C,   0,   0,   4,   4,   4,   4,   0   ; 0580: 0C 00 00 04 04 04 04 00   ........
+    EQUB   8,   8,   8,   0,   0,   0,   0,   0   ; 0588: 08 08 08 00 00 00 00 00   ........
+    EQUB   4,   8,   8,   4,   8,   8,   4,   0   ; 0590: 04 08 08 04 08 08 04 00   ........
+    EQUB   0,   8,   8,   0,   8,   8,   0,   0   ; 0598: 00 08 08 00 08 08 00 00   ........
+    EQUB   4,   8,   8,   4,   0,   8,   4,   0   ; 05A0: 04 08 08 04 00 08 04 00   ........
+    EQUB   0,   8,   8,   8,   8,   8,   0,   0   ; 05A8: 00 08 08 08 08 08 00 00   ........
+    EQUB   0,   0, &2B,   0,   9,   0, &2B, &2A   ; 05B0: 00 00 2B 00 09 00 2B 2A   ..+...+*
+    EQUB   0,   3, &17, &15,   3,   1,   9,   1   ; 05B8: 00 03 17 15 03 01 09 01   ........
+    EQUB   0,   3,   4, &2E,   3,   9, &17, &17   ; 05C0: 00 03 04 2E 03 09 17 17   ........
+    EQUB   0,   0,   8,   0,   0,   6,   0        ; 05C8: 00 00 08 00 00 06 00      .......
+    EQUS  "?"
 ; &3ECF referenced 2 times by &161C, &1627
 .game_over_string_data
-    EQUB &3F, &52, &45, &56, &4F, &20, &45, &4D   ; 3ECF: 3F 52 45 56 4F 20 45 4D                ?REVO EM     :05CF[2]
-    EQUB &41, &47,   3, &11,   1,   1, &1F, &0C   ; 3ED7: 41 47 03 11 01 01 1F 0C                AG......     :05D7[2]
-    EQUB &0F, &0E, &11,   4                       ; 3EDF: 0F 0E 11 04                            ....         :05DF[2]
+    EQUS "REVO EMAG"                                                                             ; read backwards 'GAME OVER'
+    EQUB &03, &11, &01, &01, &1F, &0C             ; 05D7: 03 11 01 01 1F 0C?        ......
+    EQUB &0F, &0E, &11, &04                       ; 05DF: 0F 0E 11 04               ....
 ; &3EE3 referenced 1 time by &0DEC
-.initial_screen_setup_vdus
-    EQUB &1C,   5, &88,   0, &12, &0C,   0, &12   ; 3EE3: 1C 05 88 00 12 0C 00 12                ........     :05E3[2]   ; read backwards - &16,2 = MODE 2
-    EQUB   3, &AC,   4, &58,   0,   0,   0, &90   ; 3EEB: 03 AC 04 58 00 00 00 90                ...X....     :05EB[2]   ; 23,0,10,32,0,0,0,0,0,0 = CRTC register 10 = Cursor start line and blink type?
-    EQUB &18,   0,   0,   0,   0,   0,   0, &20   ; 3EF3: 18 00 00 00 00 00 00 20                .......      :05F3[2]   ; 24,144,0,0,0,88,4,172,3= VDU 24, define a graphics window
-    EQUB &0A,   0, &17,   2                       ; 3EFB: 0A 00 17 02                            ....         :05FB[2]   ; 18,0,12 18,0,136| = GCOL 0,12 (col 12) + GCOL 0,136 (background col 8) + VDU 5 (Write text at graphics cursor)
+.initial_screen_setup_vdus                        ; read backwards
+    EQUB &1C,   5, &88,   0, &12, &0C,   0, &12   ; 05E3: 1C 05 88 00 12 0C 00 12   ........     ; read backwards
+    EQUB   3, &AC,   4, &58,   0,   0,   0, &90   ; 05EB: 03 AC 04 58 00 00 00 90   ...X....     ; 23,0,10,32,0,0,0,0,0,0 = CRTC register 10 = Cursor start line and blink type?
+    EQUB &18,   0,   0,   0,   0,   0,   0, &20   ; 05F3: 18 00 00 00 00 00 00 20   .......      ; 24,144,0,0,0,88,4,172,3= VDU 24, define a graphics window
+    EQUB &0A, &00, &17                            ; 05FB: 0A 00 17                  ...         ; 18,0,12 18,0,136 | = GCOL 0,12 (col 12) + GCOL 0,136 (background col 8) + VDU 5 (Write text at graphics cursor)
 ; &3EFF referenced 1 time by &10A9
+    EQUB &02, &16                                 ; 05FE: 02 16      ..   ; Command 1 (bytes backwards) - VDU 22,2 = MODE 2
+
 .game_pallet_data
-relocated_data_600 = game_pallet_data+1
-    EQUB &16                                      ; 3EFF: 16                                     .            :05FF[2]
-    EQUB   7                                      ; 3F00: 07                                     .            :0600[2]   ; Log.color 0 (black) -> Actual Color 0 (black)
-    EQUB &16                                      ; 3F01: 16                                     .            :0601[2]   ; Log.color 1 (red) -> Actual Color 1 (red)
-    EQUB &20                                      ; 3F02: 20                                                  :0602[2]   ; Log.color 2 (green) -> Actual Color 7 (white)
-    EQUB &34                                      ; 3F03: 34                                     4            :0603[2]   ; Log.color 3 (yellow) -> Actual Color 3 (yellow)
-    EQUB &43                                      ; 3F04: 43                                     C            :0604[2]   ; Log.color 4 (blue) -> Actual Color 4 (blue)
-    EQUB &52                                      ; 3F05: 52                                     R            :0605[2]   ; Log.color 5 (magenta) -> Actual Color 5 (magenta)
-    EQUB &61                                      ; 3F06: 61                                     a            :0606[2]   ; Log.color 6 (cyan) -> Actual Color 6 (cyan)
-    EQUB &75                                      ; 3F07: 75                                     u            :0607[2]   ; Log.color 7 (white) -> Actual Color 2 (green)
+relocated_data_600 = game_pallet_data
+    EQUB &07                                      ; 0600: 07      .   ; Log.color 0 (black) -> Actual Color 0 (black)
+    EQUB &16                                      ; 0601: 16      .   ; Log.color 1 (red) -> Actual Color 1 (red)
+    EQUB &20                                      ; 0602: 20          ; Log.color 2 (green) -> Actual Color 7 (white)
+    EQUB &34                                      ; 0603: 34      4   ; Log.color 3 (yellow) -> Actual Color 3 (yellow)
+    EQUB &43                                      ; 0604: 43      C   ; Log.color 4 (blue) -> Actual Color 4 (blue)
+    EQUB &52                                      ; 0605: 52      R   ; Log.color 5 (magenta) -> Actual Color 5 (magenta)
+    EQUB &61                                      ; 0606: 61      a   ; Log.color 6 (cyan) -> Actual Color 6 (cyan)
+    EQUB &75                                      ; 0607: 75      u   ; Log.color 7 (white) -> Actual Color 2 (green)
 ; &3F00 referenced 2 times by &4344, &4347
 ; &3F08 referenced 2 times by &0E2E, &24CD
-.game_pallet_data_2
-    EQUB &81                                      ; 3F08: 81                                     .            :0608[2]   ; Backgound brick Log.color (flashing) -> 1 Actual Color 6 (cyan)
-    EQUB &96                                      ; 3F09: 96                                     .            :0609[2]   ; Log.color 9 (flashing) -> 6 Actual Color 1 (red)
-    EQUB &A0                                      ; 3F0A: A0                                     .            :060A[2]   ; Log.color 10 (flashing) -> 0 Actual Color 7 (white)
-    EQUB &B4                                      ; 3F0B: B4                                     .            :060B[2]   ; Log.color 11 (flashing) -> 4 Actual Color 3 (yellow)
+.game_pallet_brick_color_background
+    EQUB &81                                      ; 0608: 81      .   ; Backgound brick Log.color (flashing) -> 1 Actual Color 6 (cyan)
+    EQUB &96                                      ; 0609: 96      .   ; Log.color 9 (flashing) -> 6 Actual Color 1 (red)
+    EQUB &A0                                      ; 060A: A0      .   ; Log.color 10 (flashing) -> 0 Actual Color 7 (white)
+    EQUB &B4                                      ; 060B: B4      .   ; Log.color 11 (flashing) -> 4 Actual Color 3 (yellow)
 ; &3F0C referenced 2 times by &0E25, &24D3
-.game_pallet_data_3
-    EQUB &C3                                      ; 3F0C: C3                                     .            :060C[2]   ; Foreground brick Log.color 12 (flashing) -> 3 Actual Color 4 (blue)
-    EQUB &D6                                      ; 3F0D: D6                                     .            :060D[2]   ; Log.color 13 (flashing) -> 6 Actual Color 1 (red)
-    EQUB &E0                                      ; 3F0E: E0                                     .            :060E[2]   ; Log.color 14 (flashing) -> 0 Actual Color ? (white)
+.game_pallet_brick_color_foreground
+    EQUB &C3                                      ; 060C: C3      .   ; Foreground brick Log.color 12 (flashing) -> 3 Actual Color 4 (blue)
+    EQUB &D6                                      ; 060D: D6      .   ; Log.color 13 (flashing) -> 6 Actual Color 1 (red)
+    EQUB &E0                                      ; 060E: E0      .   ; Log.color 14 (flashing) -> 0 Actual Color ? (white)
 ; &3F0F referenced 13 times by &1081, &1BFE, &1C41, &1CCE, &1DF5, &1E6E, &1E92, &1EC1, &1F13, &1F58, &1FAA, &236D, &23A1
 .game_pallet_data_4_or_apple_y_coord_minus_1
-    EQUB &F4                                      ; 3F0F: F4                                     .            :060F[2]   ; Log.color 15 (flashing) -> 4 Actual Color 3 (yellow)
+    EQUB &F4                                      ; 060F: F4      .   ; Log.color 15 (flashing) -> 4 Actual Color 3 (yellow)
 ; &3F10 referenced 4 times by &09EB, &09F2, &2143, &2528
 .L0610
     EQUS "jsrDCH:pla:tay:"                        ; 3F10: 6A 73 72 44 43 48 3A 70 6C 61 3A 74... jsrDCH:pla:t :0610[2]
@@ -5622,7 +5626,7 @@ relocated_data_A00 = sub_C09FF+1
 ;     Y: Y screen coordinate
 ; &41D3 referenced 3 times by &0A84, &170D, &2698
 .calculate_screen_write_address_from_x_y_coords
-    TXA                                           ; 41D3: 8A                                     .            :0AD3[1]   ; X Screen offset calulation begins (Only values 127-0 are used, each value represents two pixels wide)
+    TXA                                           ; 0AD3: 8A    .  ; X Screen offset calulation begins (Only values 127-0 are used, each value represents two pixels wide)
     ASL A                                         ; 41D4: 0A                                     .            :0AD4[1]   ; X coord * 4 (Only values 127-0 are used)
     ASL A                                         ; 41D5: 0A                                     .            :0AD5[1]
     STA zp_82                                     ; 41D6: 85 82                                  ..           :0AD6[1]
@@ -5966,7 +5970,7 @@ ORG &4300
 ; &4361 referenced 1 time by &4366
 .loop_initialize_70_7F_to_zero
     LDA #0                                        ; 4361: A9 00                                  ..
-    STA zp_70_sound_channel,X                     ; 4363: 95 70                                  .p
+    STA &70,X                                     ; 4363: 95 70                                  .p
     DEX                                           ; 4365: CA                                     .
     BPL loop_initialize_70_7F_to_zero             ; 4366: 10 F9                                  ..
     LDA #&11                                      ; 4368: A9 11                                  ..
@@ -5990,12 +5994,21 @@ ORG &4300
 
 .data_to_relocate_to_zp_40
 
+; Following 8 bytes are the pitch in the chrry pitch sound, which raises the pitch for each one 
+; eaten in a continguous manor (player does not pause)
+
 ; &4384 referenced 3 times by &12EC, &436E, &4371
-    EQUB &94, &9C, &A4, &A8, &B0, &B8             ; 4384: 94 9C A4 A8 B0 B8                      ......       :0040[3]
+    EQUB &94             ; 0040: 94
+    EQUB &9C             ; 0041: 9C
+    EQUB &A4             ; 0042: A4
+    EQUB &A8             ; 0043: A8
+    EQUB &B0             ; 0044: B0
+    EQUB &B8             ; 0045: B8
 ; &438A referenced 1 time by &1192
-    EQUB &C0                                      ; 438A: C0                                     .            :0046[3]
+    EQUB &C0             ; 0046: C0
 ; &438B referenced 1 time by &1D6E
-    EQUB &C4, &10, &20                            ; 438B: C4 10 20                               ..           :0047[3]
+    EQUB &C4             ; 0047: C4
+    EQUB &10, &20                            ; 438B: C4 10 20                               ..           :0047[3]
 ; &438E referenced 1 time by &118F
     EQUB &40, &60, &80, &99                       ; 438E: 40 60 80 99                            @`..         :004A[3]
 ; &4392 referenced 1 time by &118C
