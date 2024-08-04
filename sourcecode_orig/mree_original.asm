@@ -53,12 +53,17 @@ possible_temp_ball_x_coordinate                                 = &0019
 possible_temp_ball_y_coordinate                                 = &001A
 
 ; ball state
+;
 ; 00000000 = Ball with Mr EE (holding ball)
+;
 ; 01xxx100 = Ball in flight (released and bouncing)
 ; 01xxx1xx = Ball in flight (nn is some sort of direction indicator)
-
-; C0 to E3 = Ball explosion (counting up) radius (or stage) of explosion.
-; A3 to 81 = Ball implosion (A3 to 81) (counting down).
+;
+; 11nnnnnn = Ball is exploding
+;   C0 to E3 = Ball explosion (counting up) radius (or stage) of explosion.
+;
+; 01nnnnnn = Ball is imploding (coming back to Mr.Ee!)
+;   A3 to 81 = Ball implosion (A3 to 81) (counting down).
 ; 
 ball_state                                                      = &001B
 L001C                                                           = &001C
@@ -119,6 +124,9 @@ zp_8A_possible_ball_y_coordinate                                = &008A
 L008B                                                           = &008B
 L008C                                                           = &008C
 zp_8f_screencalc_temp_store                                     = &008F
+; Zero page &90 and &91 is used for a number of different purposes.
+; When generating the next level they point to the level data.
+; 2) xxx
 zp_90_current_x_coord                                           = &0090
 L0091                                                           = &0091
 L0092                                                           = &0092
@@ -148,7 +156,6 @@ unknown_monster_data_1                                          = &08A0
 L08A9                                                           = &08A9
 apple_x_coordinate                                              = &08AF
 L08B0                                                           = &08B0
-L0C00                                                           = &0C00
 L0CA9                                                           = &0CA9
 sub_C3000                                                       = &3000
 screen_memory_30F1                                              = &30F1
@@ -198,6 +205,7 @@ osbyte                                                          = &FFF4
     EQUB &4E, &45, &43, &53,   0, &0D, &1F,   2   ; 1928: 4E 45 43 53 00 0D 1F 02                NECS....     :0C28[4]
     EQUB &11                                      ; 1930: 11                                     .            :0C30[4]
     EQUB 4                                        ; 1931: 04                                     .            :0C31[4]
+.start_of_level_data
 .scene_10_level_data
     EQUB &3F, &C0, &60, &60, &F0, &30, &98, &10   ; 1932: 3F C0 60 60 F0 30 98 10                ?.``.0..     :0C32[4]   ; Level 0 (e.g. scene 10) data begins
     EQUB &8C, &10, &84, &10, &84, &10, &86, &10   ; 193A: 8C 10 84 10 84 10 86 10                ........     :0C3A[4]
@@ -330,19 +338,19 @@ osbyte                                                          = &FFF4
     JSR oswrch                                    ; 0DEF: 20 EE FF  ..    ; Write character
     DEX                                           ; 0DF2: CA        .  
     BNE loop_initial_screen_setup_mode2_gcol      ; 0DF3: D0 F7     .. 
-    STX L0091                                     ; 0DF5: 86 91     .. 
-    LDA level_number_scene_mod_10                 ; 0DF7: A5 23     .# 
-    ASL A                                         ; 0DF9: 0A        .  
+    STX L0091                                     ; 0DF5: 86 91     ..    ; &91 = 0
+    LDA level_number_scene_mod_10                 ; 0DF7: A5 23     .#    ; The following finds the level data.
+    ASL A                                         ; 0DF9: 0A        .     ; = level data = ((scene number MOD 10) * 16 ) + scene number MOD 10) * 2 + ??? 
     ASL A                                         ; 0DFA: 0A        .  
     ASL A                                         ; 0DFB: 0A        .  
     ASL A                                         ; 0DFC: 0A        .  
     ADC level_number_scene_mod_10                 ; 0DFD: 65 23     e# 
     ASL A                                         ; 0DFF: 0A        . 
     ROL L0091                                     ; 0E00: 26 91     &.
-    ADC #&32 ; '2'                                ; 0E02: 69 32     i2
+    ADC # start_of_level_data MOD 256             ; 0E02: 69 32     i2     ; Add start of level data address to offset and store in zp 90/91
     STA zp_90_current_x_coord                     ; 0E04: 85 90     ..
     LDA L0091                                     ; 0E06: A5 91     ..
-    ADC #&0C                                      ; 0E08: 69 0C     i.
+    ADC # start_of_level_data DIV 256             ; 0E08: 69 0C     i.
     STA L0091                                     ; 0E0A: 85 91     ..
     LDA #&F7                                      ; 0E0C: A9 F7     ..    ; logical color 15 (flash white/black) -> 7 EOR 7 = Actual color 0 (Black)
 
@@ -648,8 +656,8 @@ ENDIF
     ADC #3                                        ; 1CD3: 69 03                                  i.           :0FD3[4]
     STA zp_81_dest_screenaddr                     ; 1CD5: 85 81                                  ..           :0FD5[4]
     LDY zp_82                                     ; 1CD7: A4 82                                  ..           :0FD7[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 1CD9: 20 3C 1A                                <.          :0FD9[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 1CDC: 20 3C 1A                                <.          :0FDC[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 1CD9: 20 3C 1A                                <.          :0FD9[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 1CDC: 20 3C 1A                                <.          :0FDC[4]
     STY zp_82                                     ; 1CDF: 84 82                                  ..           :0FDF[4]
     LDY zp_83                                     ; 1CE1: A4 83                                  ..           :0FE1[4]
     CPY #&1A                                      ; 1CE3: C0 1A                                  ..           :0FE3[4]
@@ -1482,9 +1490,9 @@ ENDIF
 .sub_C14E9
     LDA zp_90_current_x_coord                     ; 21E9: A5 90                                  ..           :14E9[4]
     ASL A                                         ; 21EB: 0A                                     .            :14EB[4]
-    BCS C1531                                     ; 21EC: B0 43                                  .C           :14EC[4]
+    BCS end_routine_01                                     ; 21EC: B0 43                                  .C           :14EC[4]
     ASL A                                         ; 21EE: 0A                                     .            :14EE[4]
-    BCS C1531                                     ; 21EF: B0 40                                  .@           :14EF[4]
+    BCS end_routine_01                                     ; 21EF: B0 40                                  .@           :14EF[4]
     STA L0091                                     ; 21F1: 85 91                                  ..           :14F1[4]
     LDA possible_temp_ball_y_coordinate           ; 21F3: A5 1A                                  ..           :14F3[4]
     SEC                                           ; 21F5: 38                                     8            :14F5[4]
@@ -1498,7 +1506,7 @@ ENDIF
     LDA possible_temp_ball_y_coordinate           ; 2202: A5 1A                                  ..           :1502[4]
     CLC                                           ; 2204: 18                                     .            :1504[4]
     ADC L0091                                     ; 2205: 65 91                                  e.           :1505[4]
-    BCS C1531                                     ; 2207: B0 28                                  .(           :1507[4]
+    BCS end_routine_01                                     ; 2207: B0 28                                  .(           :1507[4]
 ; &2209 referenced 2 times by &14FA, &14FF
 .sub_C1509
     PHA                                           ; 2209: 48                                     H            :1509[4]
@@ -1527,11 +1535,11 @@ ENDIF
     ADC zp_90_current_x_coord                     ; 2227: 65 90                                  e.           :1527[4]
     TAX                                           ; 2229: AA                                     .            :1529[4]
     CPX #&4F ; 'O'                                ; 222A: E0 4F                                  .O           :152A[4]
-    BCS C1531                                     ; 222C: B0 03                                  ..           :152C[4]
+    BCS end_routine_01                            ; 222C: B0 03                                  ..           :152C[4]
     JMP sub_possible_ball_printing_or_in_motion_routine; 222E: 4C 98 26                               L.&          :152E[4]
 
 ; &2231 referenced 4 times by &14EC, &14EF, &1507, &152C
-.C1531
+.end_routine_01
     RTS                                           ; 2231: 60                                     `            :1531[4]
 
 ; &2232 referenced 1 time by &1162
@@ -1736,23 +1744,35 @@ ENDIF
 ;     Y: Unused - Corrupted?
 ; &2373 referenced 2 times by &15AF, &15BE
 .sub_possible_handle_ball_update_movement
-    LDA ball_state                                ; 2373: A5 1B                                  ..           :1673[4]
-    BPL C16E0                                     ; 2375: 10 69                                  .i           :1675[4]
-    AND #&40 ; '@'                                ; 2377: 29 40                                  )@           :1677[4]
-    BEQ C16A9                                     ; 2379: F0 2E                                  ..           :1679[4]
-    LDA ball_state                                ; 237B: A5 1B                                  ..           :167B[4]
-    CMP #&E3                                      ; 237D: C9 E3                                  ..           :167D[4]
-    BNE C168E                                     ; 237F: D0 0D                                  ..           :167F[4]
-    JSR sub_C25E5                                 ; 2381: 20 E5 25                                .%          :1681[4]
-    AND #&3F ; '?'                                ; 2384: 29 3F                                  )?           :1684[4]
-    BNE C16A8                                     ; 2386: D0 20                                  .            :1686[4]
+; ball state
+; 00000000 = Ball with Mr EE (holding ball)
+; 01xxx100 = Ball in flight (released and bouncing)
+; 01xxx1xx = Ball in flight (nn is some sort of direction indicator)
+
+
+; C0 to E3 = Ball explosion (counting up) radius (or stage) of explosion.
+; A3 to 81 = Ball implosion (A3 to 81) (counting down).
+
+; 11 = C0
+; 10 = A0
+
+    LDA ball_state                                ; 1673: A5 1B      ..   ; Is ball imploding or exploding (bit 7 set)?
+    BPL ball_is_not_imploding_or_exploding        ; 1675: 10 69      .i   ; It is not, so branch.
+    AND #&40 ; '@'                                ; 1677: 29 40      )@   ; Ball may be imploding or exploding, check implosion / explosion bit
+    BEQ ball_is_imploding                         ; 1679: F0 2E      ..   ; Bit = 0, it is imploding
+    LDA ball_state                                ; 167B: A5 1B      ..
+    CMP #&E3                                      ; 167D: C9 E3      ..   ; Has the explosion ended?
+    BNE continue_ball_explosion                   ; 167F: D0 0D      ..   ; It has not ended, branch
+    JSR sub_C25E5                                 ; 1681: 20 E5 25   .%   ; It has ended.  Call routine ???
+    AND #&3F ; '?'                                ; 1684: 29 3F      )?
+    BNE end_routine_02                                     ; 1686: D0 20      .
 ; &2388 referenced 1 time by &15BB
 .sub_C1688
     LDA #&A3                                      ; 2388: A9 A3                                  ..           :1688[4]
     STA ball_state                                ; 238A: 85 1B                                  ..           :168A[4]
-    BNE C16A9                                     ; 238C: D0 1B                                  ..           :168C[4]
+    BNE ball_is_imploding                     ; 238C: D0 1B                                  ..           :168C[4]
 ; &238E referenced 1 time by &167F
-.C168E
+.continue_ball_explosion
     ASL A                                         ; 238E: 0A                                     .            :168E[4]
     ASL A                                         ; 238F: 0A                                     .            :168F[4]
     STA zp_90_current_x_coord                     ; 2390: 85 90                                  ..           :1690[4]
@@ -1766,11 +1786,11 @@ ENDIF
     JSR sub_C14E9                                 ; 23A3: 20 E9 14                                ..          :16A3[4]
     INC ball_state                                ; 23A6: E6 1B                                  ..           :16A6[4]
 ; &23A8 referenced 3 times by &1686, &16D0, &16E0
-.C16A8
+.end_routine_02
     RTS                                           ; 23A8: 60                                     `            :16A8[4]
 
 ; &23A9 referenced 2 times by &1679, &168C
-.C16A9
+.ball_is_imploding
     LDA ball_state                                ; 23A9: A5 1B                                  ..           :16A9[4]
     ASL A                                         ; 23AB: 0A                                     .            :16AB[4]
     ASL A                                         ; 23AC: 0A                                     .            :16AC[4]
@@ -1790,7 +1810,7 @@ ENDIF
     ASL zp_90_current_x_coord                     ; 23C9: 06 90                                  ..           :16C9[4]
     JSR sub_C14E9                                 ; 23CB: 20 E9 14                                ..          :16CB[4]
     DEC ball_state                                ; 23CE: C6 1B                                  ..           :16CE[4]
-    BNE C16A8                                     ; 23D0: D0 D6                                  ..           :16D0[4]
+    BNE end_routine_02                               ; 23D0: D0 D6                                  ..           :16D0[4]
 ; &23D2 referenced 1 time by &16C4
 .C16D2
     LDA mr_ee_status                              ; 23D2: A5 27                                  .'           :16D2[4]
@@ -1804,8 +1824,8 @@ ENDIF
     RTS                                           ; 23DF: 60                                     `            :16DF[4]
 
 ; &23E0 referenced 1 time by &1675
-.C16E0
-    BEQ C16A8                                     ; 23E0: F0 C6                                  ..           :16E0[4]
+.ball_is_not_imploding_or_exploding
+    BEQ end_routine_02                               ; 23E0: F0 C6                                  ..           :16E0[4]
     JSR possible_update_ball_if_exists            ; 23E2: 20 D7 26                                .&          :16E2[4]
     LDA #4                                        ; 23E5: A9 04                                  ..           :16E5[4]
     STA L008B                                     ; 23E7: 85 8B                                  ..           :16E7[4]
@@ -1846,8 +1866,8 @@ ENDIF
     STA zp_80_dest_screenaddr                     ; 2419: 85 80                                  ..           :1719[4]
     LDA (zp_80_dest_screenaddr),Y                 ; 241B: B1 80                                  ..           :171B[4]
     PHA                                           ; 241D: 48                                     H            :171D[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 241E: 20 3C 1A                                <.          :171E[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 2421: 20 3C 1A                                <.          :1721[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 241E: 20 3C 1A                                <.          :171E[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 2421: 20 3C 1A                                <.          :1721[4]
     PLA                                           ; 2424: 68                                     h            :1724[4]
     ORA (zp_80_dest_screenaddr),Y                 ; 2425: 11 80                                  ..           :1725[4]
     AND #&C0                                      ; 2427: 29 C0                                  ).           :1727[4]
@@ -2005,26 +2025,26 @@ ENDIF
     JSR sub_add_8_to_y_register                   ; 250A: 20 60 1A                                `.          :180A[4]
 ; &250D referenced 1 time by &1802
 .C180D
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 250D: 20 3C 1A                                <.          :180D[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 250D: 20 3C 1A                                <.          :180D[4]
     JSR sub_C18E5                                 ; 2510: 20 E5 18                                ..          :1810[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 2513: 20 3C 1A                                <.          :1813[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 2513: 20 3C 1A                                <.          :1813[4]
     JSR sub_write_a_mask_to_80_81_screen_address_plus_y; 2516: 20 56 18                                V.          :1816[4]
     JSR sub_C1A66                                 ; 2519: 20 66 1A                                f.          :1819[4]
     JSR C18E8                                     ; 251C: 20 E8 18                                ..          :181C[4]
     LDX #&0C                                      ; 251F: A2 0C                                  ..           :181F[4]
 ; &2521 referenced 1 time by &1828
 .loop_C1821
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 2521: 20 3C 1A                                <.          :1821[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 2521: 20 3C 1A                                <.          :1821[4]
     JSR sub_C18E5                                 ; 2524: 20 E5 18                                ..          :1824[4]
     DEX                                           ; 2527: CA                                     .            :1827[4]
     BNE loop_C1821                                ; 2528: D0 F7                                  ..           :1828[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 252A: 20 3C 1A                                <.          :182A[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 252A: 20 3C 1A                                <.          :182A[4]
     JSR C18E8                                     ; 252D: 20 E8 18                                ..          :182D[4]
     JSR sub_add_8_to_y_register                   ; 2530: 20 60 1A                                `.          :1830[4]
     JSR sub_write_a_mask_to_80_81_screen_address_plus_y; 2533: 20 56 18                                V.          :1833[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 2536: 20 3C 1A                                <.          :1836[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 2536: 20 3C 1A                                <.          :1836[4]
     JSR sub_C18E5                                 ; 2539: 20 E5 18                                ..          :1839[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 253C: 20 3C 1A                                <.          :183C[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 253C: 20 3C 1A                                <.          :183C[4]
     LDA (zp_80_dest_screenaddr),Y                 ; 253F: B1 80                                  ..           :183F[4]
     PHA                                           ; 2541: 48                                     H            :1841[4]
     JSR sub_C1A66                                 ; 2542: 20 66 1A                                f.          :1842[4]
@@ -2089,9 +2109,9 @@ ENDIF
     JSR sub_C1A66                                 ; 2592: 20 66 1A                                f.          :1892[4]
 ; &2595 referenced 1 time by &188A
 .C1895
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 2595: 20 3C 1A                                <.          :1895[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 2595: 20 3C 1A                                <.          :1895[4]
     JSR sub_C18E5                                 ; 2598: 20 E5 18                                ..          :1898[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 259B: 20 3C 1A                                <.          :189B[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 259B: 20 3C 1A                                <.          :189B[4]
     JSR C18E8                                     ; 259E: 20 E8 18                                ..          :189E[4]
     TYA                                           ; 25A1: 98                                     .            :18A1[4]
     CLC                                           ; 25A2: 18                                     .            :18A2[4]
@@ -2101,20 +2121,20 @@ ENDIF
     LDX #&0C                                      ; 25A9: A2 0C                                  ..           :18A9[4]
 ; &25AB referenced 1 time by &18B2
 .loop_C18AB
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 25AB: 20 3C 1A                                <.          :18AB[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 25AB: 20 3C 1A                                <.          :18AB[4]
     JSR sub_C18E5                                 ; 25AE: 20 E5 18                                ..          :18AE[4]
     DEX                                           ; 25B1: CA                                     .            :18B1[4]
     BNE loop_C18AB                                ; 25B2: D0 F7                                  ..           :18B2[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 25B4: 20 3C 1A                                <.          :18B4[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 25B4: 20 3C 1A                                <.          :18B4[4]
     JSR sub_write_a_mask_to_80_81_screen_address_plus_y; 25B7: 20 56 18                                V.          :18B7[4]
     TYA                                           ; 25BA: 98                                     .            :18BA[4]
     SEC                                           ; 25BB: 38                                     8            :18BB[4]
     SBC #8                                        ; 25BC: E9 08                                  ..           :18BC[4]
     TAY                                           ; 25BE: A8                                     .            :18BE[4]
     JSR C18E8                                     ; 25BF: 20 E8 18                                ..          :18BF[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 25C2: 20 3C 1A                                <.          :18C2[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 25C2: 20 3C 1A                                <.          :18C2[4]
     JSR sub_C18E5                                 ; 25C5: 20 E5 18                                ..          :18C5[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 25C8: 20 3C 1A                                <.          :18C8[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 25C8: 20 3C 1A                                <.          :18C8[4]
     LDA (zp_80_dest_screenaddr),Y                 ; 25CB: B1 80                                  ..           :18CB[4]
     PHA                                           ; 25CD: 48                                     H            :18CD[4]
     JSR sub_add_8_to_y_register                   ; 25CE: 20 60 1A                                `.          :18CE[4]
@@ -2126,7 +2146,7 @@ ENDIF
 .C18D9
     LDA (zp_80_dest_screenaddr),Y                 ; 25D9: B1 80                                  ..           :18D9[4]
     AND #&C0                                      ; 25DB: 29 C0                                  ).           :18DB[4]
-    BNE C18F4                                     ; 25DD: D0 15                                  ..           :18DD[4]
+    BNE end_routine_04                                     ; 25DD: D0 15                                  ..           :18DD[4]
     JSR sub_C1A66                                 ; 25DF: 20 66 1A                                f.          :18DF[4]
     JMP C18E8                                     ; 25E2: 4C E8 18                               L..          :18E2[4]
 
@@ -2137,12 +2157,12 @@ ENDIF
 .C18E8
     LDA (zp_80_dest_screenaddr),Y                 ; 25E8: B1 80                                  ..           :18E8[4]
     AND #&40 ; '@'                                ; 25EA: 29 40                                  )@           :18EA[4]
-    BEQ C18F4                                     ; 25EC: F0 06                                  ..           :18EC[4]
+    BEQ end_routine_04                            ; 25EC: F0 06                                  ..           :18EC[4]
     LDA (zp_80_dest_screenaddr),Y                 ; 25EE: B1 80                                  ..           :18EE[4]
     AND #&AF                                      ; 25F0: 29 AF                                  ).           :18F0[4]
     STA (zp_80_dest_screenaddr),Y                 ; 25F2: 91 80                                  ..           :18F2[4]
 ; &25F4 referenced 2 times by &18DD, &18EC
-.C18F4
+.end_routine_04
     RTS                                           ; 25F4: 60                                     `            :18F4[4]
 
 ; &25F5 referenced 2 times by &14BD, &2286
@@ -2174,11 +2194,11 @@ code_to_relocate_1900 = sub_C18FF+1
     SEC                                           ; 261B: 38                                     8            :191B[4]
     SBC #&18                                      ; 261C: E9 18                                  ..           :191C[4]
     TAY                                           ; 261E: A8                                     .            :191E[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 261F: 20 3C 1A                                <.          :191F[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 261F: 20 3C 1A                                <.          :191F[4]
     LDA (zp_80_dest_screenaddr),Y                 ; 2622: B1 80                                  ..           :1922[4]
     AND #&C0                                      ; 2624: 29 C0                                  ).           :1924[4]
     BNE C1931                                     ; 2626: D0 09                                  ..           :1926[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 2628: 20 3C 1A                                <.          :1928[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 2628: 20 3C 1A                                <.          :1928[4]
     JSR C18E8                                     ; 262B: 20 E8 18                                ..          :192B[4]
     JSR sub_C1A4B                                 ; 262E: 20 4B 1A                                K.          :192E[4]
 ; &2631 referenced 1 time by &1926
@@ -2197,7 +2217,7 @@ code_to_relocate_1900 = sub_C18FF+1
     JSR sub_add_8_to_y_register                   ; 2648: 20 60 1A                                `.          :1948[4]
     LDA (zp_80_dest_screenaddr),Y                 ; 264B: B1 80                                  ..           :194B[4]
     PHA                                           ; 264D: 48                                     H            :194D[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 264E: 20 3C 1A                                <.          :194E[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 264E: 20 3C 1A                                <.          :194E[4]
     PLA                                           ; 2651: 68                                     h            :1951[4]
     AND #&C0                                      ; 2652: 29 C0                                  ).           :1952[4]
     BNE C1959                                     ; 2654: D0 03                                  ..           :1954[4]
@@ -2212,7 +2232,7 @@ code_to_relocate_1900 = sub_C18FF+1
     BNE C1971                                     ; 2666: D0 09                                  ..           :1966[4]
     JSR sub_C1A4B                                 ; 2668: 20 4B 1A                                K.          :1968[4]
     JSR sub_write_a_mask_to_80_81_screen_address_plus_y; 266B: 20 56 18                                V.          :196B[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 266E: 20 3C 1A                                <.          :196E[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 266E: 20 3C 1A                                <.          :196E[4]
 ; &2671 referenced 1 time by &1966
 .C1971
     TYA                                           ; 2671: 98                                     .            :1971[4]
@@ -2224,12 +2244,12 @@ code_to_relocate_1900 = sub_C18FF+1
     BNE C1985                                     ; 267A: D0 09                                  ..           :197A[4]
     JSR sub_C1A4B                                 ; 267C: 20 4B 1A                                K.          :197C[4]
     JSR C18E8                                     ; 267F: 20 E8 18                                ..          :197F[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 2682: 20 3C 1A                                <.          :1982[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 2682: 20 3C 1A                                <.          :1982[4]
 ; &2685 referenced 1 time by &197A
 .C1985
     JSR sub_add_8_to_y_register                   ; 2685: 20 60 1A                                `.          :1985[4]
     JSR sub_C18E5                                 ; 2688: 20 E5 18                                ..          :1988[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 268B: 20 3C 1A                                <.          :198B[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 268B: 20 3C 1A                                <.          :198B[4]
     JSR sub_write_a_mask_to_80_81_screen_address_plus_y; 268E: 20 56 18                                V.          :198E[4]
     TYA                                           ; 2691: 98                                     .            :1991[4]
     CLC                                           ; 2692: 18                                     .            :1992[4]
@@ -2253,8 +2273,8 @@ code_to_relocate_1900 = sub_C18FF+1
     DEC zp_81_dest_screenaddr                     ; 26AC: C6 81                                  ..           :19AC[4]
 ; &26AE referenced 1 time by &19AA
 .C19AE
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 26AE: 20 3C 1A                                <.          :19AE[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 26B1: 20 3C 1A                                <.          :19B1[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 26AE: 20 3C 1A                                <.          :19AE[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 26B1: 20 3C 1A                                <.          :19B1[4]
     JSR sub_C18E5                                 ; 26B4: 20 E5 18                                ..          :19B4[4]
     JSR sub_add_8_to_y_register                   ; 26B7: 20 60 1A                                `.          :19B7[4]
     JSR sub_C18E5                                 ; 26BA: 20 E5 18                                ..          :19BA[4]
@@ -2268,7 +2288,7 @@ code_to_relocate_1900 = sub_C18FF+1
     BNE C19D4                                     ; 26C9: D0 09                                  ..           :19C9[4]
     JSR sub_C1A4B                                 ; 26CB: 20 4B 1A                                K.          :19CB[4]
     JSR sub_write_a_mask_to_80_81_screen_address_plus_y; 26CE: 20 56 18                                V.          :19CE[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 26D1: 20 3C 1A                                <.          :19D1[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 26D1: 20 3C 1A                                <.          :19D1[4]
 ; &26D4 referenced 1 time by &19C9
 .C19D4
     JSR sub_C1A66                                 ; 26D4: 20 66 1A                                f.          :19D4[4]
@@ -2295,7 +2315,7 @@ code_to_relocate_1900 = sub_C18FF+1
     LDA (zp_80_dest_screenaddr),Y                 ; 26FC: B1 80                                  ..           :19FC[4]
     AND #&C0                                      ; 26FE: 29 C0                                  ).           :19FE[4]
     BNE C1A0B                                     ; 2700: D0 09                                  ..           :1A00[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 2702: 20 3C 1A                                <.          :1A02[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 2702: 20 3C 1A                                <.          :1A02[4]
     JSR C18E8                                     ; 2705: 20 E8 18                                ..          :1A05[4]
     JSR sub_C1A4B                                 ; 2708: 20 4B 1A                                K.          :1A08[4]
 ; &270B referenced 1 time by &1A00
@@ -2311,7 +2331,7 @@ code_to_relocate_1900 = sub_C18FF+1
     LDA (zp_80_dest_screenaddr),Y                 ; 271C: B1 80                                  ..           :1A1C[4]
     AND #&C0                                      ; 271E: 29 C0                                  ).           :1A1E[4]
     BNE C1A2B                                     ; 2720: D0 09                                  ..           :1A20[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 2722: 20 3C 1A                                <.          :1A22[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 2722: 20 3C 1A                                <.          :1A22[4]
     JSR sub_write_a_mask_to_80_81_screen_address_plus_y; 2725: 20 56 18                                V.          :1A25[4]
     JSR sub_C1A4B                                 ; 2728: 20 4B 1A                                K.          :1A28[4]
 ; &272B referenced 1 time by &1A20
@@ -2333,19 +2353,19 @@ code_to_relocate_1900 = sub_C18FF+1
 ;     A: Unused - Corrupted
 ;     X: Unused - Preserved
 ;     Y: Y coordinate of object - Incremented Y coord
-; &273C referenced 30 times by &0FD9, &0FDC, &171E, &1721, &180D, &1813, &1821, &182A, &1836, &183C, &1895, &189B, &18AB, &18B4, &18C2, &18C8, &191F, &1928, &194E, &196E, &1982, &198B, &19AE, &19B1, &19D1, &1A02, &1A22, &26A9, &26B8, &26C7
-.sub_increment_y_position_and_recalc_80_81_screen_address
+
+.sub_increment_y_pos_and_recalc_screen_addr
     INY                                           ; 273C: C8                                     .            :1A3C[4]
     TYA                                           ; 273D: 98                                     .            :1A3D[4]
     AND #7                                        ; 273E: 29 07                                  ).           :1A3E[4]
-    BNE local_skip_whatever_a                     ; 2740: D0 08                                  ..           :1A40[4]
+    BNE end_routine_05                            ; 2740: D0 08                                  ..           :1A40[4]
     JSR sub_move_80_81_screen_address_down_one_line; 2742: 20 85 27                                .'          :1A42[4]
     TYA                                           ; 2745: 98                                     .            :1A45[4]
     SEC                                           ; 2746: 38                                     8            :1A46[4]
     SBC #8                                        ; 2747: E9 08                                  ..           :1A47[4]
     TAY                                           ; 2749: A8                                     .            :1A49[4]
 ; &274A referenced 1 time by &1A40
-.local_skip_whatever_a
+.end_routine_05
     RTS                                           ; 274A: 60                                     `            :1A4A[4]
 
 ; &274B referenced 10 times by &190C, &192E, &1968, &197C, &19BD, &19CB, &19F1, &1A08, &1A28, &1A2B
@@ -2354,7 +2374,7 @@ code_to_relocate_1900 = sub_C18FF+1
     TYA                                           ; 274C: 98                                     .            :1A4C[4]
     AND #7                                        ; 274D: 29 07                                  ).           :1A4D[4]
     CMP #7                                        ; 274F: C9 07                                  ..           :1A4F[4]
-    BNE C1A65                                     ; 2751: D0 12                                  ..           :1A51[4]
+    BNE end_routine_06                                     ; 2751: D0 12                                  ..           :1A51[4]
     LDA zp_80_dest_screenaddr                     ; 2753: A5 80                                  ..           :1A53[4]
     SEC                                           ; 2755: 38                                     8            :1A55[4]
     SBC #&80                                      ; 2756: E9 80                                  ..           :1A56[4]
@@ -2376,7 +2396,7 @@ code_to_relocate_1900 = sub_C18FF+1
     ADC #8                                        ; 2762: 69 08                                  i.           :1A62[4]
     TAY                                           ; 2764: A8                                     .            :1A64[4]
 ; &2765 referenced 1 time by &1A51
-.C1A65
+.end_routine_06
     RTS                                           ; 2765: 60                                     `            :1A65[4]
 
 ; &2766 referenced 15 times by &1581, &1804, &1819, &1842, &187B, &1892, &18DF, &1959, &19D4, &19DC, &19E5, &19EB, &1A2E, &26B5, &26C4
@@ -4643,17 +4663,17 @@ code_to_relocate_1900 = sub_C18FF+1
     AND #&F8                                      ; 33A2: 29 F8                                  ).           :26A2[4]
     STA zp_80_dest_screenaddr                     ; 33A4: 85 80                                  ..           :26A4[4]
     JSR sub_C26CA                                 ; 33A6: 20 CA 26                                .&          :26A6[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 33A9: 20 3C 1A                                <.          :26A9[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 33A9: 20 3C 1A                                <.          :26A9[4]
     JSR sub_eor_write_bit_of_ball_to_screen       ; 33AC: 20 D0 26                                .&          :26AC[4]
     JSR sub_add_8_to_y_register                   ; 33AF: 20 60 1A                                `.          :26AF[4]
     JSR L26CD                                     ; 33B2: 20 CD 26                                .&          :26B2[4]
     JSR sub_C1A66                                 ; 33B5: 20 66 1A                                f.          :26B5[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 33B8: 20 3C 1A                                <.          :26B8[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 33B8: 20 3C 1A                                <.          :26B8[4]
     JSR sub_eor_write_bit_of_ball_to_screen       ; 33BB: 20 D0 26                                .&          :26BB[4]
     JSR sub_add_8_to_y_register                   ; 33BE: 20 60 1A                                `.          :26BE[4]
     JSR L26CD                                     ; 33C1: 20 CD 26                                .&          :26C1[4]
     JSR sub_C1A66                                 ; 33C4: 20 66 1A                                f.          :26C4[4]
-    JSR sub_increment_y_position_and_recalc_80_81_screen_address; 33C7: 20 3C 1A                                <.          :26C7[4]
+    JSR sub_increment_y_pos_and_recalc_screen_addr; 33C7: 20 3C 1A                                <.          :26C7[4]
 ; &33CA referenced 1 time by &26A6
 .sub_C26CA
     LDA #4                                        ; 33CA: A9 04                                  ..           :26CA[4]
