@@ -6,10 +6,13 @@ RELOAD_ADDR		= &1100		; address at which code will load
 OFFSET			= RELOAD_ADDR - NATIVE_ADDR
 
 ; Define code altering constants
-; If 0, generate original code (blank whilst generating new level screen),
-; If 1 remove blanking code ans show level screen as it's being built.
-demrepofdavenoscreenblank = FALSE
-; NOTE - above switch does not work correctly yet.
+; ==============================
+; Only one code altering constant is present.
+
+; DISABLESCREENBLANK = TRUE / FALSE - Disables blanking of the pallet when the new level screen is drawn
+;  = FALSE, generate original code (blank whilst generating new level screen),
+;  = TRUE remove blanking code ans show level screen as it's being built.
+DISABLESCREENBLANK = FALSE
                                 
 
 ; Constants
@@ -44,10 +47,19 @@ number_of_all_enemies_on_stack                                  = &0013
 remaining_monsters_to_spawn_minus_1                             = &0014
 scene_number                                                    = &0015
 extra_monster_status                                            = &0016
-L0017                                                           = &0017
-L0018                                                           = &0018
+zp_x_sprite_screen_offset                                       = &0017 ; Length (X-axis) of next sprite to print, but offset by screen address so divide stored value by 4 and then add 2 to get the actual number in pixels (due to BPL used).
+zp_y_sprite_length                                              = &0018 ; Length (Y-axis) + 1 of next sprite to print in pixels (note = +1 due to BEQ)
 possible_temp_ball_x_coordinate                                 = &0019
 possible_temp_ball_y_coordinate                                 = &001A
+
+; ball state
+; 00000000 = Ball with Mr EE (holding ball)
+; 01xxx100 = Ball in flight (released and bouncing)
+; 01xxx1xx = Ball in flight (nn is some sort of direction indicator)
+
+; C0 to E3 = Ball explosion (counting up) radius (or stage) of explosion.
+; A3 to 81 = Ball implosion (A3 to 81) (counting down).
+; 
 ball_state                                                      = &001B
 L001C                                                           = &001C
 number_of_normal_monsters_remaining_minus_1                     = &001D
@@ -55,11 +67,21 @@ number_of_active_ghosts                                         = &001E
 extra_bitmap                                                    = &001F
 mr_ee_x_coord                                                   = &0020
 mr_ee_y_coord                                                   = &0021
-possible_mr_ee_direction                                        = &0022
+
+; Mr Ee direction (also used as offset in sprite selection)
+; 0 = right; 1 = left; 2 = up; 3 = down
+zp_mr_ee_direction                                              = &0022
 level_number_scene_mod_10                                       = &0023
 zp_24_lives_remaining                                           = &0024
 L0025                                                           = &0025
 L0026                                                           = &0026
+
+; Mr ee status... (plus 6502 instruction that tests)
+; 0xxxxxxx = Mr Ee is not squished (by apple) (BPL)
+; 1xxxxxxx = Mr Ee is being squished (by apple) (BMI)
+; 0111111x = Mr Ee squishing is complete (hit the floor) (BPL)
+; xxxxxxx0 = Mr Ee is alive (BEQ)
+; xxxxxxx1 = Mr Ee has died (BNE)
 mr_ee_status                                                    = &0027
 strange_unused_score                                            = &0028  ; Used in the code but seems to do nothing(?).  Could be from a score feature that couldn't quite fit into memory and was removed.
 L002A                                                           = &002A
@@ -114,18 +136,14 @@ L00A3                                                           = &00A3
 L00A4                                                           = &00A4
 L00A5                                                           = &00A5
 escape_key_pressed_flag                                         = &00FF
-unknown_monster_data_2_minus_one                                = &0100
 unknown_monster_data_2                                          = &0101
 L03A9                                                           = &03A9
 realtime_maze_grid_offset_minus_16                              = &0720
 L0721                                                           = &0721
 realtime_maze_grid                                              = &0730
 L0740                                                           = &0740
-monster_stack_x_coord_minus_one                                 = &087F
 monster_stack_x_coord                                           = &0880
-monster_stack_y_coord_minus_one                                 = &088F
 monster_stack_y_coord                                           = &0890
-unknown_monster_data_1_minus_one                                = &089F
 unknown_monster_data_1                                          = &08A0
 L08A9                                                           = &08A9
 apple_x_coordinate                                              = &08AF
@@ -162,16 +180,19 @@ oswrch                                                          = &FFEE
 osword                                                          = &FFF1
 osbyte                                                          = &FFF4
 
-; Relocation block loop_draw_extra_box_lines_horizontal
 
     ORG &0C00
+
 .main_code_begin
-.user_defined_characters_224_to_255_relocated_data_C00
-    EQUB &C3, &66, &3C, &18, &3C, &66, &C3, &81   ; 1900: C3 66 3C 18 3C 66 C3 81                .f<.<f..     :0C00[4]   ; VDU 224 - Level block 1 - X
-    EQUB &0F, &1E, &3C, &78, &F0, &E1, &C3, &87   ; 1908: 0F 1E 3C 78 F0 E1 C3 87                ..<x....     :0C08[4]   ; VDU 225 - Level block 2 - Slide
-    EQUB   0, &7E, &7E, &7E,   0, &E7, &E7, &E7   ; 1910: 00 7E 7E 7E 00 E7 E7 E7                .~~~....     :0C10[4]   ; VDU 226 - Level block 3 - Brick
-    EQUB &60, &F0, &F9, &FF, &9F, &0F,   6,   0   ; 1918: 60 F0 F9 FF 9F 0F 06 00                `.......     :0C18[4]   ; VDU 227 - Level block 4 - Wavey
-; &1920 referenced 1 time by &1A6E
+; &C00 is normally used to store character data (e.g. definitions of VDU 224 to 255)
+; In this case only the first 32 bytes are used for this, and defined the four types
+; of brick which are plotted as the mase background.  The rest are used for other
+; parts of data for the game.
+    EQUB &C3, &66, &3C, &18, &3C, &66, &C3, &81   ; C00: C3 66 3C 18 3C 66 C3 81   .f<.<f..   ; VDU 224 - Level block 1 - X
+    EQUB &0F, &1E, &3C, &78, &F0, &E1, &C3, &87   ; C08: 0F 1E 3C 78 F0 E1 C3 87   ..<x....   ; VDU 225 - Level block 2 - Slide
+    EQUB   0, &7E, &7E, &7E,   0, &E7, &E7, &E7   ; C10: 00 7E 7E 7E 00 E7 E7 E7   .~~~....   ; VDU 226 - Level block 3 - Brick
+    EQUB &60, &F0, &F9, &FF, &9F, &0F,   6,   0   ; C18: 60 F0 F9 FF 9F 0F 06 00   `.......   ; VDU 227 - Level block 4 - Wavey
+
 .scene_and_score_zero_string_data
     EQUB   1, &0E, &1F, &30,   1,   5, &1F, &45   ; 1920: 01 0E 1F 30 01 05 1F 45                ...0...E     :0C20[4]
     EQUB &4E, &45, &43, &53,   0, &0D, &1F,   2   ; 1928: 4E 45 43 53 00 0D 1F 02                NECS....     :0C28[4]
@@ -247,7 +268,7 @@ osbyte                                                          = &FFF4
 
 ; &1A94 referenced 1 time by &1650
 .begin_new_game
-    JSR restore_L0017_L0018_to_defaults_x18_and_x10; 1A94: 20 50 26                                P&          :0D94[4]
+    JSR restore_sprite_xy_length_offset_to_default_x18_x10; 1A94: 20 50 26                                P&          :0D94[4]
     LDX #2                                        ; 1A97: A2 02   ..           :0D97[4]
     STX zp_24_lives_remaining                     ; 1A99: 86 24   .$           :0D99[4]
     STX scene_number_plus_2                       ; 1A9B: 86 03   ..           :0D9B[4]
@@ -324,17 +345,18 @@ osbyte                                                          = &FFF4
     ADC #&0C                                      ; 0E08: 69 0C     i.
     STA L0091                                     ; 0E0A: 85 91     ..
     LDA #&F7                                      ; 0E0C: A9 F7     ..    ; logical color 15 (flash white/black) -> 7 EOR 7 = Actual color 0 (Black)
-; &1B0E referenced 1 time by &0E14
+
 .loop_until_all_pallet_colours_are_set_to_black
-IF demrepofdavenoscreenblank
+IF DISABLESCREENBLANK
+; DemRepOfDave - Alternate build - Don't blank during screen update (to see how it is built and what code builds it).
    NOP
    NOP
    NOP
 ELSE
-   ; Original game code
+; DemRepOfDave - Original game code
    STA video_ula_palette                       ; 0E0E: 8D 21 FE   .!.
 ENDIF
-; DemRepOfDave - Alternate build - Don't blank during screen update (to see how it is built and what code builds it).
+
     SEC                                           ; 0E11: 38         8  
     SBC #&10                                      ; 0E12: E9 10      ..  ; subtract 1 from logical color, set this to actual color 0 (Black)
     BCS loop_until_all_pallet_colours_are_set_to_black; 0E14: B0 F8  .. 
@@ -756,7 +778,7 @@ ENDIF
     STA ball_state                                ; 1D9D: 85 1B                                  ..           :109D[4]
     STA next_monster_release_timer                ; 1D9F: 85 12                                  ..           :109F[4]
     STA number_of_all_enemies_on_stack            ; 1DA1: 85 13                                  ..           :10A1[4]
-    STA possible_mr_ee_direction                  ; 1DA3: 85 22                                  ."           :10A3[4]
+    STA zp_mr_ee_direction                  ; 1DA3: 85 22                                  ."           :10A3[4]
     STA mr_ee_status                              ; 1DA5: 85 27                                  .'           :10A5[4]
     LDX #&10                                      ; 1DA7: A2 10                                  ..           :10A7[4]
 ; &1DA9 referenced 1 time by &10B4
@@ -1244,12 +1266,12 @@ ENDIF
 ; &20B9 referenced 1 time by &13EE
 .loop_another_unknown_stuff
     LDA L0087                                     ; 20B9: A5 87                                  ..           :13B9[4]
-    CMP monster_stack_y_coord_minus_one,X         ; 20BB: DD 8F 08                               ...          :13BB[4]
+    CMP monster_stack_y_coord-1,X         ; 20BB: DD 8F 08                               ...          :13BB[4]
     BNE C13ED                                     ; 20BE: D0 2D                                  .-           :13BE[4]
-    LDA unknown_monster_data_1_minus_one,X        ; 20C0: BD 9F 08                               ...          :13C0[4]
+    LDA unknown_monster_data_1-1,X        ; 20C0: BD 9F 08                               ...          :13C0[4]
     AND #&0A                                      ; 20C3: 29 0A                                  ).           :13C3[4]
     BNE C13ED                                     ; 20C5: D0 26                                  .&           :13C5[4]
-    LDA monster_stack_x_coord_minus_one,X         ; 20C7: BD 7F 08                               ...          :13C7[4]
+    LDA monster_stack_x_coord-1,X         ; 20C7: BD 7F 08                               ...          :13C7[4]
     SBC L0086                                     ; 20CA: E5 86                                  ..           :13CA[4]
     CMP #&F0                                      ; 20CC: C9 F0                                  ..           :13CC[4]
     BCC C13ED                                     ; 20CE: 90 1D                                  ..           :13CE[4]
@@ -1263,7 +1285,7 @@ ENDIF
     BEQ C13EB                                     ; 20DE: F0 0B                                  ..           :13DE[4]
 ; &20E0 referenced 1 time by &13D7
 .C13E0
-    DEC monster_stack_x_coord_minus_one,X         ; 20E0: DE 7F 08                               ...          :13E0[4]
+    DEC monster_stack_x_coord-1,X         ; 20E0: DE 7F 08                               ...          :13E0[4]
     JSR sub_print_or_erase_monster_on_screen      ; 20E3: 20 41 24                                A$          :13E3[4]
     DEC zp_90_current_x_coord                     ; 20E6: C6 90                                  ..           :13E6[4]
     JSR sub_print_or_erase_monster_on_screen      ; 20E8: 20 41 24                                A$          :13E8[4]
@@ -1296,11 +1318,11 @@ ENDIF
 ;     A: 0-Right, 1-Left, 2-Up, 3-Down
 ; &2102 referenced 2 times by &148D, &14C6
 .set_mr_ee_direction
-    STA possible_mr_ee_direction                  ; 2102: 85 22                                  ."           :1402[4]
+    STA zp_mr_ee_direction                  ; 2102: 85 22                                  ."           :1402[4]
     JSR sub_plot_mr_ee_on_screen                  ; 2104: 20 5C 0A                                \.          :1404[4]
 ; &2107 referenced 2 times by &13B3, &143E
 .C1407
-    LDA possible_mr_ee_direction                  ; 2107: A5 22                                  ."           :1407[4]
+    LDA zp_mr_ee_direction                  ; 2107: A5 22                                  ."           :1407[4]
     STA L0025                                     ; 2109: 85 25                                  .%           :1409[4]
     RTS                                           ; 210B: 60                                     `            :140B[4]
 
@@ -1351,12 +1373,12 @@ ENDIF
 ; &2144 referenced 1 time by &1479
 .C1444
     LDA L0087                                     ; 2144: A5 87                                  ..           :1444[4]
-    CMP monster_stack_y_coord_minus_one,X         ; 2146: DD 8F 08                               ...          :1446[4]
+    CMP monster_stack_y_coord-1,X         ; 2146: DD 8F 08                               ...          :1446[4]
     BNE C1478                                     ; 2149: D0 2D                                  .-           :1449[4]
-    LDA unknown_monster_data_1_minus_one,X        ; 214B: BD 9F 08                               ...          :144B[4]
+    LDA unknown_monster_data_1-1,X        ; 214B: BD 9F 08                               ...          :144B[4]
     AND #&0A                                      ; 214E: 29 0A                                  ).           :144E[4]
     BNE C1478                                     ; 2150: D0 26                                  .&           :1450[4]
-    LDA monster_stack_x_coord_minus_one,X         ; 2152: BD 7F 08                               ...          :1452[4]
+    LDA monster_stack_x_coord-1,X         ; 2152: BD 7F 08                               ...          :1452[4]
     SBC L0086                                     ; 2155: E5 86                                  ..           :1455[4]
     CMP #9                                        ; 2157: C9 09                                  ..           :1457[4]
     BCS C1478                                     ; 2159: B0 1D                                  ..           :1459[4]
@@ -1370,7 +1392,7 @@ ENDIF
     BEQ C1476                                     ; 2169: F0 0B                                  ..           :1469[4]
 ; &216B referenced 1 time by &1462
 .C146B
-    INC monster_stack_x_coord_minus_one,X         ; 216B: FE 7F 08                               ...          :146B[4]
+    INC monster_stack_x_coord-1,X         ; 216B: FE 7F 08                               ...          :146B[4]
     JSR sub_print_or_erase_monster_on_screen      ; 216E: 20 41 24                                A$          :146E[4]
     INC zp_90_current_x_coord                     ; 2171: E6 90                                  ..           :1471[4]
     JSR sub_print_or_erase_monster_on_screen      ; 2173: 20 41 24                                A$          :1473[4]
@@ -1513,18 +1535,35 @@ ENDIF
     RTS                                           ; 2231: 60                                     `            :1531[4]
 
 ; &2232 referenced 1 time by &1162
+; ***************************************************************************************
+; Subroutine for extra player animation
+; 
+; When Mr.Ee! wins an extra life, a special animation screen with music is displayed 
+; informing the player of the extra life.  This is similar to the animation screen on
+; the acrade game version Mr.Do!, although this version only uses the existing in-game
+; sprites.
+;
+; For the purposes of clarity, all labels to do with the extra player animation are
+; prefixed with epa_
+; 
+; On Entry:
+;     A: Not used (corrupted)
+;     X: Not used (corrupted)
+;     Y: Not used (corrupted)
+;
+
 .extra_player_routine
     LDA #&72 ; 'r'                                ; 2232: A9 72                                  .r           :1532[4]
     STA L000C                                     ; 2234: 85 0C                                  ..           :1534[4]
     LDX #&33 ; '3'                                ; 2236: A2 33                                  .3           :1536[4]
-; &2238 referenced 1 time by &153F
-.loop_write_win_extra_mr_ee_text_to_screen
-    LDA extra_player_string_data,X                ; 2238: BD DC 15                               ...          :1538[4]
-    JSR oswrch                                    ; 223B: 20 EE FF                                ..          :153B[4]   ; Write character
+
+.epa_loop_write_win_extra_mr_ee_text_to_screen
+    LDA epa_extra_player_string_data - 1,X        ; 1538: BD DC 15    ...
+    JSR oswrch                                    ; 153B: 20 EE FF    ..    ; Write character
     DEX                                           ; 223E: CA                                     .            :153E[4]
-    BNE loop_write_win_extra_mr_ee_text_to_screen ; 223F: D0 F7                                  ..           :153F[4]
+    BNE epa_loop_write_win_extra_mr_ee_text_to_screen ; 223F: D0 F7                                  ..           :153F[4]
     STX ball_state                                ; 2241: 86 1B                                  ..           :1541[4]
-    STX possible_mr_ee_direction                  ; 2243: 86 22                                  ."           :1543[4]
+    STX zp_mr_ee_direction                  ; 2243: 86 22                                  ."           :1543[4]
     STX mr_ee_x_coord                             ; 2245: 86 20                                  .            :1545[4]
     LDY #&81                                      ; 2247: A0 81                                  ..           :1547[4]   ; Y=Y screen coordinate
     STY mr_ee_y_coord                             ; 2249: 84 21                                  .!           :1549[4]
@@ -1533,20 +1572,20 @@ ENDIF
     JSR write_sprite_to_screen_routine            ; 224F: 20 73 0A                                s.          :154F[4]
     JSR sub_C1A6C                                 ; 2252: 20 6C 1A                                l.          :1552[4]
     JSR sub_plot_mr_ee_on_screen                  ; 2255: 20 5C 0A                                \.          :1555[4]
-; &2258 referenced 1 time by &1567
-.move_mr_ee_towards_enemy
+
+.epa_move_mr_ee_towards_enemy
     JSR sub_plot_mr_ee_on_screen                  ; 2258: 20 5C 0A                                \.          :1558[4]   ; remove mree from screen (EOR)
     INC mr_ee_x_coord                             ; 225B: E6 20                                  .            :155B[4]
     JSR sub_plot_mr_ee_on_screen                  ; 225D: 20 5C 0A                                \.          :155D[4]   ; plot mree on screen (EOR)
     JSR run_music_and_pause_waiting_for_timer_interrupt_900; 2260: 20 00 09                                ..          :1560[4]
     LDA mr_ee_x_coord                             ; 2263: A5 20                                  .            :1563[4]
     CMP #&3C ; '<'                                ; 2265: C9 3C                                  .<           :1565[4]
-    BNE move_mr_ee_towards_enemy                  ; 2267: D0 EF                                  ..           :1567[4]
+    BNE epa_move_mr_ee_towards_enemy                  ; 2267: D0 EF                                  ..           :1567[4]
     JSR calculate_ball_x_y_position_relative_to_mr_ee; 2269: 20 6E 26                                n&          :1569[4]
     STX possible_temp_ball_x_coordinate           ; 226C: 86 19                                  ..           :156C[4]
     STY possible_temp_ball_y_coordinate           ; 226E: 84 1A                                  ..           :156E[4]
 ; &2270 referenced 1 time by &1590
-.loop_fired_ball_in_transit
+.epa_loop_fired_ball_in_transit
     JSR possible_update_ball_if_exists            ; 2270: 20 D7 26                                .&          :1570[4]
     INC possible_temp_ball_x_coordinate           ; 2273: E6 19                                  ..           :1573[4]
     LDY possible_temp_ball_y_coordinate           ; 2275: A4 1A                                  ..           :1575[4]
@@ -1565,7 +1604,7 @@ ENDIF
     JSR run_music_and_pause_waiting_for_timer_interrupt_900; 2289: 20 00 09                                ..          :1589[4]
     LDA possible_temp_ball_x_coordinate           ; 228C: A5 19                                  ..           :158C[4]
     CMP #&27 ; '''                                ; 228E: C9 27                                  .'           :158E[4]
-    BNE loop_fired_ball_in_transit                ; 2290: D0 DE                                  ..           :1590[4]
+    BNE epa_loop_fired_ball_in_transit                ; 2290: D0 DE                                  ..           :1590[4]
     JSR possible_update_ball_if_exists            ; 2292: 20 D7 26                                .&          :1592[4]
     LDA zp_24_lives_remaining                     ; 2295: A5 24                                  .$           :1595[4]
     ASL A                                         ; 2297: 0A                                     .            :1597[4]
@@ -1583,19 +1622,19 @@ ENDIF
     LDA #&C0                                      ; 22AB: A9 C0                                  ..           :15AB[4]
     STA ball_state                                ; 22AD: 85 1B                                  ..           :15AD[4]
 ; &22AF referenced 1 time by &15B9
-.loop_ball_exploding
+.epa_loop_ball_exploding
     JSR sub_possible_handle_ball_update_movement  ; 22AF: 20 73 16                                s.          :15AF[4]
     JSR run_music_and_pause_waiting_for_timer_interrupt_900; 22B2: 20 00 09                                ..          :15B2[4]
     LDA ball_state                                ; 22B5: A5 1B                                  ..           :15B5[4]
     CMP #&E3                                      ; 22B7: C9 E3                                  ..           :15B7[4]
-    BNE loop_ball_exploding                       ; 22B9: D0 F4                                  ..           :15B9[4]
+    BNE epa_loop_ball_exploding                       ; 22B9: D0 F4                                  ..           :15B9[4]
     JSR sub_C1688                                 ; 22BB: 20 88 16                                ..          :15BB[4]
 ; &22BE referenced 1 time by &15C6
-.loop_C15BE
+.epa_loop_C15BE
     JSR sub_possible_handle_ball_update_movement  ; 22BE: 20 73 16                                s.          :15BE[4]
     JSR run_music_and_pause_waiting_for_timer_interrupt_900; 22C1: 20 00 09                                ..          :15C1[4]
     LDA ball_state                                ; 22C4: A5 1B                                  ..           :15C4[4]
-    BNE loop_C15BE                                ; 22C6: D0 F6                                  ..           :15C6[4]
+    BNE epa_loop_C15BE                                ; 22C6: D0 F6                                  ..           :15C6[4]
     LDX #2                                        ; 22C8: A2 02                                  ..           :15C8[4]
     LDY mr_ee_y_coord                             ; 22CA: A4 21                                  .!           :15CA[4]
     LDA #0                                        ; 22CC: A9 00                                  ..           :15CC[4]
@@ -1604,11 +1643,11 @@ ENDIF
     JSR sub_possible_fire_ball_then_in_motion_routine; 22D3: 20 95 26                                .&          :15D3[4]
     INC zp_24_lives_remaining                     ; 22D6: E6 24                                  .$           :15D6[4]
     LDA #&A0                                      ; 22D8: A9 A0                                  ..           :15D8[4]
-.sub_C15DA
-extra_player_string_data = sub_C15DA+2
+.epa_sub_C15DA
     JMP delay_routine                             ; 22DA: 4C 40 0A                               L@.          :15DA[4]
 
 ; &22DC referenced 1 time by &1538
+.epa_extra_player_string_data
     EQUB &21, &65, &45, &20, &2E, &72, &4D, &20   ; 22DD: 21 65 45 20 2E 72 4D 20                !eE .rM      :15DD[4]
     EQUB   3, &11, &41, &52, &54, &58, &45,   7   ; 22E5: 03 11 41 52 54 58 45 07                ..ARTXE.     :15E5[4]
     EQUB   5, &1F, &4E, &49, &57, &20, &55, &4F   ; 22ED: 05 1F 4E 49 57 20 55 4F                ..NIW UO     :15ED[4]
@@ -2545,7 +2584,7 @@ code_to_relocate_1900 = sub_C18FF+1
     BNE skip_no_ball_action_required              ; 2889: D0 15                                  ..           :1B89[4]
     LDA ball_state                                ; 288B: A5 1B                                  ..           :1B8B[4]
     BNE skip_no_ball_action_required              ; 288D: D0 11                                  ..           :1B8D[4]
-    LDA possible_mr_ee_direction                  ; 288F: A5 22                                  ."           :1B8F[4]
+    LDA zp_mr_ee_direction                  ; 288F: A5 22                                  ."           :1B8F[4]
     AND #1                                        ; 2891: 29 01                                  ).           :1B91[4]
     ORA #&40 ; '@'                                ; 2893: 09 40                                  .@           :1B93[4]
     STA ball_state                                ; 2895: 85 1B                                  ..           :1B95[4]
@@ -2573,20 +2612,20 @@ code_to_relocate_1900 = sub_C18FF+1
     LDX number_of_all_enemies_on_stack            ; 28A1: A6 13                                  ..           :1BA1[4]
     BEQ possible_skip_sprint_print                ; 28A3: F0 3F                                  .?           :1BA3[4]
     LDA #8                                        ; 28A5: A9 08                                  ..           :1BA5[4]
-    STA L0018                                     ; 28A7: 85 18                                  ..           :1BA7[4]   ; Stores 8 to L0018
+    STA zp_y_sprite_length                                     ; 28A7: 85 18                                  ..           :1BA7[4]   ; Stores 8 to zp_y_sprite_length
 ; &28A9 referenced 1 time by &1BDF
 .loop_next_item
-    LDA unknown_monster_data_1_minus_one,X        ; 28A9: BD 9F 08                               ...          :1BA9[4]
+    LDA unknown_monster_data_1-1,X        ; 28A9: BD 9F 08                               ...          :1BA9[4]
     BPL skip_next_item                            ; 28AC: 10 30                                  .0           :1BAC[4]
     TXA                                           ; 28AE: 8A                                     .            :1BAE[4]
     PHA                                           ; 28AF: 48                                     H            :1BAF[4]
-    LDA monster_stack_y_coord_minus_one,X         ; 28B0: BD 8F 08                               ...          :1BB0[4]
+    LDA monster_stack_y_coord-1,X         ; 28B0: BD 8F 08                               ...          :1BB0[4]
     CLC                                           ; 28B3: 18                                     .            :1BB3[4]
     ADC #2                                        ; 28B4: 69 02                                  i.           :1BB4[4]
-    STA monster_stack_y_coord_minus_one,X         ; 28B6: 9D 8F 08                               ...          :1BB6[4]
+    STA monster_stack_y_coord-1,X         ; 28B6: 9D 8F 08                               ...          :1BB6[4]
     ADC #6                                        ; 28B9: 69 06                                  i.           :1BB9[4]
     TAY                                           ; 28BB: A8                                     .            :1BBB[4]   ; Y=Y screen coordinate
-    LDA unknown_monster_data_1_minus_one,X        ; 28BC: BD 9F 08                               ...          :1BBC[4]
+    LDA unknown_monster_data_1-1,X        ; 28BC: BD 9F 08                               ...          :1BBC[4]
     AND #8                                        ; 28BF: 29 08                                  ).           :1BBF[4]
     ASL A                                         ; 28C1: 0A                                     .            :1BC1[4]
     ASL A                                         ; 28C2: 0A                                     .            :1BC2[4]
@@ -2595,7 +2634,7 @@ code_to_relocate_1900 = sub_C18FF+1
     STA zp_84_source_spriteaddr                   ; 28C6: 85 84                                  ..           :1BC6[4]
     LDA #4                                        ; 28C8: A9 04                                  ..           :1BC8[4]
     STA zp_85_source_spriteaddr                   ; 28CA: 85 85                                  ..           :1BCA[4]
-    LDA monster_stack_x_coord_minus_one,X         ; 28CC: BD 7F 08                               ...          :1BCC[4]
+    LDA monster_stack_x_coord-1,X         ; 28CC: BD 7F 08                               ...          :1BCC[4]
     LSR A                                         ; 28CF: 4A                                     J            :1BCF[4]   ; A=(unused)
     TAX                                           ; 28D0: AA                                     .            :1BD0[4]   ; X=X screen coordinate
     JSR write_pre_selected_sprite_to_screen_routine; 28D1: 20 84 0A                                ..          :1BD1[4]
@@ -2610,7 +2649,7 @@ code_to_relocate_1900 = sub_C18FF+1
 .skip_next_item
     DEX                                           ; 28DE: CA                                     .            :1BDE[4]
     BNE loop_next_item                            ; 28DF: D0 C8                                  ..           :1BDF[4]
-    JSR restore_L0017_L0018_to_defaults_x18_and_x10; 28E1: 20 50 26                                P&          :1BE1[4]
+    JSR restore_sprite_xy_length_offset_to_default_x18_x10; 28E1: 20 50 26                                P&          :1BE1[4]
 ; &28E4 referenced 1 time by &1BA3
 .possible_skip_sprint_print
     LDA mr_ee_status                              ; 28E4: A5 27                                  .'           :1BE4[4]
@@ -2781,15 +2820,15 @@ code_to_relocate_1900 = sub_C18FF+1
     BEQ no_more_monsters_to_process_2             ; 29EF: F0 4C                                  .L           :1CEF[4]
 ; &29F1 referenced 1 time by &1D3B
 .loop_process_next_monster_2
-    LDA unknown_monster_data_1_minus_one,X        ; 29F1: BD 9F 08                               ...          :1CF1[4]
+    LDA unknown_monster_data_1-1,X        ; 29F1: BD 9F 08                               ...          :1CF1[4]
     BPL C1D3A                                     ; 29F4: 10 44                                  .D           :1CF4[4]
     STA zp_99_current_status_2                    ; 29F6: 85 99                                  ..           :1CF6[4]
-    LDA monster_stack_y_coord_minus_one,X         ; 29F8: BD 8F 08                               ...          :1CF8[4]
+    LDA monster_stack_y_coord-1,X         ; 29F8: BD 8F 08                               ...          :1CF8[4]
     SEC                                           ; 29FB: 38                                     8            :1CFB[4]
     SBC zp_93_current_y_coord                     ; 29FC: E5 93                                  ..           :1CFC[4]
     CMP #&17                                      ; 29FE: C9 17                                  ..           :1CFE[4]
     BCS C1D3A                                     ; 2A00: B0 38                                  .8           :1D00[4]
-    LDA monster_stack_x_coord_minus_one,X         ; 2A02: BD 7F 08                               ...          :1D02[4]
+    LDA monster_stack_x_coord-1,X         ; 2A02: BD 7F 08                               ...          :1D02[4]
     SBC zp_90_current_x_coord                     ; 2A05: E5 90                                  ..           :1D05[4]
     CMP #&FA                                      ; 2A07: C9 FA                                  ..           :1D07[4]
     BCS C1D0F                                     ; 2A09: B0 04                                  ..           :1D09[4]
@@ -2800,7 +2839,7 @@ code_to_relocate_1900 = sub_C18FF+1
     INC L0098                                     ; 2A0F: E6 98                                  ..           :1D0F[4]
     TXA                                           ; 2A11: 8A                                     .            :1D11[4]
     PHA                                           ; 2A12: 48                                     H            :1D12[4]
-    LDA monster_stack_y_coord_minus_one,X         ; 2A13: BD 8F 08                               ...          :1D13[4]
+    LDA monster_stack_y_coord-1,X         ; 2A13: BD 8F 08                               ...          :1D13[4]
     CLC                                           ; 2A16: 18                                     .            :1D16[4]
     ADC #8                                        ; 2A17: 69 08                                  i.           :1D17[4]
     TAY                                           ; 2A19: A8                                     .            :1D19[4]   ; Y=Y screen coordinate
@@ -2812,12 +2851,12 @@ code_to_relocate_1900 = sub_C18FF+1
     STA zp_84_source_spriteaddr                   ; 2A22: 85 84                                  ..           :1D22[4]
     LDA #4                                        ; 2A24: A9 04                                  ..           :1D24[4]
     STA zp_85_source_spriteaddr                   ; 2A26: 85 85                                  ..           :1D26[4]
-    LDA monster_stack_x_coord_minus_one,X         ; 2A28: BD 7F 08                               ...          :1D28[4]
+    LDA monster_stack_x_coord-1,X         ; 2A28: BD 7F 08                               ...          :1D28[4]
     LSR A                                         ; 2A2B: 4A                                     J            :1D2B[4]   ; A=(unused)
     TAX                                           ; 2A2C: AA                                     .            :1D2C[4]   ; X=X screen coordinate
-    LSR L0018                                     ; 2A2D: 46 18                                  F.           :1D2D[4]
+    LSR zp_y_sprite_length                                     ; 2A2D: 46 18                                  F.           :1D2D[4]
     JSR write_pre_selected_sprite_to_screen_routine; 2A2F: 20 84 0A                                ..          :1D2F[4]
-    JSR restore_L0017_L0018_to_defaults_x18_and_x10; 2A32: 20 50 26                                P&          :1D32[4]
+    JSR restore_sprite_xy_length_offset_to_default_x18_x10; 2A32: 20 50 26                                P&          :1D32[4]
     PLA                                           ; 2A35: 68                                     h            :1D35[4]
     TAX                                           ; 2A36: AA                                     .            :1D36[4]
     JSR sub_remove_monster_from_stack             ; 2A37: 20 33 25                                3%          :1D37[4]
@@ -3009,14 +3048,14 @@ code_to_relocate_1900 = sub_C18FF+1
     ADC #8                                        ; 2B19: 69 08                                  i.           :1E19[4]
     TAY                                           ; 2B1B: A8                                     .            :1E1B[4]
     LDA #8                                        ; 2B1C: A9 08                                  ..           :1E1C[4]
-    STA L0018                                     ; 2B1E: 85 18                                  ..           :1E1E[4]
+    STA zp_y_sprite_length                        ; 2B1E: 85 18                                  ..           :1E1E[4]
     JSR sub_C1E2D                                 ; 2B20: 20 2D 1E                                -.          :1E20[4]
     INX                                           ; 2B23: E8                                     .            :1E23[4]
     INX                                           ; 2B24: E8                                     .            :1E24[4]
     INX                                           ; 2B25: E8                                     .            :1E25[4]
     INX                                           ; 2B26: E8                                     .            :1E26[4]
     JSR sub_C1E2D                                 ; 2B27: 20 2D 1E                                -.          :1E27[4]
-    JMP restore_L0017_L0018_to_defaults_x18_and_x10; 2B2A: 4C 50 26                               LP&          :1E2A[4]
+    JMP restore_sprite_xy_length_offset_to_default_x18_x10; 2B2A: 4C 50 26                               LP&          :1E2A[4]
 
 ; &2B2D referenced 2 times by &1E20, &1E27
 .sub_C1E2D
@@ -3037,13 +3076,13 @@ code_to_relocate_1900 = sub_C18FF+1
 .sub_C1E3F
     DEX                                           ; 2B3F: CA                                     .            :1E3F[4]   ; X=X screen coordinate
     LDA #&28 ; '('                                ; 2B40: A9 28                                  .(           :1E40[4]
-    STA L0017                                     ; 2B42: 85 17                                  ..           :1E42[4]
+    STA zp_x_sprite_screen_offset                                     ; 2B42: 85 17                                  ..           :1E42[4]
     LDA #4                                        ; 2B44: A9 04                                  ..           :1E44[4]
     STA zp_85_source_spriteaddr                   ; 2B46: 85 85                                  ..           :1E46[4]
     LDA #&B0                                      ; 2B48: A9 B0                                  ..           :1E48[4]   ; A=(unused)
     STA zp_84_source_spriteaddr                   ; 2B4A: 85 84                                  ..           :1E4A[4]
     JSR write_pre_selected_sprite_to_screen_routine; 2B4C: 20 84 0A                                ..          :1E4C[4]
-    JMP restore_L0017_L0018_to_defaults_x18_and_x10; 2B4F: 4C 50 26                               LP&          :1E4F[4]
+    JMP restore_sprite_xy_length_offset_to_default_x18_x10; 2B4F: 4C 50 26                               LP&          :1E4F[4]
 
 ; &2B52 referenced 2 times by &1C8D, &1DA3
 .sub_C1E52
@@ -3168,14 +3207,14 @@ code_to_relocate_1900 = sub_C18FF+1
 ; &2BE4 referenced 1 time by &1F01
 .loop_process_next_monster_3
     LDA L0087                                     ; 2BE4: A5 87                                  ..           :1EE4[4]
-    CMP monster_stack_y_coord_minus_one,X         ; 2BE6: DD 8F 08                               ...          :1EE6[4]
+    CMP monster_stack_y_coord-1,X         ; 2BE6: DD 8F 08                               ...          :1EE6[4]
     BNE C1F00                                     ; 2BE9: D0 15                                  ..           :1EE9[4]
-    LDA monster_stack_x_coord_minus_one,X         ; 2BEB: BD 7F 08                               ...          :1EEB[4]
+    LDA monster_stack_x_coord-1,X         ; 2BEB: BD 7F 08                               ...          :1EEB[4]
     SEC                                           ; 2BEE: 38                                     8            :1EEE[4]
     SBC L0086                                     ; 2BEF: E5 86                                  ..           :1EEF[4]
     CMP #&F0                                      ; 2BF1: C9 F0                                  ..           :1EF1[4]
     BCC C1F00                                     ; 2BF3: 90 0B                                  ..           :1EF3[4]
-    LDA unknown_monster_data_1_minus_one,X        ; 2BF5: BD 9F 08                               ...          :1EF5[4]
+    LDA unknown_monster_data_1-1,X        ; 2BF5: BD 9F 08                               ...          :1EF5[4]
     AND #&0C                                      ; 2BF8: 29 0C                                  ).           :1EF8[4]
     EOR #8                                        ; 2BFA: 49 08                                  I.           :1EFA[4]
     ORA L008C                                     ; 2BFC: 05 8C                                  ..           :1EFC[4]
@@ -3268,14 +3307,14 @@ code_to_relocate_1900 = sub_C18FF+1
 ; &2C7B referenced 1 time by &1F98
 .loop_process_next_monster_4
     LDA L0087                                     ; 2C7B: A5 87                                  ..           :1F7B[4]
-    CMP monster_stack_y_coord_minus_one,X         ; 2C7D: DD 8F 08                               ...          :1F7D[4]
+    CMP monster_stack_y_coord-1,X         ; 2C7D: DD 8F 08                               ...          :1F7D[4]
     BNE C1F97                                     ; 2C80: D0 15                                  ..           :1F80[4]
-    LDA monster_stack_x_coord_minus_one,X         ; 2C82: BD 7F 08                               ...          :1F82[4]
+    LDA monster_stack_x_coord-1,X         ; 2C82: BD 7F 08                               ...          :1F82[4]
     SEC                                           ; 2C85: 38                                     8            :1F85[4]
     SBC L0086                                     ; 2C86: E5 86                                  ..           :1F86[4]
     CMP #9                                        ; 2C88: C9 09                                  ..           :1F88[4]
     BCS C1F97                                     ; 2C8A: B0 0B                                  ..           :1F8A[4]
-    LDA unknown_monster_data_1_minus_one,X        ; 2C8C: BD 9F 08                               ...          :1F8C[4]
+    LDA unknown_monster_data_1-1,X        ; 2C8C: BD 9F 08                               ...          :1F8C[4]
     AND #&0C                                      ; 2C8F: 29 0C                                  ).           :1F8F[4]
     EOR #8                                        ; 2C91: 49 08                                  I.           :1F91[4]
     ORA L008C                                     ; 2C93: 05 8C                                  ..           :1F93[4]
@@ -4017,7 +4056,7 @@ code_to_relocate_1900 = sub_C18FF+1
     LDA #4                                        ; 30C9: A9 04                                  ..           :23C9[4]
     STA zp_85_source_spriteaddr                   ; 30CB: 85 85                                  ..           :23CB[4]
     ASL A                                         ; 30CD: 0A                                     .            :23CD[4]
-    STA L0018                                     ; 30CE: 85 18                                  ..           :23CE[4]
+    STA zp_y_sprite_length                                     ; 30CE: 85 18                                  ..           :23CE[4]
     LDA zp_90_current_x_coord                     ; 30D0: A5 90                                  ..           :23D0[4]
     LSR A                                         ; 30D2: 4A                                     J            :23D2[4]
     TAX                                           ; 30D3: AA                                     .            :23D3[4]   ; X=X screen coordinate
@@ -4026,7 +4065,7 @@ code_to_relocate_1900 = sub_C18FF+1
     ADC #8                                        ; 30D7: 69 08                                  i.           :23D7[4]   ; A=(unused)
     TAY                                           ; 30D9: A8                                     .            :23D9[4]   ; Y=Y screen coordinate
     JSR write_pre_selected_sprite_to_screen_routine; 30DA: 20 84 0A                                ..          :23DA[4]
-    JSR restore_L0017_L0018_to_defaults_x18_and_x10; 30DD: 20 50 26                                P&          :23DD[4]
+    JSR restore_sprite_xy_length_offset_to_default_x18_x10; 30DD: 20 50 26                                P&          :23DD[4]
     PLA                                           ; 30E0: 68                                     h            :23E0[4]
     BNE check_for_mr_ee_collision_x               ; 30E1: D0 08                                  ..           :23E1[4]
 ; &30E3 referenced 5 times by &238A, &2393, &239C, &23A6, &23B3
@@ -4058,19 +4097,19 @@ code_to_relocate_1900 = sub_C18FF+1
     BCC this_monster_processing_complete          ; 3103: 90 02                                  ..           :2403[4]
 ; &3105 referenced 1 time by &23FF
 .monster_has_collided_with_mr_ee
-    INC mr_ee_status                              ; 3105: E6 27                                  .'           :2405[4]
+    INC mr_ee_status                              ; 2405: E6 27   .'   ; Mr EE status now = 1 (died)
 ; &3107 referenced 3 times by &205F, &23F6, &2403
 .this_monster_processing_complete
     PLA                                           ; 3107: 68                                     h            :2407[4]
     TAX                                           ; 3108: AA                                     .            :2408[4]
     LDA zp_90_current_x_coord                     ; 3109: A5 90                                  ..           :2409[4]
-    STA monster_stack_x_coord_minus_one,X         ; 310B: 9D 7F 08                               ...          :240B[4]
+    STA monster_stack_x_coord-1,X         ; 310B: 9D 7F 08                               ...          :240B[4]
     LDA zp_93_current_y_coord                     ; 310E: A5 93                                  ..           :240E[4]
-    STA monster_stack_y_coord_minus_one,X         ; 3110: 9D 8F 08                               ...          :2410[4]
+    STA monster_stack_y_coord-1,X         ; 3110: 9D 8F 08                               ...          :2410[4]
     LDA zp_96_current_status_1                    ; 3113: A5 96                                  ..           :2413[4]
-    STA unknown_monster_data_1_minus_one,X        ; 3115: 9D 9F 08                               ...          :2415[4]
+    STA unknown_monster_data_1-1,X        ; 3115: 9D 9F 08                               ...          :2415[4]
     LDA zp_99_current_status_2                    ; 3118: A5 99                                  ..           :2418[4]
-    STA unknown_monster_data_2_minus_one,X        ; 311A: 9D 00 01                               ...          :241A[4]
+    STA unknown_monster_data_2-1,X        ; 311A: 9D 00 01                               ...          :241A[4]
 ; &311D referenced 1 time by &20AF
 .C241D
     DEX                                           ; 311D: CA                                     .            :241D[4]
@@ -4283,14 +4322,14 @@ code_to_relocate_1900 = sub_C18FF+1
 ; &3233 referenced 2 times by &1D37, &24B0
 .sub_remove_monster_from_stack
     LDY number_of_all_enemies_on_stack            ; 3233: A4 13                                  ..           :2533[4]
-    LDA monster_stack_x_coord_minus_one,Y         ; 3235: B9 7F 08                               ...          :2535[4]
-    STA monster_stack_x_coord_minus_one,X         ; 3238: 9D 7F 08                               ...          :2538[4]
-    LDA monster_stack_y_coord_minus_one,Y         ; 323B: B9 8F 08                               ...          :253B[4]
-    STA monster_stack_y_coord_minus_one,X         ; 323E: 9D 8F 08                               ...          :253E[4]
-    LDA unknown_monster_data_1_minus_one,Y        ; 3241: B9 9F 08                               ...          :2541[4]
-    STA unknown_monster_data_1_minus_one,X        ; 3244: 9D 9F 08                               ...          :2544[4]
-    LDA unknown_monster_data_2_minus_one,Y        ; 3247: B9 00 01                               ...          :2547[4]
-    STA unknown_monster_data_2_minus_one,X        ; 324A: 9D 00 01                               ...          :254A[4]
+    LDA monster_stack_x_coord-1,Y         ; 3235: B9 7F 08                               ...          :2535[4]
+    STA monster_stack_x_coord-1,X         ; 3238: 9D 7F 08                               ...          :2538[4]
+    LDA monster_stack_y_coord-1,Y         ; 323B: B9 8F 08                               ...          :253B[4]
+    STA monster_stack_y_coord-1,X         ; 323E: 9D 8F 08                               ...          :253E[4]
+    LDA unknown_monster_data_1-1,Y        ; 3241: B9 9F 08                               ...          :2541[4]
+    STA unknown_monster_data_1-1,X        ; 3244: 9D 9F 08                               ...          :2544[4]
+    LDA unknown_monster_data_2-1,Y        ; 3247: B9 00 01                               ...          :2547[4]
+    STA unknown_monster_data_2-1,X        ; 324A: 9D 00 01                               ...          :254A[4]
     DEC number_of_all_enemies_on_stack            ; 324D: C6 13                                  ..           :254D[4]
     RTS                                           ; 324F: 60                                     `            :254F[4]
 
@@ -4301,13 +4340,13 @@ code_to_relocate_1900 = sub_C18FF+1
 ;     X: Stack index of monster data to copy
 ; &3250 referenced 2 times by &175D, &2565
 .get_monster_data_off_stack
-    LDA monster_stack_x_coord_minus_one,X         ; 3250: BD 7F 08                               ...          :2550[4]
+    LDA monster_stack_x_coord-1,X         ; 3250: BD 7F 08                               ...          :2550[4]
     STA zp_90_current_x_coord                     ; 3253: 85 90                                  ..           :2553[4]
-    LDA monster_stack_y_coord_minus_one,X         ; 3255: BD 8F 08                               ...          :2555[4]
+    LDA monster_stack_y_coord-1,X         ; 3255: BD 8F 08                               ...          :2555[4]
     STA zp_93_current_y_coord                     ; 3258: 85 93                                  ..           :2558[4]
-    LDA unknown_monster_data_1_minus_one,X        ; 325A: BD 9F 08                               ...          :255A[4]
+    LDA unknown_monster_data_1-1,X        ; 325A: BD 9F 08                               ...          :255A[4]
     STA zp_96_current_status_1                    ; 325D: 85 96                                  ..           :255D[4]
-    LDA unknown_monster_data_2_minus_one,X        ; 325F: BD 00 01                               ...          :255F[4]
+    LDA unknown_monster_data_2-1,X        ; 325F: BD 00 01                               ...          :255F[4]
     STA zp_99_current_status_2                    ; 3262: 85 99                                  ..           :2562[4]
     RTS                                           ; 3264: 60                                     `            :2564[4]
 
@@ -4416,7 +4455,7 @@ code_to_relocate_1900 = sub_C18FF+1
 ;     Y: Unused - Corrupted
 ; &32CB referenced 4 times by &116E, &1BE8, &1BEF, &1CB4
 .sub_print_squished_mr_ee
-    LSR L0018                                     ; 32CB: 46 18                                  F.           :25CB[4]
+    LSR zp_y_sprite_length                                     ; 32CB: 46 18                                  F.           :25CB[4]
     LDA #5                                        ; 32CD: A9 05                                  ..           :25CD[4]
     STA zp_85_source_spriteaddr                   ; 32CF: 85 85                                  ..           :25CF[4]
     LDA #&B0                                      ; 32D1: A9 B0                                  ..           :25D1[4]
@@ -4429,7 +4468,7 @@ code_to_relocate_1900 = sub_C18FF+1
     LSR A                                         ; 32DD: 4A                                     J            :25DD[4]   ; A=(unused)
     TAX                                           ; 32DE: AA                                     .            :25DE[4]   ; X=X screen coordinate
     JSR write_pre_selected_sprite_to_screen_routine; 32DF: 20 84 0A                                ..          :25DF[4]
-    JMP restore_L0017_L0018_to_defaults_x18_and_x10; 32E2: 4C 50 26                               LP&          :25E2[4]
+    JMP restore_sprite_xy_length_offset_to_default_x18_x10; 32E2: 4C 50 26                               LP&          :25E2[4]
 
 ; &32E5 referenced 9 times by &1031, &1050, &1681, &1FE4, &2031, &2202, &2228, &223E, &2330
 .sub_C25E5
@@ -4492,8 +4531,8 @@ code_to_relocate_1900 = sub_C18FF+1
     INY                                           ; 332D: C8                                     .            :262D[4]
     INY                                           ; 332E: C8                                     .            :262E[4]
     LDA #8                                        ; 332F: A9 08                                  ..           :262F[4]
-    STA L0017                                     ; 3331: 85 17                                  ..           :2631[4]
-    STA L0018                                     ; 3333: 85 18                                  ..           :2633[4]
+    STA zp_x_sprite_screen_offset                                     ; 3331: 85 17                                  ..           :2631[4]
+    STA zp_y_sprite_length                                     ; 3333: 85 18                                  ..           :2633[4]
     DEX                                           ; 3335: CA                                     .            :2635[4]
     PLA                                           ; 3336: 68                                     h            :2636[4]
     PHA                                           ; 3337: 48                                     H            :2637[4]
@@ -4513,11 +4552,11 @@ code_to_relocate_1900 = sub_C18FF+1
     LDA #0                                        ; 334B: A9 00                                  ..           :264B[4]
     JSR sub_C2659                                 ; 334D: 20 59 26                                Y&          :264D[4]
 ; &3350 referenced 8 times by &0B77, &0D94, &1BE1, &1D32, &1E2A, &1E4F, &23DD, &25E2
-.restore_L0017_L0018_to_defaults_x18_and_x10
-    LDA #&18                                      ; 3350: A9 18                                  ..           :2650[4]   ; Stores &18 (24) to L0017
-    STA L0017                                     ; 3352: 85 17                                  ..           :2652[4]
-    LDA #&10                                      ; 3354: A9 10                                  ..           :2654[4]   ; Stores &10 (16) to L0018
-    STA L0018                                     ; 3356: 85 18                                  ..           :2656[4]
+.restore_sprite_xy_length_offset_to_default_x18_x10
+    LDA #&18                                      ; 3350: A9 18                                  ..           :2650[4]   ; Stores &18 (24) to zp_x_sprite_screen_offset
+    STA zp_x_sprite_screen_offset                                     ; 3352: 85 17                                  ..           :2652[4]
+    LDA #&10                                      ; 3354: A9 10                                  ..           :2654[4]   ; Stores &10 (16) to zp_y_sprite_length
+    STA zp_y_sprite_length                                     ; 3356: 85 18                                  ..           :2656[4]
     RTS                                           ; 3358: 60                                     `            :2658[4]
 
 ; &3359 referenced 2 times by &2648, &264D
@@ -4556,7 +4595,7 @@ code_to_relocate_1900 = sub_C18FF+1
     LDA mr_ee_y_coord                             ; 3374: A5 21                                  .!           :2674[4]
     CLC                                           ; 3376: 18                                     .            :2676[4]
     ADC #8                                        ; 3377: 69 08                                  i.           :2677[4]
-    LDY possible_mr_ee_direction                  ; 3379: A4 22                                  ."           :2679[4]
+    LDY zp_mr_ee_direction                  ; 3379: A4 22                                  ."           :2679[4]
     BNE mr_ee_direction_right_up_or_down          ; 337B: D0 03                                  ..           :267B[4]
     INX                                           ; 337D: E8                                     .            :267D[4]
     BNE skip_end_ball_pos_calculation             ; 337E: D0 13                                  ..           :267E[4]
@@ -5346,7 +5385,7 @@ relocated_data_600 = game_pallet_data
 .sub_C09A8
 L09A9 = sub_C09A8+1
     BCS C09B8                                     ; 40A8: B0 0E                                  ..           :09A8[1]
-    LDX possible_mr_ee_direction                  ; 40AA: A6 22                                  ."           :09AA[1]
+    LDX zp_mr_ee_direction                  ; 40AA: A6 22                                  ."           :09AA[1]
     CPX #2                                        ; 40AC: E0 02                                  ..           :09AC[1]
     BCS C09B3                                     ; 40AE: B0 03                                  ..           :09AE[1]
     INY                                           ; 40B0: C8                                     .            :09B0[1]
@@ -5481,39 +5520,41 @@ relocated_data_A00 = sub_C09FF+1
 ;     X: X coordinate on screen (in pixels?) to plot the sprite at
 ;     Y: Y coordinate on screen (in pixels?) to plot the sprite at
 ;
-; &4152 referenced 3 times by &108E, &1226, &128B
+
 .write_sprite_at_central_base
-    LDX #&23 ; '#'                                ; 4152: A2 23                                  .#           :0A52[1]   ; X=X screen coordinate
-    LDY #&81                                      ; 4154: A0 81                                  ..           :0A54[1]   ; Y=Y screen coordinate
-    BNE write_sprite_to_screen_routine            ; 4156: D0 1B                                  ..           :0A56[1]
+    LDX #&23 ; '#'                                ; 0A52: A2 23   .#   ; X=X screen coordinate
+    LDY #&81                                      ; 0A54: A0 81   ..   ; Y=Y screen coordinate
+    BNE write_sprite_to_screen_routine            ; 0A56: D0 1B   ..
+
 ; ***************************************************************************************
-; Writes the Mr.Ee right sprite at the coordinates specified
+; Writes (or erases) the Mr.Ee right sprite at the coordinates specified
 ; 
 ; On Entry:
 ;     A: Unused - Corrupted
-;     X: Mr Ee x position
-;     Y: Mr Ee y position
-; &4158 referenced 4 times by &11DB, &1240, &15D0, &1A9D
+;     X: Mr Ee X position
+;     Y: Mr Ee Y position
+
 .write_mr_ee_right
     LDA #8                                        ; 4158: A9 08                                  ..           :0A58[1]   ; Select sprite 8 to write (mr ee right frame one); A=sprite number
     BNE write_sprite_to_screen_routine            ; 415A: D0 17                                  ..           :0A5A[1]
-; &415C referenced 11 times by &10D3, &1174, &13F3, &1404, &147E, &14BA, &14DB, &1555, &1558, &155D, &1CB1
+
 .sub_plot_mr_ee_on_screen
-    LDA ball_state                                ; 415C: A5 1B                                  ..           :0A5C[1]
-    BNE skip_some_unknown_subroutine              ; 415E: D0 03                                  ..           :0A5E[1]
-    JSR sub_possible_fire_ball_then_in_motion_routine; 4160: 20 95 26                                .&          :0A60[1]
-; &4163 referenced 1 time by &0A5E
-.skip_some_unknown_subroutine
-    LDA mr_ee_x_coord                             ; 4163: A5 20                                  .            :0A63[1]
-    LSR A                                         ; 4165: 4A                                     J            :0A65[1]
-    TAX                                           ; 4166: AA                                     .            :0A66[1]   ; X=X screen coordinate
-    LDY mr_ee_y_coord                             ; 4167: A4 21                                  .!           :0A67[1]   ; Y=Y screen coordinate
-    TYA                                           ; 4169: 98                                     .            :0A69[1]
-    LSR A                                         ; 416A: 4A                                     J            :0A6A[1]
-    EOR mr_ee_x_coord                             ; 416B: 45 20                                  E            :0A6B[1]
-    AND #4                                        ; 416D: 29 04                                  ).           :0A6D[1]
-    ORA possible_mr_ee_direction                  ; 416F: 05 22                                  ."           :0A6F[1]
-    ORA #8                                        ; 4171: 09 08                                  ..           :0A71[1]   ; A=sprite number
+    LDA ball_state                                ; 0A5C: A5 1B        ..  ; 
+    BNE skip_mree_not_holding_the_ball            ; 0A5E: D0 03        ..  ; Branch if Mr Ee is not holding the ball
+    JSR sub_possible_fire_ball_then_in_motion_routine; 0A60: 20 95 26   .&
+
+.skip_mree_not_holding_the_ball
+    LDA mr_ee_x_coord                             ; 0A63: A5 20        .    ; Use x and y coordinates to work out
+    LSR A                                         ; 0A65: 4A           J    ; Offset of which mree sprite to use
+    TAX                                           ; 0A66: AA           .    ; X=X screen coordinate
+    LDY mr_ee_y_coord                             ; 0A67: A4 21        .!   ; Y=Y screen coordinate
+    TYA                                           ; 0A69: 98           .  
+    LSR A                                         ; 0A6A: 4A           J  
+    EOR mr_ee_x_coord                             ; 0A6B: 45 20        E  
+    AND #4                                        ; 0A6D: 29 04        ). 
+    ORA zp_mr_ee_direction                  ; 0A6F: 05 22              ."  
+    ORA #8                                        ; 0A71: 09 08        ..   ; A=sprite number (with appled animation offset)
+
 ; ***************************************************************************************
 ; Writes a sprite to the screen
 ; 
@@ -5521,18 +5562,19 @@ relocated_data_A00 = sub_C09FF+1
 ;     A: sprite number
 ;     X: X screen coordinate
 ;     Y: Y screen coordinate
-; &4173 referenced 13 times by &0A56, &0A5A, &0B1B, &11BA, &11C8, &154F, &1E0D, &1FFD, &200A, &200F, &201D, &2479, &270C
+
 .write_sprite_to_screen_routine
-    LSR A                                         ; 4173: 4A      J   :0A73[1]   ; Calculate address for sprite in memory (&3400*(A*&40))
-    STA zp_source_sprite_address+1                ; 4174: 85 85   ..  :0A74[1]
-    LDA #0                                        ; 4176: A9 00   ..  :0A76[1]
-    ROR A                                         ; 4178: 6A      j   :0A78[1]
-    LSR zp_source_sprite_address+1                ; 4179: 46 85   F.  :0A79[1]
-    ROR A                                         ; 417B: 6A      j   :0A7B[1]
-    STA zp_source_sprite_address                  ; 417C: 85 84   ..  :0A7C[1]
-    LDA zp_source_sprite_address+1                ; 417E: A5 85   ..  :0A7E[1]
-    ADC #&29 ; ')'                                ; 4180: 69 29   i)  :0A80[1]   ; A=(unused)
-    STA zp_source_sprite_address+1                ; 4182: 85 85   ..  :0A82[1]
+    LSR A                                         ; 0A73: 4A      J   ; Calculate address for sprite in memory (&3400*(A*&40))
+    STA zp_source_sprite_address+1                ; 0A74: 85 85   ..  
+    LDA #0                                        ; 0A76: A9 00   ..  
+    ROR A                                         ; 0A78: 6A      j   
+    LSR zp_source_sprite_address+1                ; 0A79: 46 85   F.
+    ROR A                                         ; 0A7B: 6A      j
+    STA zp_source_sprite_address                  ; 0A7C: 85 84   ..  :0A7C[1]
+    LDA zp_source_sprite_address+1                ; 0A7E: A5 85   ..  :0A7E[1]
+    ADC #&29 ; ')'                                ; 0A80: 69 29   i)  :0A80[1]   ; A=(unused)
+    STA zp_source_sprite_address+1                ; 0A82: 85 85   ..  :0A82[1]
+
 ; ***************************************************************************************
 ; Writes a sprite to the screen with sprite addr already loaded in &84-85
 ; 
@@ -5540,82 +5582,78 @@ relocated_data_A00 = sub_C09FF+1
 ;     A: (unused)
 ;     X: X screen coordinate
 ;     Y: Y screen coordinate
-; &4184 referenced 9 times by &0B74, &1BD1, &1BD9, &1D2F, &1E35, &1E4C, &23DA, &25DF, &2668
+
 .write_pre_selected_sprite_to_screen_routine
-    JSR calculate_screen_write_address_from_x_y_coords; 4184: 20 D3 0A                                ..          :0A84[1]
-    STX zp_89_possible_ball_x_coordinate          ; 4187: 86 89                                  ..           :0A87[1]
-    STY zp_8A_possible_ball_y_coordinate          ; 4189: 84 8A                                  ..           :0A89[1]
-    LDX L0018                                     ; 418B: A6 18                                  ..           :0A8B[1]
-; &418D referenced 2 times by &0ABD, &0ACC
-.loop_write_next_two_pixels
-    LDY L0017                                     ; 418D: A4 17                                  ..           :0A8D[1]
-; &418F referenced 1 time by &0A9A
-.write_sprite_to_screen_memory
-    LDA (zp_source_sprite_address),Y               ; 418F: B1 84                                  ..           :0A8F[1]
-; &4191 referenced 3 times by &0B11, &0B20, &0B62
+    JSR calculate_screen_write_address_from_x_y_coords  ; 0A84: 20 D3 0A   ..
+    STX zp_89_possible_ball_x_coordinate                ; 0A87: 86 89      ..
+    STY zp_8A_possible_ball_y_coordinate                ; 0A89: 84 8A      ..
+    LDX zp_y_sprite_length                              ; 0A8B: A6 18      ..
+
+.loop_begin_write_next_line
+    LDY zp_x_sprite_screen_offset                       ; 0A8D: A4 17      ..
+
+.loop_write_next_two_pixels_until_end_of_line
+    LDA (zp_source_sprite_address),Y                    ; 418F: B1 84      ..
+
 .self_modified_code_patch_1
 ; NOTE This section the code can be changes by running code. And can have the
 ; following variations.
 ; Variation 1: (default as compiled)
-    EOR (zp_dest_screen_address),Y                 ; 4191: 51 80                                  Q.           :0A91[1]
-; &4192 referenced 3 times by &0B16, &0B25, &0B67
-; &4193 referenced 4 times by &0B07, &0B2D, &0B48, &0B6C
-    STA (zp_dest_screen_address),Y                 ; 4193: 91 80                                  ..           :0A93[1]   ; zp 80 writes to screen memory (print sprite)
-; &4194 referenced 3 times by &0B0C, &0B28, &0B71
+    EOR (zp_dest_screen_address),Y                   ; 0A91: 51 80   Q.   
+    STA (zp_dest_screen_address),Y                   ; 0A93: 91 80   ..   ; zp 80 writes to screen memory (print sprite)
 ;
 
 ; Variation 2?
 ; 
-;     NOP                                            ; 4191 EA                       Q           :0A91[1]
-;     JMP &0B91                                      ; 4192: 20 91 0B                           
-; &4192 referenced 3 times by &0B16, &0B25, &0B67
-; &4193 referenced 4 times by &0B07, &0B2D, &0B48, &0B6C
-;     STA (zp_dest_screen_address),Y                 ; 4193: 91 80                                  ..           :0A93[1]   ; zp 80 writes to screen memory (print sprite)
-; &4194 referenced 3 times by &0B0C, &0B28, &0B71
-; Variation 3
+;     NOP                                            ; 0A91 EA         Q
+;     JMP &0B91                                      ; 0A92: 20 91 0B
+;     STA (zp_dest_screen_address),Y                 ; 4193: 91 80     ..   ; zp 80 writes to screen memory (print sprite)
 
-    TYA                                           ; 4195: 98                                     .            :0A95[1]
-    SEC                                           ; 4196: 38                                     8            :0A96[1]
-    SBC #8                                        ; 4197: E9 08                                  ..           :0A97[1]
-    TAY                                           ; 4199: A8                                     .            :0A99[1]
-    BPL write_sprite_to_screen_memory             ; 419A: 10 F3                                  ..           :0A9A[1]
-    DEX                                           ; 419C: CA                                     .            :0A9C[1]
-    BEQ C0ACE                                     ; 419D: F0 2F                                  ./           :0A9D[1]
-    INC zp_source_sprite_address                  ; 419F: E6 84                                  ..           :0A9F[1]
-    BNE skip_inc_1                                ; 41A1: D0 02                                  ..           :0AA1[1]
-    INC zp_source_sprite_address+1                ; 41A3: E6 85                                  ..           :0AA3[1]
-; &41A5 referenced 1 time by &0AA1
+; Variation 3
+;    ???
+
+    TYA                                           ; 0A95: 98      .
+    SEC                                           ; 0A96: 38      8
+    SBC #8                                        ; 0A97: E9 08   ..
+    TAY                                           ; 0A99: A8      .
+    BPL loop_write_next_two_pixels_until_end_of_line   ; 0A9A: 10 F3   ..
+    DEX                                           ; 0A9C: CA      .
+    BEQ sprite_write_complete                     ; 0A9D: F0 2F   ./
+    INC zp_source_sprite_address                  ; 0A9F: E6 84   ..
+    BNE skip_inc_1                                ; 0AA1: D0 02   ..
+    INC zp_source_sprite_address+1                ; 0AA3: E6 85   ..
+
 .skip_inc_1
-    LDA zp_source_sprite_address                  ; 41A5: A5 84                                  ..           :0AA5[1]
-    AND #7                                        ; 41A7: 29 07                                  ).           :0AA7[1]
-    BNE possible_increment_screen_address         ; 41A9: D0 0B                                  ..           :0AA9[1]
-    LDA zp_source_sprite_address                  ; 41AB: A5 84                                  ..           :0AAB[1]
-    CLC                                           ; 41AD: 18                                     .            :0AAD[1]
-    ADC L0017                                     ; 41AE: 65 17                                  e.           :0AAE[1]
-    STA zp_source_sprite_address                  ; 41B0: 85 84                                  ..           :0AB0[1]
-    BCC possible_increment_screen_address         ; 41B2: 90 02                                  ..           :0AB2[1]
-    INC zp_source_sprite_address+1                ; 41B4: E6 85                                  ..           :0AB4[1]
-; &41B6 referenced 2 times by &0AA9, &0AB2
+    LDA zp_source_sprite_address                  ; 0AA5: A5 84   ..
+    AND #7                                        ; 0AA7: 29 07   ).
+    BNE possible_increment_screen_address         ; 0AA9: D0 0B   ..
+    LDA zp_source_sprite_address                  ; 0AAB: A5 84   ..
+    CLC                                           ; 0AAD: 18      .
+    ADC zp_x_sprite_screen_offset                 ; 0AAE: 65 17   e.
+    STA zp_source_sprite_address                  ; 0AB0: 85 84   ..
+    BCC possible_increment_screen_address         ; 0AB2: 90 02   ..
+    INC zp_source_sprite_address+1                ; 0AB4: E6 85   ..
+
 .possible_increment_screen_address
-    INC zp_80_dest_screenaddr                     ; 41B6: E6 80                                  ..           :0AB6[1]
-    LDY zp_80_dest_screenaddr                     ; 41B8: A4 80                                  ..           :0AB8[1]
-    TYA                                           ; 41BA: 98                                     .            :0ABA[1]
-    AND #7                                        ; 41BB: 29 07                                  ).           :0ABB[1]
-    BNE loop_write_next_two_pixels                ; 41BD: D0 CE                                  ..           :0ABD[1]
-    DEY                                           ; 41BF: 88                                     .            :0ABF[1]
-    TYA                                           ; 41C0: 98                                     .            :0AC0[1]
-    CLC                                           ; 41C1: 18                                     .            :0AC1[1]   ; increment screen address by one whole line (finished printing top line, now print bottom
-    ADC #&79 ; 'y'                                ; 41C2: 69 79                                  iy           :0AC2[1]
-    STA zp_80_dest_screenaddr                     ; 41C4: 85 80                                  ..           :0AC4[1]
-    LDA zp_81_dest_screenaddr                     ; 41C6: A5 81                                  ..           :0AC6[1]
-    ADC #2                                        ; 41C8: 69 02                                  i.           :0AC8[1]
-    STA zp_81_dest_screenaddr                     ; 41CA: 85 81                                  ..           :0ACA[1]
-    BCC loop_write_next_two_pixels                ; 41CC: 90 BF                                  ..           :0ACC[1]
-; &41CE referenced 1 time by &0A9D
-.C0ACE
-    LDX zp_89_possible_ball_x_coordinate          ; 41CE: A6 89                                  ..           :0ACE[1]
-    LDY zp_8A_possible_ball_y_coordinate          ; 41D0: A4 8A                                  ..           :0AD0[1]
-    RTS                                           ; 41D2: 60                                     `            :0AD2[1]
+    INC zp_80_dest_screenaddr                     ; 0AB6: E6 80   ..
+    LDY zp_80_dest_screenaddr                     ; 0AB8: A4 80   ..
+    TYA                                           ; 0ABA: 98      .
+    AND #7                                        ; 0ABB: 29 07   ).
+    BNE loop_begin_write_next_line                ; 0ABD: D0 CE   ..
+    DEY                                           ; 0ABF: 88      . 
+    TYA                                           ; 0AC0: 98      . 
+    CLC                                           ; 0AC1: 18      .    ; increment screen address by one whole line (finished printing top line, now print bottom
+    ADC #&79 ; 'y'                                ; 0AC2: 69 79   iy
+    STA zp_80_dest_screenaddr                     ; 0AC4: 85 80   ..
+    LDA zp_81_dest_screenaddr                     ; 0AC6: A5 81   ..
+    ADC #2                                        ; 0AC8: 69 02   i.
+    STA zp_81_dest_screenaddr                     ; 0ACA: 85 81   ..
+    BCC loop_begin_write_next_line                ; 0ACC: 90 BF   ..
+
+.sprite_write_complete
+    LDX zp_89_possible_ball_x_coordinate          ; 0ACE: A6 89   ..
+    LDY zp_8A_possible_ball_y_coordinate          ; 0AD0: A4 8A   ..
+    RTS                                           ; 0AD2: 60      `
 
 ; ***************************************************************************************
 ; Screen coords for X=0..127, Y=0..???, returns screen address calculated &80-81
@@ -5624,92 +5662,92 @@ relocated_data_A00 = sub_C09FF+1
 ;     A: Not used
 ;     X: X screen coordinate
 ;     Y: Y screen coordinate
-; &41D3 referenced 3 times by &0A84, &170D, &2698
-.calculate_screen_write_address_from_x_y_coords
-    TXA                                           ; 0AD3: 8A    .  ; X Screen offset calulation begins (Only values 127-0 are used, each value represents two pixels wide)
-    ASL A                                         ; 41D4: 0A                                     .            :0AD4[1]   ; X coord * 4 (Only values 127-0 are used)
-    ASL A                                         ; 41D5: 0A                                     .            :0AD5[1]
-    STA zp_82                                     ; 41D6: 85 82                                  ..           :0AD6[1]
-    LDA #0                                        ; 41D8: A9 00                                  ..           :0AD8[1]
-    ROL A                                         ; 41DA: 2A                                     *            :0ADA[1]   ; Shift overflowed bits into MSB
-    ASL zp_82                                     ; 41DB: 06 82                                  ..           :0ADB[1]
-    ROL A                                         ; 41DD: 2A                                     *            :0ADD[1]
-    STA zp_83                                     ; 41DE: 85 83                                  ..           :0ADE[1]
-    TYA                                           ; 41E0: 98                                     .            :0AE0[1]   ; Y Screen offset calulatiom begins Y=lllllnnn, where lllll = line number, nnn = offset within that line (0-7)
-    AND #7                                        ; 41E1: 29 07                                  ).           :0AE1[1]
-    ASL A                                         ; 41E3: 0A                                     .            :0AE3[1]
-    STA zp_dest_screen_address                     ; 41E4: 85 80                                  ..           :0AE4[1]
-    TYA                                           ; 41E6: 98                                     .            :0AE6[1]
-    AND #&F8                                      ; 41E7: 29 F8                                  ).           :0AE7[1]
-    LSR A                                         ; 41E9: 4A                                     J            :0AE9[1]
-    LSR A                                         ; 41EA: 4A                                     J            :0AEA[1]
-    STA zp_8f_screencalc_temp_store               ; 41EB: 85 8F                                  ..           :0AEB[1]
-    LSR A                                         ; 41ED: 4A                                     J            :0AED[1]
-    LSR A                                         ; 41EE: 4A                                     J            :0AEE[1]
-    ROR zp_dest_screen_address                     ; 41EF: 66 80                                  f.           :0AEF[1]
-    CLC                                           ; 41F1: 18                                     .            :0AF1[1]
-    ADC zp_8f_screencalc_temp_store               ; 41F2: 65 8F                                  e.           :0AF2[1]
-    ADC zp_83                                     ; 41F4: 65 83                                  e.           :0AF4[1]
-    ADC #&30 ; '0'                                ; 41F6: 69 30                                  i0           :0AF6[1]   ; We have memory offset address for printing spite. Add &3000 (start address of mode 2 to make it point to correct screen memory location
-    STA zp_dest_screen_address+1                  ; 41F8: 85 81                                  ..           :0AF8[1]
-    LDA zp_dest_screen_address                    ; 41FA: A5 80                                  ..           :0AFA[1]
-    ADC zp_82                                     ; 41FC: 65 82                                  e.           :0AFC[1]
-    STA zp_dest_screen_address                    ; 41FE: 85 80                                  ..           :0AFE[1]
-; &4200 referenced 2 times by &4332, &4335
-.relocated_data_B00
-    BCC skip_screenaddr_msb_increment             ; 4200: 90 02                                  ..           :0B00[1]
-    INC zp_81_dest_screenaddr                     ; 4202: E6 81                                  ..           :0B02[1]
-; &4204 referenced 1 time by &0B00
-.skip_screenaddr_msb_increment
-    RTS                                           ; 4204: 60                                     `            :0B04[1]
 
-; &4205 referenced 4 times by &2721, &2744, &2757, &2776
+.calculate_screen_write_address_from_x_y_coords
+    TXA                                           ; 0AD3: 8A      .   ; X Screen offset calulation begins (Only values 127-0 are used, each value represents two pixels wide)
+    ASL A                                         ; 0AD4: 0A      .   ; X coord * 4 (Only values 127-0 are used)
+    ASL A                                         ; 0AD5: 0A      . 
+    STA zp_82                                     ; 0AD6: 85 82   ..
+    LDA #0                                        ; 0AD8: A9 00   ..
+    ROL A                                         ; 0ADA: 2A      *    ; Shift overflowed bits into MSB
+    ASL zp_82                                     ; 0ADB: 06 82   ..
+    ROL A                                         ; 0ADD: 2A      * 
+    STA zp_83                                     ; 0ADE: 85 83   ..
+    TYA                                           ; 0AE0: 98      .    ; Y Screen offset calulatiom begins Y=lllllnnn, where lllll = line number, nnn = offset within that line (0-7)
+    AND #7                                        ; 0AE1: 29 07   ).
+    ASL A                                         ; 0AE3: 0A      . 
+    STA zp_dest_screen_address                    ; 0AE4: 85 80   ..
+    TYA                                           ; 0AE6: 98      . 
+    AND #&F8                                      ; 0AE7: 29 F8   ).
+    LSR A                                         ; 0AE9: 4A      J 
+    LSR A                                         ; 0AEA: 4A      J 
+    STA zp_8f_screencalc_temp_store               ; 0AEB: 85 8F   ..
+    LSR A                                         ; 0AED: 4A      J 
+    LSR A                                         ; 0AEE: 4A      J 
+    ROR zp_dest_screen_address                    ; 0AEF: 66 80  f.
+    CLC                                           ; 0AF1: 18      . 
+    ADC zp_8f_screencalc_temp_store               ; 0AF2: 65 8F   e.
+    ADC zp_83                                     ; 0AF4: 65 83   e.
+    ADC #&30 ; '0'                                ; 0AF6: 69 30   i0   ; We have memory offset address for printing spite. Add &3000 (start address of mode 2 to make it point to correct screen memory location
+    STA zp_dest_screen_address+1                  ; 0AF8: 85 81   ..
+    LDA zp_dest_screen_address                    ; 0AFA: A5 80   ..
+    ADC zp_82                                     ; 0AFC: 65 82   e.
+    STA zp_dest_screen_address                    ; 0AFE: 85 80   ..
+
+.relocated_data_B00
+    BCC skip_screenaddr_msb_increment             ; 0B00: 90 02   ..
+    INC zp_81_dest_screenaddr                     ; 0B02: E6 81   ..
+
+.skip_screenaddr_msb_increment
+    RTS                                           ; 0B04: 60      `
+
+
 .print_cherry
-    LDA # plot_cherry_with_outline MOD 256        ; 4205: A9 31                                  .1           :0B05[1]
-    STA self_modified_code_patch_1+2              ; 4207: 8D 93 0A                               ...          :0B07[1]
-    LDA # plot_cherry_with_outline DIV 256        ; 420A: A9 0B                                  ..           :0B0A[1]
-; &420C referenced 1 time by &0B4D
+    LDA # plot_cherry_with_outline MOD 256        ; 0B05: A9 31      .1 
+    STA self_modified_code_patch_1+2              ; 0B07: 8D 93 0A   ...
+    LDA # plot_cherry_with_outline DIV 256        ; 0B0A: A9 0B      ..
+
 .plot_sprite_with_modified_routine
-    STA self_modified_code_patch_1+3              ; 420C: 8D 94 0A                               ...          :0B0C[1]
-    LDA #&EA                                      ; 420F: A9 EA                                  ..           :0B0F[1]
-    STA self_modified_code_patch_1                ; 4211: 8D 91 0A                               ...          :0B11[1]
-    LDA #&20 ; ' '                                ; 4214: A9 20                                  .            :0B14[1]
-    STA self_modified_code_patch_1+1              ; 4216: 8D 92 0A                               ...          :0B16[1]
-    LDA #6                                        ; 4219: A9 06                                  ..           :0B19[1]   ; Select sprite 6 to write (cherry); A=sprite number
-    JSR write_sprite_to_screen_routine            ; 421B: 20 73 0A                                s.          :0B1B[1]
+    STA self_modified_code_patch_1+3              ; 0B0C: 8D 94 0A   ...
+    LDA #&EA                                      ; 0B0F: A9 EA      ..
+    STA self_modified_code_patch_1                ; 0B11: 8D 91 0A   ...
+    LDA #&20 ; ' '                                ; 0B14: A9 20      .
+    STA self_modified_code_patch_1+1              ; 0B16: 8D 92 0A   ...
+    LDA #6                                        ; 0B19: A9 06      ..    ; Select sprite 6 to write (cherry); A=sprite number
+    JSR write_sprite_to_screen_routine            ; 0B1B: 20 73 0A   s.
 ; &421E referenced 1 time by &0B7A
 .restore_sprite_routine_code_to_default
-    LDA #&51 ; 'Q'                                ; 421E: A9 51                                  .Q           :0B1E[1]
-    STA self_modified_code_patch_1                ; 4220: 8D 91 0A                               ...          :0B20[1]
-    LDA #&80                                      ; 4223: A9 80                                  ..           :0B23[1]
-    STA self_modified_code_patch_1+1              ; 4225: 8D 92 0A                               ...          :0B25[1]
-    STA self_modified_code_patch_1+3              ; 4228: 8D 94 0A                               ...          :0B28[1]
-    LDA #&91                                      ; 422B: A9 91                                  ..           :0B2B[1]
-    STA self_modified_code_patch_1+2              ; 422D: 8D 93 0A                               ...          :0B2D[1]
-    RTS                                           ; 4230: 60                                     `            :0B30[1]
+    LDA #&51 ; 'Q'                                ; 0B1E: A9 51      .Q 
+    STA self_modified_code_patch_1                ; 0B20: 8D 91 0A   ...
+    LDA #&80                                      ; 0B23: A9 80      .. 
+    STA self_modified_code_patch_1+1              ; 0B25: 8D 92 0A   ...
+    STA self_modified_code_patch_1+3              ; 0B28: 8D 94 0A   ...
+    LDA #&91                                      ; 0B2B: A9 91      .. 
+    STA self_modified_code_patch_1+2              ; 0B2D: 8D 93 0A   ...
+    RTS                                           ; 0B30: 60         `  
 
 .plot_cherry_with_outline
-    PHA                                           ; 4231: 48                                     H            :0B31[1]
-    AND #&C0                                      ; 4232: 29 C0                                  ).           :0B32[1]
-    STA L0087                                     ; 4234: 85 87                                  ..           :0B34[1]
-    LSR A                                         ; 4236: 4A                                     J            :0B36[1]
-    LSR A                                         ; 4237: 4A                                     J            :0B37[1]
-    ORA L0087                                     ; 4238: 05 87                                  ..           :0B38[1]
-    AND (zp_80_dest_screenaddr),Y                 ; 423A: 31 80                                  1.           :0B3A[1]
-    STA (zp_80_dest_screenaddr),Y                 ; 423C: 91 80                                  ..           :0B3C[1]   ; zp 80 writes to screen memory (print sprite)
-    PLA                                           ; 423E: 68                                     h            :0B3E[1]
+    PHA                                           ; 0B31: 48         H
+    AND #&C0                                      ; 0B32: 29 C0      ).
+    STA L0087                                     ; 0B34: 85 87      ..
+    LSR A                                         ; 0B36: 4A         J
+    LSR A                                         ; 0B37: 4A         J
+    ORA L0087                                     ; 0B38: 05 87      ..
+    AND (zp_80_dest_screenaddr),Y                 ; 0B3A: 31 80      1.
+    STA (zp_80_dest_screenaddr),Y                 ; 0B3C: 91 80      ..   ; zp 80 writes to screen memory (print sprite)
+    PLA                                           ; 0B3E: 68         h
 .unknown_mod_2
-    AND #&3F ; '?'                                ; 423F: 29 3F                                  )?           :0B3F[1]
-    EOR (zp_80_dest_screenaddr),Y                 ; 4241: 51 80                                  Q.           :0B41[1]
-    STA (zp_80_dest_screenaddr),Y                 ; 4243: 91 80                                  ..           :0B43[1]   ; zp 80 writes to screen memory (print sprite)
-    RTS                                           ; 4245: 60                                     `            :0B45[1]
+    AND #&3F ; '?'                                ; 0B3F: 29 3F      )?
+    EOR (zp_80_dest_screenaddr),Y                 ; 0B41: 51 80      Q.
+    STA (zp_80_dest_screenaddr),Y                 ; 0B43: 91 80      ..   ; zp 80 writes to screen memory (print sprite)
+    RTS                                           ; 0B45: 60         `
 
 ; &4246 referenced 1 time by &1B47
 .set_self_modified_code_NOP_JSR_0B3F_unknown_mod_2
-    LDA # unknown_mod_2 MOD 256                   ; 4246: A9 3F                                  .?           :0B46[1]
-    STA self_modified_code_patch_1+2              ; 4248: 8D 93 0A                               ...          :0B48[1]
-    LDA # unknown_mod_2 DIV 256                   ; 424B: A9 0B                                  ..           :0B4B[1]
-    BNE plot_sprite_with_modified_routine       ; 424D: D0 BD                                  ..           :0B4D[1]
+    LDA # unknown_mod_2 MOD 256                   ; 0B46: A9 3F      .?
+    STA self_modified_code_patch_1+2              ; 0B48: 8D 93 0A   ...
+    LDA # unknown_mod_2 DIV 256                   ; 0B4B: A9 0B      ..
+    BNE plot_sprite_with_modified_routine         ; 0B4D: D0 BD      ..
 
 ; ***************************************************************************************
 ; Prints 'E X T R A' in correct colours at the top of the screen (not sure how colours
@@ -5722,29 +5760,29 @@ relocated_data_A00 = sub_C09FF+1
 ; &424F referenced 5 times by &120B, &1AC2, &24A8, &250D, &2718
 
 .update_extra_letters_at_top_of_screen
-    AND #7                                        ; 424F: 29 07                                  ).           :0B4F[1]
-    ASL A                                         ; 4251: 0A                                     .            :0B51[1]
-    ASL A                                         ; 4252: 0A                                     .            :0B52[1]
-    ASL A                                         ; 4253: 0A                                     .            :0B53[1]
-    ASL A                                         ; 4254: 0A                                     .            :0B54[1]
-    STA zp_84_source_spriteaddr                   ; 4255: 85 84                                  ..           :0B55[1]
-    LDA #4                                        ; 4257: A9 04                                  ..           :0B57[1]
-    STA zp_85_source_spriteaddr                   ; 4259: 85 85                                  ..           :0B59[1]
-    ASL A                                         ; 425B: 0A                                     .            :0B5B[1]
-    STA L0017                                     ; 425C: 85 17                                  ..           :0B5C[1]   ; Stores 8 to L0017
-    STA L0018                                     ; 425E: 85 18                                  ..           :0B5E[1]   ; Stores 8 to L0018
+    AND #7                                        ; 0B4F: 29 07     ).
+    ASL A                                         ; 0B51: 0A        .
+    ASL A                                         ; 0B52: 0A        .
+    ASL A                                         ; 0B53: 0A        .
+    ASL A                                         ; 0B54: 0A        .
+    STA zp_84_source_spriteaddr                   ; 0B55: 85 84     ..
+    LDA #4                                        ; 0B57: A9 04     ..
+    STA zp_85_source_spriteaddr                   ; 0B59: 85 85     ..
+    ASL A                                         ; 0B5B: 0A        .
+    STA zp_x_sprite_screen_offset                 ; 0B5C: 85 17     ..           :0B5C[1]   ; Stores 8 to zp_x_sprite_screen_offset
+    STA zp_y_sprite_length                        ; 0B5E: 85 18     ..           :0B5E[1]   ; Stores 8 to zp_y_sprite_length
     ; Following modifies the sprite code to extra routine.
-    LDA #&EA                                      ; 4260: A9 EA                                  ..           :0B60[1]
-    STA self_modified_code_patch_1                ; 4262: 8D 91 0A                               ...          :0B62[1]
-    LDA #&20 ; ' '                                ; 4265: A9 20                                  .            :0B65[1]
-    STA self_modified_code_patch_1+1              ; 4267: 8D 92 0A                               ...          :0B67[1]
-    LDA # extra_plot_for_top_screen_letter_sprite MOD 256 ; '}'                                ; 426A: A9 7D                                  .}           :0B6A[1]
-    STA self_modified_code_patch_1+2              ; 426C: 8D 93 0A                               ...          :0B6C[1]
-    LDA # extra_plot_for_top_screen_letter_sprite DIV 256 ; 426F: A9 0B                                  ..           :0B6F[1]   ; A=(unused)
-    STA self_modified_code_patch_1+3              ; 4271: 8D 94 0A                               ...          :0B71[1]
-    JSR write_pre_selected_sprite_to_screen_routine; 4274: 20 84 0A                                ..          :0B74[1]
-    JSR restore_L0017_L0018_to_defaults_x18_and_x10; 4277: 20 50 26                                P&          :0B77[1]
-    JMP restore_sprite_routine_code_to_default    ; 427A: 4C 1E 0B                               L..          :0B7A[1]
+    LDA #&EA                                      ; 0B60: A9 EA     ..
+    STA self_modified_code_patch_1                ; 0B62: 8D 91 0A  ...
+    LDA #&20 ; ' '                                ; 0B65: A9 20     .
+    STA self_modified_code_patch_1+1              ; 0B67: 8D 92 0A  ...
+    LDA # extra_plot_for_top_screen_letter_sprite MOD 256 ; '}'      ; 0B6A: A9 7D   .}
+    STA self_modified_code_patch_1+2              ; 0B6C: 8D 93 0A  ...
+    LDA # extra_plot_for_top_screen_letter_sprite DIV 256 ; 0B6F: A9 0B   ..   ; A=(unused)
+    STA self_modified_code_patch_1+3              ; 0B71: 8D 94 0A   ...
+    JSR write_pre_selected_sprite_to_screen_routine; 0B74: 20 84 0A   ..
+    JSR restore_sprite_xy_length_offset_to_default_x18_x10; 0B77: 20 50 26   P&
+    JMP restore_sprite_routine_code_to_default    ; 0B7A: 4C 1E 0B   L..
 
 .extra_plot_for_top_screen_letter_sprite
     AND &97                                       ; 0B7D: 25 97
@@ -6061,7 +6099,7 @@ ORG &4300
 ;     zp_number_of_apples_on_screen:                                        14
 ;     L0098:                                                             14
 ;     zp_99_current_status_2:                                            14
-;     monster_stack_x_coord_minus_one:                                   13
+;     monster_stack_x_coord-1:                                   13
 ;     sub_C3141:                                                         13
 ;     L3F0F:                                                             13
 ;     C4173:                                                             13
@@ -6069,17 +6107,17 @@ ORG &4300
 ;     possible_temp_ball_x_coordinate:                                   12
 ;     possible_temp_ball_y_coordinate:                                   12
 ;     realtime_maze_grid:                                                12
-;     monster_stack_y_coord_minus_one:                                   12
+;     monster_stack_y_coord-1:                                   12
 ;     next_monster_release_timer:                                        11
 ;     mr_ee_status:                                                      11
-;     unknown_monster_data_1_minus_one:                                  11
+;     unknown_monster_data_1-1:                                  11
 ;     sub_C415C:                                                         11
 ;     osbyte:                                                            11
 ;     main_game_timer_counter:                                           10
 ;     zp_89_possible_ball_x_coordinate:                                  10
 ;     sub_C274B:                                                         10
 ;     C3026:                                                             10
-;     L0018:                                                              9
+;     zp_y_sprite_length:                                                              9
 ;     zp_7C_sound_pitch:                                                  9
 ;     L00A3:                                                              9
 ;     L2AEC:                                                              9
@@ -6088,7 +6126,7 @@ ORG &4300
 ;     C4184:                                                              9
 ;     scene_number:                                                       8
 ;     extra_bitmap:                                                       8
-;     possible_mr_ee_direction:                                           8
+;     zp_mr_ee_direction:                                           8
 ;     zp_7E_sound_duration:                                               8
 ;     L008C:                                                              8
 ;     L0095:                                                              8
@@ -6105,7 +6143,7 @@ ORG &4300
 ;     L3F30:                                                              7
 ;     C4140:                                                              7
 ;     number_of_continuous_cherries_consumed:                             6
-;     L0017:                                                              6
+;     zp_x_sprite_screen_offset:                                                              6
 ;     zp_24_lives_remaining:                                              6
 ;     zp_78_sound_channel:                                                6
 ;     L2090:                                                              6
@@ -6137,7 +6175,7 @@ ORG &4300
 ;     L0025:                                                              4
 ;     L008B:                                                              4
 ;     L00A1:                                                              4
-;     unknown_monster_data_2_minus_one:                                   4
+;     unknown_monster_data_2-1:                                   4
 ;     L0700:                                                              4
 ;     sub_C2231:                                                          4
 ;     L2BD9:                                                              4
