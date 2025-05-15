@@ -45,7 +45,7 @@ score_zp                                                            = &0005 ; 3 
 
 remaining_cherry_count_zp                                           = &0008
 number_of_apples_on_screen_zp                                       = &0009
-sound_on_off_flag_zp                                               = &000A
+sound_on_off_flag_zp                                                = &000A
 L000B                                                               = &000B
 L000C                                                               = &000C
 main_game_timer_counter_zp                                          = &000F
@@ -123,14 +123,11 @@ zp_78_sound_channel                                             = &0078
 zp_7A_sound_amplitude                                           = &007A
 zp_7C_sound_pitch                                               = &007C
 zp_7E_sound_duration                                            = &007E
-zp_dest_screen_address                                          = &0080
-zp_80_dest_screenaddr                                           = &0080
-zp_81_dest_screenaddr                                           = &0081
+dest_screenaddr_zp                                              = &0080 ; 80-81 - destination screen address
 zp_82                                                           = &0082
 zp_83                                                           = &0083
 zp_source_sprite_address                                        = &0084
-zp_84_source_spriteaddr                                         = &0084
-zp_85_source_spriteaddr                                         = &0085
+source_spriteaddr_zp                                             = &0084 ; 84-85 - Source sprite address
 L0086                                                           = &0086
 L0087                                                           = &0087
 L0088                                                           = &0088
@@ -139,11 +136,13 @@ zp_8A_possible_ball_y_coordinate                                = &008A
 L008B                                                           = &008B
 L008C                                                           = &008C
 zp_8f_screencalc_temp_store                                     = &008F
+
 ; Zero page &90 and &91 is used for a number of different purposes.
 ; When generating the next level they point to the level data.
 ; 2) xxx
 zp_90_current_x_coord                                           = &0090
 L0091                                                           = &0091
+
 L0092                                                           = &0092
 zp_93_current_y_coord                                           = &0093
 L0094                                                           = &0094
@@ -191,7 +190,6 @@ L801B                                                           = &801B
 L90E6                                                           = &90E6
 LA1E6                                                           = &A1E6
 LA2E6                                                           = &A2E6
-video_ula_palette                                               = &FE21
 user_via_t1c_l                                                  = &FE64
 user_via_t1c_h                                                  = &FE65
 user_via_t1l_l                                                  = &FE66
@@ -382,14 +380,15 @@ osbyte                                                          = &FFF4
     LDA #&F7                                      ; logical color 15 (flash white/black) -> 7 EOR 7 = Actual color 0 (Black)
 
 .loop_until_all_pallet_colours_are_set_to_black
+
 IF DISABLESCREENBLANK
 ; DemRepOfDave - Alternate build - Don't blank during screen update (to see how it is built and what code builds it).
-   NOP
-   NOP
-   NOP
+    NOP
+    NOP
+    NOP
 ELSE
 ; DemRepOfDave - Original game code
-   STA video_ula_palette
+    STA &FE21                                      ; BBC video ula palette
 ENDIF
 
     SEC
@@ -411,7 +410,7 @@ ENDIF
     STA game_pallet_brick_color_background        ; Set correct backgound brick for level (Logical color 8)
     INY
     LDA #&1E
-    STA zp_80_dest_screenaddr
+    STA dest_screenaddr_zp
     LDA #3
     STA L0D86
     LDA #&B0
@@ -440,19 +439,19 @@ ENDIF
     DEC L0D86
 
 .skip_to_0E63
-    DEC zp_80_dest_screenaddr                     ; 1B63: C6 80                                  ..           :0E63[4]
-    BNE perform_vdu_25_plot_a_x_y                 ; 1B65: D0 D9                                  ..           :0E65[4]
-    LDA #&48 ; 'H'                                ; 1B67: A9 48                                  .H           :0E67[4]
-    STA zp_dest_screen_address                    ; 1B69: 85 80                                  ..           :0E69[4]
-    LDA #&35 ; '5'                                ; 1B6B: A9 35                                  .5           :0E6B[4]
-    STA zp_dest_screen_address+1                  ; 1B6D: 85 81                                  ..           :0E6D[4]
-    LDA #3                                        ; 1B6F: A9 03                                  ..           :0E6F[4]
-    STA zp_82                                     ; 1B71: 85 82                                  ..           :0E71[4]
-    LDA #0                                        ; 1B73: A9 00                                  ..           :0E73[4]
-    STA zp_83                                     ; 1B75: 85 83                                  ..           :0E75[4]
-    STA L0092                                     ; 1B77: 85 92                                  ..           :0E77[4]
-    LDA #&80                                      ; 1B79: A9 80                                  ..           :0E79[4]
-    STA zp_84_source_spriteaddr                   ; 1B7B: 85 84                                  ..           :0E7B[4]
+    DEC dest_screenaddr_zp
+    BNE perform_vdu_25_plot_a_x_y
+    LDA #&48
+    STA dest_screenaddr_zp
+    LDA #&35
+    STA dest_screenaddr_zp+1
+    LDA #3
+    STA zp_82
+    LDA #0
+    STA zp_83
+    STA L0092
+    LDA #&80
+    STA source_spriteaddr_zp
 
 ; The following is called to build out the empty blocks on the brick map, performing
 ; the calculations for smoothing between the adjacent blocks.  This is called for each
@@ -461,33 +460,33 @@ ENDIF
 ; &1B7D referenced 1 time by &0FE7
 
 .loop_possible_build_maze
-    LDX L0092                                     ; 1B7D: A6 92                                  ..           :0E7D[4]
-    LDA #0                                        ; 1B7F: A9 00                                  ..           :0E7F[4]
-    STA realtime_maze_grid,X                      ; 1B81: 9D 30 07                               .0.          :0E81[4]
-    LDY zp_83                                     ; 1B84: A4 83                                  ..           :0E84[4]
-    LDA (zp_90_current_x_coord),Y                 ; 1B86: B1 90                                  ..           :0E86[4]
-    AND zp_84_source_spriteaddr                   ; 1B88: 25 84                                  %.           :0E88[4]
-    BNE C0E8F                                     ; 1B8A: D0 03                                  ..           :0E8A[4]
-    JMP C0FA0                                     ; 1B8C: 4C A0 0F                               L..          :0E8C[4]
+    LDX L0092
+    LDA #0
+    STA realtime_maze_grid,X
+    LDY zp_83
+    LDA (zp_90_current_x_coord),Y
+    AND source_spriteaddr_zp
+    BNE skip_to_0E8F
+    JMP C0FA0
 
 ; &1B8F referenced 1 time by &0E8A
-.C0E8F
-    LDA #&FF                                      ; 1B8F: A9 FF                                  ..           :0E8F[4]
-    CPX #&65 ; 'e'                                ; 1B91: E0 65                                  .e           :0E91[4]
-    BNE C0E97                                     ; 1B93: D0 02                                  ..           :0E93[4]
-    LDA #0                                        ; 1B95: A9 00                                  ..           :0E95[4]
-; &1B97 referenced 1 time by &0E93
-.C0E97
-    LDX #&77 ; 'w'                                ; 1B97: A2 77                                  .w           :0E97[4]
-; &1B99 referenced 1 time by &0E9D
+.skip_to_0E8F
+    LDA #&FF
+    CPX #&65
+    BNE skip_to_0E97
+    LDA #0
+
+.skip_to_0E97
+    LDX #&77
+
 .loop_C0E99
-    STA possible_current_tunnel_brick_map,X       ; 1B99: 9D 30 06                               .0.          :0E99[4]
-    DEX                                           ; 1B9C: CA                                     .            :0E9C[4]
-    BPL loop_C0E99                                ; 1B9D: 10 FA                                  ..           :0E9D[4]
-    TAX                                           ; 1B9F: AA                                     .            :0E9F[4]
-    BEQ C0EC6                                     ; 1BA0: F0 24                                  .$           :0EA0[4]
-    LDX #&0D                                      ; 1BA2: A2 0D                                  ..           :0EA2[4]
-; &1BA4 referenced 1 time by &0EA9
+    STA possible_current_tunnel_brick_map,X
+    DEX
+    BPL loop_C0E99
+    TAX
+    BEQ C0EC6
+    LDX #&0D
+
 .loop_C0EA4
     JSR sub_C0B84                                 ; 1BA4: 20 84 0B                                ..          :0EA4[4]
     CPX #&6D ; 'm'                                ; 1BA7: E0 6D                                  .m           :0EA7[4]
@@ -505,16 +504,16 @@ ENDIF
 ; &1BC6 referenced 1 time by &0EA0
 .C0EC6
     LDA #0                                        ; 1BC6: A9 00                                  ..           :0EC6[4]
-    STA zp_85_source_spriteaddr                   ; 1BC8: 85 85                                  ..           :0EC8[4]
+    STA source_spriteaddr_zp + 1                   ; 1BC8: 85 85                                  ..           :0EC8[4]
     LDY zp_83                                     ; 1BCA: A4 83                                  ..           :0ECA[4]
     DEY                                           ; 1BCC: 88                                     .            :0ECC[4]
     DEY                                           ; 1BCD: 88                                     .            :0ECD[4]
     BMI C0EE3                                     ; 1BCE: 30 13                                  0.           :0ECE[4]
     LDA (zp_90_current_x_coord),Y                 ; 1BD0: B1 90                                  ..           :0ED0[4]
-    AND zp_84_source_spriteaddr                   ; 1BD2: 25 84                                  %.           :0ED2[4]
+    AND source_spriteaddr_zp                   ; 1BD2: 25 84                                  %.           :0ED2[4]
     BEQ C0EE3                                     ; 1BD4: F0 0D                                  ..           :0ED4[4]
-    INC zp_85_source_spriteaddr                   ; 1BD6: E6 85                                  ..           :0ED6[4]
-    INC zp_85_source_spriteaddr                   ; 1BD8: E6 85                                  ..           :0ED8[4]
+    INC source_spriteaddr_zp + 1                   ; 1BD6: E6 85                                  ..           :0ED6[4]
+    INC source_spriteaddr_zp + 1                   ; 1BD8: E6 85                                  ..           :0ED8[4]
     LDX #1                                        ; 1BDA: A2 01                                  ..           :0EDA[4]
 ; &1BDC referenced 1 time by &0EE1
 .loop_C0EDC
@@ -529,9 +528,9 @@ ENDIF
     CPY #&1A                                      ; 1BE7: C0 1A                                  ..           :0EE7[4]
     BCS C0EFC                                     ; 1BE9: B0 11                                  ..           :0EE9[4]
     LDA (zp_90_current_x_coord),Y                 ; 1BEB: B1 90                                  ..           :0EEB[4]
-    AND zp_84_source_spriteaddr                   ; 1BED: 25 84                                  %.           :0EED[4]
+    AND source_spriteaddr_zp                   ; 1BED: 25 84                                  %.           :0EED[4]
     BEQ C0EFC                                     ; 1BEF: F0 0B                                  ..           :0EEF[4]
-    INC zp_85_source_spriteaddr                   ; 1BF1: E6 85                                  ..           :0EF1[4]
+    INC source_spriteaddr_zp + 1                   ; 1BF1: E6 85                                  ..           :0EF1[4]
     LDX #&61 ; 'a'                                ; 1BF3: A2 61                                  .a           :0EF3[4]
 ; &1BF5 referenced 1 time by &0EFA
 .loop_C0EF5
@@ -541,7 +540,7 @@ ENDIF
 ; &1BFC referenced 2 times by &0EE9, &0EEF
 .C0EFC
     LDY zp_83                                     ; 1BFC: A4 83                                  ..           :0EFC[4]
-    LDA zp_84_source_spriteaddr                   ; 1BFE: A5 84                                  ..           :0EFE[4]
+    LDA source_spriteaddr_zp                   ; 1BFE: A5 84                                  ..           :0EFE[4]
     LSR A                                         ; 1C00: 4A                                     J            :0F00[4]
     BCC C0F05                                     ; 1C01: 90 02                                  ..           :0F01[4]
     ROR A                                         ; 1C03: 6A                                     j            :0F03[4]
@@ -557,9 +556,9 @@ ENDIF
     CPX #&6E ; 'n'                                ; 1C0E: E0 6E                                  .n           :0F0E[4]
     BNE loop_C0F0B                                ; 1C10: D0 F9                                  ..           :0F10[4]
     LDX #&55 ; 'U'                                ; 1C12: A2 55                                  .U           :0F12[4]
-    LDA zp_85_source_spriteaddr                   ; 1C14: A5 85                                  ..           :0F14[4]
+    LDA source_spriteaddr_zp + 1                   ; 1C14: A5 85                                  ..           :0F14[4]
     ORA #8                                        ; 1C16: 09 08                                  ..           :0F16[4]
-    STA zp_85_source_spriteaddr                   ; 1C18: 85 85                                  ..           :0F18[4]
+    STA source_spriteaddr_zp + 1                   ; 1C18: 85 85                                  ..           :0F18[4]
     LSR A                                         ; 1C1A: 4A                                     J            :0F1A[4]
     BCC C0F20                                     ; 1C1B: 90 03                                  ..           :0F1B[4]
     STX L06A1                                     ; 1C1D: 8E A1 06                               ...          :0F1D[4]
@@ -571,7 +570,7 @@ ENDIF
 ; &1C26 referenced 2 times by &0F07, &0F21
 .C0F26
     LDY zp_83                                     ; 1C26: A4 83                                  ..           :0F26[4]
-    LDA zp_84_source_spriteaddr                   ; 1C28: A5 84                                  ..           :0F28[4]
+    LDA source_spriteaddr_zp                   ; 1C28: A5 84                                  ..           :0F28[4]
     ASL A                                         ; 1C2A: 0A                                     .            :0F2A[4]
     BCC C0F31                                     ; 1C2B: 90 04                                  ..           :0F2B[4]
     ROL A                                         ; 1C2D: 2A                                     *            :0F2D[4]
@@ -588,9 +587,9 @@ ENDIF
     CPX #&6C ; 'l'                                ; 1C3A: E0 6C                                  .l           :0F3A[4]
     BNE loop_C0F37                                ; 1C3C: D0 F9                                  ..           :0F3C[4]
     LDX #&AA                                      ; 1C3E: A2 AA                                  ..           :0F3E[4]
-    LDA zp_85_source_spriteaddr                   ; 1C40: A5 85                                  ..           :0F40[4]
+    LDA source_spriteaddr_zp + 1                   ; 1C40: A5 85                                  ..           :0F40[4]
     ORA #4                                        ; 1C42: 09 04                                  ..           :0F42[4]
-    STA zp_85_source_spriteaddr                   ; 1C44: 85 85                                  ..           :0F44[4]
+    STA source_spriteaddr_zp + 1                   ; 1C44: 85 85                                  ..           :0F44[4]
     LSR A                                         ; 1C46: 4A                                     J            :0F46[4]
     BCC C0F4C                                     ; 1C47: 90 03                                  ..           :0F47[4]
     STX L069C                                     ; 1C49: 8E 9C 06                               ...          :0F49[4]
@@ -602,19 +601,19 @@ ENDIF
 ; &1C52 referenced 3 times by &0F2F, &0F33, &0F4D
 .C0F52
     LDX L0092                                     ; 1C52: A6 92                                  ..           :0F52[4]
-    ASL zp_85_source_spriteaddr                   ; 1C54: 06 85                                  ..           :0F54[4]
-    ASL zp_85_source_spriteaddr                   ; 1C56: 06 85                                  ..           :0F56[4]
-    INC zp_85_source_spriteaddr                   ; 1C58: E6 85                                  ..           :0F58[4]
-    LDA zp_85_source_spriteaddr                   ; 1C5A: A5 85                                  ..           :0F5A[4]
+    ASL source_spriteaddr_zp + 1                   ; 1C54: 06 85                                  ..           :0F54[4]
+    ASL source_spriteaddr_zp + 1                   ; 1C56: 06 85                                  ..           :0F56[4]
+    INC source_spriteaddr_zp + 1                   ; 1C58: E6 85                                  ..           :0F58[4]
+    LDA source_spriteaddr_zp + 1                   ; 1C5A: A5 85                                  ..           :0F5A[4]
     STA realtime_maze_grid,X                      ; 1C5C: 9D 30 07                               .0.          :0F5C[4]
-    LDA zp_80_dest_screenaddr                     ; 1C5F: A5 80                                  ..           :0F5F[4]
+    LDA dest_screenaddr_zp                     ; 1C5F: A5 80                                  ..           :0F5F[4]
     STA L0088                                     ; 1C61: 85 88                                  ..           :0F61[4]
-    LDA zp_81_dest_screenaddr                     ; 1C63: A5 81                                  ..           :0F63[4]
+    LDA dest_screenaddr_zp + 1                     ; 1C63: A5 81                                  ..           :0F63[4]
     STA zp_89_possible_ball_x_coordinate          ; 1C65: 85 89                                  ..           :0F65[4]
     LDX #0                                        ; 1C67: A2 00                                  ..           :0F67[4]
     LDY zp_82                                     ; 1C69: A4 82                                  ..           :0F69[4]
     LDA #&14                                      ; 1C6B: A9 14                                  ..           :0F6B[4]
-    STA zp_85_source_spriteaddr                   ; 1C6D: 85 85                                  ..           :0F6D[4]
+    STA source_spriteaddr_zp + 1                   ; 1C6D: 85 85                                  ..           :0F6D[4]
 ; &1C6F referenced 1 time by &0F9E
 .C0F6F
     LDA #6                                        ; 1C6F: A9 06                                  ..           :0F6F[4]
@@ -648,22 +647,22 @@ ENDIF
     STA zp_89_possible_ball_x_coordinate          ; 1C9A: 85 89                                  ..           :0F9A[4]
 ; &1C9C referenced 1 time by &0F8B
 .C0F9C
-    DEC zp_85_source_spriteaddr                   ; 1C9C: C6 85                                  ..           :0F9C[4]
+    DEC source_spriteaddr_zp + 1                   ; 1C9C: C6 85                                  ..           :0F9C[4]
     BNE C0F6F                                     ; 1C9E: D0 CF                                  ..           :0F9E[4]
 ; &1CA0 referenced 1 time by &0E8C
 .C0FA0
     INC L0092                                     ; 1CA0: E6 92                                  ..           :0FA0[4]
-    LDA zp_80_dest_screenaddr                     ; 1CA2: A5 80                                  ..           :0FA2[4]
+    LDA dest_screenaddr_zp                     ; 1CA2: A5 80                                  ..           :0FA2[4]
     CLC                                           ; 1CA4: 18                                     .            :0FA4[4]
     ADC #&28 ; '('                                ; 1CA5: 69 28                                  i(           :0FA5[4]
-    STA zp_80_dest_screenaddr                     ; 1CA7: 85 80                                  ..           :0FA7[4]
+    STA dest_screenaddr_zp                     ; 1CA7: 85 80                                  ..           :0FA7[4]
     BCC C0FAD                                     ; 1CA9: 90 02                                  ..           :0FA9[4]
-    INC zp_81_dest_screenaddr                     ; 1CAB: E6 81                                  ..           :0FAB[4]
+    INC dest_screenaddr_zp + 1                     ; 1CAB: E6 81                                  ..           :0FAB[4]
 ; &1CAD referenced 1 time by &0FA9
 .C0FAD
-    LSR zp_84_source_spriteaddr                   ; 1CAD: 46 84                                  F.           :0FAD[4]
+    LSR source_spriteaddr_zp                   ; 1CAD: 46 84                                  F.           :0FAD[4]
     BCC C0FB5                                     ; 1CAF: 90 04                                  ..           :0FAF[4]
-    ROR zp_84_source_spriteaddr                   ; 1CB1: 66 84                                  f.           :0FB1[4]
+    ROR source_spriteaddr_zp                   ; 1CB1: 66 84                                  f.           :0FB1[4]
     INC zp_83                                     ; 1CB3: E6 83                                  ..           :0FB3[4]
 ; &1CB5 referenced 1 time by &0FAF
 .C0FB5
@@ -677,14 +676,14 @@ ENDIF
     STA L0092                                     ; 1CC2: 85 92                                  ..           :0FC2[4]
     INC zp_83                                     ; 1CC4: E6 83                                  ..           :0FC4[4]
     LDA #&80                                      ; 1CC6: A9 80                                  ..           :0FC6[4]
-    STA zp_84_source_spriteaddr                   ; 1CC8: 85 84                                  ..           :0FC8[4]
-    LDA zp_80_dest_screenaddr                     ; 1CCA: A5 80                                  ..           :0FCA[4]
+    STA source_spriteaddr_zp                   ; 1CC8: 85 84                                  ..           :0FC8[4]
+    LDA dest_screenaddr_zp                     ; 1CCA: A5 80                                  ..           :0FCA[4]
     CLC                                           ; 1CCC: 18                                     .            :0FCC[4]
     ADC #&20 ; ' '                                ; 1CCD: 69 20                                  i            :0FCD[4]
-    STA zp_80_dest_screenaddr                     ; 1CCF: 85 80                                  ..           :0FCF[4]
-    LDA zp_81_dest_screenaddr                     ; 1CD1: A5 81                                  ..           :0FD1[4]
+    STA dest_screenaddr_zp                     ; 1CCF: 85 80                                  ..           :0FCF[4]
+    LDA dest_screenaddr_zp + 1                     ; 1CD1: A5 81                                  ..           :0FD1[4]
     ADC #3                                        ; 1CD3: 69 03                                  i.           :0FD3[4]
-    STA zp_81_dest_screenaddr                     ; 1CD5: 85 81                                  ..           :0FD5[4]
+    STA dest_screenaddr_zp + 1                     ; 1CD5: 85 81                                  ..           :0FD5[4]
     LDY zp_82                                     ; 1CD7: A4 82                                  ..           :0FD7[4]
     JSR sub_increment_y_pos_and_recalc_screen_addr; 1CD9: 20 3C 1A                                <.          :0FD9[4]
     JSR sub_increment_y_pos_and_recalc_screen_addr; 1CDC: 20 3C 1A                                <.          :0FDC[4]
@@ -828,7 +827,7 @@ ENDIF
 ; &1DA9 referenced 1 time by &10B4
 .loop_possible_reset_game_pallete
     LDA game_pallet_data-1,X                      ; 1DA9: BD FF 05                               ...          :10A9[4]
-    STA video_ula_palette                         ; 1DAC: 8D 21 FE                               .!.          :10AC[4]
+    STA &FE21                                      ; BBC video ula palette
     STX L000C                                     ; 1DAF: 86 0C                                  ..           :10AF[4]
     STX L000B                                     ; 1DB1: 86 0B                                  ..           :10B1[4]
     DEX                                           ; 1DB3: CA                                     .            :10B3[4]
@@ -1093,14 +1092,14 @@ ENDIF
     STA remaining_monsters_to_spawn_minus_1_zp       ; 1F2B: 85 14                                  ..           :122B[4]
     LDA zp_24_lives_remaining                     ; 1F2D: A5 24                                  .$           :122D[4]
     ASL A                                         ; 1F2F: 0A                                     .            :122F[4]
-    STA zp_80_dest_screenaddr                     ; 1F30: 85 80                                  ..           :1230[4]
+    STA dest_screenaddr_zp                     ; 1F30: 85 80                                  ..           :1230[4]
     ASL A                                         ; 1F32: 0A                                     .            :1232[4]
     ASL A                                         ; 1F33: 0A                                     .            :1233[4]
     ASL A                                         ; 1F34: 0A                                     .            :1234[4]
-    ADC zp_80_dest_screenaddr                     ; 1F35: 65 80                                  e.           :1235[4]
-    STA zp_80_dest_screenaddr                     ; 1F37: 85 80                                  ..           :1237[4]
+    ADC dest_screenaddr_zp                     ; 1F35: 65 80                                  e.           :1235[4]
+    STA dest_screenaddr_zp                     ; 1F37: 85 80                                  ..           :1237[4]
     LDA #&EE                                      ; 1F39: A9 EE                                  ..           :1239[4]
-    SBC zp_80_dest_screenaddr                     ; 1F3B: E5 80                                  ..           :123B[4]
+    SBC dest_screenaddr_zp                     ; 1F3B: E5 80                                  ..           :123B[4]
     TAY                                           ; 1F3D: A8                                     .            :123D[4]
     LDX #2                                        ; 1F3E: A2 02                                  ..           :123E[4]
     JSR write_mr_ee_right                         ; 1F40: 20 58 0A                                X.          :1240[4]
@@ -1154,9 +1153,9 @@ ENDIF
     LDA L0011                                     ; 128E: A5 11     ..
     JSR C2603                                     ; 1290: 20 03 26  .&
     LDA #&86                                      ; 1293: A9 86     ..   ; logical color 8 (flash black/white) -> 6 EOR 7 = Actual color 1 (Red)
-    STA video_ula_palette                         ; 1295: 8D 21 FE  .!.
+    STA &FE21                                      ; BBC video ula palette
     LDA #&C6                                      ; 1298: A9 C6     ..   ; logical color 12 (flash blue/yellow) -> 6 EOR 7 = Actual color 1 (Red)
-    STA video_ula_palette                         ; 129A: 8D 21 FE  .!.
+    STA &FE21                                      ; BBC video ula palette
     JSR introduce_extra_monster_to_playscreen     ; 129D: 20 7C 24   |$
     LDA #&55 ; 'U'                                ; 12A0: A9 55     .U
     JSR flush_all_sound_channels                  ; 12A2: 20 B2 25   .%
@@ -1202,7 +1201,7 @@ ENDIF
 ; &1FE6 referenced 1 time by &12E0
 .C12E6
     LDA #3                                        ; 1FE6: A9 03                                  ..           :12E6[4]
-    STA zp_80_dest_screenaddr                     ; 1FE8: 85 80                                  ..           :12E8[4]
+    STA dest_screenaddr_zp                     ; 1FE8: 85 80                                  ..           :12E8[4]
 
 ; &1FEA referenced 1 time by &12FC
 .loop_unknown_sound_loop
@@ -1214,7 +1213,7 @@ ENDIF
     JSR compile_sound_from_AXY_data               ; 12F3: 20 9C 0B  ..   ; SOUND ?,1, <cherry number pitch>,2
     LDA #1                                        ; 12F6: A9 01     ..
     STA zp_70_sound_channel                       ; 12F8: 85 70     .p
-    DEC zp_80_dest_screenaddr                     ; 12FA: C6 80     ..
+    DEC dest_screenaddr_zp                     ; 12FA: C6 80     ..
     BNE loop_unknown_sound_loop                   ; 12FC: D0 EC     ..
     LDA #&11                                      ; 12FE: A9 11     ..
     STA zp_70_sound_channel                       ; 1300: 85 70     .p
@@ -1240,17 +1239,17 @@ ENDIF
 ; &2020 referenced 2 times by &12DE, &12E4
 .begin_keyboard_checks
     ; Check if key S is being pressed.
-    LDX #&AE                                      ; 1320: A2 AE     ..  
-    JSR execute_inkey                             ; 1322: 20 DF 26   .& 
-    BEQ check_key_press_Q                         ; 1325: F0 04     ..  
-    LDA #7                                        ; 1327: A9 07     ..   ; Key S was pressed, store 7 (0x0000111) in
-    BNE store_sound_mask                          ; 1329: D0 09     ..   ; sound flag.
+    LDX #&AE                                      ; Negative INKEY value for key S
+    JSR execute_inkey                             ; Read key: A=&FF if key pressed, 0 if key not pressed.
+    BEQ check_key_press_Q                         ; Branch if S key not pressed.
+    LDA #7                                        ; Key S was pressed, store 7 (0x0000111) in
+    BNE store_sound_mask                          ; sound flag.
 
 ; &202B referenced 1 time by &1325
 .check_key_press_Q
-    ; Check if key S is being pressed.
-    LDX #&EF                                      ; 132B: A2 EF     .. 
-    JSR execute_inkey                             ; 132D: 20 DF 26  .& 
+    ; Check if key Q is being pressed.
+    LDX #&EF                                      ; Negative INKEY value for key Q
+    JSR execute_inkey                             ; Read key: A=&FF if key pressed, 0 if key not pressed.
     BEQ possibly_check_game_keyboard_and_joystick ; 1330: F0 04     .. 
     LDA #0                                        ; 1332: A9 00     ..   ; Key Q was pressed store 0 in sound flag.
 
@@ -1285,13 +1284,13 @@ ENDIF
 ; &2063 referenced 1 time by &1338
 .check_keys_return_Z_X
     LDX #&B6                                      ; 2063: A2 B6                                  ..           :1363[4]
-    JSR execute_inkey                             ; 2065: 20 DF 26                                .&          :1365[4]
+    JSR execute_inkey                             ; Read key: A=&FF if key pressed, 0 if key not pressed.
     JSR handle_firing_the_the_ball_if_mree_has_it ; 2068: 20 85 1B                                ..          :1368[4]
     LDX #&9E                                      ; 206B: A2 9E                                  ..           :136B[4]
-    JSR execute_inkey                             ; 206D: 20 DF 26                                .&          :136D[4]
+    JSR execute_inkey                             ; Read key: A=&FF if key pressed, 0 if key not pressed.
     BNE handle_left_input                         ; 2070: D0 27                                  .'           :1370[4]
     LDX #&BD                                      ; 2072: A2 BD                                  ..           :1372[4]
-    JSR execute_inkey                             ; 2074: 20 DF 26                                .&          :1374[4]
+    JSR execute_inkey                             ; Read key: A=&FF if key pressed, 0 if key not pressed.
     BEQ check_key_colon                           ; 2077: F0 03                                  ..           :1377[4]
 ; &2079 referenced 1 time by &134E
 .right_input_detected
@@ -1300,7 +1299,7 @@ ENDIF
 ; &207C referenced 1 time by &1377
 .check_key_colon
     LDX #&B7                                      ; 207C: A2 B7                                  ..           :137C[4]
-    JSR execute_inkey                             ; 207E: 20 DF 26                                .&          :137E[4]
+    JSR execute_inkey                             ; Read key: A=&FF if key pressed, 0 if key not pressed.
     BEQ check_key_forward_slash                   ; 2081: F0 03                                  ..           :1381[4]
 ; &2083 referenced 1 time by &135F
 .up_input_detected
@@ -1309,7 +1308,7 @@ ENDIF
 ; &2086 referenced 1 time by &1381
 .check_key_forward_slash
     LDX #&97                                      ; 2086: A2 97                                  ..           :1386[4]
-    JSR execute_inkey                             ; 2088: 20 DF 26                                .&          :1388[4]
+    JSR execute_inkey                             ; Read key: A=&FF if key pressed, 0 if key not pressed.
     BEQ reset_cherries_consumed_counter           ; 208B: F0 03                                  ..           :138B[4]
 ; &208D referenced 1 time by &135B
 .handle_down_input
@@ -1686,14 +1685,14 @@ ENDIF
     JSR possible_update_ball_if_exists            ; 2292: 20 D7 26                                .&          :1592[4]
     LDA zp_24_lives_remaining                     ; 2295: A5 24                                  .$           :1595[4]
     ASL A                                         ; 2297: 0A                                     .            :1597[4]
-    STA zp_80_dest_screenaddr                     ; 2298: 85 80                                  ..           :1598[4]
+    STA dest_screenaddr_zp                     ; 2298: 85 80                                  ..           :1598[4]
     ASL A                                         ; 229A: 0A                                     .            :159A[4]
     ASL A                                         ; 229B: 0A                                     .            :159B[4]
     ASL A                                         ; 229C: 0A                                     .            :159C[4]
-    ADC zp_80_dest_screenaddr                     ; 229D: 65 80                                  e.           :159D[4]
-    STA zp_80_dest_screenaddr                     ; 229F: 85 80                                  ..           :159F[4]
+    ADC dest_screenaddr_zp                     ; 229D: 65 80                                  e.           :159D[4]
+    STA dest_screenaddr_zp                     ; 229F: 85 80                                  ..           :159F[4]
     LDA #&EE                                      ; 22A1: A9 EE                                  ..           :15A1[4]
-    SBC zp_80_dest_screenaddr                     ; 22A3: E5 80                                  ..           :15A3[4]
+    SBC dest_screenaddr_zp                     ; 22A3: E5 80                                  ..           :15A3[4]
     STA mr_ee_y_coord                             ; 22A5: 85 21                                  .!           :15A5[4]
     LDA #4                                        ; 22A7: A9 04                                  ..           :15A7[4]
     STA mr_ee_x_coord                             ; 22A9: 85 20                                  .            :15A9[4]
@@ -1749,7 +1748,7 @@ ENDIF
     DEX                                           ; 2322: CA                                     .            :1622[4]
     CPX #&0E                                      ; 2323: E0 0E                                  ..           :1623[4]
     BNE loop_print_game_black_box                 ; 2325: D0 F5                                  ..           :1625[4]
-; &2327 referenced 1 time by &1633
+
 .loop_print_game_over_characters_slowly
     LDA game_over_string_data-1,X                   ; 2327: BD CF 05                               ...          :1627[4]
     JSR oswrch                                    ; 232A: 20 EE FF                                ..          :162A[4]   ; Write character
@@ -1757,24 +1756,24 @@ ENDIF
     JSR delay_routine                             ; 232F: 20 40 0A                                @.          :162F[4]
     DEX                                           ; 2332: CA                                     .            :1632[4]
     BNE loop_print_game_over_characters_slowly    ; 2333: D0 F2                                  ..           :1633[4]
-; &2335 referenced 1 time by &4381
+
 .wait_for_input_space_or_fire
-    STX keyboard_or_joystick_flag                 ; 2335: 86 2F                                  ./           :1635[4]
-; &2337 referenced 1 time by &164C
+    STX keyboard_or_joystick_flag
+
 .loop_no_space_or_fire_pressed
-    LDA #osbyte_acknowledge_escape                ; 2337: A9 7E                                  .~           :1637[4]
-    JSR osbyte                                    ; 2339: 20 F4 FF                                ..          :1639[4]   ; Clear escape condition and perform escape effects
-    LDX #&9D                                      ; 233C: A2 9D                                  ..           :163C[4]
-    JSR execute_inkey                             ; 233E: 20 DF 26                                .&          :163E[4]
-    BNE space_or_fire_press_detected              ; 2341: D0 0D                                  ..           :1641[4]
-    LDA #osbyte_read_adc_or_get_buffer_status     ; 2343: A9 80                                  ..           :1643[4]
-    LDX #0                                        ; 2345: A2 00                                  ..           :1645[4]
-    JSR osbyte                                    ; 2347: 20 F4 FF                                ..          :1647[4]   ; Read the channel number last used for an ADC conversion and joystick fire buttons (X=0)
-    TXA                                           ; 234A: 8A                                     .            :164A[4]   ; X has the joystick fire buttons status in the lower two bits: bit 0=left button, bit 1=right button
-    LSR A                                         ; 234B: 4A                                     J            :164B[4]
-    BCC loop_no_space_or_fire_pressed             ; 234C: 90 E9                                  ..           :164C[4]
-    ROR keyboard_or_joystick_flag                 ; 234E: 66 2F                                  f/           :164E[4]
-; &2350 referenced 1 time by &1641
+    LDA #osbyte_acknowledge_escape
+    JSR osbyte                                    ; Clear escape condition and perform escape effects
+    LDX #&9D                                      ; Negative INKEY value for key SPACE
+    JSR execute_inkey                             ; Read key: A=&FF if key pressed, 0 if key not pressed.
+    BNE space_or_fire_press_detected
+    LDA #osbyte_read_adc_or_get_buffer_status     ; Check for fire button press
+    LDX #0
+    JSR osbyte                                    ; Read the channel number last used for an ADC conversion and joystick fire buttons (X=0)
+    TXA                                           ; X has the joystick fire buttons status in the lower two bits: bit 0=left button, bit 1=right button
+    LSR A
+    BCC loop_no_space_or_fire_pressed
+    ROR keyboard_or_joystick_flag
+
 .space_or_fire_press_detected
     JMP begin_new_game                            ; 2350: 4C 94 0D                               L..          :1650[4]
 
@@ -1928,18 +1927,18 @@ ENDIF
     CPY #&15                                      ; 2409: C0 15                                  ..           :1709[4]
     BCC C172B                                     ; 240B: 90 1E                                  ..           :170B[4]
     JSR calculate_screen_write_address_from_x_y_coords; 240D: 20 D3 0A                                ..          :170D[4]
-    LDA zp_80_dest_screenaddr                     ; 2410: A5 80                                  ..           :1710[4]
+    LDA dest_screenaddr_zp                     ; 2410: A5 80                                  ..           :1710[4]
     AND #7                                        ; 2412: 29 07                                  ).           :1712[4]
     TAY                                           ; 2414: A8                                     .            :1714[4]
-    LDA zp_80_dest_screenaddr                     ; 2415: A5 80                                  ..           :1715[4]
+    LDA dest_screenaddr_zp                     ; 2415: A5 80                                  ..           :1715[4]
     AND #&F8                                      ; 2417: 29 F8                                  ).           :1717[4]
-    STA zp_80_dest_screenaddr                     ; 2419: 85 80                                  ..           :1719[4]
-    LDA (zp_80_dest_screenaddr),Y                 ; 241B: B1 80                                  ..           :171B[4]
+    STA dest_screenaddr_zp                     ; 2419: 85 80                                  ..           :1719[4]
+    LDA (dest_screenaddr_zp),Y                 ; 241B: B1 80                                  ..           :171B[4]
     PHA                                           ; 241D: 48                                     H            :171D[4]
     JSR sub_increment_y_pos_and_recalc_screen_addr; 241E: 20 3C 1A                                <.          :171E[4]
     JSR sub_increment_y_pos_and_recalc_screen_addr; 2421: 20 3C 1A                                <.          :1721[4]
     PLA                                           ; 2424: 68                                     h            :1724[4]
-    ORA (zp_80_dest_screenaddr),Y                 ; 2425: 11 80                                  ..           :1725[4]
+    ORA (dest_screenaddr_zp),Y                 ; 2425: 11 80                                  ..           :1725[4]
     AND #&C0                                      ; 2427: 29 C0                                  ).           :1727[4]
     BEQ C172E                                     ; 2429: F0 03                                  ..           :1729[4]
 ; &242B referenced 1 time by &170B
@@ -1948,10 +1947,10 @@ ENDIF
 
 ; &242E referenced 1 time by &1729
 .C172E
-    LDA (zp_80_dest_screenaddr),Y                 ; 242E: B1 80                                  ..           :172E[4]
+    LDA (dest_screenaddr_zp),Y                 ; 242E: B1 80                                  ..           :172E[4]
     BNE process_all_monsters                      ; 2430: D0 27                                  .'           :1730[4]
     JSR sub_add_8_to_y_register                   ; 2432: 20 60 1A                                `.          :1732[4]
-    LDA (zp_80_dest_screenaddr),Y                 ; 2435: B1 80                                  ..           :1735[4]
+    LDA (dest_screenaddr_zp),Y                 ; 2435: B1 80                                  ..           :1735[4]
     BNE process_all_monsters                      ; 2437: D0 20                                  .            :1737[4]
     LDA L008B                                     ; 2439: A5 8B                                  ..           :1739[4]
     CMP #4                                        ; 243B: C9 04                                  ..           :173B[4]
@@ -2067,18 +2066,18 @@ ENDIF
 
 ; &24DC referenced 2 times by &13FB, &227D
 .sub_C17DC
-    LDA zp_80_dest_screenaddr                     ; 24DC: A5 80                                  ..           :17DC[4]
+    LDA dest_screenaddr_zp                     ; 24DC: A5 80                                  ..           :17DC[4]
     AND #7                                        ; 24DE: 29 07                                  ).           :17DE[4]
     TAY                                           ; 24E0: A8                                     .            :17E0[4]
-    LDA zp_80_dest_screenaddr                     ; 24E1: A5 80                                  ..           :17E1[4]
+    LDA dest_screenaddr_zp                     ; 24E1: A5 80                                  ..           :17E1[4]
     AND #&F8                                      ; 24E3: 29 F8                                  ).           :17E3[4]
     SEC                                           ; 24E5: 38                                     8            :17E5[4]
     SBC #8                                        ; 24E6: E9 08                                  ..           :17E6[4]
-    STA zp_80_dest_screenaddr                     ; 24E8: 85 80                                  ..           :17E8[4]
-    LDA zp_81_dest_screenaddr                     ; 24EA: A5 81                                  ..           :17EA[4]
+    STA dest_screenaddr_zp                     ; 24E8: 85 80                                  ..           :17E8[4]
+    LDA dest_screenaddr_zp + 1                     ; 24EA: A5 81                                  ..           :17EA[4]
     SBC #5                                        ; 24EC: E9 05                                  ..           :17EC[4]
-    STA zp_81_dest_screenaddr                     ; 24EE: 85 81                                  ..           :17EE[4]
-    LDA (zp_80_dest_screenaddr),Y                 ; 24F0: B1 80                                  ..           :17F0[4]
+    STA dest_screenaddr_zp + 1                     ; 24EE: 85 81                                  ..           :17EE[4]
+    LDA (dest_screenaddr_zp),Y                 ; 24F0: B1 80                                  ..           :17F0[4]
     PHA                                           ; 24F2: 48                                     H            :17F2[4]
     JSR sub_add_8_to_y_register                   ; 24F3: 20 60 1A                                `.          :17F3[4]
     PLA                                           ; 24F6: 68                                     h            :17F6[4]
@@ -2087,7 +2086,7 @@ ENDIF
     JSR sub_write_a_mask_to_80_81_screen_address_plus_y; 24FB: 20 56 18                                V.          :17FB[4]
 ; &24FE referenced 1 time by &17F9
 .C17FE
-    LDA (zp_80_dest_screenaddr),Y                 ; 24FE: B1 80                                  ..           :17FE[4]
+    LDA (dest_screenaddr_zp),Y                 ; 24FE: B1 80                                  ..           :17FE[4]
     AND #&C0                                      ; 2500: 29 C0                                  ).           :1800[4]
     BNE C180D                                     ; 2502: D0 09                                  ..           :1802[4]
     JSR sub_C1A66                                 ; 2504: 20 66 1A                                f.          :1804[4]
@@ -2115,7 +2114,7 @@ ENDIF
     JSR sub_increment_y_pos_and_recalc_screen_addr; 2536: 20 3C 1A                                <.          :1836[4]
     JSR sub_C18E5                                 ; 2539: 20 E5 18                                ..          :1839[4]
     JSR sub_increment_y_pos_and_recalc_screen_addr; 253C: 20 3C 1A                                <.          :183C[4]
-    LDA (zp_80_dest_screenaddr),Y                 ; 253F: B1 80                                  ..           :183F[4]
+    LDA (dest_screenaddr_zp),Y                 ; 253F: B1 80                                  ..           :183F[4]
     PHA                                           ; 2541: 48                                     H            :1841[4]
     JSR sub_C1A66                                 ; 2542: 20 66 1A                                f.          :1842[4]
     PLA                                           ; 2545: 68                                     h            :1845[4]
@@ -2124,7 +2123,7 @@ ENDIF
     JSR C18E8                                     ; 254A: 20 E8 18                                ..          :184A[4]
 ; &254D referenced 1 time by &1848
 .C184D
-    LDA (zp_80_dest_screenaddr),Y                 ; 254D: B1 80                                  ..           :184D[4]
+    LDA (dest_screenaddr_zp),Y                 ; 254D: B1 80                                  ..           :184D[4]
     AND #&C0                                      ; 254F: 29 C0                                  ).           :184F[4]
     BNE skip_mask_result_is_zero                  ; 2551: D0 0F                                  ..           :1851[4]
     JSR sub_add_8_to_y_register                   ; 2553: 20 60 1A                                `.          :1853[4]
@@ -2138,31 +2137,31 @@ ENDIF
 ;     Y: Unused - Preserved
 ; &2556 referenced 16 times by &17FB, &1816, &1833, &188F, &18A6, &18B7, &18D6, &18E5, &1945, &1956, &196B, &198E, &19CE, &19D7, &1A25, &1A39
 .sub_write_a_mask_to_80_81_screen_address_plus_y
-    LDA (zp_80_dest_screenaddr),Y                 ; 2556: B1 80                                  ..           :1856[4]
+    LDA (dest_screenaddr_zp),Y                 ; 2556: B1 80                                  ..           :1856[4]
     AND #&80                                      ; 2558: 29 80                                  ).           :1858[4]
     BEQ skip_mask_result_is_zero                  ; 255A: F0 06                                  ..           :185A[4]
-    LDA (zp_80_dest_screenaddr),Y                 ; 255C: B1 80                                  ..           :185C[4]
+    LDA (dest_screenaddr_zp),Y                 ; 255C: B1 80                                  ..           :185C[4]
     AND #&5F ; '_'                                ; 255E: 29 5F                                  )_           :185E[4]
-    STA (zp_80_dest_screenaddr),Y                 ; 2560: 91 80                                  ..           :1860[4]
+    STA (dest_screenaddr_zp),Y                 ; 2560: 91 80                                  ..           :1860[4]
 ; &2562 referenced 2 times by &1851, &185A
 .skip_mask_result_is_zero
     RTS                                           ; 2562: 60                                     `            :1862[4]
 
 ; &2563 referenced 2 times by &1486, &2271
 .sub_C1863
-    LDA zp_80_dest_screenaddr                     ; 2563: A5 80                                  ..           :1863[4]
+    LDA dest_screenaddr_zp                     ; 2563: A5 80                                  ..           :1863[4]
     AND #7                                        ; 2565: 29 07                                  ).           :1865[4]
     CLC                                           ; 2567: 18                                     .            :1867[4]
     ADC #&20 ; ' '                                ; 2568: 69 20                                  i            :1868[4]
     TAY                                           ; 256A: A8                                     .            :186A[4]
-    LDA zp_80_dest_screenaddr                     ; 256B: A5 80                                  ..           :186B[4]
+    LDA dest_screenaddr_zp                     ; 256B: A5 80                                  ..           :186B[4]
     AND #&F8                                      ; 256D: 29 F8                                  ).           :186D[4]
-    STA zp_80_dest_screenaddr                     ; 256F: 85 80                                  ..           :186F[4]
-    LDA zp_81_dest_screenaddr                     ; 2571: A5 81                                  ..           :1871[4]
+    STA dest_screenaddr_zp                     ; 256F: 85 80                                  ..           :186F[4]
+    LDA dest_screenaddr_zp + 1                     ; 2571: A5 81                                  ..           :1871[4]
     SEC                                           ; 2573: 38                                     8            :1873[4]
     SBC #5                                        ; 2574: E9 05                                  ..           :1874[4]
-    STA zp_81_dest_screenaddr                     ; 2576: 85 81                                  ..           :1876[4]
-    LDA (zp_80_dest_screenaddr),Y                 ; 2578: B1 80                                  ..           :1878[4]
+    STA dest_screenaddr_zp + 1                     ; 2576: 85 81                                  ..           :1876[4]
+    LDA (dest_screenaddr_zp),Y                 ; 2578: B1 80                                  ..           :1878[4]
     PHA                                           ; 257A: 48                                     H            :187A[4]
     JSR sub_C1A66                                 ; 257B: 20 66 1A                                f.          :187B[4]
     PLA                                           ; 257E: 68                                     h            :187E[4]
@@ -2171,7 +2170,7 @@ ENDIF
     JSR C18E8                                     ; 2583: 20 E8 18                                ..          :1883[4]
 ; &2586 referenced 1 time by &1881
 .C1886
-    LDA (zp_80_dest_screenaddr),Y                 ; 2586: B1 80                                  ..           :1886[4]
+    LDA (dest_screenaddr_zp),Y                 ; 2586: B1 80                                  ..           :1886[4]
     AND #&C0                                      ; 2588: 29 C0                                  ).           :1888[4]
     BNE C1895                                     ; 258A: D0 09                                  ..           :188A[4]
     JSR sub_add_8_to_y_register                   ; 258C: 20 60 1A                                `.          :188C[4]
@@ -2205,7 +2204,7 @@ ENDIF
     JSR sub_increment_y_pos_and_recalc_screen_addr; 25C2: 20 3C 1A                                <.          :18C2[4]
     JSR sub_C18E5                                 ; 25C5: 20 E5 18                                ..          :18C5[4]
     JSR sub_increment_y_pos_and_recalc_screen_addr; 25C8: 20 3C 1A                                <.          :18C8[4]
-    LDA (zp_80_dest_screenaddr),Y                 ; 25CB: B1 80                                  ..           :18CB[4]
+    LDA (dest_screenaddr_zp),Y                 ; 25CB: B1 80                                  ..           :18CB[4]
     PHA                                           ; 25CD: 48                                     H            :18CD[4]
     JSR sub_add_8_to_y_register                   ; 25CE: 20 60 1A                                `.          :18CE[4]
     PLA                                           ; 25D1: 68                                     h            :18D1[4]
@@ -2214,7 +2213,7 @@ ENDIF
     JSR sub_write_a_mask_to_80_81_screen_address_plus_y; 25D6: 20 56 18                                V.          :18D6[4]
 ; &25D9 referenced 1 time by &18D4
 .C18D9
-    LDA (zp_80_dest_screenaddr),Y                 ; 25D9: B1 80                                  ..           :18D9[4]
+    LDA (dest_screenaddr_zp),Y                 ; 25D9: B1 80                                  ..           :18D9[4]
     AND #&C0                                      ; 25DB: 29 C0                                  ).           :18DB[4]
     BNE end_routine_04                                     ; 25DD: D0 15                                  ..           :18DD[4]
     JSR sub_C1A66                                 ; 25DF: 20 66 1A                                f.          :18DF[4]
@@ -2225,33 +2224,33 @@ ENDIF
     JSR sub_write_a_mask_to_80_81_screen_address_plus_y; 25E5: 20 56 18                                V.          :18E5[4]
 ; &25E8 referenced 16 times by &1807, &181C, &182D, &184A, &1883, &189E, &18BF, &18E2, &192B, &1934, &197F, &1996, &19E8, &19F9, &1A05, &1A31
 .C18E8
-    LDA (zp_80_dest_screenaddr),Y                 ; 25E8: B1 80                                  ..           :18E8[4]
+    LDA (dest_screenaddr_zp),Y                 ; 25E8: B1 80                                  ..           :18E8[4]
     AND #&40 ; '@'                                ; 25EA: 29 40                                  )@           :18EA[4]
     BEQ end_routine_04                            ; 25EC: F0 06                                  ..           :18EC[4]
-    LDA (zp_80_dest_screenaddr),Y                 ; 25EE: B1 80                                  ..           :18EE[4]
+    LDA (dest_screenaddr_zp),Y                 ; 25EE: B1 80                                  ..           :18EE[4]
     AND #&AF                                      ; 25F0: 29 AF                                  ).           :18F0[4]
-    STA (zp_80_dest_screenaddr),Y                 ; 25F2: 91 80                                  ..           :18F2[4]
+    STA (dest_screenaddr_zp),Y                 ; 25F2: 91 80                                  ..           :18F2[4]
 ; &25F4 referenced 2 times by &18DD, &18EC
 .end_routine_04
     RTS                                           ; 25F4: 60                                     `            :18F4[4]
 
 ; &25F5 referenced 2 times by &14BD, &2286
 .sub_C18F5
-    LDA zp_80_dest_screenaddr                     ; 25F5: A5 80                                  ..           :18F5[4]
+    LDA dest_screenaddr_zp                     ; 25F5: A5 80                                  ..           :18F5[4]
     AND #7                                        ; 25F7: 29 07                                  ).           :18F7[4]
     CLC                                           ; 25F9: 18                                     .            :18F9[4]
     ADC #&10                                      ; 25FA: 69 10                                  i.           :18FA[4]
     TAY                                           ; 25FC: A8                                     .            :18FC[4]
-    LDA zp_80_dest_screenaddr                     ; 25FD: A5 80                                  ..           :18FD[4]
+    LDA dest_screenaddr_zp                     ; 25FD: A5 80                                  ..           :18FD[4]
 .sub_C18FF
 code_to_relocate_1900 = sub_C18FF+1
     AND #&F8                                      ; 25FF: 29 F8                                  ).           :18FF[4]
     SEC                                           ; 2601: 38                                     8            :1901[4]
     SBC #&10                                      ; 2602: E9 10                                  ..           :1902[4]
-    STA zp_80_dest_screenaddr                     ; 2604: 85 80                                  ..           :1904[4]
-    LDA zp_81_dest_screenaddr                     ; 2606: A5 81                                  ..           :1906[4]
+    STA dest_screenaddr_zp                     ; 2604: 85 80                                  ..           :1904[4]
+    LDA dest_screenaddr_zp + 1                     ; 2606: A5 81                                  ..           :1906[4]
     SBC #5                                        ; 2608: E9 05                                  ..           :1908[4]
-    STA zp_81_dest_screenaddr                     ; 260A: 85 81                                  ..           :190A[4]
+    STA dest_screenaddr_zp + 1                     ; 260A: 85 81                                  ..           :190A[4]
     JSR sub_C1A4B                                 ; 260C: 20 4B 1A                                K.          :190C[4]
     LDX #2                                        ; 260F: A2 02                                  ..           :190F[4]
 ; &2611 referenced 1 time by &1918
@@ -2265,7 +2264,7 @@ code_to_relocate_1900 = sub_C18FF+1
     SBC #&18                                      ; 261C: E9 18                                  ..           :191C[4]
     TAY                                           ; 261E: A8                                     .            :191E[4]
     JSR sub_increment_y_pos_and_recalc_screen_addr; 261F: 20 3C 1A                                <.          :191F[4]
-    LDA (zp_80_dest_screenaddr),Y                 ; 2622: B1 80                                  ..           :1922[4]
+    LDA (dest_screenaddr_zp),Y                 ; 2622: B1 80                                  ..           :1922[4]
     AND #&C0                                      ; 2624: 29 C0                                  ).           :1924[4]
     BNE C1931                                     ; 2626: D0 09                                  ..           :1926[4]
     JSR sub_increment_y_pos_and_recalc_screen_addr; 2628: 20 3C 1A                                <.          :1928[4]
@@ -2285,7 +2284,7 @@ code_to_relocate_1900 = sub_C18FF+1
     JSR sub_add_8_to_y_register                   ; 2642: 20 60 1A                                `.          :1942[4]
     JSR sub_write_a_mask_to_80_81_screen_address_plus_y; 2645: 20 56 18                                V.          :1945[4]
     JSR sub_add_8_to_y_register                   ; 2648: 20 60 1A                                `.          :1948[4]
-    LDA (zp_80_dest_screenaddr),Y                 ; 264B: B1 80                                  ..           :194B[4]
+    LDA (dest_screenaddr_zp),Y                 ; 264B: B1 80                                  ..           :194B[4]
     PHA                                           ; 264D: 48                                     H            :194D[4]
     JSR sub_increment_y_pos_and_recalc_screen_addr; 264E: 20 3C 1A                                <.          :194E[4]
     PLA                                           ; 2651: 68                                     h            :1951[4]
@@ -2297,7 +2296,7 @@ code_to_relocate_1900 = sub_C18FF+1
     JSR sub_C1A66                                 ; 2659: 20 66 1A                                f.          :1959[4]
     JSR sub_C18E5                                 ; 265C: 20 E5 18                                ..          :195C[4]
     JSR sub_add_8_to_y_register                   ; 265F: 20 60 1A                                `.          :195F[4]
-    LDA (zp_80_dest_screenaddr),Y                 ; 2662: B1 80                                  ..           :1962[4]
+    LDA (dest_screenaddr_zp),Y                 ; 2662: B1 80                                  ..           :1962[4]
     AND #&C0                                      ; 2664: 29 C0                                  ).           :1964[4]
     BNE C1971                                     ; 2666: D0 09                                  ..           :1966[4]
     JSR sub_C1A4B                                 ; 2668: 20 4B 1A                                K.          :1968[4]
@@ -2309,7 +2308,7 @@ code_to_relocate_1900 = sub_C18FF+1
     SEC                                           ; 2672: 38                                     8            :1972[4]
     SBC #&28 ; '('                                ; 2673: E9 28                                  .(           :1973[4]
     TAY                                           ; 2675: A8                                     .            :1975[4]
-    LDA (zp_80_dest_screenaddr),Y                 ; 2676: B1 80                                  ..           :1976[4]
+    LDA (dest_screenaddr_zp),Y                 ; 2676: B1 80                                  ..           :1976[4]
     AND #&C0                                      ; 2678: 29 C0                                  ).           :1978[4]
     BNE C1985                                     ; 267A: D0 09                                  ..           :197A[4]
     JSR sub_C1A4B                                 ; 267C: 20 4B 1A                                K.          :197C[4]
@@ -2329,18 +2328,18 @@ code_to_relocate_1900 = sub_C18FF+1
 
 ; &2699 referenced 3 times by &14DE, &1E63, &228C
 .C1999
-    LDA zp_80_dest_screenaddr                     ; 2699: A5 80                                  ..           :1999[4]
+    LDA dest_screenaddr_zp                     ; 2699: A5 80                                  ..           :1999[4]
     AND #7                                        ; 269B: 29 07                                  ).           :199B[4]
     CLC                                           ; 269D: 18                                     .            :199D[4]
     ADC #&18                                      ; 269E: 69 18                                  i.           :199E[4]
     TAY                                           ; 26A0: A8                                     .            :19A0[4]
-    LDA zp_80_dest_screenaddr                     ; 26A1: A5 80                                  ..           :19A1[4]
+    LDA dest_screenaddr_zp                     ; 26A1: A5 80                                  ..           :19A1[4]
     AND #&F8                                      ; 26A3: 29 F8                                  ).           :19A3[4]
     SEC                                           ; 26A5: 38                                     8            :19A5[4]
     SBC #&10                                      ; 26A6: E9 10                                  ..           :19A6[4]
-    STA zp_80_dest_screenaddr                     ; 26A8: 85 80                                  ..           :19A8[4]
+    STA dest_screenaddr_zp                     ; 26A8: 85 80                                  ..           :19A8[4]
     BCS C19AE                                     ; 26AA: B0 02                                  ..           :19AA[4]
-    DEC zp_81_dest_screenaddr                     ; 26AC: C6 81                                  ..           :19AC[4]
+    DEC dest_screenaddr_zp + 1                     ; 26AC: C6 81                                  ..           :19AC[4]
 ; &26AE referenced 1 time by &19AA
 .C19AE
     JSR sub_increment_y_pos_and_recalc_screen_addr; 26AE: 20 3C 1A                                <.          :19AE[4]
@@ -2353,7 +2352,7 @@ code_to_relocate_1900 = sub_C18FF+1
     CLC                                           ; 26C1: 18                                     .            :19C1[4]
     ADC #&10                                      ; 26C2: 69 10                                  i.           :19C2[4]
     TAY                                           ; 26C4: A8                                     .            :19C4[4]
-    LDA (zp_80_dest_screenaddr),Y                 ; 26C5: B1 80                                  ..           :19C5[4]
+    LDA (dest_screenaddr_zp),Y                 ; 26C5: B1 80                                  ..           :19C5[4]
     AND #&C0                                      ; 26C7: 29 C0                                  ).           :19C7[4]
     BNE C19D4                                     ; 26C9: D0 09                                  ..           :19C9[4]
     JSR sub_C1A4B                                 ; 26CB: 20 4B 1A                                K.          :19CB[4]
@@ -2373,7 +2372,7 @@ code_to_relocate_1900 = sub_C18FF+1
     JSR sub_C1A66                                 ; 26E5: 20 66 1A                                f.          :19E5[4]
     JSR C18E8                                     ; 26E8: 20 E8 18                                ..          :19E8[4]
     JSR sub_C1A66                                 ; 26EB: 20 66 1A                                f.          :19EB[4]
-    LDA (zp_80_dest_screenaddr),Y                 ; 26EE: B1 80                                  ..           :19EE[4]
+    LDA (dest_screenaddr_zp),Y                 ; 26EE: B1 80                                  ..           :19EE[4]
     PHA                                           ; 26F0: 48                                     H            :19F0[4]
     JSR sub_C1A4B                                 ; 26F1: 20 4B 1A                                K.          :19F1[4]
     PLA                                           ; 26F4: 68                                     h            :19F4[4]
@@ -2382,7 +2381,7 @@ code_to_relocate_1900 = sub_C18FF+1
     JSR C18E8                                     ; 26F9: 20 E8 18                                ..          :19F9[4]
 ; &26FC referenced 1 time by &19F7
 .C19FC
-    LDA (zp_80_dest_screenaddr),Y                 ; 26FC: B1 80                                  ..           :19FC[4]
+    LDA (dest_screenaddr_zp),Y                 ; 26FC: B1 80                                  ..           :19FC[4]
     AND #&C0                                      ; 26FE: 29 C0                                  ).           :19FE[4]
     BNE C1A0B                                     ; 2700: D0 09                                  ..           :1A00[4]
     JSR sub_increment_y_pos_and_recalc_screen_addr; 2702: 20 3C 1A                                <.          :1A02[4]
@@ -2398,7 +2397,7 @@ code_to_relocate_1900 = sub_C18FF+1
     TAY                                           ; 2715: A8                                     .            :1A15[4]
     JSR sub_C18E5                                 ; 2716: 20 E5 18                                ..          :1A16[4]
     JSR sub_add_8_to_y_register                   ; 2719: 20 60 1A                                `.          :1A19[4]
-    LDA (zp_80_dest_screenaddr),Y                 ; 271C: B1 80                                  ..           :1A1C[4]
+    LDA (dest_screenaddr_zp),Y                 ; 271C: B1 80                                  ..           :1A1C[4]
     AND #&C0                                      ; 271E: 29 C0                                  ).           :1A1E[4]
     BNE C1A2B                                     ; 2720: D0 09                                  ..           :1A20[4]
     JSR sub_increment_y_pos_and_recalc_screen_addr; 2722: 20 3C 1A                                <.          :1A22[4]
@@ -2445,13 +2444,13 @@ code_to_relocate_1900 = sub_C18FF+1
     AND #7                                        ; 274D: 29 07                                  ).           :1A4D[4]
     CMP #7                                        ; 274F: C9 07                                  ..           :1A4F[4]
     BNE end_routine_06                                     ; 2751: D0 12                                  ..           :1A51[4]
-    LDA zp_80_dest_screenaddr                     ; 2753: A5 80                                  ..           :1A53[4]
+    LDA dest_screenaddr_zp                     ; 2753: A5 80                                  ..           :1A53[4]
     SEC                                           ; 2755: 38                                     8            :1A55[4]
     SBC #&80                                      ; 2756: E9 80                                  ..           :1A56[4]
-    STA zp_80_dest_screenaddr                     ; 2758: 85 80                                  ..           :1A58[4]
-    LDA zp_81_dest_screenaddr                     ; 275A: A5 81                                  ..           :1A5A[4]
+    STA dest_screenaddr_zp                     ; 2758: 85 80                                  ..           :1A58[4]
+    LDA dest_screenaddr_zp + 1                     ; 275A: A5 81                                  ..           :1A5A[4]
     SBC #2                                        ; 275C: E9 02                                  ..           :1A5C[4]
-    STA zp_81_dest_screenaddr                     ; 275E: 85 81                                  ..           :1A5E[4]
+    STA dest_screenaddr_zp + 1                     ; 275E: 85 81                                  ..           :1A5E[4]
 ; ***************************************************************************************
 ; Adds 8 to y register - possibly something to do with screen writing routines
 ; 
@@ -2566,9 +2565,9 @@ code_to_relocate_1900 = sub_C18FF+1
     DEX                                           ; 27ED: CA                                     .            :1AED[4]
     BNE loop_draw_extra_box_lines_horizontal      ; 27EE: D0 E2                                  ..           :1AEE[4]
     LDA #&E8                                      ; 27F0: A9 E8                                  ..           :1AF0[4]
-    STA zp_80_dest_screenaddr                     ; 27F2: 85 80                                  ..           :1AF2[4]
+    STA dest_screenaddr_zp                     ; 27F2: 85 80                                  ..           :1AF2[4]
     LDA #&30 ; '0'                                ; 27F4: A9 30                                  .0           :1AF4[4]
-    STA zp_81_dest_screenaddr                     ; 27F6: 85 81                                  ..           :1AF6[4]
+    STA dest_screenaddr_zp + 1                     ; 27F6: 85 81                                  ..           :1AF6[4]
     LDA #&90                                      ; 27F8: A9 90                                  ..           :1AF8[4]
     STA zp_82                                     ; 27FA: 85 82                                  ..           :1AFA[4]
     LDA #&31 ; '1'                                ; 27FC: A9 31                                  .1           :1AFC[4]
@@ -2578,7 +2577,7 @@ code_to_relocate_1900 = sub_C18FF+1
 ; &2804 referenced 1 time by &1B22
 .loop_draw_extra_box_lines_vertical
     LDA #&0F                                      ; 2804: A9 0F                                  ..           :1B04[4]
-    STA (zp_80_dest_screenaddr),Y                 ; 2806: 91 80                                  ..           :1B06[4]
+    STA (dest_screenaddr_zp),Y                 ; 2806: 91 80                                  ..           :1B06[4]
     STA (zp_82),Y                                 ; 2808: 91 82                                  ..           :1B08[4]
     INY                                           ; 280A: C8                                     .            :1B0A[4]
     CPY #8                                        ; 280B: C0 08                                  ..           :1B0B[4]
@@ -2721,9 +2720,9 @@ code_to_relocate_1900 = sub_C18FF+1
     ASL A                                         ; 28C2: 0A                                     .            :1BC2[4]
     ORA #&50 ; 'P'                                ; 28C3: 09 50                                  .P           :1BC3[4]
     PHA                                           ; 28C5: 48                                     H            :1BC5[4]
-    STA zp_84_source_spriteaddr                   ; 28C6: 85 84                                  ..           :1BC6[4]
+    STA source_spriteaddr_zp                   ; 28C6: 85 84                                  ..           :1BC6[4]
     LDA #4                                        ; 28C8: A9 04                                  ..           :1BC8[4]
-    STA zp_85_source_spriteaddr                   ; 28CA: 85 85                                  ..           :1BCA[4]
+    STA source_spriteaddr_zp + 1                   ; 28CA: 85 85                                  ..           :1BCA[4]
     LDA monster_stack_x_coord-1,X         ; 28CC: BD 7F 08                               ...          :1BCC[4]
     LSR A                                         ; 28CF: 4A                                     J            :1BCF[4]   ; A=(unused)
     TAX                                           ; 28D0: AA                                     .            :1BD0[4]   ; X=X screen coordinate
@@ -2731,7 +2730,7 @@ code_to_relocate_1900 = sub_C18FF+1
     INY                                           ; 28D4: C8                                     .            :1BD4[4]
     INY                                           ; 28D5: C8                                     .            :1BD5[4]   ; Y=Y screen coordinate
     PLA                                           ; 28D6: 68                                     h            :1BD6[4]   ; A=(unused)
-    STA zp_84_source_spriteaddr                   ; 28D7: 85 84                                  ..           :1BD7[4]
+    STA source_spriteaddr_zp                   ; 28D7: 85 84                                  ..           :1BD7[4]
     JSR write_pre_selected_sprite_to_screen_routine; 28D9: 20 84 0A                                ..          :1BD9[4]
     PLA                                           ; 28DC: 68                                     h            :1BDC[4]
     TAX                                           ; 28DD: AA                                     .            :1BDD[4]
@@ -2938,9 +2937,9 @@ code_to_relocate_1900 = sub_C18FF+1
     ASL A                                         ; 2A1E: 0A                                     .            :1D1E[4]
     ASL A                                         ; 2A1F: 0A                                     .            :1D1F[4]
     ORA #&50 ; 'P'                                ; 2A20: 09 50                                  .P           :1D20[4]
-    STA zp_84_source_spriteaddr                   ; 2A22: 85 84                                  ..           :1D22[4]
+    STA source_spriteaddr_zp                   ; 2A22: 85 84                                  ..           :1D22[4]
     LDA #4                                        ; 2A24: A9 04                                  ..           :1D24[4]
-    STA zp_85_source_spriteaddr                   ; 2A26: 85 85                                  ..           :1D26[4]
+    STA source_spriteaddr_zp + 1                   ; 2A26: 85 85                                  ..           :1D26[4]
     LDA monster_stack_x_coord-1,X         ; 2A28: BD 7F 08                               ...          :1D28[4]
     LSR A                                         ; 2A2B: 4A                                     J            :1D2B[4]   ; A=(unused)
     TAX                                           ; 2A2C: AA                                     .            :1D2C[4]   ; X=X screen coordinate
@@ -3150,9 +3149,9 @@ code_to_relocate_1900 = sub_C18FF+1
 ; &2B2D referenced 2 times by &1E20, &1E27
 .sub_C1E2D
     LDA #4                                        ; 2B2D: A9 04                                  ..           :1E2D[4]
-    STA zp_85_source_spriteaddr                   ; 2B2F: 85 85                                  ..           :1E2F[4]
+    STA source_spriteaddr_zp + 1                   ; 2B2F: 85 85                                  ..           :1E2F[4]
     LDA #&90                                      ; 2B31: A9 90                                  ..           :1E31[4]   ; A=(unused)
-    STA zp_84_source_spriteaddr                   ; 2B33: 85 84                                  ..           :1E33[4]
+    STA source_spriteaddr_zp                   ; 2B33: 85 84                                  ..           :1E33[4]
     JMP write_pre_selected_sprite_to_screen_routine; 2B35: 4C 84 0A                               L..          :1E35[4]
 
 ; &2B38 referenced 2 times by &1C2E, &1D89
@@ -3168,9 +3167,9 @@ code_to_relocate_1900 = sub_C18FF+1
     LDA #&28 ; '('                                ; 2B40: A9 28                                  .(           :1E40[4]
     STA x_sprite_screen_offset_zp                                     ; 2B42: 85 17                                  ..           :1E42[4]
     LDA #4                                        ; 2B44: A9 04                                  ..           :1E44[4]
-    STA zp_85_source_spriteaddr                   ; 2B46: 85 85                                  ..           :1E46[4]
+    STA source_spriteaddr_zp + 1                   ; 2B46: 85 85                                  ..           :1E46[4]
     LDA #&B0                                      ; 2B48: A9 B0                                  ..           :1E48[4]   ; A=(unused)
-    STA zp_84_source_spriteaddr                   ; 2B4A: 85 84                                  ..           :1E4A[4]
+    STA source_spriteaddr_zp                   ; 2B4A: 85 84                                  ..           :1E4A[4]
     JSR write_pre_selected_sprite_to_screen_routine; 2B4C: 20 84 0A                                ..          :1E4C[4]
     JMP restore_sprite_xy_length_offset_to_default_x18_x10; 2B4F: 4C 50 26                               LP&          :1E4F[4]
 
@@ -3194,7 +3193,7 @@ code_to_relocate_1900 = sub_C18FF+1
 
 ; &2B66 referenced 3 times by &14D6, &1CBF, &2317
 .sub_C1E66
-    STX zp_80_dest_screenaddr                     ; 2B66: 86 80                                  ..           :1E66[4]
+    STX dest_screenaddr_zp                     ; 2B66: 86 80                                  ..           :1E66[4]
     LDX number_of_apples_on_screen_zp                ; 2B68: A6 09                                  ..           :1E68[4]
     BEQ C1E88                                     ; 2B6A: F0 1C                                  ..           :1E6A[4]
 ; &2B6C referenced 1 time by &1E86
@@ -3204,7 +3203,7 @@ code_to_relocate_1900 = sub_C18FF+1
     SBC game_pallet_data_4_or_apple_y_coord_minus_1,X; 2B6E: FD 0F 06                               ...          :1E6E[4]
     CMP #&F0                                      ; 2B71: C9 F0                                  ..           :1E71[4]
     BCC C1E85                                     ; 2B73: 90 10                                  ..           :1E73[4]
-    LDA zp_80_dest_screenaddr                     ; 2B75: A5 80                                  ..           :1E75[4]
+    LDA dest_screenaddr_zp                     ; 2B75: A5 80                                  ..           :1E75[4]
     SEC                                           ; 2B77: 38                                     8            :1E77[4]
     SBC apple_x_coordinate,X                      ; 2B78: FD AF 08                               ...          :1E78[4]
     CMP #8                                        ; 2B7B: C9 08                                  ..           :1E7B[4]
@@ -3227,7 +3226,7 @@ code_to_relocate_1900 = sub_C18FF+1
 
 ; &2B8A referenced 2 times by &14B2, &2309
 .sub_C1E8A
-    STX zp_80_dest_screenaddr                     ; 2B8A: 86 80                                  ..           :1E8A[4]
+    STX dest_screenaddr_zp                     ; 2B8A: 86 80                                  ..           :1E8A[4]
     LDX number_of_apples_on_screen_zp                ; 2B8C: A6 09                                  ..           :1E8C[4]
     BEQ C1EAC                                     ; 2B8E: F0 1C                                  ..           :1E8E[4]
 ; &2B90 referenced 1 time by &1EAA
@@ -3237,7 +3236,7 @@ code_to_relocate_1900 = sub_C18FF+1
     SBC game_pallet_data_4_or_apple_y_coord_minus_1,X; 2B92: FD 0F 06                               ...          :1E92[4]
     CMP #&11                                      ; 2B95: C9 11                                  ..           :1E95[4]
     BCS C1EA9                                     ; 2B97: B0 10                                  ..           :1E97[4]
-    LDA zp_80_dest_screenaddr                     ; 2B99: A5 80                                  ..           :1E99[4]
+    LDA dest_screenaddr_zp                     ; 2B99: A5 80                                  ..           :1E99[4]
     SEC                                           ; 2B9B: 38                                     8            :1E9B[4]
     SBC apple_x_coordinate,X                      ; 2B9C: FD AF 08                               ...          :1E9C[4]
     CMP #8                                        ; 2B9F: C9 08                                  ..           :1E9F[4]
@@ -3654,10 +3653,10 @@ code_to_relocate_1900 = sub_C18FF+1
     LDA realtime_maze_grid_offset_minus_16,Y                                   ; 2DFE: B9 20 07                               . .          :20FE[4]
     LSR A                                         ; 2E01: 4A                                     J            :2101[4]
     LSR A                                         ; 2E02: 4A                                     J            :2102[4]
-    STA zp_80_dest_screenaddr                     ; 2E03: 85 80                                  ..           :2103[4]
+    STA dest_screenaddr_zp                     ; 2E03: 85 80                                  ..           :2103[4]
 ; &2E05 referenced 1 time by &210E
 .loop_C2105
-    LSR zp_80_dest_screenaddr                     ; 2E05: 46 80                                  F.           :2105[4]
+    LSR dest_screenaddr_zp                     ; 2E05: 46 80                                  F.           :2105[4]
     LDA #0                                        ; 2E07: A9 00                                  ..           :2107[4]
     ROL A                                         ; 2E09: 2A                                     *            :2109[4]
     ROL A                                         ; 2E0A: 2A                                     *            :210A[4]
@@ -4142,9 +4141,9 @@ code_to_relocate_1900 = sub_C18FF+1
     ASL A                                         ; 30C3: 0A                                     .            :23C3[4]
     ASL A                                         ; 30C4: 0A                                     .            :23C4[4]
     ORA #&50 ; 'P'                                ; 30C5: 09 50                                  .P           :23C5[4]
-    STA zp_84_source_spriteaddr                   ; 30C7: 85 84                                  ..           :23C7[4]
+    STA source_spriteaddr_zp                   ; 30C7: 85 84                                  ..           :23C7[4]
     LDA #4                                        ; 30C9: A9 04                                  ..           :23C9[4]
-    STA zp_85_source_spriteaddr                   ; 30CB: 85 85                                  ..           :23CB[4]
+    STA source_spriteaddr_zp + 1                   ; 30CB: 85 85                                  ..           :23CB[4]
     ASL A                                         ; 30CD: 0A                                     .            :23CD[4]
     STA y_sprite_length_zp                                     ; 30CE: 85 18                                  ..           :23CE[4]
     LDA zp_90_current_x_coord                     ; 30D0: A5 90                                  ..           :23D0[4]
@@ -4252,7 +4251,7 @@ code_to_relocate_1900 = sub_C18FF+1
 .C2458
     LDA zp_96_current_status_1                    ; 3158: A5 96                                  ..           :2458[4]
     AND #3                                        ; 315A: 29 03                                  ).           :245A[4]
-    STA zp_80_dest_screenaddr                     ; 315C: 85 80                                  ..           :245C[4]
+    STA dest_screenaddr_zp                     ; 315C: 85 80                                  ..           :245C[4]
     LDA zp_96_current_status_1                    ; 315E: A5 96                                  ..           :245E[4]
     AND #&0C                                      ; 3160: 29 0C                                  ).           :2460[4]
     CMP #8                                        ; 3162: C9 08                                  ..           :2462[4]
@@ -4267,7 +4266,7 @@ code_to_relocate_1900 = sub_C18FF+1
     LDA #&14                                      ; 3173: A9 14                                  ..           :2473[4]
 ; &3175 referenced 2 times by &246B, &2471
 .C2475
-    ORA zp_80_dest_screenaddr                     ; 3175: 05 80                                  ..           :2475[4]   ; A=sprite number
+    ORA dest_screenaddr_zp                     ; 3175: 05 80                                  ..           :2475[4]   ; A=sprite number
 ; &3177 referenced 2 times by &2456, &24AE
 .C2477
     LDY zp_93_current_y_coord                     ; 3177: A4 93                                  ..           :2477[4]   ; Y=Y screen coordinate
@@ -4337,9 +4336,9 @@ code_to_relocate_1900 = sub_C18FF+1
 ; &31CD referenced 1 time by &2517
 .restore_pallet_from_red
     LDA game_pallet_brick_color_background        ; 31CD: AD 08 06                               ...          :24CD[4]
-    STA video_ula_palette                         ; 31D0: 8D 21 FE                               .!.          :24D0[4]
+    STA &FE21                                      ; BBC video ula palette
     LDA game_pallet_brick_color_foreground        ; 31D3: AD 0C 06                               ...          :24D3[4]
-    STA video_ula_palette                         ; 31D6: 8D 21 FE                               .!.          :24D6[4]
+    STA &FE21                                      ; BBC video ula palette
     LDA #&FD                                      ; 31D9: A9 FD                                  ..           :24D9[4]
     STA remaining_monsters_to_spawn_minus_1_zp       ; 31DB: 85 14                                  ..           :24DB[4]
     INC incrementing_counter_during_level_starting_at_scenenumber_plus_2_zp; 31DD: E6 02                                  ..           :24DD[4]
@@ -4391,9 +4390,9 @@ code_to_relocate_1900 = sub_C18FF+1
 ; &321A referenced 1 time by &24BC
 .sub_C251A
     JSR write_apple_to_screen_corrected           ; 321A: 20 0B 1E                                ..          :251A[4]
-    STX zp_80_dest_screenaddr                     ; 321D: 86 80                                  ..           :251D[4]
+    STX dest_screenaddr_zp                     ; 321D: 86 80                                  ..           :251D[4]
     LDX number_of_apples_on_screen_zp             ; 321F: A6 09                                  ..           :251F[4]
-    LDA zp_80_dest_screenaddr                     ; 3221: A5 80                                  ..           :2521[4]
+    LDA dest_screenaddr_zp                     ; 3221: A5 80                                  ..           :2521[4]
     ASL A                                         ; 3223: 0A                                     .            :2523[4]
     STA L08B0,X                                   ; 3224: 9D B0 08                               ...          :2524[4]
     TYA                                           ; 3227: 98                                     .            :2527[4]
@@ -4547,9 +4546,9 @@ code_to_relocate_1900 = sub_C18FF+1
 .sub_print_squished_mr_ee
     LSR y_sprite_length_zp                                     ; 32CB: 46 18                                  F.           :25CB[4]
     LDA #5                                        ; 32CD: A9 05                                  ..           :25CD[4]
-    STA zp_85_source_spriteaddr                   ; 32CF: 85 85                                  ..           :25CF[4]
+    STA source_spriteaddr_zp + 1                   ; 32CF: 85 85                                  ..           :25CF[4]
     LDA #&B0                                      ; 32D1: A9 B0                                  ..           :25D1[4]
-    STA zp_84_source_spriteaddr                   ; 32D3: 85 84                                  ..           :25D3[4]
+    STA source_spriteaddr_zp                   ; 32D3: 85 84                                  ..           :25D3[4]
     LDA mr_ee_y_coord                             ; 32D5: A5 21                                  .!           :25D5[4]
     CLC                                           ; 32D7: 18                                     .            :25D7[4]
     ADC #6                                        ; 32D8: 69 06                                  i.           :25D8[4]
@@ -4587,8 +4586,8 @@ code_to_relocate_1900 = sub_C18FF+1
 
 ; &3303 referenced 4 times by &1290, &1316, &178E, &1D73
 .C2603
-    STA zp_80_dest_screenaddr                     ; 3303: 85 80                                  ..           :2603[4]
-    STX zp_81_dest_screenaddr                     ; 3305: 86 81                                  ..           :2605[4]
+    STA dest_screenaddr_zp                     ; 3303: 85 80                                  ..           :2603[4]
+    STX dest_screenaddr_zp + 1                     ; 3305: 86 81                                  ..           :2605[4]
     TAX                                           ; 3307: AA                                     .            :2607[4]
     LDA #0                                        ; 3308: A9 00                                  ..           :2608[4]
     JSR increment_score                           ; 330A: 20 AD 0B                                ..          :260A[4]
@@ -4603,16 +4602,16 @@ code_to_relocate_1900 = sub_C18FF+1
 
 ; &3317 referenced 1 time by &2611
 .C2617
-    LDA zp_80_dest_screenaddr                     ; 3317: A5 80                                  ..           :2617[4]
+    LDA dest_screenaddr_zp                     ; 3317: A5 80                                  ..           :2617[4]
     STA L0038,X                                   ; 3319: 95 38                                  .8           :2619[4]
     TYA                                           ; 331B: 98                                     .            :261B[4]
     STA L0034,X                                   ; 331C: 95 34                                  .4           :261C[4]
-    LDA zp_81_dest_screenaddr                     ; 331E: A5 81                                  ..           :261E[4]
+    LDA dest_screenaddr_zp + 1                     ; 331E: A5 81                                  ..           :261E[4]
     STA L0030,X                                   ; 3320: 95 30                                  .0           :2620[4]
     LDA #&2D ; '-'                                ; 3322: A9 2D                                  .-           :2622[4]
     STA unknown_counter,X                         ; 3324: 95 3C                                  .<           :2624[4]
-    LDX zp_81_dest_screenaddr                     ; 3326: A6 81                                  ..           :2626[4]
-    LDA zp_80_dest_screenaddr                     ; 3328: A5 80                                  ..           :2628[4]
+    LDX dest_screenaddr_zp + 1                     ; 3326: A6 81                                  ..           :2626[4]
+    LDA dest_screenaddr_zp                     ; 3328: A5 80                                  ..           :2628[4]
 ; &332A referenced 1 time by &166B
 .sub_C262A
     PHA                                           ; 332A: 48                                     H            :262A[4]
@@ -4660,9 +4659,9 @@ code_to_relocate_1900 = sub_C18FF+1
     ASL A                                         ; 335E: 0A                                     .            :265E[4]
     CLC                                           ; 335F: 18                                     .            :265F[4]
     ADC #&10                                      ; 3360: 69 10                                  i.           :2660[4]
-    STA zp_84_source_spriteaddr                   ; 3362: 85 84                                  ..           :2662[4]
+    STA source_spriteaddr_zp                   ; 3362: 85 84                                  ..           :2662[4]
     LDA #5                                        ; 3364: A9 05                                  ..           :2664[4]   ; A=(unused)
-    STA zp_85_source_spriteaddr                   ; 3366: 85 85                                  ..           :2666[4]
+    STA source_spriteaddr_zp + 1                   ; 3366: 85 85                                  ..           :2666[4]
     JSR write_pre_selected_sprite_to_screen_routine; 3368: 20 84 0A                                ..          :2668[4]
     INX                                           ; 336B: E8                                     .            :266B[4]
     INX                                           ; 336C: E8                                     .            :266C[4]
@@ -4726,12 +4725,12 @@ code_to_relocate_1900 = sub_C18FF+1
 ; &3398 referenced 5 times by &1513, &151F, &152E, &1756, &26DB
 .sub_possible_ball_printing_or_in_motion_routine
     JSR calculate_screen_write_address_from_x_y_coords; 3398: 20 D3 0A                                ..          :2698[4]
-    LDA zp_80_dest_screenaddr                     ; 339B: A5 80                                  ..           :269B[4]
+    LDA dest_screenaddr_zp                     ; 339B: A5 80                                  ..           :269B[4]
     AND #7                                        ; 339D: 29 07                                  ).           :269D[4]
     TAY                                           ; 339F: A8                                     .            :269F[4]
-    LDA zp_80_dest_screenaddr                     ; 33A0: A5 80                                  ..           :26A0[4]
+    LDA dest_screenaddr_zp                     ; 33A0: A5 80                                  ..           :26A0[4]
     AND #&F8                                      ; 33A2: 29 F8                                  ).           :26A2[4]
-    STA zp_80_dest_screenaddr                     ; 33A4: 85 80                                  ..           :26A4[4]
+    STA dest_screenaddr_zp                     ; 33A4: 85 80                                  ..           :26A4[4]
     JSR sub_C26CA                                 ; 33A6: 20 CA 26                                .&          :26A6[4]
     JSR sub_increment_y_pos_and_recalc_screen_addr; 33A9: 20 3C 1A                                <.          :26A9[4]
     JSR sub_eor_write_bit_of_ball_to_screen       ; 33AC: 20 D0 26                                .&          :26AC[4]
@@ -4765,8 +4764,8 @@ L26CD = sub_C26CC+1
 ; &33D0 referenced 2 times by &26AC, &26BB
 .sub_eor_write_bit_of_ball_to_screen
     LDA #&0C                                      ; 33D0: A9 0C                                  ..           :26D0[4]
-    EOR (zp_80_dest_screenaddr),Y                 ; 33D2: 51 80                                  Q.           :26D2[4]
-    STA (zp_80_dest_screenaddr),Y                 ; 33D4: 91 80                                  ..           :26D4[4]
+    EOR (dest_screenaddr_zp),Y                 ; 33D2: 51 80                                  Q.           :26D2[4]
+    STA (dest_screenaddr_zp),Y                 ; 33D4: 91 80                                  ..           :26D4[4]
     RTS                                           ; 33D6: 60                                     `            :26D6[4]
 
 ; &33D7 referenced 6 times by &11E4, &1570, &1586, &1592, &16E2, &17D9
@@ -4774,16 +4773,18 @@ L26CD = sub_C26CC+1
     LDY possible_temp_ball_y_coordinate_zp           ; 33D7: A4 1A                                  ..           :26D7[4]
     LDX possible_temp_ball_x_coordinate_zp           ; 33D9: A6 19                                  ..           :26D9[4]   ; if X=0 then ball does not exist on screen?
     BNE sub_possible_ball_printing_or_in_motion_routine; 33DB: D0 BB                                  ..           :26DB[4]
+
 ; &33DD referenced 4 times by &0907, &090C, &0911, &0916
 .sub_check_P_key_pressed
-    LDX #inkey_key_p                              ; 33DD: A2 C8                                  ..           :26DD[4]   ; X=inkey key value
+    LDX #inkey_key_p                              ; INKEY value for key 'P' ready to detect if this key is being pressed.
+
 ; &33DF referenced 8 times by &1322, &132D, &1365, &136D, &1374, &137E, &1388, &163E
 .execute_inkey
-    LDY #&FF                                      ; 33DF: A0 FF                                  ..           :26DF[4]
-    LDA #osbyte_inkey                             ; 33E1: A9 81                                  ..           :26E1[4]
-    JSR osbyte                                    ; 33E3: 20 F4 FF                                ..          :26E3[4]   ; Is the 'P' key pressed?
-    TXA                                           ; 33E6: 8A                                     .            :26E6[4]   ; X and Y contain &FF if the key is pressed
-    RTS                                           ; 33E7: 60                                     `            :26E7[4]
+    LDY #&FF                                      ; Y=&FF - Do a keyboard scan.
+    LDA #osbyte_inkey
+    JSR osbyte                                    ; Call osbyte for keyboard scan
+    TXA                                           ; X and Y contain &FF if the key is pressed
+    RTS                                           ; On return, A = &FF if desired key is being pressed. A=&00 if not pressed.
 
 ; &33E8 referenced 4 times by &1028, &11FC, &204A, &2510
 .sub_C26E8
@@ -4910,13 +4911,13 @@ L26CD = sub_C26CC+1
 ;     Y: Unused - Not Changed
 ; &3485 referenced 2 times by &1A42, &1B11
 .sub_move_80_81_screen_address_down_one_line
-    LDA zp_dest_screen_address                    ; 3485: A5 80                                  ..           :2785[4]
+    LDA dest_screenaddr_zp                    ; 3485: A5 80                                  ..           :2785[4]
     CLC                                           ; 3487: 18                                     .            :2787[4]
     ADC # SCREEN_LINE_OFFSET MOD 256              ; 3488: 69 80                                  i.           :2788[4]
-    STA zp_dest_screen_address                    ; 348A: 85 80                                  ..           :278A[4]
-    LDA zp_dest_screen_address+1                  ; 348C: A5 81                                  ..           :278C[4]
+    STA dest_screenaddr_zp                    ; 348A: 85 80                                  ..           :278A[4]
+    LDA dest_screenaddr_zp+1                  ; 348C: A5 81                                  ..           :278C[4]
     ADC # SCREEN_LINE_OFFSET DIV 256              ; 348E: 69 02                                  i.           :278E[4]
-    STA zp_dest_screen_address+1                  ; 3490: 85 81                                  ..           :2790[4]
+    STA dest_screenaddr_zp+1                  ; 3490: 85 81                                  ..           :2790[4]
     RTS                                           ; 3492: 60                                     `            :2792[4]
 
 ; &3493 referenced 1 time by &12B1
@@ -5413,10 +5414,10 @@ relocated_data_600 = game_pallet_data
     STY zp_78_sound_channel                       ; 4041: 84 78                                  .x           :0941[1]
     STA zp_7E_sound_duration                      ; 4043: 85 7E                                  .~           :0943[1]
     LDA #0                                        ; 4045: A9 00                                  ..           :0945[1]
-    STA zp_80_dest_screenaddr                     ; 4047: 85 80                                  ..           :0947[1]
+    STA dest_screenaddr_zp                     ; 4047: 85 80                                  ..           :0947[1]
     CPX #&65 ; 'e'                                ; 4049: E0 65                                  .e           :0949[1]
     BCS C0965                                     ; 404B: B0 18                                  ..           :094B[1]
-    INC zp_80_dest_screenaddr                     ; 404D: E6 80                                  ..           :094D[1]
+    INC dest_screenaddr_zp                     ; 404D: E6 80                                  ..           :094D[1]
     CPX #&1B                                      ; 404F: E0 1B                                  ..           :094F[1]
     BCC C0965                                     ; 4051: 90 12                                  ..           :0951[1]
     CPX #&55 ; 'U'                                ; 4053: E0 55                                  .U           :0953[1]
@@ -5428,7 +5429,7 @@ relocated_data_600 = game_pallet_data
     CLC                                           ; 405E: 18                                     .            :095E[1]
     ADC zp_7E_sound_duration                      ; 405F: 65 7E                                  e~           :095F[1]
     STA zp_7E_sound_duration                      ; 4061: 85 7E                                  .~           :0961[1]
-    ASL zp_80_dest_screenaddr                     ; 4063: 06 80                                  ..           :0963[1]
+    ASL dest_screenaddr_zp                     ; 4063: 06 80                                  ..           :0963[1]
 ; &4065 referenced 4 times by &094B, &0951, &0955, &0959
 .C0965
     LDX #&F9                                      ; 4065: A2 F9                                  ..           :0965[1]
@@ -5444,7 +5445,7 @@ relocated_data_600 = game_pallet_data
     JSR play_precompile_sound_block_at_zp_78      ; 4075: 20 98 0B                                ..          :0975[1]
     LDX #0                                        ; 4078: A2 00                                  ..           :0978[1]
     STX zp_7A_sound_amplitude                     ; 407A: 86 7A                                  .z           :097A[1]
-    LDA zp_80_dest_screenaddr                     ; 407C: A5 80                                  ..           :097C[1]
+    LDA dest_screenaddr_zp                     ; 407C: A5 80                                  ..           :097C[1]
     STA zp_7E_sound_duration                      ; 407E: 85 7E                                  .~           :097E[1]
     JSR play_precompile_sound_block_at_zp_78      ; 4080: 20 98 0B                                ..          :0980[1]
     INC L000C                                     ; 4083: E6 0C                                  ..           :0983[1]
@@ -5506,7 +5507,7 @@ L09A9 = sub_C09A8+1
     BCC C0A26                                     ; 40CD: 90 57                                  .W           :09CD[1]
     LSR A                                         ; 40CF: 4A                                     J            :09CF[1]
     LSR A                                         ; 40D0: 4A                                     J            :09D0[1]
-    STA zp_80_dest_screenaddr                     ; 40D1: 85 80                                  ..           :09D1[1]
+    STA dest_screenaddr_zp                     ; 40D1: 85 80                                  ..           :09D1[1]
     BCC C09E7                                     ; 40D3: 90 12                                  ..           :09D3[1]
     LDA possible_current_tunnel_brick_map,Y       ; 40D5: B9 30 06                               .0.          :09D5[1]
     BNE C09E7                                     ; 40D8: D0 0D                                  ..           :09D8[1]
@@ -5519,7 +5520,7 @@ L09A9 = sub_C09A8+1
     STA L0700,X                                   ; 40E4: 9D 00 07                               ...          :09E4[1]
 ; &40E7 referenced 2 times by &09D3, &09D8
 .C09E7
-    LSR zp_80_dest_screenaddr                     ; 40E7: 46 80                                  F.           :09E7[1]
+    LSR dest_screenaddr_zp                     ; 40E7: 46 80                                  F.           :09E7[1]
     BCC C09FD                                     ; 40E9: 90 12                                  ..           :09E9[1]
     LDA L0610,Y                                   ; 40EB: B9 10 06                               ...          :09EB[1]
     BNE C09FD                                     ; 40EE: D0 0D                                  ..           :09EE[1]
@@ -5532,7 +5533,7 @@ L09A9 = sub_C09A8+1
     STA L0700,X                                   ; 40FA: 9D 00 07                               ...          :09FA[1]
 ; &40FD referenced 2 times by &09E9, &09EE
 .C09FD
-    LSR zp_80_dest_screenaddr                     ; 40FD: 46 80                                  F.           :09FD[1]
+    LSR dest_screenaddr_zp                     ; 40FD: 46 80                                  F.           :09FD[1]
 .sub_C09FF
 relocated_data_A00 = sub_C09FF+1
     BCC C0A12                                     ; 40FF: 90 11                                  ..           :09FF[1]
@@ -5548,7 +5549,7 @@ relocated_data_A00 = sub_C09FF+1
     STA L0700,X                                   ; 410F: 9D 00 07                               ...          :0A0F[1]
 ; &4112 referenced 2 times by &09FF, &0A04
 .C0A12
-    LSR zp_80_dest_screenaddr                     ; 4112: 46 80                                  F.           :0A12[1]
+    LSR dest_screenaddr_zp                     ; 4112: 46 80                                  F.           :0A12[1]
     BCC C0A26                                     ; 4114: 90 10                                  ..           :0A14[1]
     LDA L0621,Y                                   ; 4116: B9 21 06                               .!.          :0A16[1]
     BNE C0A26                                     ; 4119: D0 0B                                  ..           :0A19[1]
@@ -5689,15 +5690,15 @@ relocated_data_A00 = sub_C09FF+1
 ; NOTE This section the code can be changes by running code. And can have the
 ; following variations.
 ; Variation 1: (default as compiled)
-    EOR (zp_dest_screen_address),Y                   ; 0A91: 51 80   Q.   
-    STA (zp_dest_screen_address),Y                   ; 0A93: 91 80   ..   ; zp 80 writes to screen memory (print sprite)
+    EOR (dest_screenaddr_zp),Y                   ; 0A91: 51 80   Q.   
+    STA (dest_screenaddr_zp),Y                   ; 0A93: 91 80   ..   ; zp 80 writes to screen memory (print sprite)
 ;
 
 ; Variation 2?
 ; 
 ;     NOP                                            ; 0A91 EA         Q
 ;     JMP &0B91                                      ; 0A92: 20 91 0B
-;     STA (zp_dest_screen_address),Y                 ; 4193: 91 80     ..   ; zp 80 writes to screen memory (print sprite)
+;     STA (dest_screenaddr_zp),Y                 ; 4193: 91 80     ..   ; zp 80 writes to screen memory (print sprite)
 
 ; Variation 3
 ;    ???
@@ -5725,8 +5726,8 @@ relocated_data_A00 = sub_C09FF+1
     INC zp_source_sprite_address+1                ; 0AB4: E6 85   ..
 
 .possible_increment_screen_address
-    INC zp_80_dest_screenaddr                     ; 0AB6: E6 80   ..
-    LDY zp_80_dest_screenaddr                     ; 0AB8: A4 80   ..
+    INC dest_screenaddr_zp                     ; 0AB6: E6 80   ..
+    LDY dest_screenaddr_zp                     ; 0AB8: A4 80   ..
     TYA                                           ; 0ABA: 98      .
     AND #7                                        ; 0ABB: 29 07   ).
     BNE loop_begin_write_next_line                ; 0ABD: D0 CE   ..
@@ -5734,10 +5735,10 @@ relocated_data_A00 = sub_C09FF+1
     TYA                                           ; 0AC0: 98      . 
     CLC                                           ; 0AC1: 18      .    ; increment screen address by one whole line (finished printing top line, now print bottom
     ADC #&79 ; 'y'                                ; 0AC2: 69 79   iy
-    STA zp_80_dest_screenaddr                     ; 0AC4: 85 80   ..
-    LDA zp_81_dest_screenaddr                     ; 0AC6: A5 81   ..
+    STA dest_screenaddr_zp                     ; 0AC4: 85 80   ..
+    LDA dest_screenaddr_zp + 1                     ; 0AC6: A5 81   ..
     ADC #2                                        ; 0AC8: 69 02   i.
-    STA zp_81_dest_screenaddr                     ; 0ACA: 85 81   ..
+    STA dest_screenaddr_zp + 1                     ; 0ACA: 85 81   ..
     BCC loop_begin_write_next_line                ; 0ACC: 90 BF   ..
 
 .sprite_write_complete
@@ -5766,7 +5767,7 @@ relocated_data_A00 = sub_C09FF+1
     TYA                                           ; 0AE0: 98      .    ; Y Screen offset calulatiom begins Y=lllllnnn, where lllll = line number, nnn = offset within that line (0-7)
     AND #7                                        ; 0AE1: 29 07   ).
     ASL A                                         ; 0AE3: 0A      . 
-    STA zp_dest_screen_address                    ; 0AE4: 85 80   ..
+    STA dest_screenaddr_zp                    ; 0AE4: 85 80   ..
     TYA                                           ; 0AE6: 98      . 
     AND #&F8                                      ; 0AE7: 29 F8   ).
     LSR A                                         ; 0AE9: 4A      J 
@@ -5774,19 +5775,19 @@ relocated_data_A00 = sub_C09FF+1
     STA zp_8f_screencalc_temp_store               ; 0AEB: 85 8F   ..
     LSR A                                         ; 0AED: 4A      J 
     LSR A                                         ; 0AEE: 4A      J 
-    ROR zp_dest_screen_address                    ; 0AEF: 66 80  f.
+    ROR dest_screenaddr_zp                    ; 0AEF: 66 80  f.
     CLC                                           ; 0AF1: 18      . 
     ADC zp_8f_screencalc_temp_store               ; 0AF2: 65 8F   e.
     ADC zp_83                                     ; 0AF4: 65 83   e.
     ADC #&30 ; '0'                                ; 0AF6: 69 30   i0   ; We have memory offset address for printing spite. Add &3000 (start address of mode 2 to make it point to correct screen memory location
-    STA zp_dest_screen_address+1                  ; 0AF8: 85 81   ..
-    LDA zp_dest_screen_address                    ; 0AFA: A5 80   ..
+    STA dest_screenaddr_zp+1                  ; 0AF8: 85 81   ..
+    LDA dest_screenaddr_zp                    ; 0AFA: A5 80   ..
     ADC zp_82                                     ; 0AFC: 65 82   e.
-    STA zp_dest_screen_address                    ; 0AFE: 85 80   ..
+    STA dest_screenaddr_zp                    ; 0AFE: 85 80   ..
 
 .relocated_data_B00
     BCC skip_screenaddr_msb_increment             ; 0B00: 90 02   ..
-    INC zp_81_dest_screenaddr                     ; 0B02: E6 81   ..
+    INC dest_screenaddr_zp + 1                     ; 0B02: E6 81   ..
 
 .skip_screenaddr_msb_increment
     RTS                                           ; 0B04: 60      `
@@ -5823,13 +5824,13 @@ relocated_data_A00 = sub_C09FF+1
     LSR A                                         ; 0B36: 4A         J
     LSR A                                         ; 0B37: 4A         J
     ORA L0087                                     ; 0B38: 05 87      ..
-    AND (zp_80_dest_screenaddr),Y                 ; 0B3A: 31 80      1.
-    STA (zp_80_dest_screenaddr),Y                 ; 0B3C: 91 80      ..   ; zp 80 writes to screen memory (print sprite)
+    AND (dest_screenaddr_zp),Y                 ; 0B3A: 31 80      1.
+    STA (dest_screenaddr_zp),Y                 ; 0B3C: 91 80      ..   ; zp 80 writes to screen memory (print sprite)
     PLA                                           ; 0B3E: 68         h
 .unknown_mod_2
     AND #&3F ; '?'                                ; 0B3F: 29 3F      )?
-    EOR (zp_80_dest_screenaddr),Y                 ; 0B41: 51 80      Q.
-    STA (zp_80_dest_screenaddr),Y                 ; 0B43: 91 80      ..   ; zp 80 writes to screen memory (print sprite)
+    EOR (dest_screenaddr_zp),Y                 ; 0B41: 51 80      Q.
+    STA (dest_screenaddr_zp),Y                 ; 0B43: 91 80      ..   ; zp 80 writes to screen memory (print sprite)
     RTS                                           ; 0B45: 60         `
 
 ; &4246 referenced 1 time by &1B47
@@ -5855,9 +5856,9 @@ relocated_data_A00 = sub_C09FF+1
     ASL A                                         ; 0B52: 0A        .
     ASL A                                         ; 0B53: 0A        .
     ASL A                                         ; 0B54: 0A        .
-    STA zp_84_source_spriteaddr                   ; 0B55: 85 84     ..
+    STA source_spriteaddr_zp                   ; 0B55: 85 84     ..
     LDA #4                                        ; 0B57: A9 04     ..
-    STA zp_85_source_spriteaddr                   ; 0B59: 85 85     ..
+    STA source_spriteaddr_zp + 1                   ; 0B59: 85 85     ..
     ASL A                                         ; 0B5B: 0A        .
     STA x_sprite_screen_offset_zp                 ; 0B5C: 85 17     ..           :0B5C[1]   ; Stores 8 to x_sprite_screen_offset_zp
     STA y_sprite_length_zp                        ; 0B5E: 85 18     ..           :0B5E[1]   ; Stores 8 to y_sprite_length_zp
@@ -6046,10 +6047,10 @@ ORG &4300
 
     LDX #&24 ; '$'                                ; 4316: A2 24                                  .$
     LDY #0                                        ; 4318: A0 00                                  ..
-    STY zp_80_dest_screenaddr                     ; 431A: 84 80                                  ..
+    STY dest_screenaddr_zp                     ; 431A: 84 80                                  ..
     STY zp_82                                     ; 431C: 84 82                                  ..
     LDA #&0C                                      ; 431E: A9 0C                                  ..                      ; loads address &0C00 into &80-81
-    STA zp_81_dest_screenaddr                     ; 4320: 85 81                                  ..
+    STA dest_screenaddr_zp + 1                     ; 4320: 85 81                                  ..
     LDA #&19                                      ; 4322: A9 19                                  ..
     STA zp_83                                     ; 4324: 85 83                                  ..                      ; loads address &1900 into &82-83
 
@@ -6083,10 +6084,10 @@ ORG &4300
 ; &434D referenced 2 times by &4352, &4359
 .loop_relocate_more_data
     LDA (zp_82),Y                                 ; 434D: B1 82                                  ..
-    STA (zp_80_dest_screenaddr),Y                 ; 434F: 91 80                                  ..
+    STA (dest_screenaddr_zp),Y                 ; 434F: 91 80                                  ..
     DEY                                           ; 4351: 88                                     .
     BNE loop_relocate_more_data                   ; 4352: D0 F9                                  ..
-    INC zp_81_dest_screenaddr                     ; 4354: E6 81                                  ..
+    INC dest_screenaddr_zp + 1                     ; 4354: E6 81                                  ..
     INC zp_83                                     ; 4356: E6 83                                  ..
     DEX                                           ; 4358: CA                                     .
     BNE loop_relocate_more_data                   ; 4359: D0 F2                                  ..
@@ -6155,16 +6156,14 @@ ORG &4300
 .relocation_code_end
 
 ; Label references by decreasing frequency:
-;     zp_80_dest_screenaddr:                                            106
+;     dest_screenaddr_zp:                                            106
 ;     zp_90_current_x_coord:                                             68
 ;     zp_96_current_status_1:                                            57
 ;     zp_93_current_y_coord:                                             46
 ;     mr_ee_y_coord:                                                     32
 ;     mr_ee_x_coord:                                                     30
 ;     sub_C273C:                                                         30
-;     zp_85_source_spriteaddr:                                           28
-;     zp_81_dest_screenaddr:                                             26
-;     zp_84_source_spriteaddr:                                           24
+;     source_spriteaddr_zp:                                           24
 ;     L0092:                                                             23
 ;     ball_state_zp:                                                        22
 ;     L0088:                                                             22
@@ -6238,7 +6237,6 @@ ORG &4300
 ;     zp_78_sound_channel:                                                6
 ;     L2090:                                                              6
 ;     C33D7:                                                              6
-;     video_ula_palette:                                                  6
 ;     L0026:                                                              5
 ;     strange_unused_score+1:                                             5
 ;     unknown_counter:                                                    5
@@ -6255,8 +6253,6 @@ ORG &4300
 ;     sub_C4284:                                                          5
 ;     incrementing_counter_during_level_starting_at_scenenumber_plus_2_zp:   4
 ;     score_zp:                                                              4
-;     score_zp+1:                                                            4
-;     score_zp+2:                                                            4
 ;     remaining_cherry_count_zp:                                             4
 ;     sound_on_off_flag_z[:                                                  4
 ;     L000B:                                                              4
@@ -6265,7 +6261,6 @@ ORG &4300
 ;     L0025:                                                              4
 ;     L008B:                                                              4
 ;     L00A1:                                                              4
-;     unknown_monster_data_2-1:                                   4
 ;     L0700:                                                              4
 ;     sub_C2231:                                                          4
 ;     L2BD9:                                                              4
