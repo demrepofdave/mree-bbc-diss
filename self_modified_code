@@ -1,0 +1,26 @@
+
+Normal....
+
+0B05: A9 31       LDA #31     >d 0a91
+    0A91: 51 80       EOR (80),Y  
+    0A93: 91 80       STA (80),Y  
+    0A95: 98          TYA         
+
+
+When called from .print_cherry
+
+    0A91: EA          NOP         
+    0A92: 20 31 0B    JSR 0B31    
+    0A95: 98          TYA         
+
+When called from .update_extra_letters_at_top_of_screen
+    0A91: EA          NOP         
+    0A92: 20 7D 0B    JSR 0B7D    
+    0A95: 98          TYA         
+
+
+When restore_sprite_routine_code_to_default is called (back to normal)
+
+    0A91: 51 80       EOR (80),Y  
+    0A93: 91 80       STA (80),Y  
+    0A95: 98          TYA         
