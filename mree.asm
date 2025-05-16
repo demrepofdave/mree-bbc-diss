@@ -475,9 +475,8 @@ ENDIF
     LDA (zp_90_current_x_coord),Y
     AND source_spriteaddr_zp
     BNE skip_to_0E8F
-    JMP C0FA0
+    JMP skip_to_0FA0
 
-; &1B8F referenced 1 time by &0E8A
 .skip_to_0E8F
     LDA #&FF
     CPX #&65
@@ -492,331 +491,325 @@ ENDIF
     DEX
     BPL loop_C0E99
     TAX
-    BEQ C0EC6
+    BEQ skip_to_0EC6
     LDX #&0D
 
 .loop_C0EA4
-    JSR sub_C0B84                                 ; 1BA4: 20 84 0B                                ..          :0EA4[4]
-    CPX #&6D ; 'm'                                ; 1BA7: E0 6D                                  .m           :0EA7[4]
-    BNE loop_C0EA4                                ; 1BA9: D0 F9                                  ..           :0EA9[4]
-    DEC L063D                                     ; 1BAB: CE 3D 06                               .=.          :0EAB[4]
-    DEC L0640                                     ; 1BAE: CE 40 06                               .@.          :0EAE[4]
-    DEC L0697                                     ; 1BB1: CE 97 06                               ...          :0EB1[4]
-    DEC L069A                                     ; 1BB4: CE 9A 06                               ...          :0EB4[4]
-    LDA #&AA                                      ; 1BB7: A9 AA                                  ..           :0EB7[4]
-    STA L0643                                     ; 1BB9: 8D 43 06                               .C.          :0EB9[4]
-    STA L0691                                     ; 1BBC: 8D 91 06                               ...          :0EBC[4]
-    LSR A                                         ; 1BBF: 4A                                     J            :0EBF[4]
-    STA L0646                                     ; 1BC0: 8D 46 06                               .F.          :0EC0[4]
-    STA L0694                                     ; 1BC3: 8D 94 06                               ...          :0EC3[4]
-; &1BC6 referenced 1 time by &0EA0
-.C0EC6
-    LDA #0                                        ; 1BC6: A9 00                                  ..           :0EC6[4]
-    STA source_spriteaddr_zp + 1                   ; 1BC8: 85 85                                  ..           :0EC8[4]
-    LDY zp_83                                     ; 1BCA: A4 83                                  ..           :0ECA[4]
-    DEY                                           ; 1BCC: 88                                     .            :0ECC[4]
-    DEY                                           ; 1BCD: 88                                     .            :0ECD[4]
-    BMI C0EE3                                     ; 1BCE: 30 13                                  0.           :0ECE[4]
-    LDA (zp_90_current_x_coord),Y                 ; 1BD0: B1 90                                  ..           :0ED0[4]
-    AND source_spriteaddr_zp                   ; 1BD2: 25 84                                  %.           :0ED2[4]
-    BEQ C0EE3                                     ; 1BD4: F0 0D                                  ..           :0ED4[4]
-    INC source_spriteaddr_zp + 1                   ; 1BD6: E6 85                                  ..           :0ED6[4]
-    INC source_spriteaddr_zp + 1                   ; 1BD8: E6 85                                  ..           :0ED8[4]
-    LDX #1                                        ; 1BDA: A2 01                                  ..           :0EDA[4]
-; &1BDC referenced 1 time by &0EE1
+    JSR sub_C0B84
+    CPX #&6D
+    BNE loop_C0EA4
+    DEC L063D
+    DEC L0640
+    DEC L0697
+    DEC L069A
+    LDA #&AA
+    STA L0643
+    STA L0691
+    LSR A
+    STA L0646
+    STA L0694
+
+.skip_to_0EC6
+    LDA #0
+    STA source_spriteaddr_zp + 1
+    LDY zp_83
+    DEY
+    DEY
+    BMI skip_to_0EE3
+    LDA (zp_90_current_x_coord),Y
+    AND source_spriteaddr_zp
+    BEQ skip_to_0EE3
+    INC source_spriteaddr_zp + 1
+    INC source_spriteaddr_zp + 1
+    LDX #1
+
 .loop_C0EDC
-    JSR sub_C0B84                                 ; 1BDC: 20 84 0B                                ..          :0EDC[4]
-    CPX #&19                                      ; 1BDF: E0 19                                  ..           :0EDF[4]
-    BNE loop_C0EDC                                ; 1BE1: D0 F9                                  ..           :0EE1[4]
-; &1BE3 referenced 2 times by &0ECE, &0ED4
-.C0EE3
-    LDY zp_83                                     ; 1BE3: A4 83                                  ..           :0EE3[4]
-    INY                                           ; 1BE5: C8                                     .            :0EE5[4]
-    INY                                           ; 1BE6: C8                                     .            :0EE6[4]
-    CPY #&1A                                      ; 1BE7: C0 1A                                  ..           :0EE7[4]
-    BCS C0EFC                                     ; 1BE9: B0 11                                  ..           :0EE9[4]
-    LDA (zp_90_current_x_coord),Y                 ; 1BEB: B1 90                                  ..           :0EEB[4]
-    AND source_spriteaddr_zp                   ; 1BED: 25 84                                  %.           :0EED[4]
-    BEQ C0EFC                                     ; 1BEF: F0 0B                                  ..           :0EEF[4]
-    INC source_spriteaddr_zp + 1                   ; 1BF1: E6 85                                  ..           :0EF1[4]
-    LDX #&61 ; 'a'                                ; 1BF3: A2 61                                  .a           :0EF3[4]
-; &1BF5 referenced 1 time by &0EFA
+    JSR sub_C0B84
+    CPX #&19
+    BNE loop_C0EDC
+
+.skip_to_0EE3
+    LDY zp_83
+    INY
+    INY
+    CPY #&1A
+    BCS skip_to_0EFC
+    LDA (zp_90_current_x_coord),Y
+    AND source_spriteaddr_zp
+    BEQ skip_to_0EFC
+    INC source_spriteaddr_zp + 1
+    LDX #&61
+
 .loop_C0EF5
-    JSR sub_C0B84                                 ; 1BF5: 20 84 0B                                ..          :0EF5[4]
-    CPX #&79 ; 'y'                                ; 1BF8: E0 79                                  .y           :0EF8[4]
-    BNE loop_C0EF5                                ; 1BFA: D0 F9                                  ..           :0EFA[4]
-; &1BFC referenced 2 times by &0EE9, &0EEF
-.C0EFC
-    LDY zp_83                                     ; 1BFC: A4 83                                  ..           :0EFC[4]
-    LDA source_spriteaddr_zp                   ; 1BFE: A5 84                                  ..           :0EFE[4]
-    LSR A                                         ; 1C00: 4A                                     J            :0F00[4]
-    BCC C0F05                                     ; 1C01: 90 02                                  ..           :0F01[4]
-    ROR A                                         ; 1C03: 6A                                     j            :0F03[4]
-    INY                                           ; 1C04: C8                                     .            :0F04[4]
-; &1C05 referenced 1 time by &0F01
-.C0F05
-    AND (zp_90_current_x_coord),Y                 ; 1C05: 31 90                                  1.           :0F05[4]
-    BEQ C0F26                                     ; 1C07: F0 1D                                  ..           :0F07[4]
-    LDX #&0E                                      ; 1C09: A2 0E                                  ..           :0F09[4]
-; &1C0B referenced 1 time by &0F10
+    JSR sub_C0B84
+    CPX #&79
+    BNE loop_C0EF5
+
+.skip_to_0EFC
+    LDY zp_83
+    LDA source_spriteaddr_zp
+    LSR A
+    BCC skip_to_0F05
+    ROR A
+    INY
+
+.skip_to_0F05
+    AND (zp_90_current_x_coord),Y
+    BEQ skip_to_0F26
+    LDX #&0E
+
 .loop_C0F0B
-    JSR sub_C0B84                                 ; 1C0B: 20 84 0B                                ..          :0F0B[4]
-    CPX #&6E ; 'n'                                ; 1C0E: E0 6E                                  .n           :0F0E[4]
-    BNE loop_C0F0B                                ; 1C10: D0 F9                                  ..           :0F10[4]
-    LDX #&55 ; 'U'                                ; 1C12: A2 55                                  .U           :0F12[4]
-    LDA source_spriteaddr_zp + 1                   ; 1C14: A5 85                                  ..           :0F14[4]
-    ORA #8                                        ; 1C16: 09 08                                  ..           :0F16[4]
-    STA source_spriteaddr_zp + 1                   ; 1C18: 85 85                                  ..           :0F18[4]
-    LSR A                                         ; 1C1A: 4A                                     J            :0F1A[4]
-    BCC C0F20                                     ; 1C1B: 90 03                                  ..           :0F1B[4]
-    STX L06A1                                     ; 1C1D: 8E A1 06                               ...          :0F1D[4]
-; &1C20 referenced 1 time by &0F1B
-.C0F20
-    LSR A                                         ; 1C20: 4A                                     J            :0F20[4]
-    BCC C0F26                                     ; 1C21: 90 03                                  ..           :0F21[4]
-    STX L063B                                     ; 1C23: 8E 3B 06                               .;.          :0F23[4]
-; &1C26 referenced 2 times by &0F07, &0F21
-.C0F26
-    LDY zp_83                                     ; 1C26: A4 83                                  ..           :0F26[4]
-    LDA source_spriteaddr_zp                   ; 1C28: A5 84                                  ..           :0F28[4]
-    ASL A                                         ; 1C2A: 0A                                     .            :0F2A[4]
-    BCC C0F31                                     ; 1C2B: 90 04                                  ..           :0F2B[4]
-    ROL A                                         ; 1C2D: 2A                                     *            :0F2D[4]
-    DEY                                           ; 1C2E: 88                                     .            :0F2E[4]
-    BMI C0F52                                     ; 1C2F: 30 21                                  0!           :0F2F[4]
-; &1C31 referenced 1 time by &0F2B
-.C0F31
-    AND (zp_90_current_x_coord),Y                 ; 1C31: 31 90                                  1.           :0F31[4]
-    BEQ C0F52                                     ; 1C33: F0 1D                                  ..           :0F33[4]
-    LDX #&0C                                      ; 1C35: A2 0C                                  ..           :0F35[4]
-; &1C37 referenced 1 time by &0F3C
+    JSR sub_C0B84
+    CPX #&6E
+    BNE loop_C0F0B
+    LDX #&55
+    LDA source_spriteaddr_zp + 1
+    ORA #8
+    STA source_spriteaddr_zp + 1
+    LSR A
+    BCC skip_to_0F20
+    STX L06A1
+
+.skip_to_0F20
+    LSR A
+    BCC skip_to_0F26
+    STX L063B
+
+.skip_to_0F26
+    LDY zp_83
+    LDA source_spriteaddr_zp
+    ASL A
+    BCC skip_to_0F31
+    ROL A
+    DEY
+    BMI skip_to_0F52
+
+.skip_to_0F31
+    AND (zp_90_current_x_coord),Y
+    BEQ skip_to_0F52
+    LDX #&0C
+
 .loop_C0F37
-    JSR sub_C0B84                                 ; 1C37: 20 84 0B                                ..          :0F37[4]
-    CPX #&6C ; 'l'                                ; 1C3A: E0 6C                                  .l           :0F3A[4]
-    BNE loop_C0F37                                ; 1C3C: D0 F9                                  ..           :0F3C[4]
-    LDX #&AA                                      ; 1C3E: A2 AA                                  ..           :0F3E[4]
-    LDA source_spriteaddr_zp + 1                   ; 1C40: A5 85                                  ..           :0F40[4]
-    ORA #4                                        ; 1C42: 09 04                                  ..           :0F42[4]
-    STA source_spriteaddr_zp + 1                   ; 1C44: 85 85                                  ..           :0F44[4]
-    LSR A                                         ; 1C46: 4A                                     J            :0F46[4]
-    BCC C0F4C                                     ; 1C47: 90 03                                  ..           :0F47[4]
-    STX L069C                                     ; 1C49: 8E 9C 06                               ...          :0F49[4]
-; &1C4C referenced 1 time by &0F47
-.C0F4C
-    LSR A                                         ; 1C4C: 4A                                     J            :0F4C[4]
-    BCC C0F52                                     ; 1C4D: 90 03                                  ..           :0F4D[4]
-    STX L0636                                     ; 1C4F: 8E 36 06                               .6.          :0F4F[4]
-; &1C52 referenced 3 times by &0F2F, &0F33, &0F4D
-.C0F52
-    LDX L0092                                     ; 1C52: A6 92                                  ..           :0F52[4]
-    ASL source_spriteaddr_zp + 1                   ; 1C54: 06 85                                  ..           :0F54[4]
-    ASL source_spriteaddr_zp + 1                   ; 1C56: 06 85                                  ..           :0F56[4]
-    INC source_spriteaddr_zp + 1                   ; 1C58: E6 85                                  ..           :0F58[4]
-    LDA source_spriteaddr_zp + 1                   ; 1C5A: A5 85                                  ..           :0F5A[4]
-    STA realtime_maze_grid,X                      ; 1C5C: 9D 30 07                               .0.          :0F5C[4]
-    LDA dest_screenaddr_zp                     ; 1C5F: A5 80                                  ..           :0F5F[4]
-    STA L0088                                     ; 1C61: 85 88                                  ..           :0F61[4]
-    LDA dest_screenaddr_zp + 1                     ; 1C63: A5 81                                  ..           :0F63[4]
-    STA zp_89_possible_ball_x_coordinate          ; 1C65: 85 89                                  ..           :0F65[4]
-    LDX #0                                        ; 1C67: A2 00                                  ..           :0F67[4]
-    LDY zp_82                                     ; 1C69: A4 82                                  ..           :0F69[4]
-    LDA #&14                                      ; 1C6B: A9 14                                  ..           :0F6B[4]
-    STA source_spriteaddr_zp + 1                   ; 1C6D: 85 85                                  ..           :0F6D[4]
-; &1C6F referenced 1 time by &0F9E
-.C0F6F
-    LDA #6                                        ; 1C6F: A9 06                                  ..           :0F6F[4]
-    STA L0086                                     ; 1C71: 85 86                                  ..           :0F71[4]
+    JSR sub_C0B84
+    CPX #&6C
+    BNE loop_C0F37
+    LDX #&AA
+    LDA source_spriteaddr_zp + 1
+    ORA #4
+    STA source_spriteaddr_zp + 1
+    LSR A
+    BCC skip_to_0F4C
+    STX L069C
 
-; &1C73 referenced 1 time by &0F82
+.skip_to_0F4C
+    LSR A
+    BCC skip_to_0F52
+    STX L0636
+
+.skip_to_0F52
+    LDX L0092
+    ASL source_spriteaddr_zp + 1
+    ASL source_spriteaddr_zp + 1
+    INC source_spriteaddr_zp + 1
+    LDA source_spriteaddr_zp + 1
+    STA realtime_maze_grid,X
+    LDA dest_screenaddr_zp
+    STA L0088
+    LDA dest_screenaddr_zp + 1
+    STA zp_89_possible_ball_x_coordinate
+    LDX #0
+    LDY zp_82
+    LDA #&14
+    STA source_spriteaddr_zp + 1
+
+.skip_to_0F6F
+    LDA #6
+    STA L0086
+
 .loop_until_empty_space_is_plotted
-    LDA possible_current_tunnel_brick_map,X       ; 1C73: BD 30 06                               .0.          :0F73[4]
-    AND (L0088),Y                                 ; 1C76: 31 88                                  1.           :0F76[4]
-    STA (L0088),Y                                 ; 1C78: 91 88                                  ..           :0F78[4]
-    INX                                           ; 1C7A: E8                                     .            :0F7A[4]
-    TYA                                           ; 1C7B: 98                                     .            :0F7B[4]
-    CLC                                           ; 1C7C: 18                                     .            :0F7C[4]
-    ADC #8                                        ; 1C7D: 69 08                                  i.           :0F7D[4]
-    TAY                                           ; 1C7F: A8                                     .            :0F7F[4]
-    DEC L0086                                     ; 1C80: C6 86                                  ..           :0F80[4]
-    BNE loop_until_empty_space_is_plotted         ; 1C82: D0 EF                                  ..           :0F82[4]
-    TYA                                           ; 1C84: 98                                     .            :0F84[4]
-    SEC                                           ; 1C85: 38                                     8            :0F85[4]
-    SBC #&2F ; '/'                                ; 1C86: E9 2F                                  ./           :0F86[4]
-    TAY                                           ; 1C88: A8                                     .            :0F88[4]
-    CPY #8                                        ; 1C89: C0 08                                  ..           :0F89[4]
-    BNE C0F9C                                     ; 1C8B: D0 0F                                  ..           :0F8B[4]
-    LDY #0                                        ; 1C8D: A0 00                                  ..           :0F8D[4]
-    LDA L0088                                     ; 1C8F: A5 88                                  ..           :0F8F[4]
-    CLC                                           ; 1C91: 18                                     .            :0F91[4]
-    ADC # SCREEN_LINE_OFFSET MOD 256              ; 1C92: 69 80                                  i.           :0F92[4]
-    STA L0088                                     ; 1C94: 85 88                                  ..           :0F94[4]
-    LDA zp_89_possible_ball_x_coordinate          ; 1C96: A5 89                                  ..           :0F96[4]
-    ADC # SCREEN_LINE_OFFSET DIV 256              ; 1C98: 69 02                                  i.           :0F98[4]
-    STA zp_89_possible_ball_x_coordinate          ; 1C9A: 85 89                                  ..           :0F9A[4]
-; &1C9C referenced 1 time by &0F8B
-.C0F9C
-    DEC source_spriteaddr_zp + 1                   ; 1C9C: C6 85                                  ..           :0F9C[4]
-    BNE C0F6F                                     ; 1C9E: D0 CF                                  ..           :0F9E[4]
-; &1CA0 referenced 1 time by &0E8C
-.C0FA0
-    INC L0092                                     ; 1CA0: E6 92                                  ..           :0FA0[4]
-    LDA dest_screenaddr_zp                     ; 1CA2: A5 80                                  ..           :0FA2[4]
-    CLC                                           ; 1CA4: 18                                     .            :0FA4[4]
-    ADC #&28 ; '('                                ; 1CA5: 69 28                                  i(           :0FA5[4]
-    STA dest_screenaddr_zp                     ; 1CA7: 85 80                                  ..           :0FA7[4]
-    BCC C0FAD                                     ; 1CA9: 90 02                                  ..           :0FA9[4]
-    INC dest_screenaddr_zp + 1                     ; 1CAB: E6 81                                  ..           :0FAB[4]
-; &1CAD referenced 1 time by &0FA9
-.C0FAD
-    LSR source_spriteaddr_zp                   ; 1CAD: 46 84                                  F.           :0FAD[4]
-    BCC C0FB5                                     ; 1CAF: 90 04                                  ..           :0FAF[4]
-    ROR source_spriteaddr_zp                   ; 1CB1: 66 84                                  f.           :0FB1[4]
-    INC zp_83                                     ; 1CB3: E6 83                                  ..           :0FB3[4]
-; &1CB5 referenced 1 time by &0FAF
-.C0FB5
-    LDA L0092                                     ; 1CB5: A5 92                                  ..           :0FB5[4]
-    AND #&0F                                      ; 1CB7: 29 0F                                  ).           :0FB7[4]
-    CMP #&0C                                      ; 1CB9: C9 0C                                  ..           :0FB9[4]
-    BNE skip_end_of_maze_line                     ; 1CBB: D0 2A                                  .*           :0FBB[4]
-    LDA L0092                                     ; 1CBD: A5 92                                  ..           :0FBD[4]
-    CLC                                           ; 1CBF: 18                                     .            :0FBF[4]
-    ADC #4                                        ; 1CC0: 69 04                                  i.           :0FC0[4]
-    STA L0092                                     ; 1CC2: 85 92                                  ..           :0FC2[4]
-    INC zp_83                                     ; 1CC4: E6 83                                  ..           :0FC4[4]
-    LDA #&80                                      ; 1CC6: A9 80                                  ..           :0FC6[4]
-    STA source_spriteaddr_zp                   ; 1CC8: 85 84                                  ..           :0FC8[4]
-    LDA dest_screenaddr_zp                     ; 1CCA: A5 80                                  ..           :0FCA[4]
-    CLC                                           ; 1CCC: 18                                     .            :0FCC[4]
-    ADC #&20 ; ' '                                ; 1CCD: 69 20                                  i            :0FCD[4]
-    STA dest_screenaddr_zp                     ; 1CCF: 85 80                                  ..           :0FCF[4]
-    LDA dest_screenaddr_zp + 1                     ; 1CD1: A5 81                                  ..           :0FD1[4]
-    ADC #3                                        ; 1CD3: 69 03                                  i.           :0FD3[4]
-    STA dest_screenaddr_zp + 1                     ; 1CD5: 85 81                                  ..           :0FD5[4]
-    LDY zp_82                                     ; 1CD7: A4 82                                  ..           :0FD7[4]
-    JSR sub_increment_y_pos_and_recalc_screen_addr; 1CD9: 20 3C 1A                                <.          :0FD9[4]
-    JSR sub_increment_y_pos_and_recalc_screen_addr; 1CDC: 20 3C 1A                                <.          :0FDC[4]
-    STY zp_82                                     ; 1CDF: 84 82                                  ..           :0FDF[4]
-    LDY zp_83                                     ; 1CE1: A4 83                                  ..           :0FE1[4]
-    CPY #&1A                                      ; 1CE3: C0 1A                                  ..           :0FE3[4]
-    BEQ position_fruit_in_maze                    ; 1CE5: F0 03                                  ..           :0FE5[4]
+    LDA possible_current_tunnel_brick_map,X
+    AND (L0088),Y
+    STA (L0088),Y
+    INX
+    TYA
+    CLC
+    ADC #8
+    TAY
+    DEC L0086
+    BNE loop_until_empty_space_is_plotted
+    TYA
+    SEC
+    SBC #&2F
+    TAY
+    CPY #8
+    BNE skip_to_0F9C
+    LDY #0
+    LDA L0088
+    CLC
+    ADC # SCREEN_LINE_OFFSET MOD 256
+    STA L0088
+    LDA zp_89_possible_ball_x_coordinate
+    ADC # SCREEN_LINE_OFFSET DIV 256
+    STA zp_89_possible_ball_x_coordinate
 
-; &1CE7 referenced 1 time by &0FBB
+.skip_to_0F9C
+    DEC source_spriteaddr_zp + 1
+    BNE skip_to_0F6F
+
+.skip_to_0FA0
+    INC L0092
+    LDA dest_screenaddr_zp
+    CLC
+    ADC #&28
+    STA dest_screenaddr_zp
+    BCC skip_to_0FAD
+    INC dest_screenaddr_zp + 1
+
+.skip_to_0FAD
+    LSR source_spriteaddr_zp
+    BCC skip_to_0FB5
+    ROR source_spriteaddr_zp
+    INC zp_83
+
+.skip_to_0FB5
+    LDA L0092
+    AND #&0F
+    CMP #&0C
+    BNE skip_end_of_maze_line
+    LDA L0092
+    CLC
+    ADC #4
+    STA L0092
+    INC zp_83
+    LDA #&80
+    STA source_spriteaddr_zp
+    LDA dest_screenaddr_zp
+    CLC
+    ADC #&20
+    STA dest_screenaddr_zp
+    LDA dest_screenaddr_zp + 1
+    ADC #3
+    STA dest_screenaddr_zp + 1
+    LDY zp_82
+    JSR sub_increment_y_pos_and_recalc_screen_addr
+    JSR sub_increment_y_pos_and_recalc_screen_addr
+    STY zp_82
+    LDY zp_83
+    CPY #&1A
+    BEQ position_fruit_in_maze
+
 .skip_end_of_maze_line
-    JMP loop_possible_build_maze                  ; 1CE7: 4C 7D 0E                               L}.          :0FE7[4]
+    JMP loop_possible_build_maze
 
-; &1CEA referenced 1 time by &0FE5
 .position_fruit_in_maze
-    LDA (zp_90_current_x_coord),Y                 ; 1CEA: B1 90                                  ..           :0FEA[4]
-    STA L0092                                     ; 1CEC: 85 92                                  ..           :0FEC[4]
+    LDA (zp_90_current_x_coord),Y
+    STA L0092
 
-; &1CEE referenced 1 time by &1023
-.C0FEE
-    INY                                           ; 1CEE: C8                                     .            :0FEE[4]
-    TYA                                           ; 1CEF: 98                                     .            :0FEF[4]
-    PHA                                           ; 1CF0: 48                                     H            :0FF0[4]
-    LDA (zp_90_current_x_coord),Y                 ; 1CF1: B1 90                                  ..           :0FF1[4]
-    PHA                                           ; 1CF3: 48                                     H            :0FF3[4]
-    AND #&F0                                      ; 1CF4: 29 F0                                  ).           :0FF4[4]
-    LSR A                                         ; 1CF6: 4A                                     J            :0FF6[4]
-    LSR A                                         ; 1CF7: 4A                                     J            :0FF7[4]
-    STA zp_93_current_y_coord                     ; 1CF8: 85 93                                  ..           :0FF8[4]
-    LSR A                                         ; 1CFA: 4A                                     J            :0FFA[4]
-    LSR A                                         ; 1CFB: 4A                                     J            :0FFB[4]
-    STA L0094                                     ; 1CFC: 85 94                                  ..           :0FFC[4]
-    ADC zp_93_current_y_coord                     ; 1CFE: 65 93                                  e.           :0FFE[4]
-    ADC #&0A                                      ; 1D00: 69 0A                                  i.           :1000[4]
-    TAX                                           ; 1D02: AA                                     .            :1002[4]
-    PLA                                           ; 1D03: 68                                     h            :1003[4]
-    AND #&0F                                      ; 1D04: 29 0F                                  ).           :1004[4]
-    ASL A                                         ; 1D06: 0A                                     .            :1006[4]
-    STA zp_93_current_y_coord                     ; 1D07: 85 93                                  ..           :1007[4]
-    ASL A                                         ; 1D09: 0A                                     .            :1009[4]
-    ASL A                                         ; 1D0A: 0A                                     .            :100A[4]
-    ASL A                                         ; 1D0B: 0A                                     .            :100B[4]
-    ORA L0094                                     ; 1D0C: 05 94                                  ..           :100C[4]
-    STA L0094                                     ; 1D0E: 85 94                                  ..           :100E[4]
-    LDA zp_93_current_y_coord                     ; 1D10: A5 93                                  ..           :1010[4]
-    ASL A                                         ; 1D12: 0A                                     .            :1012[4]
-    ASL A                                         ; 1D13: 0A                                     .            :1013[4]
-    ASL A                                         ; 1D14: 0A                                     .            :1014[4]
-    ADC zp_93_current_y_coord                     ; 1D15: 65 93                                  e.           :1015[4]
-    ADC #&15                                      ; 1D17: 69 15                                  i.           :1017[4]
-    CPY L0092                                     ; 1D19: C4 92                                  ..           :1019[4]
-    TAY                                           ; 1D1B: A8                                     .            :101B[4]
-    JSR print_cherry_group                        ; 1D1C: 20 1B 27                                .'          :101C[4]
-    PLA                                           ; 1D1F: 68                                     h            :101F[4]
-    TAY                                           ; 1D20: A8                                     .            :1020[4]
-    CPY #&1F                                      ; 1D21: C0 1F                                  ..           :1021[4]
-    BNE C0FEE                                     ; 1D23: D0 C9                                  ..           :1023[4]
-    JSR sub_C1A6C                                 ; 1D25: 20 6C 1A                                l.          :1025[4]
-    JSR sub_C26E8                                 ; 1D28: 20 E8 26                                .&          :1028[4]
-    LDA #6                                        ; 1D2B: A9 06                                  ..           :102B[4]
-    STA number_of_apples_on_screen_zp             ; 1D2D: 85 09                                  ..           :102D[4]
-    STA zp_90_current_x_coord                     ; 1D2F: 85 90                                  ..           :102F[4]
-; &1D31 referenced 3 times by &106A, &106F, &108A
-.C1031
-    JSR sub_C25E5                                 ; 1D31: 20 E5 25                                .%          :1031[4]
-; &1D34 referenced 1 time by &1037
+.skip_to_0FEE
+    INY
+    TYA
+    PHA
+    LDA (zp_90_current_x_coord),Y
+    PHA
+    AND #&F0
+    LSR A
+    LSR A
+    STA zp_93_current_y_coord
+    LSR A
+    LSR A
+    STA L0094
+    ADC zp_93_current_y_coord
+    ADC #&0A
+    TAX
+    PLA
+    AND #&0F
+    ASL A
+    STA zp_93_current_y_coord
+    ASL A
+    ASL A
+    ASL A
+    ORA L0094
+    STA L0094
+    LDA zp_93_current_y_coord
+    ASL A
+    ASL A
+    ASL A
+    ADC zp_93_current_y_coord
+    ADC #&15
+    CPY L0092
+    TAY
+    JSR print_cherry_group
+    PLA
+    TAY
+    CPY #&1F
+    BNE skip_to_0FEE
+    JSR sub_C1A6C
+    JSR sub_C26E8
+    LDA #6
+    STA number_of_apples_on_screen_zp
+    STA zp_90_current_x_coord
+
+.skip_to_1031
+    JSR sub_C25E5
+
 .loop_C1034
-    SEC                                           ; 1D34: 38                                     8            :1034[4]
-    SBC #&0A                                      ; 1D35: E9 0A                                  ..           :1035[4]
-    BCS loop_C1034                                ; 1D37: B0 FB                                  ..           :1037[4]
-    ADC #&0B                                      ; 1D39: 69 0B                                  i.           :1039[4]
-    PHA                                           ; 1D3B: 48                                     H            :103B[4]
-    STA L0091                                     ; 1D3C: 85 91                                  ..           :103C[4]
-    ASL A                                         ; 1D3E: 0A                                     .            :103E[4]
-    ASL A                                         ; 1D3F: 0A                                     .            :103F[4]
-    ADC L0091                                     ; 1D40: 65 91                                  e.           :1040[4]
-    ADC #&0A                                      ; 1D42: 69 0A                                  i.           :1042[4]
-    ASL A                                         ; 1D44: 0A                                     .            :1044[4]
-    LDY zp_90_current_x_coord                     ; 1D45: A4 90                                  ..           :1045[4]
-    STA apple_x_coordinate,Y                      ; 1D47: 99 AF 08                               ...          :1047[4]
-    TAX                                           ; 1D4A: AA                                     .            :104A[4]
-    LDA #0                                        ; 1D4B: A9 00                                  ..           :104B[4]
-    STA apple_status_data_minus_1,Y               ; 1D4D: 99 1F 06                               ...          :104D[4]
-    JSR sub_C25E5                                 ; 1D50: 20 E5 25                                .%          :1050[4]
+    SEC
+    SBC #&0A
+    BCS loop_C1034
+    ADC #&0B
+    PHA
+    STA L0091
+    ASL A
+    ASL A
+    ADC L0091
+    ADC #&0A
+    ASL A
+    LDY zp_90_current_x_coord
+    STA apple_x_coordinate,Y
+    TAX
+    LDA #0
+    STA apple_status_data_minus_1,Y
+    JSR sub_C25E5
 
-; &1D53 referenced 1 time by &1056
 .loop_C1053
-    SEC                                           ; 1D53: 38                                     8            :1053[4]
-    SBC #&0B                                      ; 1D54: E9 0B                                  ..           :1054[4]
-    BCS loop_C1053                                ; 1D56: B0 FB                                  ..           :1056[4]
-    ADC #&0B                                      ; 1D58: 69 0B                                  i.           :1058[4]
-    ASL A                                         ; 1D5A: 0A                                     .            :105A[4]
-    STA L0091                                     ; 1D5B: 85 91                                  ..           :105B[4]
-    ASL A                                         ; 1D5D: 0A                                     .            :105D[4]
-    ASL A                                         ; 1D5E: 0A                                     .            :105E[4]
-    ASL A                                         ; 1D5F: 0A                                     .            :105F[4]
-    STA L0092                                     ; 1D60: 85 92                                  ..           :1060[4]
-    PLA                                           ; 1D62: 68                                     h            :1062[4]
-    ORA L0092                                     ; 1D63: 05 92                                  ..           :1063[4]
-    TAY                                           ; 1D65: A8                                     .            :1065[4]
-    LDA L0740,Y                                   ; 1D66: B9 40 07                               .@.          :1066[4]
-    LSR A                                         ; 1D69: 4A                                     J            :1069[4]
-    BCS C1031                                     ; 1D6A: B0 C5                                  ..           :106A[4]
-    LDA realtime_maze_grid,Y                      ; 1D6C: B9 30 07                               .0.          :106C[4]
-    BNE C1031                                     ; 1D6F: D0 C0                                  ..           :106F[4]
-    ORA #&80                                      ; 1D71: 09 80                                  ..           :1071[4]
-    STA realtime_maze_grid,Y                      ; 1D73: 99 30 07                               .0.          :1073[4]
-    LDA L0091                                     ; 1D76: A5 91                                  ..           :1076[4]
-    ASL A                                         ; 1D78: 0A                                     .            :1078[4]
-    ASL A                                         ; 1D79: 0A                                     .            :1079[4]
-    ASL A                                         ; 1D7A: 0A                                     .            :107A[4]
-    ADC L0091                                     ; 1D7B: 65 91                                  e.           :107B[4]
-    ADC #&15                                      ; 1D7D: 69 15                                  i.           :107D[4]
-    LDY zp_90_current_x_coord                     ; 1D7F: A4 90                                  ..           :107F[4]
-    STA game_pallet_data_4_or_apple_y_coord_minus_1,Y; 1D81: 99 0F 06                               ...          :1081[4]
-    TAY                                           ; 1D84: A8                                     .            :1084[4]
-    JSR write_apple_to_screen_uncorrected         ; 1D85: 20 08 1E                                ..          :1085[4]
-    DEC zp_90_current_x_coord                     ; 1D88: C6 90                                  ..           :1088[4]
-    BNE C1031                                     ; 1D8A: D0 A5                                  ..           :108A[4]
+    SEC
+    SBC #&0B
+    BCS loop_C1053
+    ADC #&0B
+    ASL A
+    STA L0091
+    ASL A
+    ASL A
+    ASL A
+    STA L0092
+    PLA
+    ORA L0092
+    TAY
+    LDA L0740,Y
+    LSR A
+    BCS skip_to_1031
+    LDA realtime_maze_grid,Y
+    BNE skip_to_1031
+    ORA #&80
+    STA realtime_maze_grid,Y
+    LDA L0091
+    ASL A
+    ASL A
+    ASL A
+    ADC L0091
+    ADC #&15
+    LDY zp_90_current_x_coord
+    STA game_pallet_data_4_or_apple_y_coord_minus_1,Y
+    TAY
+    JSR write_apple_to_screen_uncorrected
+    DEC zp_90_current_x_coord
+    BNE skip_to_1031
 
-; &1D8C referenced 1 time by &1248
 .initial_write_of_central_base_to_screen
-    LDA #7                                        ; 1D8C: A9 07                                  ..           :108C[4]   ; Sprite 7 to write (center_base)
-    JSR write_sprite_at_central_base              ; 1D8E: 20 52 0A                                R.          :108E[4]
-    LDX #3                                        ; 1D91: A2 03                                  ..           :1091[4]
-    LDA #0                                        ; 1D93: A9 00                                  ..           :1093[4]
+    LDA #7
+    JSR write_sprite_at_central_base
+    LDX #3
+    LDA #0
 
 ; &1D95 referenced 1 time by &1098
 .loop_decrement_three_unknown_counters
