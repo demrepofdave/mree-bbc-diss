@@ -92,7 +92,7 @@ mr_ee_y_coord                                 = &0021
 ; 0 = right; 1 = left; 2 = up; 3 = down
 zp_mr_ee_direction                                              = &0022
 level_number_scene_mod_10                                       = &0023
-zp_24_lives_remaining                                           = &0024
+lives_remaining_zp                                           = &0024
 L0025                                                           = &0025
 L0026                                                           = &0026
 
@@ -209,100 +209,108 @@ osbyte                                                          = &FFF4
 ; In this case only the first 32 bytes are used for this, and defined the four types
 ; of brick which are plotted as the mase background.  The rest are used for other
 ; parts of data for the game.
-    EQUB &C3, &66, &3C, &18, &3C, &66, &C3, &81   ; C00: C3 66 3C 18 3C 66 C3 81   .f<.<f..   ; VDU 224 - Level block 1 - X
-    EQUB &0F, &1E, &3C, &78, &F0, &E1, &C3, &87   ; C08: 0F 1E 3C 78 F0 E1 C3 87   ..<x....   ; VDU 225 - Level block 2 - Slide
-    EQUB   0, &7E, &7E, &7E,   0, &E7, &E7, &E7   ; C10: 00 7E 7E 7E 00 E7 E7 E7   .~~~....   ; VDU 226 - Level block 3 - Brick
-    EQUB &60, &F0, &F9, &FF, &9F, &0F,   6,   0   ; C18: 60 F0 F9 FF 9F 0F 06 00   `.......   ; VDU 227 - Level block 4 - Wavey
+    EQUB &C3, &66, &3C, &18, &3C, &66, &C3, &81   ; VDU 224 - Level block 1 - X
+    EQUB &0F, &1E, &3C, &78, &F0, &E1, &C3, &87   ; VDU 225 - Level block 2 - Slide
+    EQUB &00, &7E, &7E, &7E, &00, &E7, &E7, &E7   ; VDU 226 - Level block 3 - Brick
+    EQUB &60, &F0, &F9, &FF, &9F, &0F, &06, &00   ; VDU 227 - Level block 4 - Wavey
 
 .scene_and_score_zero_string_data
-    EQUB   1, &0E, &1F, &30,   1,   5, &1F, &45   ; 1920: 01 0E 1F 30 01 05 1F 45                ...0...E     :0C20[4]
-    EQUB &4E, &45, &43, &53,   0, &0D, &1F,   2   ; 1928: 4E 45 43 53 00 0D 1F 02                NECS....     :0C28[4]
-    EQUB &11                                      ; 1930: 11                                     .            :0C30[4]
-    EQUB 4                                        ; 1931: 04                                     .            :0C31[4]
+    EQUB &01, &0E, &1F, &30, &01, &05, &1F, &45   ; ...0...E
+    EQUB &4E, &45, &43, &53, &00, &0D, &1F, &02   ; NECS....
+    EQUB &11
+    EQUB &04
 
 .start_of_level_data
 
 .scene_10_level_data
-    EQUB &3F, &C0, &60, &60, &F0, &30, &98, &10   ; 1932: 3F C0 60 60 F0 30 98 10                ?.``.0..     :0C32[4]   ; Level 0 (e.g. scene 10) data begins
-    EQUB &8C, &10, &84, &10, &84, &10, &86, &10   ; 193A: 8C 10 84 10 84 10 86 10                ........     :0C3A[4]
-    EQUB &83, &10, &81, &90, &C0, &F0, &60, &60   ; 1942: 83 10 81 90 C0 F0 60 60                ......``     :0C42[4]
-    EQUB &3F, &C0, &1F, &15, &73, &18, &4A, &96   ; 194A: 3F C0 1F 15 73 18 4A 96                ?...s.J.     :0C4A[4]
-    EQUB &10, &E2                                 ; 1952: 10 E2                                  ..           :0C52[4]   ; Level 0 foreground/background brick color (0x22 = 34 bytes in total per level); Level 0 Brick character
+    EQUB &3F, &C0, &60, &60, &F0, &30, &98, &10   ; Level 0 (e.g. scene 10) data begins
+    EQUB &8C, &10, &84, &10, &84, &10, &86, &10
+    EQUB &83, &10, &81, &90, &C0, &F0, &60, &60
+    EQUB &3F, &C0, &1F, &15, &73, &18, &4A, &96
+    EQUB &10, &E2                                 ; Level 0 foreground/background brick color (0x22 = 34 bytes in total per level); Level 0 Brick character
 
 .scene_1_level_data
-    EQUB &0F, &C0,   4, &60,   4, &30,   4, &10   ; 1954: 0F C0 04 60 04 30 04 10                ...`.0..     :0C54[4]   ; Level 1 (e.g. scene 1) data begins
-    EQUB   4, &10,   4, &10,   4, &10,   4, &10   ; 195C: 04 10 04 10 04 10 04 10                ........     :0C5C[4]
-    EQUB   4, &10,   4, &10, &E4, &30, &A4, &60   ; 1964: 04 10 04 10 E4 30 A4 60                .....0.`     :0C64[4]
-    EQUB &FF, &C0, &1D, &62,   8,   1, &33, &86   ; 196C: FF C0 1D 62 08 01 33 86                ...b..3.     :0C6C[4]
-    EQUB &15, &E2                                 ; 1974: 15 E2                                  ..           :0C74[4]   ; Level 1 foreground/background brick color; Level 1 Brick character
+    EQUB &0F, &C0, &04, &60, &04, &30, &04, &10   ; Level 1 (e.g. scene 1) data begins
+    EQUB &04, &10, &04, &10, &04, &10, &04, &10
+    EQUB &04, &10, &04, &10, &E4, &30, &A4, &60
+    EQUB &FF, &C0, &1D, &62, &08, &01, &33, &86
+    EQUB &15, &E2                                 ; Level 1 foreground/background brick color; Level 1 Brick character
 
 .scene_2_level_data
-    EQUB &3F, &C0, &60, &60, &C0, &30, &80, &10   ; 1976: 3F C0 60 60 C0 30 80 10                ?.``.0..     :0C76[4]   ; Level 2 data begins
-    EQUB   0, &10,   0, &10,   4, &30,   7, &E0   ; 197E: 00 10 00 10 04 30 07 E0                .....0..     :0C7E[4]
-    EQUB &1C,   0, &70,   0, &C0,   0, &80,   0   ; 1986: 1C 00 70 00 C0 00 80 00                ..p.....     :0C86[4]
-    EQUB &FF, &F0, &1D, &22, &49, &83,   5, &A8   ; 198E: FF F0 1D 22 49 83 05 A8                ..."I...     :0C8E[4]
-    EQUB &13, &E1                                 ; 1996: 13 E1                                  ..           :0C96[4]   ; Level 2 foreground/background brick color; Level 2 Brick character
+    EQUB &3F, &C0, &60, &60, &C0, &30, &80, &10   ; Level 2 data begins
+    EQUB   0, &10,   0, &10,   4, &30,   7, &E0
+    EQUB &1C,   0, &70,   0, &C0,   0, &80,   0
+    EQUB &FF, &F0, &1D, &22, &49, &83,   5, &A8
+    EQUB &13, &E1                                 ; Level 2 foreground/background brick color; Level 2 Brick character
 
 .scene_3_level_data
-    EQUB &3F, &C0, &60, &60, &C0, &30, &80, &10   ; 1998: 3F C0 60 60 C0 30 80 10                ?.``.0..     :0C98[4]   ; Level 3 data begins
-    EQUB   0, &10,   0, &10,   4, &30, &0F, &E0   ; 19A0: 00 10 00 10 04 30 0F E0                .....0..     :0CA0[4]
-    EQUB   0, &30,   0, &10, &80, &10, &C0, &30   ; 19A8: 00 30 00 10 80 10 C0 30                .0.....0     :0CA8[4]
-    EQUB &7F, &E0, &1D, &33, &79,   4, &83, &38   ; 19B0: 7F E0 1D 33 79 04 83 38                ...3y..8     :0CB0[4]
-    EQUB &21, &E0                                 ; 19B8: 21 E0                                  !.           :0CB8[4]   ; Level 3 foreground/background brick color; Level 3 Brick character
+    EQUB &3F, &C0, &60, &60, &C0, &30, &80, &10   ; Level 3 data begins
+    EQUB   0, &10,   0, &10,   4, &30, &0F, &E0
+    EQUB   0, &30,   0, &10, &80, &10, &C0, &30
+    EQUB &7F, &E0, &1D, &33, &79,   4, &83, &38
+    EQUB &21, &E0                                 ; Level 3 foreground/background brick color; Level 3 Brick character
 
 .scene_4_level_data
-    EQUB &0F, &C0,   8, &40,   8, &40, &18, &40   ; 19BA: 0F C0 08 40 08 40 18 40                ...@.@.@     :0CBA[4]   ; Level 4 data begins
-    EQUB &10, &40, &30, &40, &24, &40, &3C, &40   ; 19C2: 10 40 30 40 24 40 3C 40                .@0@$@<@     :0CC2[4]
-    EQUB &E0, &40, &80, &40, &FF, &F0,   0, &40   ; 19CA: E0 40 80 40 FF F0 00 40                .@.@...@     :0CCA[4]
-    EQUB   7, &C0, &1D,   1, &1B,   4, &74, &A2   ; 19D2: 07 C0 1D 01 1B 04 74 A2                ......t.     :0CD2[4]
-    EQUB &42, &E0                                 ; 19DA: 42 E0                                  B.           :0CDA[4]   ; Level 4 foreground/background brick color; Level 4 Brick character
+    EQUB &0F, &C0,   8, &40,   8, &40, &18, &40   ; Level 4 data begins
+    EQUB &10, &40, &30, &40, &24, &40, &3C, &40
+    EQUB &E0, &40, &80, &40, &FF, &F0,   0, &40
+    EQUB   7, &C0, &1D,   1, &1B,   4, &74, &A2
+    EQUB &42, &E0                                 ; Level 4 foreground/background brick color; Level 4 Brick character
 
 .scene_5_level_data
-    EQUB &FF, &F0, &80,   0, &80,   0, &80,   0   ; 19DC: FF F0 80 00 80 00 80 00                ........     :0CDC[4]   ; Level 5 data begins
-    EQUB &80,   0, &FF, &E0, &0E, &30, &0E, &10   ; 19E4: 80 00 FF E0 0E 30 0E 10                .....0..     :0CE4[4]
-    EQUB   0, &10,   0, &10, &80, &10, &C0, &30   ; 19EC: 00 10 00 10 80 10 C0 30                .......0     :0CEC[4]
-    EQUB &7F, &E0, &1E, &22, &83, &49, &17, &97   ; 19F4: 7F E0 1E 22 83 49 17 97                ...".I..     :0CF4[4]
-    EQUB &14, &E0                                 ; 19FC: 14 E0                                  ..           :0CFC[4]   ; Level 5 foreground/background brick color; Level 5 Brick character
+    EQUB &FF, &F0, &80,   0, &80,   0, &80,   0   ; Level 5 data begins
+    EQUB &80,   0, &FF, &E0, &0E, &30, &0E, &10
+    EQUB   0, &10,   0, &10, &80, &10, &C0, &30
+    EQUB &7F, &E0, &1E, &22, &83, &49, &17, &97
+    EQUB &14, &E0                                 ; Level 5 foreground/background brick color; Level 5 Brick character
 
 .scene_6_level_data
-    EQUB &3F, &F0, &60,   0, &C0,   0, &80,   0   ; 19FE: 3F F0 60 00 C0 00 80 00                ?.`.....     :0CFE[4]   ; Level 6 data begins
-    EQUB &80,   0, &80,   0, &84,   0, &FF, &E0   ; 1A06: 80 00 80 00 84 00 FF E0                ........     :0D06[4]
-    EQUB &80, &30, &80, &10, &80, &10, &C0, &30   ; 1A0E: 80 30 80 10 80 10 C0 30                .0.....0     :0D0E[4]
-    EQUB &7F, &E0, &1E, &53, &19, &6A, &23, &A3   ; 1A16: 7F E0 1E 53 19 6A 23 A3                ...S.j#.     :0D16[4]
-    EQUB &21, &E0                                 ; 1A1E: 21 E0                                  !.           :0D1E[4]   ; Level 6 foreground/background brick color; Level 6 Brick character
+    EQUB &3F, &F0, &60,   0, &C0,   0, &80,   0   ; Level 6 data begins
+    EQUB &80,   0, &80,   0, &84,   0, &FF, &E0
+    EQUB &80, &30, &80, &10, &80, &10, &C0, &30
+    EQUB &7F, &E0, &1E, &53, &19, &6A, &23, &A3
+    EQUB &21, &E0                                 ; Level 6 foreground/background brick color; Level 6 Brick character
 
 .scene_7_level_data
-    EQUB &FF, &F0, &80, &10,   0, &30,   0, &60   ; 1A20: FF F0 80 10 00 30 00 60                .....0.`     :0D20[4]   ; Level 7 data begins
-    EQUB   0, &C0,   1, &80,   7,   0,   6,   0   ; 1A28: 00 C0 01 80 07 00 06 00                ........     :0D28[4]
-    EQUB   4,   0,   4,   0,   4,   0,   4,   0   ; 1A30: 04 00 04 00 04 00 04 00                ........     :0D30[4]
-    EQUB   4,   0, &1D, &43,   8, &12, &78, &A5   ; 1A38: 04 00 1D 43 08 12 78 A5                ...C..x.     :0D38[4]
-    EQUB &24, &E3                                 ; 1A40: 24 E3                                  $.           :0D40[4]   ; Level 7 foreground/background brick color; Level 7 Brick character
+    EQUB &FF, &F0, &80, &10,   0, &30,   0, &60   ; Level 7 data begins
+    EQUB   0, &C0,   1, &80,   7,   0,   6,   0
+    EQUB   4,   0,   4,   0,   4,   0,   4,   0
+    EQUB   4,   0, &1D, &43,   8, &12, &78, &A5
+    EQUB &24, &E3                                 ; Level 7 foreground/background brick color; Level 7 Brick character
 
 .scene_8_level_data
-    EQUB &3F, &C0, &60, &60, &C0, &30, &80, &10   ; 1A42: 3F C0 60 60 C0 30 80 10                ?.``.0..     :0D42[4]   ; Level 8 data begins
-    EQUB &80, &10, &C0, &30, &64, &60, &3F, &C0   ; 1A4A: 80 10 C0 30 64 60 3F C0                ...0d`?.     :0D4A[4]
-    EQUB &E0, &70, &80, &10, &80, &10, &C0, &30   ; 1A52: E0 70 80 10 80 10 C0 30                .p.....0     :0D52[4]
-    EQUB &7F, &E0, &1D, &19, &6A, &22, &52, &82   ; 1A5A: 7F E0 1D 19 6A 22 52 82                ....j"R.     :0D5A[4]
-    EQUB &51, &E3                                 ; 1A62: 51 E3                                  Q.           :0D62[4]   ; Level 8 foreground/background brick color; Level 8 Brick character
+    EQUB &3F, &C0, &60, &60, &C0, &30, &80, &10   ; Level 8 data begins
+    EQUB &80, &10, &C0, &30, &64, &60, &3F, &C0
+    EQUB &E0, &70, &80, &10, &80, &10, &C0, &30
+    EQUB &7F, &E0, &1D, &19, &6A, &22, &52, &82
+    EQUB &51, &E3                                 ; Level 8 foreground/background brick color; Level 8 Brick character
 
 .scene_9_level_data
-    EQUB &3F, &C0, &60, &60, &C0, &30, &80, &10   ; 1A64: 3F C0 60 60 C0 30 80 10                ?.``.0..     :0D64[4]   ; Level 9 data begins
-    EQUB &80, &10, &80, &10, &C4, &10, &7F, &F0   ; 1A6C: 80 10 80 10 C4 10 7F F0                ........     :0D6C[4]
-    EQUB   0, &10,   0, &10,   0, &30,   0, &60   ; 1A74: 00 10 00 10 00 30 00 60                .....0.`     :0D74[4]
-    EQUB &FF, &C0, &1E, &52, &75, &69, &23,   8   ; 1A7C: FF C0 1E 52 75 69 23 08                ...Rui#.     :0D7C[4]
-    EQUB &14, &E3                                 ; 1A84: 14 E3                                  ..           :0D84[4]   ; Level 9 foreground/background brick color; Level 9 Brick character
-; &1A86 referenced 3 times by &0E38, &0E42, &0E60
-.L0D86
-    EQUB 0                                        ; 1A86: 00                                     .            :0D86[4]
-; &1A87 referenced 3 times by &0E3D, &0E55, &0E5B
-.L0D87
-    EQUB   0,   0, &90,   4, &19, &10,   0, &F4   ; 1A87: 00 00 90 04 19 10 00 F4                ........     :0D87[4]
-    EQUB &FF,   2,   0,   1,   0                  ; 1A8F: FF 02 00 01 00                         .....        :0D8F[4]
+    EQUB &3F, &C0, &60, &60, &C0, &30, &80, &10   ; Level 9 data begins
+    EQUB &80, &10, &80, &10, &C4, &10, &7F, &F0
+    EQUB   0, &10,   0, &10,   0, &30,   0, &60
+    EQUB &FF, &C0, &1E, &52, &75, &69, &23,   8
+    EQUB &14, &E3                                 ; Level 9 foreground/background brick color; Level 9 Brick character
+
+; VDU string for PLOT4, which moves the graphics cursor to the next line in on
+; order to allor the blocks that make up the screen to be plotted.
+; VDU sequence is backwards (as index X is decremented in the plotting loop).
+.plot_4_x_y_movement_string
+    EQUB 0
+    EQUB 0
+    EQUB 0
+    EQUB 144
+    EQUB 4
+    EQUB 25
+
+; Following probably isn't used.
+    EQUB &10,   0, &F4
+    EQUB &FF,   2,   0,   1,   0
 
 .begin_new_game
     JSR restore_sprite_xy_length_offset_to_default_x18_x10;
     LDX #2
-    STX zp_24_lives_remaining
+    STX lives_remaining_zp
     STX scene_number_zp_plus_2_zp
     DEX
     DEX
@@ -412,15 +420,15 @@ ENDIF
     LDA #&1E
     STA dest_screenaddr_zp
     LDA #3
-    STA L0D86
+    STA plot_4_x_y_movement_string
     LDA #&B0
-    STA L0D87
+    STA plot_4_x_y_movement_string + 1
 
 .perform_vdu_25_plot_a_x_y
     LDX #5
 
 .loop_plot
-    LDA L0D86,X
+    LDA plot_4_x_y_movement_string,X
     JSR oswrch                                    ; Write character
     DEX
     BPL loop_plot
@@ -431,12 +439,12 @@ ENDIF
     JSR oswrch                                    ; Write character
     DEX
     BNE loop_until_brick_line_is_plotted
-    LDA L0D87
+    LDA plot_4_x_y_movement_string + 1
     SEC
     SBC #&20
-    STA L0D87
+    STA plot_4_x_y_movement_string + 1
     BCS skip_to_0E63
-    DEC L0D86
+    DEC plot_4_x_y_movement_string
 
 .skip_to_0E63
     DEC dest_screenaddr_zp
@@ -1017,7 +1025,7 @@ ENDIF
 
 ; &1ECF referenced 1 time by &11C6
 .lose_a_life
-    DEC zp_24_lives_remaining                     ; 1ECF: C6 24                                  .$           :11CF[4]
+    DEC lives_remaining_zp                     ; 1ECF: C6 24                                  .$           :11CF[4]
     BPL still_have_lives                          ; 1ED1: 10 03                                  ..           :11D1[4]
     JMP game_over_routine                         ; 1ED3: 4C 10 16                               L..          :11D3[4]
 
@@ -1090,7 +1098,7 @@ ENDIF
 .C1229
     LDA number_of_normal_monsters_remaining_minus_1; 1F29: A5 1D                                  ..           :1229[4]
     STA remaining_monsters_to_spawn_minus_1_zp       ; 1F2B: 85 14                                  ..           :122B[4]
-    LDA zp_24_lives_remaining                     ; 1F2D: A5 24                                  .$           :122D[4]
+    LDA lives_remaining_zp                     ; 1F2D: A5 24                                  .$           :122D[4]
     ASL A                                         ; 1F2F: 0A                                     .            :122F[4]
     STA dest_screenaddr_zp                     ; 1F30: 85 80                                  ..           :1230[4]
     ASL A                                         ; 1F32: 0A                                     .            :1232[4]
@@ -1685,7 +1693,7 @@ ENDIF
     CMP #&27 ; '''                                ; 228E: C9 27                                  .'           :158E[4]
     BNE epa_loop_fired_ball_in_transit                ; 2290: D0 DE                                  ..           :1590[4]
     JSR possible_update_ball_if_exists            ; 2292: 20 D7 26                                .&          :1592[4]
-    LDA zp_24_lives_remaining                     ; 2295: A5 24                                  .$           :1595[4]
+    LDA lives_remaining_zp                     ; 2295: A5 24                                  .$           :1595[4]
     ASL A                                         ; 2297: 0A                                     .            :1597[4]
     STA dest_screenaddr_zp                     ; 2298: 85 80                                  ..           :1598[4]
     ASL A                                         ; 229A: 0A                                     .            :159A[4]
@@ -1720,7 +1728,7 @@ ENDIF
     STA extra_bitmap                              ; 22CE: 85 1F                                  ..           :15CE[4]
     JSR write_mr_ee_right                         ; 22D0: 20 58 0A                                X.          :15D0[4]
     JSR sub_possible_fire_ball_then_in_motion_routine; 22D3: 20 95 26                                .&          :15D3[4]
-    INC zp_24_lives_remaining                     ; 22D6: E6 24                                  .$           :15D6[4]
+    INC lives_remaining_zp                     ; 22D6: E6 24                                  .$           :15D6[4]
     LDA #&A0                                      ; 22D8: A9 A0                                  ..           :15D8[4]
 .epa_sub_C15DA
     JMP delay_routine                             ; 22DA: 4C 40 0A                               L@.          :15DA[4]
@@ -2511,7 +2519,7 @@ code_to_relocate_1900 = sub_C18FF+1
     JSR oswrch                                    ; 278D: 20 EE FF                                ..          :1A8D[4]   ; Write character
     JSR print_score_to_screen                     ; 2790: 20 CB 0B                                ..          :1A90[4]
     LDY #&ED                                      ; 2793: A0 ED                                  ..           :1A93[4]
-    LDX zp_24_lives_remaining                     ; 2795: A6 24                                  .$           :1A95[4]
+    LDX lives_remaining_zp                     ; 2795: A6 24                                  .$           :1A95[4]
     BEQ no_more_mr_ee_lives_to_print              ; 2797: F0 11                                  ..           :1A97[4]
 ; &2799 referenced 1 time by &1AA8
 .loop_print_mr_ee_remaining_lives_on_left
@@ -6064,7 +6072,7 @@ ORG &4300
 ; This loop relocates data from...
 ; &3D00-&3FFF to &400-&6FF
 ; &4000-&42FF to &900-&BFF
-
+                                     ; 0DF5: 86 91     ..  
 ; &4326 referenced 1 time by &434B
 
 .loop_relocate_data
@@ -6098,7 +6106,7 @@ ORG &4300
     DEX                                           ; 4358: CA                                     .
     BNE loop_relocate_more_data                   ; 4359: D0 F2                                  ..
     LDX #7                                        ; 435B: A2 07                                  ..
-    STX sound_on_off_flag_zp                        ; 435D: 86 0A                                  ..
+    STX sound_on_off_flag_zp                        ; 435D: 86 0A                                         ; 0DF5: 86 91     ..                                ..
 
 ; Initialisation for game zero values in &70 to &7F
     LDX #&0F                                      ; 435F: A2 0F                                  ..
