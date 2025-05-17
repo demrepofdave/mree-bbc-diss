@@ -1208,12 +1208,12 @@ ENDIF
 .loop_unknown_sound_loop
     LDX number_of_continuous_cherries_consumed_zp
     LDA &40,X
-    TAX
-    LDA #1                                        ; Prepare sound call equivalent to
-    LDY #2                                        ; SOUND ? <A>, <X>, <Y>
-    JSR compile_sound_from_AXY_data               ; SOUND ?,1, <cherry number pitch>,2
+    TAX                                           ; Pitch = Pitch table located at &40 + (number of number_of_continuous_cherries_consumed_zp)
+    LDA #1                                        ; Prepare sound call equivalent to SOUND ? <A>, <X>, <Y>
+    LDY #2                                        ; 
+    JSR compile_sound_from_AXY_data               ; SOUND (what is in &70), 1, <cherry number pitch>,2
     LDA #1
-    STA zp_70_sound_channel
+    STA zp_70_sound_channel                       ; Sound channel set to 1.
     DEC dest_screenaddr_zp
     BNE loop_unknown_sound_loop
     LDA #&11
@@ -2843,10 +2843,11 @@ code_to_relocate_1900 = sub_C18FF+1
     BNE C1C7F                                     ; 2970: D0 0D                                  ..           :1C70[4]
     TYA                                           ; 2972: 98                                     .            :1C72[4]
     PHA                                           ; 2973: 48                                     H            :1C73[4]
-    LDA #2                                        ; 2974: A9 02                                  ..           :1C74[4]
-    LDX #&BE                                      ; 2976: A2 BE                                  ..           :1C76[4]
-    LDY #&24 ; '$'                                ; 2978: A0 24                                  .$           :1C78[4]
-    JSR compile_sound_from_AXY_data               ; 297A: 20 9C 0B                                ..          :1C7A[4]
+    LDA #2                                        ; Prepare sound call equivalent to SOUND ? <A>, <X>, <Y> A = Sound amplitude?
+    LDX #&BE                                      ; X = Sound pitch
+    LDY #&24                                      ; Y = Sound duration (DM
+    JSR compile_sound_from_AXY_data               ; SOUND (what is in &70), 2, &BE, 36
+
     PLA                                           ; 297D: 68                                     h            :1C7D[4]
     TAY                                           ; 297E: A8                                     .            :1C7E[4]
 ; &297F referenced 1 time by &1C70
@@ -5883,35 +5884,36 @@ relocated_data_A00 = sub_C09FF+1
     JMP restore_sprite_routine_code_to_default    ; 0B7A: 4C 1E 0B   L..
 
 .extra_plot_for_top_screen_letter_sprite
-    AND &97                                       ; 0B7D: 25 97
-    EOR (&80),Y                                   ; 0B7F: 51 80
-    STA (&80),Y                                   ; 0B81: 91 80 
-    RTS                                           ; 0B83: 60 
+    AND &97
+    EOR (&80),Y
+    STA (&80),Y
+    RTS
 
 ; &4284 referenced 5 times by &0EA4, &0EDC, &0EF5, &0F0B, &0F37
 .sub_C0B84
-    LDA #0                                        ; 4284: A9 00                                  ..           :0B84[1]
-    STA possible_current_tunnel_brick_map,X       ; 4286: 9D 30 06                               .0.          :0B86[1]
-    STA L0631,X                                   ; 4289: 9D 31 06                               .1.          :0B89[1]
-    STA L0632,X                                   ; 428C: 9D 32 06                               .2.          :0B8C[1]
-    STA L0633,X                                   ; 428F: 9D 33 06                               .3.          :0B8F[1]
-    TXA                                           ; 4292: 8A                                     .            :0B92[1]
-    CLC                                           ; 4293: 18                                     .            :0B93[1]
-    ADC #6                                        ; 4294: 69 06                                  i.           :0B94[1]
-    TAX                                           ; 4296: AA                                     .            :0B96[1]
-; &4297 referenced 1 time by &0BA8
+    LDA #0
+    STA possible_current_tunnel_brick_map,X
+    STA L0631,X
+    STA L0632,X
+    STA L0633,X
+    TXA
+    CLC
+    ADC #6
+    TAX
+
 .finish_subroutine
-    RTS                                           ; 4297: 60                                     `            :0B97[1]
+    RTS
 
 ; ***************************************************************************************
 ; Plays a pre-compiled OSWORD sound block at &78-&7F if sound is enabled.
 ; 
 ; On Entry:
 ;     A: (Unused)
-; &4298 referenced 8 times by &0975, &0980, &1196, &119E, &11A7, &11AF, &12B8, &12C1
+
 .play_precompile_sound_block_at_zp_78
-    LDX #&78 ; 'x'                                ; 4298: A2 78                                  .x           :0B98[1]
-    BNE skip_other_sound_routine                  ; 429A: D0 08                                  ..           :0B9A[1]
+    LDX #&78
+    BNE skip_other_sound_routine
+
 ; ***************************************************************************************
 ; Creates a OSWORD sound block at &70-&77 and makes the OSWORD sound call if enabled.
 ; Note Channel is already preselected in &70-&71 prior to the subroutine call
@@ -5920,21 +5922,21 @@ relocated_data_A00 = sub_C09FF+1
 ;     A: Sound Amplitude
 ;     X: Sound Pitch
 ;     Y: Sound Duration
-; &429C referenced 4 times by &12F3, &1C7A, &1CE6, &25BB
+
 .compile_sound_from_AXY_data
-    STA zp_72_sound_amplitude                     ; 429C: 85 72                                  .r           :0B9C[1]
-    STX zp_74_sound_pitch                         ; 429E: 86 74                                  .t           :0B9E[1]
-    STY zp_76_sound_duration                      ; 42A0: 84 76                                  .v           :0BA0[1]
-    LDX #&70 ; 'p'                                ; 42A2: A2 70                                  .p           :0BA2[1]
-; &42A4 referenced 1 time by &0B9A
+                                        ; &70 = Channel.
+    STA zp_72_sound_amplitude           ; &72 = sound amplitude
+    STX zp_74_sound_pitch               ; &74 = sound pitch
+    STY zp_76_sound_duration            ; &76 = sound duration
+    LDX #&70
+
 .skip_other_sound_routine
-    LDY #0                                        ; 42A4: A0 00                                  ..           :0BA4[1]
-; flag either containes 7 = Sound on and OSWORD 7, or 0 = skip osword command
-; &42A6 referenced 1 time by &1743
+    LDY #0
+
 .play_sound_if_enabled
-    LDA sound_on_off_flag_zp                        ; 42A6: A5 0A                                  ..           :0BA6[1]
-    BEQ finish_subroutine                         ; 42A8: F0 ED                                  ..           :0BA8[1]
-    JMP osword                                    ; 42AA: 4C F1 FF                               L..          :0BAA[1]
+    LDA sound_on_off_flag_zp            ; flag either containes 7 = Sound on and OSWORD 7, or 0 = skip osword command
+    BEQ finish_subroutine               ; Essentially the RTS
+    JMP osword                          ; JMP not JSR = Call osword and then RTS
 
 ; ***************************************************************************************
 ; Increments the player score value.
@@ -5945,54 +5947,57 @@ relocated_data_A00 = sub_C09FF+1
 ; the least significant value (0-100).
 ;
 ; There is also a mystery 'strange_unused_score' value that is increments but I have
-; not understood what this does yet.
+; not understood what this does yet (possibly used to add an element of apparent 
+; randomness to monster behaviour).
 ; 
 ; On Entry:
 ;     A: LSB BCD value to increment store by (1-100)
 ;     X: MSB BCD value to increment score by (multiples of 100 from 100 to 9000)
 ;     Y: Not used
-; &42AD referenced 2 times by &131D, &260A
+
 .increment_score
-    SED                                           ; 42AD: F8        .            :0BAD[1] ; Set BCD flag.
-    PHA                                           ; 42AE: 48        H            :0BAE[1] ; Push accumulator value to stack
-    CLC                                           ; 42AF: 18        .            :0BAF[1] ; Clear carry, ready for below addition.
-    ADC score_zp                                     ; 42B0: 65 05  e.           :0BB0[1] 
-    STA score_zp                                     ; 42B2: 85 05  ..           :0BB2[1]
-    TXA                                           ; 42B4: 8A        .            :0BB4[1]
-    ADC score_zp+1                                   ; 42B5: 65 06  e.           :0BB5[1]
-    STA score_zp+1                                   ; 42B7: 85 06  ..           :0BB7[1]
-    LDA score_zp+2                                   ; 42B9: A5 07  ..           :0BB9[1]
-    ADC #0                                        ; 42BB: 69 00     i.           :0BBB[1]
-    STA score_zp+2                                   ; 42BD: 85 07  ..           :0BBD[1]
-    PLA                                           ; 42BF: 68        h            :0BBF[1] ; Pop accumulator value off of stack (orig value when entering)
-    CLC                                           ; 42C0: 18        .            :0BC0[1] ; Carry clear, ready for  below addition.
-    ADC strange_unused_score                      ; 42C1: 65 28     e(           :0BC1[1] ; Perform addition again on strange unused score
-    STA strange_unused_score                      ; 42C3: 85 28     .(           :0BC3[1]
-    TXA                                           ; 42C5: 8A        .            :0BC5[1]
-    ADC strange_unused_score+1                    ; 42C6: 65 29     e)           :0BC6[1]; But only for first four digits
-    STA strange_unused_score+1                    ; 42C8: 85 29     .)           :0BC8[1] 
-    CLD                                           ; 42CA: D8        .            :0BCA[1] ; Clear BCD flags, back to normal 8-bit calculations.
+    SED                                           ; Set BCD flag.
+    PHA                                           ; Push accumulator value to stack
+    CLC                                           ; Clear carry, ready for below addition.
+    ADC score_zp
+    STA score_zp
+    TXA
+    ADC score_zp+1
+    STA score_zp+1
+    LDA score_zp+2
+    ADC #0
+    STA score_zp+2
+    PLA                                           ; Pop accumulator value off of stack (orig value when entering)
+    CLC                                           ; Carry clear, ready for  below addition.
+    ADC strange_unused_score                      ; Perform addition again on strange unused score
+    STA strange_unused_score
+    TXA
+    ADC strange_unused_score+1                    ; But only for first four digits
+    STA strange_unused_score+1
+    CLD                                           ; Clear BCD flags, back to normal 8-bit calculations.
+
 ; ***************************************************************************************
 ; Subroutine : print_score_to_screen
 ; 
 ; Does what it says, positions the test cursor and prints the score to the screen using
 ; a number of OSWRCH calls.
+;
 ; On Entry:
 ;     A: Not used?
 ;     X: Not used?
 ;     Y: Not used?
-; &42CB referenced 1 time by &1A90
+
 .print_score_to_screen
-    LDA #&1E                                      ; 42CB: A9 1E        ..          :0BCB[1]   ; Move text cursor to top left of screen
-    JSR oswrch                                    ; 42CD: 20 EE FF     ..          :0BCD[1]   ; Write character 30
-    JSR osnewl                                    ; 42D0: 20 E7 FF     ..          :0BD0[1]   ; Write newline, text cursor now on line one and in position to output the score.
-    LDA #0                                        ; 42D3: A9 00        ..          :0BD3[1]   ; &82 contains 0?
-    STA zp_82                                     ; 42D5: 85 82        ..          :0BD5[1]
-    LDA score_zp+2                                ; 42D7: A5 07        ..          :0BD7[1]   ; Print first two digits of score ()
-    JSR byte_to_2_digit_score                     ; 42D9: 20 E3 0B     ..          :0BD9[1]
-    LDA score_zp+1                                ; 42DC: A5 06        ..          :0BDC[1]   ; Print second two digits of score
-    JSR byte_to_2_digit_score                     ; 42DE: 20 E3 0B     ..          :0BDE[1]
-    LDA score_zp                                  ; 42E1: A5 05        ..          :0BE1[1]   ; Print final two digits of score
+    LDA #&1E                                      ; Move text cursor to top left of screen
+    JSR oswrch                                    ; Write character 30
+    JSR osnewl                                    ; Write newline, text cursor now on line one and in position to output the score.
+    LDA #0                                        ; &82 contains 0?
+    STA zp_82
+    LDA score_zp+2                                ; Print first two digits of score
+    JSR byte_to_2_digit_score
+    LDA score_zp+1                                ; Print second two digits of score
+    JSR byte_to_2_digit_score
+    LDA score_zp                                  ; Print final two digits of score
 
 ; ***************************************************************************************
 ; Subroutine : byte_to_2_digit_score
@@ -6005,47 +6010,49 @@ relocated_data_A00 = sub_C09FF+1
 ;     X: Not used
 ;     Y: Not used
 
-; &42E3 referenced 2 times by &0BD9, &0BDE
+
 .byte_to_2_digit_score
-    PHA                                           ; 0BE3: 48          H   ; Push accumulator value to stack 
-    LSR A                                         ; 0BE4: 4A          J   ; Get the most significant digit value by shifting it from high nibble to low nibble
-    LSR A                                         ; 0BE5: 4A          J   
-    LSR A                                         ; 0BE6: 4A          J   
-    LSR A                                         ; 0BE7: 4A          J
-    JSR print_digit_or_move_cursor                ; 0BE8: 20 EE 0B    ..  ; Call digit printing routine
-    PLA                                           ; 0BEB: 68          h   ; Get original accumulator value off of the stack
-    AND #&0F                                      ; 0BEC: 29 0F       ).  ; Now remove most significant digit value, leaving least significant digit in low nibble
-; &42EE referenced 1 time by &0BE8
+    PHA                                           ; Push accumulator value to stack 
+    LSR A                                         ; Get the most significant digit value by shifting it from high nibble to low nibble
+    LSR A
+    LSR A
+    LSR A
+    JSR print_digit_or_move_cursor                ; Call digit printing routine
+    PLA                                           ; Get original accumulator value off of the stack
+    AND #&0F                                      ; Now remove most significant digit value, leaving least significant digit in low nibble
+
 .print_digit_or_move_cursor
-    BNE print_digit                               ; 0BEE: D0 08       ..  ; If A != 0 then we can print the print_digit
-    LDX zp_82                                     ; 0BF0: A6 82       ..  ; Load &82 value
-    BNE print_digit                               ; 0BF2: D0 04       ..  ; If &82 is not 0 then we can print the digit
-    LDA #9                                        ; 0BF4: A9 09       ..  ; If we get here them this means we haven't begun to show a score value
-    BNE move_cursor_right                         ; 0BF6: D0 04       ..  ; so just move cursor right instead (effectively printing a space)
+    BNE print_digit                               ; If A != 0 then we can print the print_digit
+    LDX zp_82                                     ; Load &82 value
+    BNE print_digit                               ; If &82 is not 0 then we can print the digit
+    LDA #9                                        ; If we get here them this means we haven't begun to show a score value
+    BNE move_cursor_right                         ; so just move cursor right instead (effectively printing a space)
 ; &42F8 referenced 2 times by &0BEE, &0BF2
 .print_digit
-    INC zp_82                                     ; 0BF8: E6 82       ..  ; We have a digit to print.  Add ASCII '0' to it so that it will
-    ORA #&30 ; '0'                                ; 0BFA: 09 30       .0  ; have the correct ASCII value and print it.
+    INC zp_82                                     ; We have a digit to print.  Add ASCII '0' to it so that it will
+    ORA #&30 ; '0'                                ; have the correct ASCII value and print it.
 ; &42FC referenced 1 time by &0BF6
 .move_cursor_right
-    JMP oswrch                                    ; 0BFC: 4C EE FF    L.. ; Write character (either the score digit, or move cursor right depending on the code path)
+    JMP oswrch                                    ; Write character (either the score digit, or move cursor right depending on the code path)
 
-    EQUB &3A                                      ; 0BFF: 3A          :   ; This byte appears to be unused.
+    EQUB &3A                                      ; This byte appears to be unused.
+
 .reloc_0900_end
 
 ORG &4300
+
 ; Main entry point that relocates the file so...
 .relocation_code_begin
 .entry_point_4300
-    LDA #osbyte_read_write_escape_break_effect    ; 4300: A9 C8       ..
-    STA L801B                                     ; 4302: 8D 1B 80    ...
-    LDX #2                                        ; 4305: A2 02       ..
-    JSR osbyte                                    ; 4307: 20 F4 FF    ..   *FX200,2 - disable escape and clear memory on break; Read/Write ESCAPE+BREAK effects
-    LDA #osbyte_disable_event                     ; 430A: A9 0D       ..
-    LDX #event_start_of_vertical_sync             ; 430C: A2 04       ..
-    JSR osbyte                                    ; 430E: 20 F4 FF    ..   Disable 'Start of vertical sync' event (X=4)
-    LDA #osbyte_tape                              ; 4311: A9 8C       ..
-    JSR osbyte                                    ; 4313: 20 F4 FF    ..   Select TAPE filing system
+    LDA #osbyte_read_write_escape_break_effect
+    STA L801B
+    LDX #2
+    JSR osbyte                                    ; *FX200,2 - disable escape and clear memory on break; Read/Write ESCAPE+BREAK effects
+    LDA #osbyte_disable_event
+    LDX #event_start_of_vertical_sync
+    JSR osbyte                                    ; Disable 'Start of vertical sync' event (X=4)
+    LDA #osbyte_tape
+    JSR osbyte                                    ; Select TAPE filing system
 
     ; Set up &80-&81 with main code relocation destination address &C00
     ; And &82-&83 with main code relocation source address &1900
@@ -6065,24 +6072,22 @@ ORG &4300
 ; This loop relocates data from...
 ; &3D00-&3FFF to &400-&6FF
 ; &4000-&42FF to &900-&BFF
-                                     ; 0DF5: 86 91     ..  
-; &4326 referenced 1 time by &434B
 
 .loop_relocate_data
-    LDA data_to_relocate_4000,Y                   ; 4326: B9 00 40                               ..@
-    STA run_music_and_pause_waiting_for_timer_interrupt_900,Y; 4329: 99 00 09                               ...
-    LDA data_to_relocate_4100,Y                   ; 432C: B9 00 41                               ..A
-    STA relocated_data_A00,Y                      ; 432F: 99 00 0A                               ...
-    LDA data_to_relocate_4200,Y                   ; 4332: B9 00 42                               ..B
-    STA relocated_data_B00,Y                      ; 4335: 99 00 0B                               ...
-    LDA data_to_relocate_3D00,Y                   ; 4338: B9 00 3D                               ..=
-    STA relocated_data_400,Y                      ; 433B: 99 00 04                               ...
-    LDA data_to_relocate_3E00,Y                   ; 433E: B9 00 3E                               ..>
-    STA relocated_data_500,Y                      ; 4341: 99 00 05                               ...
-    LDA data_to_relocate_3F00,Y                   ; 4344: B9 00 3F                               ..?
-    STA relocated_data_600,Y                      ; 4347: 99 00 06                               ...
-    DEY                                           ; 434A: 88                                     .
-    BNE loop_relocate_data                        ; 434B: D0 D9                                  ..
+    LDA data_to_relocate_4000,Y
+    STA run_music_and_pause_waiting_for_timer_interrupt_900,Y;
+    LDA data_to_relocate_4100,Y
+    STA relocated_data_A00,Y
+    LDA data_to_relocate_4200,Y
+    STA relocated_data_B00,Y
+    LDA data_to_relocate_3D00,Y
+    STA relocated_data_400,Y
+    LDA data_to_relocate_3E00,Y
+    STA relocated_data_500,Y
+    LDA data_to_relocate_3F00,Y
+    STA relocated_data_600,Y
+    DEY
+    BNE loop_relocate_data
 
 
 ; This loop relocates data from...
