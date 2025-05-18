@@ -5943,7 +5943,7 @@ relocated_data_A00 = sub_C09FF+1
 ;
 ; This routine can increment the score value by 0-9999.  The score is stored as binary
 ; coded decimal (BCD).  The increment value is also in BCD but it's value is split into
-; the X and A registers. X stored the most significant BCX value (hundred units), A is 
+; the X and A registers. X stored the most significant BCD value (hundred units), A is 
 ; the least significant value (0-100).
 ;
 ; There is also a mystery 'strange_unused_score' value that is increments but I have
@@ -6097,41 +6097,42 @@ ORG &4300
 .loop_relocate_more_data
     LDA (zp_82),Y                                 ; 434D: B1 82                                  ..
     STA (dest_screenaddr_zp),Y                 ; 434F: 91 80                                  ..
-    DEY                                           ; 4351: 88                                     .
-    BNE loop_relocate_more_data                   ; 4352: D0 F9                                  ..
-    INC dest_screenaddr_zp + 1                     ; 4354: E6 81                                  ..
-    INC zp_83                                     ; 4356: E6 83                                  ..
-    DEX                                           ; 4358: CA                                     .
-    BNE loop_relocate_more_data                   ; 4359: D0 F2                                  ..
-    LDX #7                                        ; 435B: A2 07                                  ..
-    STX sound_on_off_flag_zp                        ; 435D: 86 0A                                         ; 0DF5: 86 91     ..                                ..
+    DEY
+    BNE loop_relocate_more_data
+    INC dest_screenaddr_zp + 1
+    INC zp_83
+    DEX
+    BNE loop_relocate_more_data
+    LDX #7                                        ; Sound on by default.
+    STX sound_on_off_flag_zp
 
 ; Initialisation for game zero values in &70 to &7F
-    LDX #&0F                                      ; 435F: A2 0F                                  ..
-; &4361 referenced 1 time by &4366
+
+    LDX #&0F  
+
 .loop_initialize_70_7F_to_zero
-    LDA #0                                        ; 4361: A9 00                                  ..
-    STA &70,X                                     ; 4363: 95 70                                  .p
-    DEX                                           ; 4365: CA                                     .
-    BPL loop_initialize_70_7F_to_zero             ; 4366: 10 F9                                  ..
-    LDA #&11                                      ; 4368: A9 11                                  ..
-    STA zp_70_sound_channel                       ; 436A: 85 70                                  .p
-    LDX #&21 ; '!'                                ; 436C: A2 21                                  .!
-; &436E referenced 1 time by &4374
+    LDA #0
+    STA &70,X
+    DEX
+    BPL loop_initialize_70_7F_to_zero
+    LDA #&11
+    STA zp_70_sound_channel
+    LDX #&21
+
 .loop_relocate_zp_data
-    LDA data_to_relocate_to_zp_40,X                   ; 436E: BD 84 43  
-    STA &40,X                     ; 4371: 95 40                                  .@
-    DEX                                           ; 4373: CA                                     .
-    BPL loop_relocate_zp_data                     ; 4374: 10 F8                                  ..
-    LDX #&17                                      ; 4376: A2 17                                  ..
-; &4378 referenced 1 time by &437F
+    LDA data_to_relocate_to_zp_40,X
+    STA &40,X
+    DEX
+    BPL loop_relocate_zp_data
+
+    LDX #&17
+
 .loop_print_press_space_or_fire
     LDA press_space_or_fire_string_data,X
     JSR oswrch                                    ; Write character
     DEX
     BNE loop_print_press_space_or_fire
     JMP wait_for_input_space_or_fire
-
 
 .data_to_relocate_to_zp_40
 
